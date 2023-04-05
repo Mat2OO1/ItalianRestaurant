@@ -8,6 +8,8 @@ import { LoginComponent } from './login/login.component';
 import {RouterLink, RouterOutlet} from "@angular/router";
 import {AppRoutingModule} from "./app.routing.module";
 import {MenuComponent} from "./menu/menu.component";
+import {ReactiveFormsModule} from "@angular/forms";
+import {RegisterComponent} from "./register/register.component";
 
 @NgModule({
   declarations: [
@@ -15,14 +17,16 @@ import {MenuComponent} from "./menu/menu.component";
     NavComponent,
     InfoComponent,
     LoginComponent,
-    MenuComponent
+    MenuComponent,
+    RegisterComponent
   ],
-    imports: [
-        BrowserModule,
-        RouterLink,
-        RouterOutlet,
-        AppRoutingModule
-    ],
+  imports: [
+    BrowserModule,
+    RouterLink,
+    RouterOutlet,
+    AppRoutingModule,
+    ReactiveFormsModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

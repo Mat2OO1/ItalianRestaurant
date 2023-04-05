@@ -1,32 +1,32 @@
 <p class="p-5"></p>
 <div class="container d-flex align-items-center justify-content-center">
   <div class="row w-25 text-center">
-    <form>
+    <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
       <!-- First name input -->
       <div class="form-outline mb-4">
-        <input type="text" id="name" class="form-control bg-white border" />
+        <input type="text" id="name" formControlName="name" class="form-control bg-white border" />
         <label class="form-label" for="name">Name</label>
       </div>
       <!-- Surname input -->
       <div class="form-outline mb-4">
-        <input type="text" id="surname" class="form-control bg-white border" />
+        <input type="text" id="surname" formControlName="surname" class="form-control bg-white border" />
         <label class="form-label" for="surname">Surname</label>
       </div>
       <!-- Email input -->
       <div class="form-outline mb-4">
-        <input type="email" id="form2Example1" class="form-control bg-white border" />
-        <label class="form-label" for="form2Example1">Email address</label>
+        <input type="email" id="email" formControlName="email" class="form-control bg-white border" />
+        <label class="form-label" for="email">Email address</label>
       </div>
 
       <!-- Password input -->
       <div class="form-outline mb-4">
-        <input type="password" id="form2Example2" class="form-control  bg-white border" />
-        <label class="form-label" for="form2Example2">Password</label>
+        <input type="password" id="password" formControlName="password" class="form-control  bg-white border" />
+        <label class="form-label" for="password">Password</label>
       </div>
 
 
       <!-- Submit button -->
-      <button type="button" class="btn rounded-pill" style="background-color: #005B47; text-decoration: none; color: #FFFFFF">Register</button>
+      <button type="submit" class="btn rounded-pill" style="background-color: #005B47; text-decoration: none; color: #FFFFFF">Register</button>
     </form>
   </div>
 </div>
