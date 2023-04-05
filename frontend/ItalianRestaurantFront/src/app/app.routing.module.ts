@@ -4,11 +4,13 @@ import {CommonModule} from "@angular/common";
 import {InfoComponent} from "./info/info.component";
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
+import {MenuComponent} from "./menu/menu.component";
 
 const routes: Routes = [
   {path: '', component: InfoComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
+  {path: 'menu', component: MenuComponent},
   {path: '**', redirectTo: ''}
 ]
 

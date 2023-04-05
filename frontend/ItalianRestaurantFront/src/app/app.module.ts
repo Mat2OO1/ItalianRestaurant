@@ -7,13 +7,15 @@ import { InfoComponent } from './info/info.component';
 import { LoginComponent } from './login/login.component';
 import {RouterLink, RouterOutlet} from "@angular/router";
 import {AppRoutingModule} from "./app.routing.module";
+import {MenuComponent} from "./menu/menu.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     InfoComponent,
-    LoginComponent
+    LoginComponent,
+    MenuComponent
   ],
     imports: [
         BrowserModule,
