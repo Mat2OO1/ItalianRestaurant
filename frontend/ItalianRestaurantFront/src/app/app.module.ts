@@ -10,6 +10,8 @@ import {AppRoutingModule} from "./app.routing.module";
 import {MenuComponent} from "./menu/menu.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {RegisterComponent} from "./register/register.component";
+import {CartComponent} from "./cart/cart.component";
+import {CartService} from "./shared/cart.service";
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import {RegisterComponent} from "./register/register.component";
     InfoComponent,
     LoginComponent,
     MenuComponent,
-    RegisterComponent
+    RegisterComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,7 @@ import {RegisterComponent} from "./register/register.component";
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

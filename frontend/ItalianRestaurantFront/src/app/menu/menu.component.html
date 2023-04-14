@@ -51,7 +51,7 @@
   <div class="row justify-content-center">
     <div class="card bg-transparent shadow-none hover-overlay hover-zoom hover-shadow"
          *ngFor="let category of categories let i =index"
-         style="margin-right:10px; max-width: 20%; padding: 0"
+         style="margin-right:20px; max-width: 20%; padding: 0"
          (click)="scroll(category)">
       <img class="card-img-top rounded" src="{{images[i]}}" alt="Card image cap">
       <div class="card-body">
@@ -79,9 +79,9 @@
                 <h4 class="card-title mb-3"><strong>6.99$</strong></h4>
               </div>
               <div>
-                <button type="button" class="btn btn-dark">
+                <button type="button" class="btn btn-dark" (click)="addToCart(meal)">
                   <i class="bi bi-cart me-1"></i>
-                  Buy</button>
+                  Add to Cart</button>
               </div>
             </div>
           </div>

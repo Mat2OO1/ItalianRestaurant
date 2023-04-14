@@ -1,4 +1,6 @@
 import {Component, ElementRef} from '@angular/core';
+import {Meal} from "../models/meal";
+import {CartService} from "../shared/cart.service";
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -6,6 +8,8 @@ import {Component, ElementRef} from '@angular/core';
 })
 export class MenuComponent {
 
+  constructor(private cartService: CartService) {
+  }
 
   categories = ['Pasta Dishes', 'Pizza', 'Seafood']
   images = [
@@ -26,18 +30,10 @@ export class MenuComponent {
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
-}
 
-class Meal{
-  name: string
-  imgPath: string
-  description: string
-  constructor(name: string,
-              imgPath: string,
-              description: string) {
-    this.name = name
-    this.imgPath = imgPath
-    this.description = description
+  addToCart(meal:Meal){
+    this.cartService.addToCart(meal);
   }
-
 }
+
+
