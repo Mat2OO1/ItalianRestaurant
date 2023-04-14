@@ -18,10 +18,10 @@ export class MenuComponent {
     'https://www.foodandwine.com/thmb/tjkyiJutr0DdYGtGFy_hpcN0bSQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/seafood-blog618-f86e8baba8834537bbffa1d55e71c999.jpg'
   ]
   meals: {[key:string]: Meal[]} = {
-    'Pasta Dishes': [new Meal('Carbonara','http://kuchnia-domowa.pl/images/content/176/spaghetti-carbonara.jpg','grana padano, pasta, basil'),
-      new Meal('Aglio Oglio','https://italia-by-natalia.pl/wp-content/uploads/2020/11/aglio-olio-e-peperoncino.jpg','olive oil, garlic, pasta')],
-    'Pizza': [new Meal("Margherita", '', 'tomato sauce, cheese')],
-    'Seafood': [new Meal('Clams', '','some description')]
+    'Pasta Dishes': [new Meal('Carbonara','http://kuchnia-domowa.pl/images/content/176/spaghetti-carbonara.jpg','grana padano, pasta, basil', 6.99),
+      new Meal('Aglio Oglio','https://italia-by-natalia.pl/wp-content/uploads/2020/11/aglio-olio-e-peperoncino.jpg','olive oil, garlic, pasta', 10.49)],
+    'Pizza': [new Meal("Margherita", '', 'tomato sauce, cheese', 2.49)],
+    'Seafood': [new Meal('Clams', '','some description', 15.99)]
   }
 
   scroll(category: string){
