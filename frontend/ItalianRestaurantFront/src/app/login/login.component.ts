@@ -11,8 +11,6 @@ export class LoginComponent {
 
   constructor() {
     this.loginForm = new FormGroup({
-      name: new FormControl('',[Validators.required]),
-      surname: new FormControl('',[Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
 
@@ -20,12 +18,8 @@ export class LoginComponent {
   }
 
   onLoginSubmit(){
-    let name = this.loginForm.value['name']
-    let surname = this.loginForm.value['surname'];
     let email = this.loginForm.value['email'];
     let password = this.loginForm.value['password'];
-    console.log(name);
-    console.log(surname);
     console.log(email);
     console.log(password)
   }
