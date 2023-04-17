@@ -1,0 +1,46 @@
+
+body {
+  font-family: 'Red Hat Display',
+  sans-serif;
+  background-color: hsl(225, 100%, 94%);
+  font-size: 16px;
+}
+
+.container {
+  margin: auto;
+  max-width: 750px;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.text-content {
+  padding: 2% 7%;
+  text-align: center;
+}
+
+.title {
+  color: hsl(223, 47%, 23%);
+  font-weight: 900;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.proceed-btn{
+  display: block;
+  text-decoration: none;
+  color: white;
+  background-color: #005B47;
+  padding: 20px 0;
+  border-radius: 12px;
+  margin: 30px auto;
+  transition: background-color .3s ease;
+  width: 80%;
+  border: 0;
+}
+
+.form{
+  margin: auto;
+  width:70%;
+}

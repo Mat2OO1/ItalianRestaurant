@@ -16,7 +16,7 @@ align-items: center;
       <div class="navbar-nav ms-auto d-flex align-items-center">
         <a class="nav-item nav-link" href="#">About Us</a>
         <a class="nav-item nav-link active" href="#">Contact</a>
-        <a class="nav-item nav-link" *ngIf="isLoggedIn" routerLink="/cart"><i class="bi bi-cart" style="font-size: 1.5em;"></i></a>
+        <a class="nav-item nav-link" *ngIf="isLoggedIn" routerLink="/summary"><i class="bi bi-cart" style="font-size: 1.5em;"></i></a>
         <a class="nav-item nav-link active" routerLink="login" *ngIf="!isLoggedIn"><button class="btn rounded-pill" style="background-color: #005B47; text-decoration: none; color: #FFFFFF">Log In</button></a>
       </div>
   </div>

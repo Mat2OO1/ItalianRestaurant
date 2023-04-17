@@ -12,6 +12,9 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {RegisterComponent} from "./register/register.component";
 import {CartComponent} from "./cart/cart.component";
 import {CartService} from "./shared/cart.service";
+import {SummaryComponent} from "./summary/summary.component";
+import {BuyComponent} from "./buy/buy.component";
+import {ConfirmationComponent} from "./confirmation/confirmation.component";
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import {CartService} from "./shared/cart.service";
     LoginComponent,
     MenuComponent,
     RegisterComponent,
-    CartComponent
+    CartComponent,
+    SummaryComponent,
+    BuyComponent,
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule,

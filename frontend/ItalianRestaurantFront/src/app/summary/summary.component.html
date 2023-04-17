@@ -1,0 +1,29 @@
+<div class="container" style="margin-top: 20px">
+  <div class="title-img">
+    <img src="assets/delivery.png">
+  </div>
+  <div class="text-content">
+    <h2 class="title">
+      Order Summary
+    </h2>
+    <div class="plan-box" *ngFor="let item of cart">
+      <div class="plan-box-left">
+        <img class="img-preview" src="{{item.meal.imgPath}}">
+        <div>
+          <h5>{{item.meal.name}}</h5>
+          <p>{{item.quantity}}x {{item.meal.price}}$</p>
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="plus-minus-btn" (click)="increaseQuantity(item)">+</button>
+        <p class="number">{{item.quantity}}</p>
+        <button class="plus-minus-btn" (click)="decreaseQuantity(item)">-</button>
+      </div>
+      <h4 class="calculated">{{item.quantity * item.meal.price}} $</h4>
+    </div>
+    <hr style="width: 70%; margin: auto">
+    <h4 class="sum">Sum: {{calculateSum()}} $</h4>
+    <a href="#" class="proceed-btn" routerLink="/buy">Proceed</a>
+    <a href="#" class="cancel-btn">Cancel</a>
+  </div>
+</div>
