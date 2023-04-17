@@ -14,9 +14,11 @@ export class ConfirmationComponent implements OnDestroy{
   orderNumber = "1414dasrqwda"
   subscription: Subscription
   orderStatus: string = '';
+  sum: number;
   constructor(private cartService: CartService,
               private orderService: OrderService) {
     this.order = this.cartService.cart;
+    this.sum = this.cartService.calculateSum()
     this.subscription = this.orderService.orderStatus.subscribe(
       (data) => {
         this.orderStatus = data;
