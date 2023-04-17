@@ -1,0 +1,53 @@
+
+body {
+  background-color: hsl(225, 100%, 94%);
+  font-size: 16px;
+}
+
+.container {
+  margin: auto;
+  max-width: 750px;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.title {
+  margin-top:10px;
+  color: hsl(223, 47%, 23%);
+  font-weight: 900;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.img-preview {
+  width:5rem;
+  height:5rem;
+  object-fit: cover;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.td{
+  vertical-align: middle;
+}
+
+.info{
+ position: relative;
+  width:25%;
+  background-color: #005B47;
+  border-radius:30px;
+  margin:auto;
+  padding: 20px;
+  color:white;
+}
+.info h3 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  font-size:14px;
+}
+

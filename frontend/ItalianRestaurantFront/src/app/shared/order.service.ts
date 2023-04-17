@@ -1,8 +1,9 @@
 import {Meal} from "../models/meal";
+import {Subject} from "rxjs";
 
 export class OrderService{
   order: {id: number, cart: {meal: Meal,quantity: number}[]}
-
+  orderStatus: Subject<string>;
   constructor() {
     this.order =
       {id: 1, cart:
@@ -12,5 +13,10 @@ export class OrderService{
           'grana padano, pasta, basil', 6.99), quantity: 3}
           ]
       }
+      this.orderStatus = new Subject()
+      setInterval(() =>{
+        this.orderStatus.next("In preperation")
+
+      }, 100)
   }
 }

@@ -15,6 +15,7 @@ import {CartService} from "./shared/cart.service";
 import {SummaryComponent} from "./summary/summary.component";
 import {BuyComponent} from "./buy/buy.component";
 import {ConfirmationComponent} from "./confirmation/confirmation.component";
+import {OrderService} from "./shared/order.service";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,9 @@ import {ConfirmationComponent} from "./confirmation/confirmation.component";
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [CartService],
+  providers: [
+    CartService,
+    OrderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
