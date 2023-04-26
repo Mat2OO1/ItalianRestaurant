@@ -1,7 +1,10 @@
 package com.example.italianrestaurant.meal.mealcategory;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import java.util.Objects;
@@ -17,8 +20,11 @@ public class MealCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
+
+    public MealCategory(String name) {
+        this.name = name;
+    }
 
     @Override
     public boolean equals(Object o) {

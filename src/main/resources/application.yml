@@ -17,5 +17,3 @@ application:
     jwt:
       secret-key: 50645367556B58703273357638792F423F4528482B4D6251655468576D597133
       expiration: 60000
-
-add-sample-users-data: false
