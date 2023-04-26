@@ -1,8 +1,7 @@
 package com.example.italianrestaurant.order;
 
-import com.example.italianrestaurant.authentication.User;
+import com.example.italianrestaurant.user.User;
 import com.example.italianrestaurant.delivery.Delivery;
-import com.example.italianrestaurant.order.mealorder.MealOrder;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -10,7 +9,7 @@ import org.hibernate.Hibernate;
 import java.util.Objects;
 
 @Entity
-@Table(name = "main_order")
+@Table(name = "orders")
 @Getter
 @Setter
 @ToString
@@ -25,11 +24,6 @@ public class Order {
     @JoinColumn
     @ToString.Exclude
     private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    @ToString.Exclude
-    private MealOrder mealOrder;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn

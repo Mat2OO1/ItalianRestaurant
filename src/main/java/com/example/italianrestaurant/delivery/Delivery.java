@@ -1,26 +1,44 @@
 package com.example.italianrestaurant.delivery;
 
 import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.Hibernate;
+
+import java.util.Objects;
 
 @Entity
+@Table(name = "deliveries")
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class Delivery {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
     private String city;
 
-    @Column
     private String postalCode;
 
-    @Column
     private String floor;
 
-    @Column
     private String info;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private DeliveryOptions deliveryOptions;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Delivery delivery = (Delivery) o;
+        return getId() != null && Objects.equals(getId(), delivery.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

@@ -8,6 +8,7 @@ import org.hibernate.Hibernate;
 import java.util.Objects;
 
 @Entity
+@Table(name = "meals")
 @Getter
 @Setter
 @ToString
@@ -18,10 +19,8 @@ public class Meal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
     private String name;
 
-    @Column
     private String imgPath;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,10 +28,8 @@ public class Meal {
     @ToString.Exclude
     private MealCategory mealCategory;
 
-    @Column
     private String description;
 
-    @Column
     private double price;
 
     @Override

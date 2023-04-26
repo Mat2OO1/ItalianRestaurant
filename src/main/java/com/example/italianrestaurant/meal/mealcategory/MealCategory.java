@@ -7,6 +7,7 @@ import org.hibernate.Hibernate;
 import java.util.Objects;
 
 @Entity
+@Table(name = "meal_categories")
 @Getter
 @Setter
 @ToString
@@ -17,7 +18,6 @@ public class MealCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
     private String name;
 
     @Override
