@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .requestMatchers(AUTH_WHITELIST)
                 .permitAll()
                 .anyRequest()
-                .permitAll()
+                .authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
