@@ -15,9 +15,9 @@
         </div>
       </div>
       <div class="buttons">
-        <button class="plus-minus-btn" (click)="increaseQuantity(item)">+</button>
-        <p class="number">{{item.quantity}}</p>
         <button class="plus-minus-btn" (click)="decreaseQuantity(item)">-</button>
+        <p class="number">{{item.quantity}}</p>
+        <button class="plus-minus-btn" (click)="increaseQuantity(item)">+</button>
       </div>
       <h4 class="calculated">{{item.quantity * item.meal.price}} $</h4>
     </div>
