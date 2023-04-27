@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  db:
+    container_name: db
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=italian_restaurant
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  backend:
+    container_name: backend
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+#    restart: always
+    depends_on:
+      - db
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/italian_restaurant
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend/ItalianRestaurantFront/
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    restart: always
+    expose:
+      - "80"
+
+volumes:
+  db:
+    driver: local
