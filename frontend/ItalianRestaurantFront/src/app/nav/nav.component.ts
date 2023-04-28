@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {AuthService} from "../auth/auth.service";
 
 @Component({
   selector: 'app-nav',
@@ -6,6 +7,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent {
-  isLoggedIn = true;
+  constructor(private authService: AuthService) {
+    this.authService.user.subscribe(
+      (user) => {
+        if(user.token){
+          this.isLoggedIn = true;
+        }
+      }
+    )
+  }
+  isLoggedIn = false;
 
+  onLogout(){
+    this.isLoggedIn = false;
+    this.authService.logout();
+  }
 }

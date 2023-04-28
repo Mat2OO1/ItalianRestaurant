@@ -6,6 +6,7 @@ import {User} from "./user.model";
 
 export interface AuthResponseData{
   token: string;
+  expiration: string;
 }
 @Injectable()
 export class AuthService {
@@ -13,9 +14,7 @@ export class AuthService {
   private logoutTimer: any;
   constructor(private http: HttpClient, private router: Router){}
 
-
   signup(firstName: string, lastName: string, email: string, password: string){
-    console.log(firstName)
     return this.http
       .post<AuthResponseData>(
         "http://localhost:8080/auth/register",
@@ -26,11 +25,7 @@ export class AuthService {
           password: password}
       )
       .subscribe(resData => {
-          const user = new User(resData.token)
-          this.user.next(user)
-          this.autoLogout(1000000);
-          localStorage.setItem('userData', resData.token);
-          this.router.navigate(['/menu']);
+        this.handleAuthentication(resData.token, new Date(resData.expiration).getTime())
         })
 
   }
@@ -45,29 +40,51 @@ export class AuthService {
         }
       )
       .subscribe(resData => {
-        const user = new User(resData.token)
-        this.user.next(user)
-        this.autoLogout(1000000);
-        localStorage.setItem('userData', resData.token);
-        console.log(resData.token)
-        this.router.navigate(['/menu']);
+        this.handleAuthentication(resData.token, new Date(resData.expiration).getTime())
       })
   }
 
-  autoLogout(expiration: number) {
-    this.logoutTimer = setTimeout( () => {
-      this.logout()
-    }, expiration)
+  autoLogin() {
+    const userData: {_token: string, _tokenExpirationDate: string} = JSON.parse(localStorage.getItem('userData'));
+    if(!userData){
+      return;
+    }
+    const loadedUser = new User(
+      userData._token,
+      new Date(userData._tokenExpirationDate)
+    );
+    if (loadedUser.token) {
+      this.user.next(loadedUser);
+      const expirationDuration =
+        new Date(userData._tokenExpirationDate).getTime() -
+        new Date().getTime();
+      //this.autoLogout(100000000);
+    }
   }
 
   logout() {
     this.user.next(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
     localStorage.removeItem('userData');
-    // if (this.tokenExpirationTimer) {
-    //   clearTimeout(this.tokenExpirationTimer);
-    // }
-    // this.tokenExpirationTimer = null;
+    if (this.logoutTimer) {
+      clearTimeout(this.logoutTimer);
+    }
+    this.logoutTimer = null;
+  }
+  // autoLogout(expirationDuration: number) {
+  //   this.logoutTimer = setTimeout( () => {
+  //     this.logout()
+  //   }, expirationDuration)
+  // }
+
+
+  handleAuthentication(token: string, expiresIn: number){
+    const expirationDate: Date = new Date(new Date().getTime() + expiresIn * 1000);
+    const user = new User(token, expirationDate);
+    this.user.next(user);
+    //this.autoLogout(1000000000);
+    localStorage.setItem('userData', JSON.stringify(user));
+    this.router.navigate(['./menu'])
   }
 
 }

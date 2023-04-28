@@ -1,16 +1,22 @@
-import {Component, ElementRef} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {Meal} from "../models/meal";
 import {CartService} from "../shared/cart.service";
 import {MealsService} from "../shared/meals.service";
+import {DataStorageService} from "../shared/data-storage.service";
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
-export class MenuComponent {
-
+export class MenuComponent{
+  meals1: Meal[] = []
   constructor(private cartService: CartService,
-              private mealsService: MealsService) {
+              private dataStorageService: DataStorageService) {
+    this.dataStorageService.getMenu()
+      .subscribe(res => {
+        this.meals1 = res;
+        console.log(this.meals1)
+      })
   }
 
   categories = ['Pasta Dishes', 'Pizza', 'Seafood']
@@ -36,6 +42,7 @@ export class MenuComponent {
   addToCart(meal:Meal){
     this.cartService.addToCart(meal);
   }
+
 }
 
 

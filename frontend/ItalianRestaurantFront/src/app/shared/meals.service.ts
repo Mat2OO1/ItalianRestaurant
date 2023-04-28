@@ -6,14 +6,5 @@ import {DataStorageService} from "./data-storage.service";
 export class MealsService{
   meals: Meal[] = []
 
-  constructor(private dataStorageService: DataStorageService) {
-    this.dataStorageService.getMenu()
-      .subscribe(
-        menu => {
-          this.meals = menu;
-          console.log(menu);
-        }
-      )
-  }
 
 }
