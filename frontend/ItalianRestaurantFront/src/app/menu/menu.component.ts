@@ -1,6 +1,7 @@
 import {Component, ElementRef} from '@angular/core';
 import {Meal} from "../models/meal";
 import {CartService} from "../shared/cart.service";
+import {MealsService} from "../shared/meals.service";
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -8,7 +9,8 @@ import {CartService} from "../shared/cart.service";
 })
 export class MenuComponent {
 
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService,
+              private mealsService: MealsService) {
   }
 
   categories = ['Pasta Dishes', 'Pizza', 'Seafood']

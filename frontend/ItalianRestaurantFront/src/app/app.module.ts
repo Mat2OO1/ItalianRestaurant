@@ -16,6 +16,11 @@ import {SummaryComponent} from "./summary/summary.component";
 import {BuyComponent} from "./buy/buy.component";
 import {ConfirmationComponent} from "./confirmation/confirmation.component";
 import {OrderService} from "./shared/order.service";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {AuthService} from "./auth/auth.service";
+import {AuthInterceptorService} from "./auth/auth-interceptor.service";
+import {MealsService} from "./shared/meals.service";
+import {DataStorageService} from "./shared/data-storage.service";
 
 @NgModule({
   declarations: [
@@ -35,11 +40,21 @@ import {OrderService} from "./shared/order.service";
     RouterLink,
     RouterOutlet,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
     CartService,
-    OrderService],
+    OrderService,
+    AuthService,
+    MealsService,
+    DataStorageService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

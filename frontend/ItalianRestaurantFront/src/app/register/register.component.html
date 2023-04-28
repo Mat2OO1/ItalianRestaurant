@@ -4,12 +4,12 @@
     <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
       <!-- First name input -->
       <div class="form-outline mb-4">
-        <input type="text" id="name" formControlName="name" class="form-control bg-white border" />
+        <input type="text" id="name" formControlName="firstName" class="form-control bg-white border" />
         <label class="form-label" for="name">Name</label>
       </div>
       <!-- Surname input -->
       <div class="form-outline mb-4">
-        <input type="text" id="surname" formControlName="surname" class="form-control bg-white border" />
+        <input type="text" id="surname" formControlName="lastName" class="form-control bg-white border" />
         <label class="form-label" for="surname">Surname</label>
       </div>
       <!-- Email input -->

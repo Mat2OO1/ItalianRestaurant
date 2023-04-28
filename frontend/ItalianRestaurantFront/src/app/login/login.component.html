@@ -2,16 +2,6 @@
 <div class="container d-flex align-items-center justify-content-center">
   <div class="row text-center" style="width:40%">
 <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
-  <!-- Name input -->
-  <div class="form-outline mb-4">
-    <input type="text" id="name" formControlName="name" class="form-control bg-white border" />
-    <label class="form-label" for="name">First Name</label>
-  </div>
-  <!-- Surname input -->
-  <div class="form-outline mb-4">
-    <input type="text" id="surname" formControlName="surname" class="form-control bg-white border" />
-    <label class="form-label" for="surname">Surname</label>
-  </div>
   <!-- Email input -->
   <div class="form-outline mb-4">
     <input type="email" id="form2Example1" formControlName="email" class="form-control bg-white border" />
