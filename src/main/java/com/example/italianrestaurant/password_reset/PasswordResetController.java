@@ -2,6 +2,7 @@ package com.example.italianrestaurant.password_reset;
 
 import com.example.italianrestaurant.exceptions.InvalidTokenException;
 import com.example.italianrestaurant.exceptions.TokenNotFoundException;
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class PasswordResetController {
             return ResponseEntity.ok().build();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
-        } catch (MailException e) {
+        } catch (MailException | MessagingException e) {
             return ResponseEntity.status(HttpStatus.BAD_GATEWAY).build();
         }
     }

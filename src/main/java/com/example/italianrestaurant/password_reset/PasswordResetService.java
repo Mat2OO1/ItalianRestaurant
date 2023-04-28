@@ -7,6 +7,7 @@ import com.example.italianrestaurant.exceptions.TokenNotFoundException;
 import com.example.italianrestaurant.password_reset.Token.TokenService;
 import com.example.italianrestaurant.user.User;
 import com.example.italianrestaurant.user.UserService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class PasswordResetService {
     @Value("${server-url}")
     private String serverUrl;
 
-    public void resetPasswordRequest(String email) {
+    public void resetPasswordRequest(String email) throws MessagingException {
 
         User user = userService.getUserByEmail(email);
 
@@ -30,7 +31,7 @@ public class PasswordResetService {
         tokenService.saveToken(token, user);
 
         String resetUrl = serverUrl + "/reset-password?token=" + token;
-        emailService.sendMessage(email, "Click here to reset your password: " + resetUrl);
+        emailService.sendPasswordResetEmail(email, resetUrl);
     }
 
 
