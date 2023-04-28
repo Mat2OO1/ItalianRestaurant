@@ -11,9 +11,22 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: myapplic256@gmail.com
+    password: guduardwrqxdsqjf
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 application:
   security:
     jwt:
       secret-key: 50645367556B58703273357638792F423F4528482B4D6251655468576D597133
       expiration: 60000
+
+server-url: http://localhost:4200
