@@ -10,7 +10,7 @@ export class OrderService{
           [
             {meal: new Meal('Carbonara',
           'http://kuchnia-domowa.pl/images/content/176/spaghetti-carbonara.jpg',
-          'grana padano, pasta, basil', 6.99), quantity: 3}
+          'grana padano, pasta, basil', 6.99, 'grana'), quantity: 3}
           ]
       }
       this.orderStatus = new Subject()
