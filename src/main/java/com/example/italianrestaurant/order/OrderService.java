@@ -27,12 +27,13 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public Order makeOrder(User user, DeliveryDto deliveryDto) {
-        Delivery dbDelivery = deliveryService.addDelivery(deliveryDto);
+    public Order makeOrder(User user, OrderDto orderDto) {
+        Delivery dbDelivery = deliveryService.addDelivery(orderDto.getDelivery());
         Order order = Order.builder()
                 .delivery(dbDelivery)
 //                .orderDate(LocalDateTime.now())
                 .user(user)
+                .mealOrders(orderDto.getMealOrders())
                 .build();
 
         return orderRepository.save(order);

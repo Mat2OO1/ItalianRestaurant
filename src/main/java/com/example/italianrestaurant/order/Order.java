@@ -1,5 +1,6 @@
 package com.example.italianrestaurant.order;
 
+import com.example.italianrestaurant.order.mealorder.MealOrder;
 import com.example.italianrestaurant.user.User;
 import com.example.italianrestaurant.delivery.Delivery;
 import jakarta.persistence.*;
@@ -7,6 +8,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -32,6 +34,13 @@ public class Order {
     @JoinColumn
     @ToString.Exclude
     private Delivery delivery;
+
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    @ToString.Exclude
+    private List<MealOrder> mealOrders;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
 
     private LocalDateTime orderDate;
 

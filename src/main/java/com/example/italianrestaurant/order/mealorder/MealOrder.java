@@ -30,9 +30,6 @@ public class MealOrder {
 
     private double price;
 
-    @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     @ToString.Exclude
