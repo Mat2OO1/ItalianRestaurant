@@ -35,12 +35,12 @@
   </table>
     <h3>Delivery status:</h3>
     <div class="info">
-      <h3 class="text-center">{{orderStatus}}</h3>
+      <h3 class="text-center">{{orderDetails.status}}</h3>
     </div>
     <br>
     <h3>Estimated delivery time:</h3>
     <div class="info">
-      <h3 class="text-center">21:20</h3>
+      <h3 class="text-center">{{orderDetails.date | date:"HH:mm"}}</h3>
     </div>
   </div>
 </div>

@@ -15,13 +15,11 @@ export class SummaryComponent {
 
   increaseQuantity(item: {meal: Meal,quantity: number}){
     item.quantity++
-    console.log(this.cartService.cart)
   }
 
   decreaseQuantity(item: {meal: Meal,quantity: number}){
     if(item.quantity > 0)
       item.quantity--
-    console.log(this.cartService.cart)
   }
 
   calculateSum(){
