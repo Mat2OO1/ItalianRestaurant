@@ -1,22 +1,25 @@
 import {Meal} from "../models/meal";
-import {Subject} from "rxjs";
+import {interval, Subject} from "rxjs";
+import {HttpClient} from "@angular/common/http";
+import {Injectable, OnInit} from "@angular/core";
 
-export class OrderService{
-  order: {id: number, cart: {meal: Meal,quantity: number}[]}
-  orderStatus: Subject<string>;
-  constructor() {
-    this.order =
-      {id: 1, cart:
-          [
-            {meal: new Meal('Carbonara',
-          'http://kuchnia-domowa.pl/images/content/176/spaghetti-carbonara.jpg',
-          'grana padano, pasta, basil', 6.99, 'grana'), quantity: 3}
-          ]
+@Injectable()
+export class OrderService {
+  orderDetails: Subject<{date: string, status: string}> = new Subject()
+
+  constructor(private http: HttpClient) {
+  }
+
+  getOrderDetails(){
+    interval(30000).subscribe(() => {
+        return this.http
+          .get("http://localhost:8080/order/user")
+          .subscribe(
+            (res: any) => {
+              this.orderDetails.next({date: res[0].orderDate, status: res[0].orderStatus})
+            }
+          )
       }
-      this.orderStatus = new Subject()
-      setInterval(() =>{
-        this.orderStatus.next("In preperation")
-
-      }, 100)
+    )
   }
 }
