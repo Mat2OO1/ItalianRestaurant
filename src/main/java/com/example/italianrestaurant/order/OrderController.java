@@ -2,6 +2,7 @@ package com.example.italianrestaurant.order;
 
 import com.example.italianrestaurant.delivery.DeliveryDto;
 import com.example.italianrestaurant.user.User;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,5 +30,15 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<Order> makeOrder(@AuthenticationPrincipal User user, @RequestBody OrderDto orderDto) {
         return ResponseEntity.ok(orderService.makeOrder(user, orderDto));
+    }
+
+    @PostMapping("/change-status")
+    public ResponseEntity<Order> changeStatus(@RequestBody ChangeOrderStatusDto orderDto) {
+        try {
+            return ResponseEntity.ok(orderService.changeStatus(orderDto));
+        }
+        catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

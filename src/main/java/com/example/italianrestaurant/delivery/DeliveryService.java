@@ -15,7 +15,6 @@ public class DeliveryService {
 
     public Delivery addDelivery(DeliveryDto deliveryDto) {
         Delivery delivery = modelMapper.map(deliveryDto, Delivery.class);
-        delivery.setDeliveryDate(LocalDateTime.now());
         return deliveryRepository.save(delivery);
     }
 }

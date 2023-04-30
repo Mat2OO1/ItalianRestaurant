@@ -3,6 +3,7 @@ package com.example.italianrestaurant.order;
 import com.example.italianrestaurant.order.mealorder.MealOrder;
 import com.example.italianrestaurant.user.User;
 import com.example.italianrestaurant.delivery.Delivery;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -25,9 +26,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     @ToString.Exclude
+    @JsonIgnore
     private User user;
 
     @OneToOne(fetch = FetchType.EAGER)
