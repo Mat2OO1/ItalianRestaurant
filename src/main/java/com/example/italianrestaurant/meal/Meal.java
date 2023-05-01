@@ -2,10 +2,7 @@ package com.example.italianrestaurant.meal;
 
 import com.example.italianrestaurant.meal.mealcategory.MealCategory;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import java.util.Objects;
@@ -14,21 +11,24 @@ import java.util.Objects;
 @Table(name = "meals")
 @Getter
 @Setter
+@Builder
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class Meal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String name;
     private String imgPath;
-
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn
+    @JoinColumn(nullable = false)
     @ToString.Exclude
     private MealCategory mealCategory;
     private String description;
+    @Column(nullable = false)
     private double price;
 
     public Meal(String name, String imgPath, MealCategory mealCategory, String description, double price) {
