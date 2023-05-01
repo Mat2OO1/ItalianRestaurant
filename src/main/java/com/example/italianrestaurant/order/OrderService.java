@@ -3,7 +3,9 @@ package com.example.italianrestaurant.order;
 import com.example.italianrestaurant.delivery.Delivery;
 import com.example.italianrestaurant.delivery.DeliveryDto;
 import com.example.italianrestaurant.delivery.DeliveryService;
+import com.example.italianrestaurant.exceptions.InvalidEntityException;
 import com.example.italianrestaurant.order.mealorder.MealOrder;
+import com.example.italianrestaurant.order.mealorder.MealOrderService;
 import com.example.italianrestaurant.user.User;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final DeliveryService deliveryService;
     private final ModelMapper modelMapper;
+    private final MealOrderService mealOrderService;
 
     public List<Order> getOrdersByUser(User user) {
         return orderRepository.findAllByUser(user);
@@ -31,11 +34,17 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public Order makeOrder(User user, OrderDto orderDto) {
+    public Order makeOrder(User user, OrderDto orderDto) throws InvalidEntityException {
         Delivery dbDelivery = deliveryService.addDelivery(orderDto.getDelivery());
+
         List<MealOrder> mealOrders = orderDto.getMealOrders().stream()
                 .map(mealOrderDto -> modelMapper.map(mealOrderDto, MealOrder.class))
                 .toList();
+
+        Optional<Boolean> first = mealOrders.stream().map(mealOrderService::isMealOrderValid)
+                .filter(v -> !v)
+                .findFirst();
+        if (first.isPresent()) throw new InvalidEntityException();
 
         Order order = Order.builder()
                 .delivery(dbDelivery)
