@@ -21,6 +21,9 @@ public class UserService {
 
     public void updatePassword(User user, String password) {
         user.setPassword(passwordEncoder.encode(password));
+        if (!userRepository.existsByEmail(user.getEmail()))
+            throw new EntityNotFoundException();
         userRepository.save(user);
+
     }
 }
