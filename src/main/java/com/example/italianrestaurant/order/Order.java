@@ -19,7 +19,7 @@ import java.util.Objects;
 @ToString
 @Builder
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class Order {
 
     @Id

@@ -3,8 +3,6 @@ package com.example.italianrestaurant.order;
 import com.example.italianrestaurant.Utils;
 import com.example.italianrestaurant.config.security.JwtAuthenticationFilter;
 import com.example.italianrestaurant.exceptions.InvalidEntityException;
-import com.example.italianrestaurant.meal.Meal;
-import com.example.italianrestaurant.meal.MealController;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.val;
 import org.junit.jupiter.api.Test;
@@ -15,7 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;

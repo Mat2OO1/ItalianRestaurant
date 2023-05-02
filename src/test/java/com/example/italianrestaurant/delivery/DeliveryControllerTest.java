@@ -45,7 +45,7 @@ public class DeliveryControllerTest {
         // when
         val resultActions = mockMvc.perform(post("/delivery")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(Utils.asJsonString(deliveryDto)));
+                .content(Utils.objectToJsonString(deliveryDto)));
 
         // then
         resultActions.andExpect(status().isOk());
@@ -61,7 +61,7 @@ public class DeliveryControllerTest {
         // when
         val resultActions = mockMvc.perform(post("/delivery")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(Utils.asJsonString(deliveryDto)));
+                .content(Utils.objectToJsonString(deliveryDto)));
 
         // then
         resultActions.andExpect(status().isBadRequest());

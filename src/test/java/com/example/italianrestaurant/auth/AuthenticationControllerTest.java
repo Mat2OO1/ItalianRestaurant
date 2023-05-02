@@ -51,7 +51,7 @@ public class AuthenticationControllerTest {
         // when
         val resultActions = mockMvc.perform(post("/auth/authenticate")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(Utils.asJsonString(authenticationRequest)));
+                .content(Utils.objectToJsonString(authenticationRequest)));
 
         // then
         resultActions.andExpect(status().isOk());
@@ -73,7 +73,7 @@ public class AuthenticationControllerTest {
         // when
         val resultActions = mockMvc.perform(post("/auth/authenticate")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(Utils.asJsonString(authenticationRequest)));
+                .content(Utils.objectToJsonString(authenticationRequest)));
 
         // then
         resultActions.andExpect(status().isNotFound());
@@ -99,7 +99,7 @@ public class AuthenticationControllerTest {
         // when
         val resultActions = mockMvc.perform(post("/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(Utils.asJsonString(registerRequest)));
+                .content(Utils.objectToJsonString(registerRequest)));
 
         // then
         resultActions.andExpect(status().isOk());
@@ -121,7 +121,7 @@ public class AuthenticationControllerTest {
         // when
         val resultActions = mockMvc.perform(post("/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(Utils.asJsonString(registerRequest)));
+                .content(Utils.objectToJsonString(registerRequest)));
 
         // then
         resultActions.andExpect(status().isBadRequest());

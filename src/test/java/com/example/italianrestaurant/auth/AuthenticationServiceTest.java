@@ -3,6 +3,7 @@ package com.example.italianrestaurant.auth;
 import com.example.italianrestaurant.Utils;
 import com.example.italianrestaurant.config.security.JwtService;
 import com.example.italianrestaurant.user.Role;
+import com.example.italianrestaurant.user.User;
 import com.example.italianrestaurant.user.UserRepository;
 import jakarta.persistence.EntityExistsException;
 import lombok.val;
@@ -22,8 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class AuthenticationServiceTest {
@@ -106,18 +106,19 @@ public class AuthenticationServiceTest {
                 .firstname("firstName")
                 .lastname("lastName")
                 .build();
-        val user = Utils.getUser();
-        user.setRole(Role.USER);
         val token = "token";
         val date = new Date();
         val authenticationResponse = AuthenticationResponse.builder()
                 .token(token)
                 .expiration(date)
                 .build();
+        val user = Utils.getUser();
+        user.setRole(Role.USER);
 
         given(userRepository.existsByEmail(registerRequest.getEmail())).willReturn(false);
         given(passwordEncoder.encode(registerRequest.getPassword())).willReturn("password");
-        given(jwtService.generateToken(user)).willReturn(token);
+        given(userRepository.save(any(User.class))).willReturn(user);
+        given(jwtService.generateToken(any(User.class))).willReturn(token);
         given(jwtService.getTokenExpiration(token)).willReturn(date);
 
         //when

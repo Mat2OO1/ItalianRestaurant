@@ -1,9 +1,7 @@
 package com.example.italianrestaurant.order;
 
 import com.example.italianrestaurant.Utils;
-import com.example.italianrestaurant.delivery.Delivery;
 import com.example.italianrestaurant.delivery.DeliveryRepository;
-import com.example.italianrestaurant.user.User;
 import com.example.italianrestaurant.user.UserRepository;
 import lombok.val;
 import org.junit.jupiter.api.AfterEach;
@@ -11,10 +9,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.DirtiesContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class OrderRepositoryTest {
 
     @Autowired
@@ -67,7 +67,6 @@ public class OrderRepositoryTest {
         assertThat(orders).isNotEmpty();
         assertThat(orders).hasSize(1);
         assertThat(orders.stream().map(Order::getUser).allMatch(u -> u.getId() == 1)).isTrue();
-
     }
 
     @Test
