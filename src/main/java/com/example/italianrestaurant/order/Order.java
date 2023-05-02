@@ -19,7 +19,7 @@ import java.util.Objects;
 @ToString
 @Builder
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class Order {
 
     @Id
@@ -27,7 +27,7 @@ public class Order {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(nullable = false)
     @ToString.Exclude
     @JsonIgnore
     private User user;
@@ -49,9 +49,9 @@ public class Order {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return getId() != null && Objects.equals(getId(), order.getId());
+        return Objects.equals(id, order.id) && Objects.equals(user, order.user) && Objects.equals(delivery, order.delivery) && Objects.equals(mealOrders, order.mealOrders) && orderStatus == order.orderStatus && Objects.equals(orderDate, order.orderDate);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.italianrestaurant.delivery;
 
+import com.example.italianrestaurant.exceptions.InvalidEntityException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +15,11 @@ public class DeliveryController {
     private final DeliveryService deliveryService;
 
     @PostMapping
-    public ResponseEntity<Delivery> addDelivery(DeliveryDto delivery) {
-        return ResponseEntity.ok(deliveryService.addDelivery(delivery));
+    public ResponseEntity<?> addDelivery(DeliveryDto delivery) {
+        try {
+            return ResponseEntity.ok(deliveryService.addDelivery(delivery));
+        } catch (InvalidEntityException e) {
+            return ResponseEntity.badRequest().body("Invalid delivery entity");
+        }
     }
 }

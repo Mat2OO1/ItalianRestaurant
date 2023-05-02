@@ -1,8 +1,8 @@
-package com.example.italianrestaurant.password_reset.Token;
+package com.example.italianrestaurant.passwordreset.passwordtoken;
 
 import com.example.italianrestaurant.exceptions.TokenNotFoundException;
 import com.example.italianrestaurant.user.User;
-import com.example.italianrestaurant.user.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,36 +10,38 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class TokenService {
+public class PasswordTokenService {
 
-    private final TokenRepository tokenRepository;
+    private final PasswordTokenRepository tokenRepository;
     private static final int EXPIRATION_TIME = 60;
 
     public String generateToken() {
         return UUID.randomUUID().toString();
     }
 
-    public void saveToken(String token, User user) {
+    public PasswordToken saveToken(String token, User user) {
         long expiryTime = System.currentTimeMillis() + (EXPIRATION_TIME * 60 * 1000);
-        Token tokenEntity = Token.builder()
+        PasswordToken tokenEntity = PasswordToken.builder()
                 .expiryTime(expiryTime)
                 .user(user)
                 .token(token).build();
-        tokenRepository.save(tokenEntity);
+        return tokenRepository.save(tokenEntity);
     }
 
-    public Token getToken(String token) throws TokenNotFoundException {
-        return tokenRepository.findTokenByToken(token).orElseThrow(TokenNotFoundException::new);
+    public PasswordToken getToken(String token) {
+        return tokenRepository.findTokenByToken(token).orElseThrow(EntityNotFoundException::new);
     }
 
-    public boolean isValidToken(Token token) {
+    public boolean isValidToken(PasswordToken token) {
         long currentTime = System.currentTimeMillis();
         return token != null &&
                 token.getExpiryTime() != null &&
                 token.getExpiryTime() >= currentTime;
     }
 
-    public void deleteToken(Token token) {
+    public void deleteToken(PasswordToken token) {
+        if (tokenRepository.findTokenByToken(token.getToken()).isEmpty())
+            throw new EntityNotFoundException();
         tokenRepository.delete(token);
     }
 }

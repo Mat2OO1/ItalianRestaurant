@@ -14,7 +14,9 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MealOrder {
 
     @Id
@@ -22,16 +24,16 @@ public class MealOrder {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(nullable = false)
     @ToString.Exclude
     private Meal meal;
-
+    @Column(nullable = false)
     private int quantity;
-
+    @Column(nullable = false)
     private double price;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(nullable = false)
     @ToString.Exclude
     private Order order;
 

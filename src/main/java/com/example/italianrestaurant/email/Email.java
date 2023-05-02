@@ -13,6 +13,7 @@ public class Email {
     private String to;
     private String subject;
     private String template;
+    private String text;
     private Map<String, Object> properties;
 
     public void addProperty(String key, Object property) {

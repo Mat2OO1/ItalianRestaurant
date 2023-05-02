@@ -1,6 +1,7 @@
 package com.example.italianrestaurant.order;
 
 import com.example.italianrestaurant.delivery.DeliveryDto;
+import com.example.italianrestaurant.exceptions.InvalidEntityException;
 import com.example.italianrestaurant.user.User;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,12 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Order> makeOrder(@AuthenticationPrincipal User user, @RequestBody OrderDto orderDto) {
-        return ResponseEntity.ok(orderService.makeOrder(user, orderDto));
+    public ResponseEntity<?> makeOrder(@AuthenticationPrincipal User user, @RequestBody OrderDto orderDto) {
+        try {
+            return ResponseEntity.ok(orderService.makeOrder(user, orderDto));
+        } catch (InvalidEntityException e) {
+            return ResponseEntity.badRequest().body("Invalid delivery entity");
+        }
     }
 
     @PostMapping("/change-status")
