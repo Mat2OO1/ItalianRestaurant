@@ -2,6 +2,7 @@ package com.example.italianrestaurant.passwordreset.passwordtoken;
 
 import com.example.italianrestaurant.exceptions.TokenNotFoundException;
 import com.example.italianrestaurant.user.User;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,17 +19,17 @@ public class PasswordTokenService {
         return UUID.randomUUID().toString();
     }
 
-    public void saveToken(String token, User user) {
+    public PasswordToken saveToken(String token, User user) {
         long expiryTime = System.currentTimeMillis() + (EXPIRATION_TIME * 60 * 1000);
         PasswordToken tokenEntity = PasswordToken.builder()
                 .expiryTime(expiryTime)
                 .user(user)
                 .token(token).build();
-        tokenRepository.save(tokenEntity);
+        return tokenRepository.save(tokenEntity);
     }
 
-    public PasswordToken getToken(String token) throws TokenNotFoundException {
-        return tokenRepository.findTokenByToken(token).orElseThrow(TokenNotFoundException::new);
+    public PasswordToken getToken(String token) {
+        return tokenRepository.findTokenByToken(token).orElseThrow(EntityNotFoundException::new);
     }
 
     public boolean isValidToken(PasswordToken token) {
@@ -39,6 +40,8 @@ public class PasswordTokenService {
     }
 
     public void deleteToken(PasswordToken token) {
+        if (tokenRepository.findTokenByToken(token.getToken()).isEmpty())
+            throw new EntityNotFoundException();
         tokenRepository.delete(token);
     }
 }

@@ -1,13 +1,14 @@
-package com.example.italianrestaurant.password_reset;
+package com.example.italianrestaurant.passwordreset;
 
+import com.example.italianrestaurant.email.Email;
 import com.example.italianrestaurant.email.EmailService;
 import com.example.italianrestaurant.exceptions.InvalidTokenException;
-import com.example.italianrestaurant.password_reset.Token.Token;
-import com.example.italianrestaurant.exceptions.TokenNotFoundException;
-import com.example.italianrestaurant.password_reset.Token.TokenService;
+import com.example.italianrestaurant.passwordreset.passwordtoken.PasswordToken;
+import com.example.italianrestaurant.passwordreset.passwordtoken.PasswordTokenService;
 import com.example.italianrestaurant.user.User;
 import com.example.italianrestaurant.user.UserService;
 import jakarta.mail.MessagingException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -17,26 +18,28 @@ import org.springframework.stereotype.Service;
 public class PasswordResetService {
 
     private final UserService userService;
-    private final TokenService tokenService;
+    private final PasswordTokenService tokenService;
     private final EmailService emailService;
 
     @Value("${server-url}")
     private String serverUrl;
 
-    public void resetPasswordRequest(String email) throws MessagingException {
+    public PasswordToken sendResetPasswordRequest(String email) throws MessagingException {
 
         User user = userService.getUserByEmail(email);
 
         String token = tokenService.generateToken();
-        tokenService.saveToken(token, user);
+        PasswordToken passwordToken = tokenService.saveToken(token, user);
 
         String resetUrl = serverUrl + "/reset-password?token=" + token;
-        emailService.sendPasswordResetEmail(email, resetUrl);
+        Email emailObject = emailService.buildPasswordResetEmail(email, resetUrl);
+        emailService.sendHtmlMessage(emailObject);
+        return passwordToken;
     }
 
 
-    public void resetPassword(PasswordResetRequest request) throws TokenNotFoundException, InvalidTokenException {
-        Token token = tokenService.getToken(request.getToken());
+    public void resetPassword(PasswordResetRequest request) throws InvalidTokenException, EntityNotFoundException {
+        PasswordToken token = tokenService.getToken(request.getToken());
         User user = token.getUser();
         if (!tokenService.isValidToken(token)) {
             throw new InvalidTokenException();
@@ -44,6 +47,5 @@ public class PasswordResetService {
 
         userService.updatePassword(user, request.getPassword());
         tokenService.deleteToken(token);
-
     }
 }

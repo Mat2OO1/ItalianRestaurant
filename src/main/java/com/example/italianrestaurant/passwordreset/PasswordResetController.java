@@ -1,7 +1,6 @@
-package com.example.italianrestaurant.password_reset;
+package com.example.italianrestaurant.passwordreset;
 
 import com.example.italianrestaurant.exceptions.InvalidTokenException;
-import com.example.italianrestaurant.exceptions.TokenNotFoundException;
 import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +19,7 @@ public class PasswordResetController {
     @GetMapping("/request")
     public ResponseEntity<?> resetPasswordRequest(@RequestParam String email) {
         try {
-            passwordResetService.resetPasswordRequest(email);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(passwordResetService.sendResetPasswordRequest(email));
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (MailException | MessagingException e) {
@@ -33,8 +31,8 @@ public class PasswordResetController {
     public ResponseEntity<?> resetPassword(@RequestBody PasswordResetRequest request) {
         try {
             passwordResetService.resetPassword(request);
-            return ResponseEntity.ok().build();
-        } catch (TokenNotFoundException e) {
+            return ResponseEntity.ok().body("Password retested");
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().body("Token not found");
         } catch (InvalidTokenException e) {
             return ResponseEntity.badRequest().body("Invalid token");
