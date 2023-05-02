@@ -63,7 +63,8 @@ public class DataInitializer {
         return List.of(new User("pawel.kluska256@gmail.com", passwordEncoder.encode("password"),
                         "Pawel", "Kluska", Role.USER),
                 new User("mateusz.krajewski@gmail.com", passwordEncoder.encode("password"),
-                        "Mateusz", "Krajewski", Role.USER)
+                        "Mateusz", "Krajewski", Role.USER),
+                new User("admin@example.com", passwordEncoder.encode("password"),"Admin","Admin", Role.ADMIN)
                 );
     }
 }

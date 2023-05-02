@@ -1,5 +1,6 @@
 package com.example.italianrestaurant.auth;
 
+import com.example.italianrestaurant.user.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,4 +16,5 @@ public class AuthenticationResponse {
 
     private String token;
     private Date expiration;
+    private Role role;
 }
