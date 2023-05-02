@@ -10,6 +10,7 @@ export interface AuthResponseData{
 }
 @Injectable()
 export class AuthService {
+  // @ts-ignore
   user = new BehaviorSubject<User>(null);
   private logoutTimer: any;
   constructor(private http: HttpClient, private router: Router){}
@@ -45,6 +46,7 @@ export class AuthService {
   }
 
   autoLogin() {
+    // @ts-ignore
     const userData: {_token: string, _tokenExpirationDate: string} = JSON.parse(localStorage.getItem('userData'));
     if(!userData){
       return;
@@ -63,6 +65,7 @@ export class AuthService {
   }
 
   logout() {
+    // @ts-ignore
     this.user.next(null);
     this.router.navigate(['/']);
     localStorage.removeItem('userData');

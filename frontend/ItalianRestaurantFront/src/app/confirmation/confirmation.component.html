@@ -34,8 +34,17 @@
     </tbody>
   </table>
     <h3>Delivery status:</h3>
+    <div class="steps">
+      <span class="circle active" id="circle1">1</span>
+      <span class="circle" id="circle2">2</span>
+      <span class="circle" id="circle3">3</span>
+      <div class="progress-bar">
+        <span class="indicator" id="indicator"></span>
+      </div>
+    </div>
+    <br>
     <div class="info">
-      <h3 class="text-center">{{orderDetails.status}}</h3>
+      <h3 class="text-center">{{orderDetails.status ? orderDetails.status: 'Processing' }}</h3>
     </div>
     <br>
     <h3>Estimated delivery time:</h3>

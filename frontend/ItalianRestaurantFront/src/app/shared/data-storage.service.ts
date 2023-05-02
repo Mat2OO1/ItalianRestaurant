@@ -10,16 +10,7 @@ import {Delivery} from "../models/delivery";
 
 @Injectable()
 export class DataStorageService{
-  orderDetails: Subject<{date: string, status: string}> = new Subject()
-
-  constructor(private http: HttpClient) {
-    this.getOrderDetails()
-    this.orderDetails.subscribe(
-      (res) => {
-        console.log(res)
-      }
-    )
-  }
+  constructor(private http: HttpClient) {}
 
   getMenu(){
     return this.http
@@ -48,16 +39,4 @@ export class DataStorageService{
         })
   }
 
-  getOrderDetails(){
-    interval(1000).subscribe(() => {
-      return this.http
-        .get("http://localhost:8080/order/user")
-        .subscribe(
-          (res: any) => {
-            this.orderDetails.next({date: res[0].orderDate, status: res[0].orderStatus})
-          }
-        )
-    }
-    )
-  }
 }
