@@ -27,6 +27,6 @@ application:
   security:
     jwt:
       secret-key: 50645367556B58703273357638792F423F4528482B4D6251655468576D597133
-      expiration: 60000
+      expiration: 300000
 
 server-url: http://localhost:4200

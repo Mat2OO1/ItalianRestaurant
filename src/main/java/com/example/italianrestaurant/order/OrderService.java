@@ -37,24 +37,23 @@ public class OrderService {
     public Order makeOrder(User user, OrderDto orderDto) throws InvalidEntityException {
         Delivery dbDelivery = deliveryService.addDelivery(orderDto.getDelivery());
 
-        List<MealOrder> mealOrders = orderDto.getMealOrders().stream()
-                .map(mealOrderDto -> modelMapper.map(mealOrderDto, MealOrder.class))
-                .toList();
-
-        Optional<Boolean> first = mealOrders.stream().map(mealOrderService::isMealOrderValid)
-                .filter(v -> !v)
-                .findFirst();
-        if (first.isPresent()) throw new InvalidEntityException();
-
         Order order = Order.builder()
                 .delivery(dbDelivery)
                 .orderDate(LocalDateTime.now())
                 .user(user)
-                .mealOrders(mealOrders)
                 .orderStatus(orderDto.getOrderStatus())
                 .build();
 
-        return orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
+
+        List<MealOrder> mealOrders = orderDto.getMealOrders().stream()
+                .map(mealOrderDto -> modelMapper.map(mealOrderDto, MealOrder.class))
+                .toList();
+
+        mealOrders.forEach(mealOrder -> mealOrder.setOrder(savedOrder));
+        List<MealOrder> dbMealOrders = mealOrders.stream().map(mealOrderService::addMealOrder).toList();
+        savedOrder.setMealOrders(dbMealOrders);
+        return savedOrder;
     }
 
     public Order changeStatus(ChangeOrderStatusDto orderDto) {
