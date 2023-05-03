@@ -3,6 +3,7 @@ package com.example.italianrestaurant.passwordreset;
 import com.example.italianrestaurant.exceptions.InvalidTokenException;
 import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class PasswordResetController {
     }
 
     @PostMapping("/reset")
-    public ResponseEntity<?> resetPassword(@RequestBody PasswordResetRequest request) {
+    public ResponseEntity<?> resetPassword(@Valid @RequestBody PasswordResetRequest request) {
         try {
             passwordResetService.resetPassword(request);
             return ResponseEntity.ok().body("Password retested");

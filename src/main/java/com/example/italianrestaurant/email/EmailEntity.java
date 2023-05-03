@@ -1,5 +1,7 @@
 package com.example.italianrestaurant.email;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,9 +10,12 @@ import java.util.Map;
 
 @Data
 @Builder
-public class Email {
+public class EmailEntity {
     private String from;
+    @NotBlank(message = "To is mandatory")
+    @Email
     private String to;
+    @NotBlank(message = "Subject is mandatory")
     private String subject;
     private String template;
     private String text;

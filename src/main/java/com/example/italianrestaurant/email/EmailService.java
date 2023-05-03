@@ -19,7 +19,7 @@ public class EmailService {
     private final JavaMailSender emailSender;
     private final SpringTemplateEngine templateEngine;
 
-    public void sendMessage(Email email) {
+    public void sendMessage(EmailEntity email) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(email.getFrom());
         message.setTo(email.getTo());
@@ -29,7 +29,7 @@ public class EmailService {
     }
 
 
-    public void sendHtmlMessage(Email email) throws MessagingException {
+    public void sendHtmlMessage(EmailEntity email) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
         Context context = new Context();
@@ -43,8 +43,8 @@ public class EmailService {
         emailSender.send(message);
     }
 
-    public Email buildPasswordResetEmail(String to, String url) {
-        Email email = Email.builder()
+    public EmailEntity buildPasswordResetEmail(String to, String url) {
+        EmailEntity email = EmailEntity.builder()
                 .to(to)
                 .from("italian.restaurant@rest.com")
                 .subject("Password reset request")

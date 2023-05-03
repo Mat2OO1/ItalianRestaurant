@@ -1,9 +1,9 @@
 package com.example.italianrestaurant.order;
 
-import com.example.italianrestaurant.delivery.DeliveryDto;
 import com.example.italianrestaurant.exceptions.InvalidEntityException;
 import com.example.italianrestaurant.user.User;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,7 +29,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<?> makeOrder(@AuthenticationPrincipal User user, @RequestBody OrderDto orderDto) {
+    public ResponseEntity<?> makeOrder(@AuthenticationPrincipal User user, @Valid @RequestBody OrderDto orderDto) {
         try {
             return ResponseEntity.ok(orderService.makeOrder(user, orderDto));
         } catch (InvalidEntityException e) {
@@ -38,7 +38,7 @@ public class OrderController {
     }
 
     @PostMapping("/change-status")
-    public ResponseEntity<Order> changeStatus(@RequestBody ChangeOrderStatusDto orderDto) {
+    public ResponseEntity<Order> changeStatus(@Valid @RequestBody ChangeOrderStatusDto orderDto) {
         try {
             return ResponseEntity.ok(orderService.changeStatus(orderDto));
         }
