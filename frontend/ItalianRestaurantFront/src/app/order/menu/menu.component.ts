@@ -1,8 +1,8 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
-import {Meal} from "../models/meal";
-import {CartService} from "../shared/cart.service";
-import {MealsService} from "../shared/meals.service";
-import {DataStorageService} from "../shared/data-storage.service";
+import {Meal} from "../../models/meal";
+import {CartService} from "../../shared/cart.service";
+import {MealsService} from "../../shared/meals.service";
+import {DataStorageService} from "../../shared/data-storage.service";
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',

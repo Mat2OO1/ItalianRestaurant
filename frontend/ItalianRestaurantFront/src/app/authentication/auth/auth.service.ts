@@ -90,4 +90,9 @@ export class AuthService {
     this.router.navigate(['./menu'])
   }
 
+  resetPassword(email: string){
+    this.http.get(`http://localhost:8080/password/request?email=${email}`)
+
+  }
+
 }

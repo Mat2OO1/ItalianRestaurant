@@ -1,11 +1,13 @@
 export class MealResponse{
+  id: number
   name: string
   imgPath: string
   description: string
   price: number
   mealCategory: Category
 
-  constructor(name: string, imgPath: string, description: string, price: number, mealCategory: Category) {
+  constructor(id: number, name: string, imgPath: string, description: string, price: number, mealCategory: Category) {
+    this.id = id;
     this.name = name;
     this.imgPath = imgPath;
     this.description = description;
@@ -22,13 +24,15 @@ export class MealResponse{
 }
 
 export class Meal{
+  id: number
   name: string
   imgPath: string
   description: string
   price: number
   mealCategory: string
 
-  constructor(name: string, imgPath: string, description: string, price: number, mealCategory: string) {
+  constructor(id: number,name: string, imgPath: string, description: string, price: number, mealCategory: string) {
+    this.id = id
     this.name = name;
     this.imgPath = imgPath;
     this.description = description;

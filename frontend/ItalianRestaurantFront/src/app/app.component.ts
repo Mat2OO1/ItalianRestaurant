@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import * as AOS from "aos";
-import {AuthService} from "./auth/auth.service";
+import {AuthService} from "./authentication/auth/auth.service";
 
 @Component({
   selector: 'app-root',

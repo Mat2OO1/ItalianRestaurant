@@ -14,7 +14,7 @@ export class CartService{
     console.log(this.cart)
   }
   calculateSum(){
-    let sum =0
+    let sum: number =0
     this.cart.forEach(item => sum += item.meal.price * item.quantity)
     return sum;
   }

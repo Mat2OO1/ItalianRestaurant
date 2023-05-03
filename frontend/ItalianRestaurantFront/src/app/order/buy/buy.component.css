@@ -40,6 +40,10 @@ body {
   border: 0;
 }
 
+.proceed-btn:disabled {
+  background-color: #003D37;
+}
+
 .form{
   margin: auto;
   width:70%;

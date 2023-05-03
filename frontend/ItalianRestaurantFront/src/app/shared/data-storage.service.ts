@@ -1,11 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {CartService} from "./cart.service";
-import {AuthService} from "../auth/auth.service";
-import {OrderService} from "./order.service";
 import {Meal, MealResponse} from "../models/meal";
 import {interval, map, Observable, Subject, tap} from "rxjs";
-import {MealsService} from "./meals.service";
 import {Delivery} from "../models/delivery";
 
 @Injectable()
@@ -18,7 +14,7 @@ export class DataStorageService{
         "http://localhost:8080/meals",
       )
       .pipe(
-        map(meals => meals.map(meal => new Meal(meal.name,meal.imgPath,meal.description,meal.price,meal.mealCategory.name)))
+        map(meals => meals.map(meal => new Meal(meal.id,meal.name,meal.imgPath,meal.description,meal.price,meal.mealCategory.name)))
       )
   }
 

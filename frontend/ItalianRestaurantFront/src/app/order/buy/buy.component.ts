@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {DataStorageService} from "../shared/data-storage.service";
-import {CartService} from "../shared/cart.service";
-import {Delivery} from "../models/delivery";
-import {OrderService} from "../shared/order.service";
+import {DataStorageService} from "../../shared/data-storage.service";
+import {CartService} from "../../shared/cart.service";
+import {Delivery} from "../../models/delivery";
+import {OrderService} from "../../shared/order.service";
 
 @Component({
   selector: 'app-buy',
@@ -22,7 +22,7 @@ export class BuyComponent {
     this.buyForm = new FormGroup({
       address: new FormControl('',[Validators.required]),
       city: new FormControl('',[Validators.required]),
-      pcode: new FormControl('', [Validators.required, Validators.email]),
+      pcode: new FormControl('', [Validators.required]),
       floor: new FormControl(''),
       info: new FormControl(''),
       deliveryOption: new FormControl(''),
@@ -45,6 +45,7 @@ export class BuyComponent {
       .subscribe(
       (res: any) => {
         this.orderService.orderId = res.id
+        console.log(this.orderService.orderId)
         localStorage.setItem('orderId', JSON.stringify(res.id));
         this.router.navigate(["/confirmation"])
       }
