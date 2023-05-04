@@ -1,6 +1,6 @@
 package com.example.italianrestaurant.passwordreset;
 
-import com.example.italianrestaurant.email.Email;
+import com.example.italianrestaurant.email.EmailEntity;
 import com.example.italianrestaurant.email.EmailService;
 import com.example.italianrestaurant.exceptions.InvalidTokenException;
 import com.example.italianrestaurant.passwordreset.passwordtoken.PasswordToken;
@@ -29,21 +29,18 @@ public class PasswordResetService {
         User user = userService.getUserByEmail(email);
 
         String token = tokenService.generateToken();
-        PasswordToken passwordToken = tokenService.saveToken(token, user);
 
         String resetUrl = serverUrl + "/reset-password?token=" + token;
-        Email emailObject = emailService.buildPasswordResetEmail(email, resetUrl);
+        EmailEntity emailObject = emailService.buildPasswordResetEmail(email, resetUrl);
         emailService.sendHtmlMessage(emailObject);
-        return passwordToken;
+
+        return tokenService.saveToken(token, user);
     }
 
 
     public void resetPassword(PasswordResetRequest request) throws InvalidTokenException, EntityNotFoundException {
         PasswordToken token = tokenService.getToken(request.getToken());
         User user = token.getUser();
-        if (!tokenService.isValidToken(token)) {
-            throw new InvalidTokenException();
-        }
 
         userService.updatePassword(user, request.getPassword());
         tokenService.deleteToken(token);

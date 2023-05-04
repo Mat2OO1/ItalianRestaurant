@@ -30,3 +30,7 @@ application:
       expiration: 300000
 
 server-url: http://localhost:4200
+
+server:
+  error:
+    include-message: always

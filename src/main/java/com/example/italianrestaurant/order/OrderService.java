@@ -1,7 +1,6 @@
 package com.example.italianrestaurant.order;
 
 import com.example.italianrestaurant.delivery.Delivery;
-import com.example.italianrestaurant.delivery.DeliveryDto;
 import com.example.italianrestaurant.delivery.DeliveryService;
 import com.example.italianrestaurant.exceptions.InvalidEntityException;
 import com.example.italianrestaurant.order.mealorder.MealOrder;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +32,7 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public Order makeOrder(User user, OrderDto orderDto) throws InvalidEntityException {
+    public Order makeOrder(User user, OrderDto orderDto) {
         Delivery dbDelivery = deliveryService.addDelivery(orderDto.getDelivery());
 
         Order order = Order.builder()

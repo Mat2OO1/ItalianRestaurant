@@ -3,11 +3,13 @@ package com.example.italianrestaurant.passwordreset;
 import com.example.italianrestaurant.exceptions.InvalidTokenException;
 import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/password")
@@ -21,21 +23,24 @@ public class PasswordResetController {
         try {
             return ResponseEntity.ok(passwordResetService.sendResetPasswordRequest(email));
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "There is no user with email:" + email, e);
         } catch (MailException | MessagingException e) {
-            return ResponseEntity.status(HttpStatus.BAD_GATEWAY).build();
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_GATEWAY, "Mail service is not available", e);
         }
     }
 
     @PostMapping("/reset")
-    public ResponseEntity<?> resetPassword(@RequestBody PasswordResetRequest request) {
+    public ResponseEntity<?> resetPassword(@Valid @RequestBody PasswordResetRequest request) {
         try {
             passwordResetService.resetPassword(request);
             return ResponseEntity.ok().body("Password retested");
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.badRequest().body("Token not found");
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Token not found", e);
         } catch (InvalidTokenException e) {
-            return ResponseEntity.badRequest().body("Invalid token");
+            return ResponseEntity.badRequest().body("Token is invalid");
         }
     }
 }

@@ -33,11 +33,11 @@ public class EmailServiceTest {
     @InjectMocks
     private EmailService emailService;
 
-    private Email email;
+    private EmailEntity email;
 
     @BeforeEach
     public void setUp() {
-        email = Email.builder()
+        email = EmailEntity.builder()
                 .to("email@email.com")
                 .from("italian.restaurant@rest.com")
                 .subject("Password reset request")
@@ -98,7 +98,7 @@ public class EmailServiceTest {
         val url = "http://localhost:8080/reset-password?token=1234567890";
 
         //when
-        Email serviceEmail = emailService.buildPasswordResetEmail(to, url);
+        EmailEntity serviceEmail = emailService.buildPasswordResetEmail(to, url);
 
         //then
         assertThat(serviceEmail).isEqualTo(email);

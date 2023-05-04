@@ -32,13 +32,6 @@ public class PasswordTokenService {
         return tokenRepository.findTokenByToken(token).orElseThrow(EntityNotFoundException::new);
     }
 
-    public boolean isValidToken(PasswordToken token) {
-        long currentTime = System.currentTimeMillis();
-        return token != null &&
-                token.getExpiryTime() != null &&
-                token.getExpiryTime() >= currentTime;
-    }
-
     public void deleteToken(PasswordToken token) {
         if (tokenRepository.findTokenByToken(token.getToken()).isEmpty())
             throw new EntityNotFoundException();

@@ -14,16 +14,8 @@ public class DeliveryService {
     private final DeliveryRepository deliveryRepository;
     private final ModelMapper modelMapper;
 
-    public Delivery addDelivery(DeliveryDto deliveryDto) throws InvalidEntityException {
+    public Delivery addDelivery(DeliveryDto deliveryDto) {
         Delivery delivery = modelMapper.map(deliveryDto, Delivery.class);
-        if (!isDeliveryValid(delivery)) throw new InvalidEntityException();
         return deliveryRepository.save(delivery);
-    }
-
-    public boolean isDeliveryValid(Delivery delivery) {
-        return delivery.getAddress() != null &&
-                delivery.getCity() != null &&
-                delivery.getPostalCode() != null &&
-                delivery.getFloor() != null;
     }
 }

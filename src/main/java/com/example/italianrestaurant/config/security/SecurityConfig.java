@@ -58,6 +58,7 @@ public class SecurityConfig {
     }
 
     private static final String[] AUTH_WHITELIST = {
+            "/error",
             "/auth/**",
             "/password/**",
             "/v3/api-docs/**",

@@ -3,7 +3,7 @@ package com.example.italianrestaurant;
 import com.example.italianrestaurant.delivery.Delivery;
 import com.example.italianrestaurant.delivery.DeliveryDto;
 import com.example.italianrestaurant.delivery.DeliveryOptions;
-import com.example.italianrestaurant.email.Email;
+import com.example.italianrestaurant.email.EmailEntity;
 import com.example.italianrestaurant.meal.Meal;
 import com.example.italianrestaurant.meal.mealcategory.MealCategory;
 import com.example.italianrestaurant.order.ChangeOrderStatusDto;
@@ -162,8 +162,8 @@ public class Utils {
                 .build();
     }
 
-    public static Email getEmail() {
-        return Email.builder()
+    public static EmailEntity getEmail() {
+        return EmailEntity.builder()
                 .to("email")
                 .subject("Reset password")
                 .text("content")
