@@ -29,12 +29,12 @@ public class PasswordResetService {
         User user = userService.getUserByEmail(email);
 
         String token = tokenService.generateToken();
-        PasswordToken passwordToken = tokenService.saveToken(token, user);
 
         String resetUrl = serverUrl + "/reset-password?token=" + token;
         EmailEntity emailObject = emailService.buildPasswordResetEmail(email, resetUrl);
         emailService.sendHtmlMessage(emailObject);
-        return passwordToken;
+
+        return tokenService.saveToken(token, user);
     }
 
 

@@ -32,7 +32,7 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public Order makeOrder(User user, OrderDto orderDto) throws InvalidEntityException {
+    public Order makeOrder(User user, OrderDto orderDto) {
         Delivery dbDelivery = deliveryService.addDelivery(orderDto.getDelivery());
 
         Order order = Order.builder()

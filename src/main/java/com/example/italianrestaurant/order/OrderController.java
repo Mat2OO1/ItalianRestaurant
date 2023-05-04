@@ -5,9 +5,11 @@ import com.example.italianrestaurant.user.User;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -30,11 +32,8 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<?> makeOrder(@AuthenticationPrincipal User user, @Valid @RequestBody OrderDto orderDto) {
-        try {
-            return ResponseEntity.ok(orderService.makeOrder(user, orderDto));
-        } catch (InvalidEntityException e) {
-            return ResponseEntity.badRequest().body("Invalid delivery entity");
-        }
+        return ResponseEntity.ok(orderService.makeOrder(user, orderDto));
+
     }
 
     @PostMapping("/change-status")
@@ -43,7 +42,8 @@ public class OrderController {
             return ResponseEntity.ok(orderService.changeStatus(orderDto));
         }
         catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "There is no order with id: " + orderDto.getOrderId(), e);
         }
     }
 }

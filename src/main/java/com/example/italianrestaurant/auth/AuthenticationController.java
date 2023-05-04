@@ -4,12 +4,14 @@ import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/auth")
@@ -32,7 +34,8 @@ public class AuthenticationController {
         try {
             return ResponseEntity.ok(service.authenticate(request));
         } catch (BadCredentialsException | EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Bad credentials", e);
         }
     }
 
