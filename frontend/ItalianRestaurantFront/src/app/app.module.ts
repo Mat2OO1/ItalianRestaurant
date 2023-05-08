@@ -21,8 +21,10 @@ import {AuthService} from "./authentication/auth/auth.service";
 import {AuthInterceptorService} from "./authentication/auth/auth-interceptor.service";
 import {MealsService} from "./shared/meals.service";
 import {DataStorageService} from "./shared/data-storage.service";
-import {AuthGuard} from "./authentication/auth/auth.guard";
 import {ForgotPasswordComponent} from "./authentication/forgot-password/forgot-password.component";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatProgressSpinner, MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {LoadingSpinnerComponent} from "./shared/loading-spinner/loading-spinner.component";
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import {ForgotPasswordComponent} from "./authentication/forgot-password/forgot-p
     SummaryComponent,
     BuyComponent,
     ConfirmationComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -44,8 +47,11 @@ import {ForgotPasswordComponent} from "./authentication/forgot-password/forgot-p
     RouterOutlet,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule
   ],
+
   providers: [
     CartService,
     OrderService,

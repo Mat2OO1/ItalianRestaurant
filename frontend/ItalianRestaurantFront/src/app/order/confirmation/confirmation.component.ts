@@ -12,16 +12,34 @@ import {HttpClient} from "@angular/common/http";
 export class ConfirmationComponent implements OnInit {
   order: {meal: Meal,quantity: number}[] = []
   orderNumber: number | undefined
-  sum: number;
+  sum: number | undefined;
   orderDetails: {date: Date, status: string} = {
     // @ts-ignore
     date: null,
     status: ''
   }
-  isContentLoaded:boolean
+  isContentLoaded: boolean | undefined
   constructor(private cartService: CartService,
               private http: HttpClient,
-              private orderService: OrderService) {
+              private orderService: OrderService) {}
+
+  adjustStatus(){
+    const circle2 = document.getElementById("circle2")!
+    const circle3 = document.getElementById("circle3")!
+    const progressBar = document.getElementById("indicator")!
+    if(this.orderDetails.status.toLowerCase() == 'in delivery'){
+      circle2.classList.add("active")
+      progressBar.style.width = "50%";
+    }
+    else if(this.orderDetails.status.toLowerCase() == 'delivered'){
+      circle2.classList.add("active")
+      circle3.classList.add("active")
+      progressBar.style.width = "100%";
+    }
+  }
+
+  ngOnInit(): void {
+    this.orderService.orderId = Number(localStorage.getItem("orderId"));
     this.orderService.getOrderDetails()
     this.orderService.orderDetails
       .subscribe(
@@ -45,26 +63,7 @@ export class ConfirmationComponent implements OnInit {
     }
     this.sum = this.cartService.calculateSum()
     this.orderNumber = this.orderService.orderId;
-    this.isContentLoaded = !!this.orderNumber
-  }
-
-  adjustStatus(){
-    const circle2 = document.getElementById("circle2")!
-    const circle3 = document.getElementById("circle3")!
-    const progressBar = document.getElementById("indicator")!
-    if(this.orderDetails.status.toLowerCase() == 'in delivery'){
-      circle2.classList.add("active")
-      progressBar.style.width = "50%";
-    }
-    else if(this.orderDetails.status.toLowerCase() == 'delivered'){
-      circle2.classList.add("active")
-      circle3.classList.add("active")
-      progressBar.style.width = "100%";
-    }
-  }
-
-  ngOnInit(): void {
-    this.orderService.orderId = Number(localStorage.getItem("orderId"));
+    this.isContentLoaded = this.order.length > 0;
   }
 
   calculateOrder() {

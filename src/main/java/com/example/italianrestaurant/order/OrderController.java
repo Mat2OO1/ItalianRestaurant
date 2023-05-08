@@ -31,7 +31,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<?> makeOrder(@AuthenticationPrincipal User user, @Valid @RequestBody OrderDto orderDto) {
+    public ResponseEntity<?> makeOrder(@AuthenticationPrincipal User user, @RequestBody OrderDto orderDto) {
         return ResponseEntity.ok(orderService.makeOrder(user, orderDto));
 
     }

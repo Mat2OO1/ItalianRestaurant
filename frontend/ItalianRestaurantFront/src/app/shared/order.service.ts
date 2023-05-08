@@ -12,7 +12,7 @@ export class OrderService {
 
   getOrderDetails(){
     this.orderId = Number(localStorage.getItem("orderId"));
-    interval(10000).subscribe(() => {
+    interval(5000).subscribe(() => {
         return this.http
           .get("http://localhost:8080/order/user")
           .subscribe(
