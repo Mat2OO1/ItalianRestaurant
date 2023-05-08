@@ -1,6 +1,8 @@
 package com.example.italianrestaurant.order;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,9 +15,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChangeOrderStatusDto {
-    @NotBlank(message = "Order status is mandatory")
+    @NotNull(message = "Order status is mandatory")
     private OrderStatus orderStatus;
     private LocalDateTime deliveryDate;
-    @NotBlank(message = "Order id is mandatory")
+    @Min(value = 1, message = "Order id must be greater than 0")
     private long orderId;
 }
