@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {tap} from "rxjs";
 import {AuthService} from "../auth/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,9 @@ import {AuthService} from "../auth/auth.service";
 })
 export class RegisterComponent{
   registerForm: FormGroup
-  constructor(private http: HttpClient,
+  error: string = '';
+  constructor(private router: Router,
+              private http: HttpClient,
               private authService: AuthService) {
     this.registerForm = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
@@ -27,6 +30,15 @@ export class RegisterComponent{
     let email = this.registerForm.value['email'];
     let password = this.registerForm.value['password'];
     this.authService.signup(firstName,lastName,email,password)
+      .subscribe(
+        resData => {
+          this.router.navigate(['./menu'])
+        },
+        errorMessage => {
+          this.registerForm.reset()
+          this.error = errorMessage;
+        }
+      )
   }
 
 }

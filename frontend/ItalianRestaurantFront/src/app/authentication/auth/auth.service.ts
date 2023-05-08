@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {BehaviorSubject, catchError, first, tap, throwError} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {User} from "./user.model";
 
@@ -25,10 +25,13 @@ export class AuthService {
           email: email,
           password: password}
       )
-      .subscribe(resData => {
+      .pipe(
+        catchError(this.handleError),
+        tap(
+        resData => {
         this.handleAuthentication(resData.token, new Date(resData.expiration).getTime())
         })
-
+      )
   }
 
   login(email: string, password: string){
@@ -40,9 +43,13 @@ export class AuthService {
           password: password,
         }
       )
-      .subscribe(resData => {
-        this.handleAuthentication(resData.token, new Date(resData.expiration).getTime())
-      })
+      .pipe(
+        catchError(this.handleError),
+        tap(
+          resData => {
+            this.handleAuthentication(resData.token, new Date(resData.expiration).getTime())
+          })
+      )
   }
 
   autoLogin() {
@@ -87,12 +94,22 @@ export class AuthService {
     this.user.next(user);
     //this.autoLogout(1000000000);
     localStorage.setItem('userData', JSON.stringify(user));
-    this.router.navigate(['./menu'])
   }
 
   resetPassword(email: string){
     this.http.get(`http://localhost:8080/password/request?email=${email}`)
 
+  }
+
+  private handleError(errorRes: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred!';
+    if(errorRes.error.error === 'Not Found') {
+      errorMessage = `Bad credentials`;
+      }
+    else if (errorRes.error === 'User already exists') {
+      errorMessage = 'This user exists already';
+    }
+    return throwError(errorMessage);
   }
 
 }

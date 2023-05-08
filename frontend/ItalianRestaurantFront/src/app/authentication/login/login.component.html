@@ -1,11 +1,11 @@
 <p class="p-5"></p>
 <div class="container d-flex align-items-center justify-content-center">
-  <div class="row text-center" style="width:40%">
+  <div class="row" style="width:40%">
     <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
       <!-- Email input -->
-      <div class="form-outline mb-4">
-        <input type="email" id="form2Example1" formControlName="email" class="form-control bg-white border" />
+      <div class="mb-3">
         <label class="form-label" for="form2Example1">Email address</label>
+        <input type="email" id="form2Example1" formControlName="email" class="form-control bg-white border" placeholder="name@example.com"/>
         <!-- Validation message for email input -->
         <div *ngIf="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched)" class="text-danger">
           <div *ngIf="loginForm.get('email').errors['required']">Email is required</div>
@@ -14,9 +14,10 @@
       </div>
 
       <!-- Password input -->
-      <div class="form-outline mb-4">
-        <input type="password" id="form2Example2" formControlName="password" class="form-control  bg-white border" />
+      <div class="mb-4">
         <label class="form-label" for="form2Example2">Password</label>
+
+        <input type="password" id="form2Example2" formControlName="password" class="form-control  bg-white border" />
         <!-- Validation message for password input -->
         <div *ngIf="loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched)" class="text-danger">
           <div *ngIf="loginForm.get('password').errors['required']">Password is required</div>
@@ -34,11 +35,13 @@
           <a href="#!">Forgot password?</a>
         </div>
       </div>
-
-
+      <div *ngIf="error != ''" class="alert alert-danger" style="height: 50px; border-radius:20px; display: flex; align-items: center; justify-content: center;">{{error}}</div>
+      <br>
+      <div class="text-center">
       <!-- Submit button -->
-      <button type="submit" [disabled]="!loginForm.valid"  class="btn rounded-pill" style="background-color: #005B47; text-decoration: none; color: #FFFFFF">Sign in</button>
+      <button type="submit" [disabled]="!loginForm.valid"  class="btn btn-primary rounded-pill" style="background-color: #005B47; text-decoration: none; color: #FFFFFF">Sign in</button>
       <!-- Register buttons -->
+      </div>
       <hr>
       <div class="text-center">
         <p>Not a member? <a routerLink="/register">Register</a></p>
@@ -46,3 +49,4 @@
     </form>
   </div>
 </div>
+
