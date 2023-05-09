@@ -31,7 +31,8 @@ export class DataStorageService{
       .post("http://localhost:8080/order",
         {
           delivery: delivery,
-          mealOrders: order
+          mealOrders: order,
+          orderStatus: "IN_PREPARATION"
         })
   }
 
