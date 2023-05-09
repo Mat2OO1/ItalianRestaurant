@@ -21,9 +21,11 @@ public class MealCategory {
     private Long id;
     @Column(nullable = false)
     private String name;
+    private String imgPath;
 
-    public MealCategory(String name) {
+    public MealCategory(String name, String imgPath) {
         this.name = name;
+        this.imgPath = imgPath;
     }
 
     @Override

@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Meal, MealResponse} from "../models/meal";
+import {Meal} from "../models/meal";
 import {interval, map, Observable, Subject, tap} from "rxjs";
 import {Delivery} from "../models/delivery";
 
@@ -10,11 +10,11 @@ export class DataStorageService{
 
   getMenu(){
     return this.http
-      .get<MealResponse[]>(
+      .get<Meal[]>(
         "http://localhost:8080/meals",
       )
       .pipe(
-        map(meals => meals.map(meal => new Meal(meal.id,meal.name,meal.imgPath,meal.description,meal.price,meal.mealCategory.name)))
+        map(meals => meals.map(meal => new Meal(meal.id,meal.name,meal.imgPath,meal.description,meal.price,meal.mealCategory)))
       )
   }
 
