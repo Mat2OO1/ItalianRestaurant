@@ -109,18 +109,4 @@ public class PasswordResetControllerTest {
         //then
         resultActions.andExpect(status().isOk());
     }
-
-    @Test
-    void shouldNotResetPassword() throws Exception {
-        //given
-        val passwordResetRequest = Utils.getPasswordResetRequest();
-        doThrow(new InvalidTokenException()).when(passwordResetService).resetPassword(passwordResetRequest);
-
-        //when
-        val resultActions = mockMvc.perform(post("/password/reset")
-                .contentType(MediaType.APPLICATION_JSON));
-
-        //then
-        resultActions.andExpect(status().isBadRequest());
-    }
 }

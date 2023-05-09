@@ -98,7 +98,7 @@ public class OrderServiceTest {
     }
 
     @Test
-    void shouldMakeOrder() throws InvalidEntityException {
+    void shouldMakeOrder() {
         //given
         val delivery = Utils.getDelivery();
         delivery.setId(1L);
@@ -119,7 +119,6 @@ public class OrderServiceTest {
         given(deliveryService.addDelivery(any())).willReturn(delivery);
         given(modelMapper.map(any(), eq(MealOrder.class))).willReturn(Utils.getMealOrder());
         given(orderRepository.save(any())).willReturn(order);
-        given(mealOrderService.isMealOrderValid(any())).willReturn(true);
 
         //when
         Order result = orderService.makeOrder(user, Utils.getOrderDto());
@@ -136,24 +135,6 @@ public class OrderServiceTest {
         val user = Utils.getUser();
         val orderDto = Utils.getOrderDto();
         given(deliveryService.addDelivery(any())).willThrow(InvalidEntityException.class);
-
-        //when
-        assertThatThrownBy(() -> orderService.makeOrder(user, orderDto))
-                .isInstanceOf(InvalidEntityException.class);
-
-        //then
-        verify(orderRepository, times(0)).save(any());
-    }
-
-    @Test
-    void shouldNotMakeOrderMealOrderNotValid() throws InvalidEntityException {
-        //given
-        val user = Utils.getUser();
-        val orderDto = Utils.getOrderDto();
-        val delivery = Utils.getDelivery();
-
-        given(mealOrderService.isMealOrderValid(any())).willReturn(false);
-        given(deliveryService.addDelivery(any())).willReturn(delivery);
 
         //when
         assertThatThrownBy(() -> orderService.makeOrder(user, orderDto))

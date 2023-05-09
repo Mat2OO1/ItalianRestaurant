@@ -1,6 +1,5 @@
 package com.example.italianrestaurant.order;
 
-import com.example.italianrestaurant.exceptions.InvalidEntityException;
 import com.example.italianrestaurant.user.User;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;

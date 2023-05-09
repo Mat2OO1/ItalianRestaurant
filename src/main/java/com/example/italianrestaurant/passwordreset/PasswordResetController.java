@@ -39,8 +39,6 @@ public class PasswordResetController {
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Token not found", e);
-        } catch (InvalidTokenException e) {
-            return ResponseEntity.badRequest().body("Token is invalid");
         }
     }
 }

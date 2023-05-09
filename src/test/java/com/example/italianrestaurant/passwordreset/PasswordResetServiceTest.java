@@ -83,7 +83,6 @@ public class PasswordResetServiceTest {
 
         given(userService.getUserByEmail(email)).willReturn(user);
         given(passwordTokenService.generateToken()).willReturn(token);
-        given(passwordTokenService.saveToken(token, user)).willReturn(passwordToken);
         given(emailService.buildPasswordResetEmail(eq(email), any())).willReturn(emailObject);
         doThrow(new MessagingException()).when(emailService).sendHtmlMessage(emailObject);
 
@@ -103,7 +102,6 @@ public class PasswordResetServiceTest {
         token.setUser(user);
 
         given(passwordTokenService.getToken(token.getToken())).willReturn(token);
-        given(passwordTokenService.isValidToken(token)).willReturn(true);
 
         //when
         passwordResetService.resetPassword(new PasswordResetRequest(token.getToken(), "password"));
@@ -111,23 +109,5 @@ public class PasswordResetServiceTest {
         //then
         verify(userService, times(1)).updatePassword(user, "password");
         verify(passwordTokenService, times(1)).deleteToken(token);
-    }
-
-    @Test
-    void shouldNotResetPassword() throws InvalidTokenException {
-        //given
-        val token = Utils.getPasswordToken();
-        val user = Utils.getUser();
-
-        given(passwordTokenService.getToken(token.getToken())).willReturn(token);
-        given(passwordTokenService.isValidToken(token)).willReturn(false);
-
-        //when
-        assertThatThrownBy(() -> passwordResetService.resetPassword(new PasswordResetRequest(token.getToken(), "password")))
-                .isInstanceOf(InvalidTokenException.class);
-
-        //then
-        verify(userService, times(0)).updatePassword(user, "password");
-        verify(passwordTokenService, times(0)).deleteToken(token);
     }
 }

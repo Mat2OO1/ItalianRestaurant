@@ -30,7 +30,7 @@ public class Utils {
                 .address("address")
                 .city("city")
                 .postalCode("postalCode")
-                .floor("floor")
+                .floor(2)
                 .info("info")
                 .deliveryOptions(DeliveryOptions.KNOCK)
                 .build();

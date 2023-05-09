@@ -12,8 +12,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.List;
 
@@ -91,23 +93,6 @@ public class OrderControllerTest {
         String contentAsString = resultActions.andReturn().getResponse().getContentAsString();
         val resultOrder = Utils.jsonStringToObject(contentAsString, Order.class);
         assertThat(resultOrder).isEqualTo(order);
-    }
-
-    @Test
-    void shouldNotMakeOrder() throws Exception {
-        //given
-        val orderDto = Utils.getOrderDto();
-        orderDto.setDelivery(null);
-
-        given(orderService.makeOrder(any(), eq(orderDto))).willThrow(new InvalidEntityException("Invalid order"));
-
-        // when
-        val resultActions = mockMvc.perform(post("/order")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(Utils.objectToJsonString(orderDto)));
-
-        // then
-        resultActions.andExpect(status().isBadRequest());
     }
 
     @Test
