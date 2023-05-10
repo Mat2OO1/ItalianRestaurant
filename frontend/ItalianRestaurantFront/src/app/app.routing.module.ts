@@ -10,14 +10,15 @@ import {SummaryComponent} from "./order/summary/summary.component";
 import {BuyComponent} from "./order/buy/buy.component";
 import {ConfirmationComponent} from "./order/confirmation/confirmation.component";
 import {AuthGuard} from "./authentication/auth/auth.guard";
-import {ForgotPasswordComponent} from "./authentication/forgot-password/forgot-password.component";
+import {EmailFormComponent} from "./authentication/password-reset/email-form/email-form.component";
 import {AdminPanelComponent} from "./admin-panel/admin-panel.component";
-import {AdminGuard} from "./authentication/auth/admin.guard";
+import {PasswordFormComponent} from "./authentication/password-reset/password-form/password-form.component";
 
 const routes: Routes = [
   {path: '', component: InfoComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'reset', component: ForgotPasswordComponent},
+  {path: 'reset', component: EmailFormComponent},
+  {path: 'password', component: PasswordFormComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'menu', component: MenuComponent, canActivate: [AuthGuard]},
   {path: 'cart', component: CartComponent, canActivate: [AuthGuard]},
@@ -30,10 +31,11 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-  CommonModule,
-  RouterModule.forRoot(routes)
-],
-exports: [ RouterModule ]
+    CommonModule,
+    RouterModule.forRoot(routes)
+  ],
+  exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
 

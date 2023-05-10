@@ -30,7 +30,7 @@ public class PasswordResetService {
 
         String token = tokenService.generateToken();
 
-        String resetUrl = serverUrl + "/reset-password?token=" + token;
+        String resetUrl = serverUrl + "/password?token=" + token;
         EmailEntity emailObject = emailService.buildPasswordResetEmail(email, resetUrl);
         emailService.sendHtmlMessage(emailObject);
 
