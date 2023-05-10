@@ -13,14 +13,9 @@ export class MenuComponent{
   meals: {[key:string]: Meal[]} = {};
   constructor(private cartService: CartService,
               private dataStorageService: DataStorageService) {
-    // this.dataStorageService.getCategories()
-    //   .subscribe(res => {
-    //     this.categories = res
-    //   })
     this.dataStorageService.getMenu()
       .subscribe(res => {
         const meals = res;
-        console.log(meals)
         for(let meal of meals){
           if(this.meals[meal.mealCategory.name]){
             this.meals[meal.mealCategory.name].push(meal)
@@ -30,7 +25,6 @@ export class MenuComponent{
             this.categories.push(meal.mealCategory)
           }
         }
-        console.log(this.meals)
       })
   }
 

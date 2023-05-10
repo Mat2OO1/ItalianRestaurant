@@ -28,7 +28,7 @@
     <div class="col-md-4 text-center" style="width: 20%">
       <h2><strong>Sum: {{calculateSum()}} $</strong></h2>
       <hr>
-      <button class="btn btn-lg rounded-pill" style="background-color: #005B47; text-decoration: none; color: #FFFFFF" routerLink="/summary">Buy</button>
+      <button class="btn btn-lg rounded-pill" [ngClass]="cart.length === 0 ? 'disabled': ''" style="background-color: #005B47; text-decoration: none; color: #FFFFFF" routerLink="/summary">Buy</button>
     </div>
   </div>
   </div>

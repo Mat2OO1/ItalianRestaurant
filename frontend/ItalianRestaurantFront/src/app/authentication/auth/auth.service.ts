@@ -7,6 +7,7 @@ import {User} from "./user.model";
 export interface AuthResponseData{
   token: string;
   expiration: string;
+  role: string;
 }
 @Injectable()
 export class AuthService {
@@ -29,7 +30,7 @@ export class AuthService {
         catchError(this.handleError),
         tap(
         resData => {
-        this.handleAuthentication(resData.token, new Date(resData.expiration).getTime())
+        this.handleAuthentication(resData.token, new Date(resData.expiration).getTime(),resData.role)
         })
       )
   }
@@ -47,20 +48,21 @@ export class AuthService {
         catchError(this.handleError),
         tap(
           resData => {
-            this.handleAuthentication(resData.token, new Date(resData.expiration).getTime())
+            this.handleAuthentication(resData.token, new Date(resData.expiration).getTime(), resData.role)
           })
       )
   }
 
   autoLogin() {
     // @ts-ignore
-    const userData: {_token: string, _tokenExpirationDate: string} = JSON.parse(localStorage.getItem('userData'));
+    const userData: {_token: string, _tokenExpirationDate: string, role: string} = JSON.parse(localStorage.getItem('userData'));
     if(!userData){
       return;
     }
     const loadedUser = new User(
       userData._token,
-      new Date(userData._tokenExpirationDate)
+      new Date(userData._tokenExpirationDate),
+      userData.role
     );
     if (loadedUser.token) {
       this.user.next(loadedUser);
@@ -88,9 +90,9 @@ export class AuthService {
   // }
 
 
-  handleAuthentication(token: string, expiresIn: number){
+  handleAuthentication(token: string, expiresIn: number, role: string){
     const expirationDate: Date = new Date(new Date().getTime() + expiresIn * 1000);
-    const user = new User(token, expirationDate);
+    const user = new User(token, expirationDate,role);
     this.user.next(user);
     //this.autoLogout(1000000000);
     localStorage.setItem('userData', JSON.stringify(user));
@@ -98,6 +100,12 @@ export class AuthService {
 
   resetPassword(email: string){
     this.http.get(`http://localhost:8080/password/request?email=${email}`)
+      .subscribe(
+        (res) => {
+          console.log(res);
+          this.router.navigate([''])
+        }
+      )
 
   }
 

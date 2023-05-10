@@ -23,7 +23,7 @@
     </div>
     <hr style="width: 70%; margin: auto">
     <h4 class="sum">Sum: {{calculateSum()}} $</h4>
-    <a href="#" class="proceed-btn" routerLink="/buy">Proceed</a>
-    <a href="#" class="cancel-btn">Cancel</a>
+    <a href="#" class="proceed-btn" routerLink="/buy" [ngClass]="{'disabled': cart.length === 0}">Proceed</a>
+    <a href="#" class="cancel-btn" routerLink="/menu" >Cancel</a>
   </div>
 </div>

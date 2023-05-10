@@ -27,7 +27,13 @@ export class LoginComponent {
     this.authService.login(email, password)
       .subscribe(
         resData => {
-          this.router.navigate(['./menu'])
+          if(resData.role === "ADMIN"){
+            this.router.navigate(['./admin-panel'])
+          }
+          else{
+            this.router.navigate(['./menu'])
+
+          }
         },
         errorMessage => {
           this.loginForm.reset()

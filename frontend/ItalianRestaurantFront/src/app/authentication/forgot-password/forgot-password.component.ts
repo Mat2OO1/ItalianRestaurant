@@ -19,7 +19,7 @@ export class ForgotPasswordComponent {
 
   onResetSubmit(){
     let email = this.resetPasswordForm.value['email'];
-    this.authService.resetPassword(email);
+    this.authService.resetPassword(email)
   }
 
 }

@@ -18,12 +18,9 @@ export class DataStorageService{
       )
   }
 
-  getCategories(): Observable<string[]> {
+  getCategories() {
     return this.http
-      .get<{id: number, category: string}[]>("http://localhost:8080/meal-categories")
-      .pipe(
-        map(categories => categories.map(c => c.category))
-      );
+      .get<{name: string, imgPath: string}[]>("http://localhost:8080/meal-categories")
   }
 
   makeAnOrder(delivery: Delivery, order: {meal: Meal,quantity: number, price: number}[]){

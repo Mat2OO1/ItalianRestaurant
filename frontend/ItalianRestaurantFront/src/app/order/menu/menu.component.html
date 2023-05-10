@@ -1,10 +1,11 @@
 <div class="container" style="margin-top: 10px">
+  <br>
   <div class="row justify-content-center">
     <div class="card bg-transparent shadow-none hover-overlay hover-zoom hover-shadow"
-         *ngFor="let category of categories let i =index"
-         style="margin-right:20px; max-width: 20%; padding: 0"
+         *ngFor="let category of categories"
+         style="max-width: 20%; padding: 0;"
          (click)="scroll(category.name)">
-      <img class="card-img-top rounded" src="{{category.imgPath}}" alt="Card image cap">
+      <img class="card-img-top rounded mx-auto d-block" src="{{category.imgPath}}" alt="Card image cap" style="max-width: 100px">
       <div class="card-body">
         <h5 class="card-title text-center">{{category.name}}</h5>
       </div>
@@ -12,8 +13,9 @@
   </div>
 </div>
 
+
 <div class="container">
-  <div *ngFor="let category of categories" id="{{category}}">
+  <div *ngFor="let category of categories" id="{{category.name}}">
     <div class="row" *ngFor="let meal of meals[category.name]">
         <div class="menu-item">
               <img class="menu-item-img" src="{{meal.imgPath}}" alt="pizza">

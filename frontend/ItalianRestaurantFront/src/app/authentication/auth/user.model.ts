@@ -1,7 +1,8 @@
 export class User{
   constructor(
     private _token: string,
-    private _tokenExpirationDate: Date
+    private _tokenExpirationDate: Date,
+    private _role: string
   ) {}
 
   get token() {
@@ -9,5 +10,9 @@ export class User{
       return null;
     }
     return this._token;
+  }
+
+  get role(){
+    return this._role;
   }
 }

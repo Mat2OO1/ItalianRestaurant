@@ -11,6 +11,8 @@ import {BuyComponent} from "./order/buy/buy.component";
 import {ConfirmationComponent} from "./order/confirmation/confirmation.component";
 import {AuthGuard} from "./authentication/auth/auth.guard";
 import {ForgotPasswordComponent} from "./authentication/forgot-password/forgot-password.component";
+import {AdminPanelComponent} from "./admin-panel/admin-panel.component";
+import {AdminGuard} from "./authentication/auth/admin.guard";
 
 const routes: Routes = [
   {path: '', component: InfoComponent},
@@ -22,6 +24,7 @@ const routes: Routes = [
   {path: 'summary', component: SummaryComponent, canActivate: [AuthGuard]},
   {path: 'buy', component: BuyComponent, canActivate: [AuthGuard]},
   {path: 'confirmation', component: ConfirmationComponent, canActivate: [AuthGuard]},
+  {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AdminGuard]},
   {path: '**', redirectTo: ''}
 ]
 
