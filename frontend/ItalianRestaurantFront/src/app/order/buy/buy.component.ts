@@ -50,6 +50,7 @@ export class BuyComponent {
         this.router.navigate(["/confirmation"])
       }
     )
+    this.cartService.cart = [];
   }
 
 }

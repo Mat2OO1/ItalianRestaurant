@@ -8,6 +8,7 @@ import com.example.italianrestaurant.order.mealorder.MealOrderService;
 import com.example.italianrestaurant.user.User;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +29,11 @@ public class OrderService {
         return orderRepository.findAllByUser(user);
     }
 
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+    public List<Order> getAllOrdersFromToday() {
+        return orderRepository.findAll()
+                .stream()
+                .filter( o -> o.getOrderDate().getDayOfMonth() == LocalDateTime.now().getDayOfMonth())
+                .toList();
     }
 
     public Order makeOrder(User user, OrderDto orderDto) {

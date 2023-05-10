@@ -24,7 +24,7 @@ const routes: Routes = [
   {path: 'summary', component: SummaryComponent, canActivate: [AuthGuard]},
   {path: 'buy', component: BuyComponent, canActivate: [AuthGuard]},
   {path: 'confirmation', component: ConfirmationComponent, canActivate: [AuthGuard]},
-  {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AdminGuard]},
+  {path: 'admin-panel', component: AdminPanelComponent},
   {path: '**', redirectTo: ''}
 ]
 

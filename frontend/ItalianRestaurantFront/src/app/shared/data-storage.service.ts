@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Meal} from "../models/meal";
 import {interval, map, Observable, Subject, tap} from "rxjs";
 import {Delivery} from "../models/delivery";
+import {Order, OrderRes} from "../models/order";
 
 @Injectable()
 export class DataStorageService{
@@ -31,6 +32,11 @@ export class DataStorageService{
           mealOrders: order,
           orderStatus: "IN_PREPARATION"
         })
+  }
+
+  getOrders(){
+    return this.http
+      .get<OrderRes[]>("http://localhost:8080/order/all")
   }
 
 }

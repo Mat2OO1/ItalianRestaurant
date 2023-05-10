@@ -1,1 +1,47 @@
-<p>admin-panel works!</p>
+<div class="container" *ngIf="isContentLoaded">
+  <table class="table table-bordered" *ngFor="let order of orders">
+    <thead>
+    <tr>
+      <th scope="col">ID: {{order.id}}</th>
+      <th scope="col">Meal</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let meal of order.mealOrders">
+      <th></th>
+      <td>{{meal.meal.name}}</td>
+      <td>{{meal.quantity}}</td>
+      <td>{{meal.price}}</td>
+    </tr>
+    <tr>HERE</tr>
+    </tbody>
+  </table>
+</div>
+
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th scope="col">Meal</th>
+    <th scope="col">Quantity</th>
+    <th scope="col">Price</th>
+  </tr>
+  </thead>
+  <tbody>
+<tr>
+  <th></th>
+  <td>
+    <table class="table table-bordered">
+      <thead></thead>
+      <tbody>
+      <th></th>
+      <td>sth</td>
+      <td>sth</td>
+      <td><button class="btn btn-primary">Change</button></td>
+      </tbody>
+    </table>
+  </td>
+</tr>
+  </tbody>
+</table>

@@ -25,6 +25,7 @@ import {ForgotPasswordComponent} from "./authentication/forgot-password/forgot-p
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatProgressSpinner, MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {LoadingSpinnerComponent} from "./shared/loading-spinner/loading-spinner.component";
+import {AdminPanelComponent} from "./admin-panel/admin-panel.component";
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {LoadingSpinnerComponent} from "./shared/loading-spinner/loading-spinner.
     BuyComponent,
     ConfirmationComponent,
     ForgotPasswordComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    AdminPanelComponent
   ],
   imports: [
     BrowserModule,
