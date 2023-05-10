@@ -24,5 +24,14 @@ export class AdminPanelComponent {
       )
   }
 
+  calculateSum(order: OrderRes){
+    var sum = 0;
+    for(let meals of order.mealOrders){
+      sum += meals.price
+    }
+
+    return sum;
+  }
+
 
 }

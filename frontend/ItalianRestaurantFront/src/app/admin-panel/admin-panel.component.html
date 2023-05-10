@@ -1,8 +1,9 @@
+<br>
 <div class="container" *ngIf="isContentLoaded">
-  <table class="table table-bordered" *ngFor="let order of orders">
+  <table class="table table-bordered bg-white" *ngFor="let order of orders">
     <thead>
     <tr>
-      <th scope="col">ID: {{order.id}}</th>
+      <th style="width:70px; font-size: 9px;" scope="col">ID: {{order.id}}</th>
       <th scope="col">Meal</th>
       <th scope="col">Quantity</th>
       <th scope="col">Price</th>
@@ -15,33 +16,44 @@
       <td>{{meal.quantity}}</td>
       <td>{{meal.price}}</td>
     </tr>
-    <tr>HERE</tr>
+    <tr>
+      <td colspan="4">
+        <table class="table table-active">
+          <thead>
+          <tr>
+            <th scope="col">Order Status</th>
+            <th scope="col">Estimated Delivery Date</th>
+            <th scope="col">Address</th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>
+              <select class="form-select" [value]="order.orderStatus">
+                <option value="IN_PREPARATION">In preperation</option>
+                <option value="IN_DELIVERY">In delivery</option>
+                <option value="DELIVERED">Delivered</option>
+              </select>
+            </td>
+            <td>
+              <input type="time" class="form-control" [value]="order.delivery.deliveryDate" name="deliveryDate" required>
+            </td>
+            <td>{{order.delivery.address}}{{order.delivery.city}} {{order.delivery.deliveryOptions}} {{order.delivery.postalCode}} {{order.delivery.info}}</td>
+            <td><button class="btn btn-primary">Change</button></td>
+
+          </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr class="text-center">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td> <strong>Sum: {{calculateSum(order)}} $</strong> </td>
+
+    </tr>
     </tbody>
   </table>
 </div>
-
-<table class="table table-bordered">
-  <thead>
-  <tr>
-    <th scope="col">Meal</th>
-    <th scope="col">Quantity</th>
-    <th scope="col">Price</th>
-  </tr>
-  </thead>
-  <tbody>
-<tr>
-  <th></th>
-  <td>
-    <table class="table table-bordered">
-      <thead></thead>
-      <tbody>
-      <th></th>
-      <td>sth</td>
-      <td>sth</td>
-      <td><button class="btn btn-primary">Change</button></td>
-      </tbody>
-    </table>
-  </td>
-</tr>
-  </tbody>
-</table>
