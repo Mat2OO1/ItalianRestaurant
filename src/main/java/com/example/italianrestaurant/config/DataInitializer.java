@@ -41,21 +41,20 @@ public class DataInitializer {
     }
 
     private List<Meal> getMealData() {
-        return List.of(new Meal("Carbonara", "images/carbonara.jpg", mealCategoryRepository.findById(1L).get(),
+        return List.of(new Meal("Carbonara", "https://cdn.galleries.smcloud.net/t/photos/gf-Jyiw-FVWU-vX4E_spaghetti-carbonara-jak-zrobic-szybko-te-odmiane-pasty.jpg", mealCategoryRepository.findById(2L).get(),
                 "grana padano, pasta, basil", 35.50),
-                new Meal("Aglio Olio", "images/aglio-olio.jpg", mealCategoryRepository.findById(2L).get(),
+                new Meal("Aglio Olio", "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/F5853F13-70A5-4A54-B38A-8F229C3050F5/Derivates/7C5F0049-A335-40D1-8EF5-D2702653584E.jpg", mealCategoryRepository.findById(2L).get(),
                         "olive oil, garlic, pasta", 15.99),
-                new Meal("Margherita", "images/margherita.jpg", mealCategoryRepository.findById(1L).get(),
+                new Meal("Margherita", "https://cdn.galleries.smcloud.net/t/galleries/gf-th4D-DoeK-NWgH_pizza-margherita-skad-pochodzi-nazwa-jpg-1920x1080-nocrop.jpg", mealCategoryRepository.findById(1L).get(),
                         "tomato sauce, cheese", 50),
-                new Meal("Clams", "images/clams.jpg", mealCategoryRepository.findById(4L).get(),
+                new Meal("Clams", "https://cdn.apartmenttherapy.info/image/upload/f_jpg,q_auto:eco,c_fill,g_auto,w_1500,ar_4:3/k%2FPhoto%2FRecipes%2F2019-07-recipe-20-minute-garlic-butter-steamed-clams%2F20-Minute-Garlic-Butter-Steamed-Clams_021", mealCategoryRepository.findById(3L).get(),
                         "clams", 30.25));
     }
 
     private List<MealCategory> getMealCategoriesData() {
-        return List.of(new MealCategory("pizza"),
-                new MealCategory("pasta"),
-                new MealCategory("meat dish"),
-                new MealCategory("seafood"));
+        return List.of(new MealCategory("pizza", "https://www.foodandwine.com/thmb/97PY4E6Wk95IYv1_8pDZvBEi0Uw=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/cream-tomato-rigatoni-FT-RECIPE1020-139fb3fa52574e8bb06f98e7fa3e4f1e.jpg"),
+                new MealCategory("pasta", "https://cdn.galleries.smcloud.net/t/galleries/gf-cgdk-p5yy-aE4f_pizza-pepperoni-z-jalapeno-to-jadl-joe-biden-z-zolnierzami-w-rzeszowie-1920x1080-nocrop.jpg"),
+                new MealCategory("seafood", "https://www.foodandwine.com/thmb/tjkyiJutr0DdYGtGFy_hpcN0bSQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/seafood-blog618-f86e8baba8834537bbffa1d55e71c999.jpg"));
     }
 
 

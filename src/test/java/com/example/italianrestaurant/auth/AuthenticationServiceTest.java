@@ -55,6 +55,7 @@ public class AuthenticationServiceTest {
         val authenticationResponse = AuthenticationResponse.builder()
                 .token(token)
                 .expiration(date)
+                .role(user.getRole())
                 .build();
 
         given(authenticationManager.authenticate(any())).willReturn(null);

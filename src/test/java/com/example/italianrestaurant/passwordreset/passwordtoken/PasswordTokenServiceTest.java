@@ -71,28 +71,6 @@ public class PasswordTokenServiceTest {
     }
 
     @Test
-    void isValidTokenTest() {
-        //given
-        val passwordToken = Utils.getPasswordToken();
-        //when
-        val returnedToken = passwordTokenService.isValidToken(passwordToken);
-        //then
-        assertThat(returnedToken).isEqualTo(true);
-    }
-
-    @Test
-    void isNotValidTokenTest() {
-        //given
-        val passwordToken = Utils.getPasswordToken();
-        val expiryTime = 100000;
-        passwordToken.setExpiryTime(passwordToken.getExpiryTime() - expiryTime);
-        //when
-        val returnedToken = passwordTokenService.isValidToken(passwordToken);
-        //then
-        assertThat(returnedToken).isEqualTo(false);
-    }
-
-    @Test
     void shouldDeleteToken() {
         //given
         val passwordToken = Utils.getPasswordToken();

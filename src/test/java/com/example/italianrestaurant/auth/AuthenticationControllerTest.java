@@ -84,7 +84,7 @@ public class AuthenticationControllerTest {
 
         // given
         val registerRequest = RegisterRequest.builder()
-                .email("email")
+                .email("example@email.com")
                 .password("password")
                 .firstname("firstname")
                 .lastname("lastname")

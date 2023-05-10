@@ -48,21 +48,4 @@ public class DeliveryServiceTest {
         verify(deliveryRepository).save(mappedDelivery);
         assertThat(returnedDelivery).isEqualTo(dbDelivery);
     }
-
-    @Test
-    void shouldNotAddDelivery() throws InvalidEntityException {
-
-        // given
-        val deliveryDto = new DeliveryDto();
-        val mappedDelivery = new Delivery();
-
-        given(modelMapper.map(deliveryDto, Delivery.class)).willReturn(mappedDelivery);
-
-        // when
-        assertThatThrownBy(() -> deliveryService.addDelivery(deliveryDto)).
-                isInstanceOf(InvalidEntityException.class);
-        // then
-        verify(deliveryRepository, times(0)).save(any());
-    }
-
 }

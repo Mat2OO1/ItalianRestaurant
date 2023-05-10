@@ -5,6 +5,7 @@ import com.example.italianrestaurant.order.mealorder.MealOrder;
 import com.example.italianrestaurant.order.mealorder.MealOrderDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,10 +18,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDto {
-    @NotBlank(message = "Delivery is mandatory")
+    @NotNull(message = "Delivery is mandatory")
     private DeliveryDto delivery;
     @NotEmpty(message = "Meal orders are mandatory")
     private List<MealOrderDto> mealOrders;
-    @NotBlank(message = "Order status is mandatory")
+    @NotNull(message = "Order status is mandatory")
     private OrderStatus orderStatus;
 }

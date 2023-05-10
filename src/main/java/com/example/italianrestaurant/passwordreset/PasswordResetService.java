@@ -38,7 +38,7 @@ public class PasswordResetService {
     }
 
 
-    public void resetPassword(PasswordResetRequest request) throws InvalidTokenException, EntityNotFoundException {
+    public void resetPassword(PasswordResetRequest request) throws EntityNotFoundException {
         PasswordToken token = tokenService.getToken(request.getToken());
         User user = token.getUser();
 

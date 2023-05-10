@@ -1,6 +1,5 @@
 package com.example.italianrestaurant.order;
 
-import com.example.italianrestaurant.exceptions.InvalidEntityException;
 import com.example.italianrestaurant.user.User;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -32,7 +31,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<?> makeOrder(@AuthenticationPrincipal User user, @RequestBody OrderDto orderDto) {
+    public ResponseEntity<?> makeOrder(@AuthenticationPrincipal User user, @Valid @RequestBody OrderDto orderDto) {
         return ResponseEntity.ok(orderService.makeOrder(user, orderDto));
 
     }
