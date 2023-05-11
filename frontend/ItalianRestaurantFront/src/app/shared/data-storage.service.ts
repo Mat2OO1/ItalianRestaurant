@@ -4,27 +4,29 @@ import {Meal} from "../models/meal";
 import {interval, map, Observable, Subject, tap} from "rxjs";
 import {Delivery} from "../models/delivery";
 import {Order, OrderRes} from "../models/order";
+import {ToastService} from "./toast.service";
 
 @Injectable()
-export class DataStorageService{
-  constructor(private http: HttpClient) {}
+export class DataStorageService {
+  constructor(private http: HttpClient) {
+  }
 
-  getMenu(){
+  getMenu() {
     return this.http
       .get<Meal[]>(
         "http://localhost:8080/meals",
       )
       .pipe(
-        map(meals => meals.map(meal => new Meal(meal.id,meal.name,meal.imgPath,meal.description,meal.price,meal.mealCategory)))
+        map(meals => meals.map(meal => new Meal(meal.id, meal.name, meal.imgPath, meal.description, meal.price, meal.mealCategory)))
       )
   }
 
   getCategories() {
     return this.http
-      .get<{name: string, imgPath: string}[]>("http://localhost:8080/meal-categories")
+      .get<{ name: string, imgPath: string }[]>("http://localhost:8080/meal-categories")
   }
 
-  makeAnOrder(delivery: Delivery, order: {meal: Meal,quantity: number, price: number}[]){
+  makeAnOrder(delivery: Delivery, order: { meal: Meal, quantity: number, price: number }[]) {
     return this.http
       .post("http://localhost:8080/order",
         {
@@ -34,18 +36,18 @@ export class DataStorageService{
         })
   }
 
-  getOrders(){
+  getOrders() {
     return this.http
       .get<OrderRes[]>("http://localhost:8080/order/all")
   }
 
-  updateOrder(orderStatus: string, deliveryDate: string, orderId: number){
+  updateOrder(orderStatus: string, deliveryDate: string, orderId: number) {
     return this.http
       .post("http://localhost:8080/order/change-status", {
         orderStatus: orderStatus,
         deliveryDate: deliveryDate,
         orderId: orderId
-    })
+      })
       .subscribe(
         (res) => {
           console.log(res)

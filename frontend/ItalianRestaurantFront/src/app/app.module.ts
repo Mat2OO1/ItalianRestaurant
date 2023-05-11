@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
-import { NavComponent } from './welcome/nav/nav.component';
-import { InfoComponent } from './welcome/info/info.component';
-import { LoginComponent } from './authentication/login/login.component';
+import {AppComponent} from './app.component';
+import {NavComponent} from './welcome/nav/nav.component';
+import {InfoComponent} from './welcome/info/info.component';
+import {LoginComponent} from './authentication/login/login.component';
 import {RouterLink, RouterOutlet} from "@angular/router";
 import {AppRoutingModule} from "./app.routing.module";
 import {MenuComponent} from "./order/menu/menu.component";
@@ -22,10 +22,14 @@ import {AuthInterceptorService} from "./authentication/auth/auth-interceptor.ser
 import {MealsService} from "./shared/meals.service";
 import {DataStorageService} from "./shared/data-storage.service";
 import {EmailFormComponent} from "./authentication/password-reset/email-form/email-form.component";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatProgressSpinner, MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {LoadingSpinnerComponent} from "./shared/loading-spinner/loading-spinner.component";
 import {AdminPanelComponent} from "./admin-panel/admin-panel.component";
+import {PasswordFormComponent} from "./authentication/password-reset/password-form/password-form.component";
+import {DatePipe} from "@angular/common";
+import { ToastComponent } from './toast-notifications/toast/toast.component';
+import { ToasterComponent } from './toast-notifications/toaster/toaster.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +46,9 @@ import {AdminPanelComponent} from "./admin-panel/admin-panel.component";
     EmailFormComponent,
     LoadingSpinnerComponent,
     AdminPanelComponent,
-    PasswordFormComponent
+    PasswordFormComponent,
+    ToastComponent,
+    ToasterComponent
   ],
   imports: [
     BrowserModule,

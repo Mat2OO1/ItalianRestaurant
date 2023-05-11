@@ -30,10 +30,7 @@ public class OrderService {
     }
 
     public List<Order> getAllOrdersFromToday() {
-        return orderRepository.findAll()
-                .stream()
-                .filter( o -> o.getOrderDate().getDayOfMonth() == LocalDateTime.now().getDayOfMonth())
-                .toList();
+        return orderRepository.findAllFromToday(LocalDateTime.now().toLocalDate());
     }
 
     public Order makeOrder(User user, OrderDto orderDto) {
