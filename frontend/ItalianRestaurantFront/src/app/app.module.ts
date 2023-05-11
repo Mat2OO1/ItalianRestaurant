@@ -21,12 +21,11 @@ import {AuthService} from "./authentication/auth/auth.service";
 import {AuthInterceptorService} from "./authentication/auth/auth-interceptor.service";
 import {MealsService} from "./shared/meals.service";
 import {DataStorageService} from "./shared/data-storage.service";
-import {ForgotPasswordComponent} from "./authentication/forgot-password/forgot-password.component";
+import {EmailFormComponent} from "./authentication/password-reset/email-form/email-form.component";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatProgressSpinner, MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {LoadingSpinnerComponent} from "./shared/loading-spinner/loading-spinner.component";
 import {AdminPanelComponent} from "./admin-panel/admin-panel.component";
-import {DatePipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -40,9 +39,10 @@ import {DatePipe} from "@angular/common";
     SummaryComponent,
     BuyComponent,
     ConfirmationComponent,
-    ForgotPasswordComponent,
+    EmailFormComponent,
     LoadingSpinnerComponent,
-    AdminPanelComponent
+    AdminPanelComponent,
+    PasswordFormComponent
   ],
   imports: [
     BrowserModule,
