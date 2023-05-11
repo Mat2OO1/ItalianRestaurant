@@ -98,7 +98,7 @@ export class AuthService {
     localStorage.setItem('userData', JSON.stringify(user));
   }
 
-  resetPassword(email: string){
+  requestResetPassword(email: string){
     this.http.get(`http://localhost:8080/password/request?email=${email}`)
       .subscribe(
         (res) => {
@@ -107,6 +107,21 @@ export class AuthService {
         }
       )
 
+  }
+
+  resetPassword(password: string, token: string) {
+    this.http
+      .post("http://localhost:8080/password/reset",
+        {
+          token: token,
+          password: password,
+        }, { responseType: 'text' })
+      .subscribe(
+        (res) => {
+          console.log(res);
+          this.router.navigate([''])
+        }
+      );
   }
 
   private handleError(errorRes: HttpErrorResponse) {
@@ -119,5 +134,4 @@ export class AuthService {
     }
     return throwError(errorMessage);
   }
-
 }

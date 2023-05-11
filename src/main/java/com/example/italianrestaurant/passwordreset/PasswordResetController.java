@@ -35,7 +35,7 @@ public class PasswordResetController {
     public ResponseEntity<?> resetPassword(@Valid @RequestBody PasswordResetRequest request) {
         try {
             passwordResetService.resetPassword(request);
-            return ResponseEntity.ok().body("Password retested");
+            return ResponseEntity.ok().body("Password changed");
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Token not found", e);

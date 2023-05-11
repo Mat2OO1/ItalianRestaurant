@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/italian_restaurant
     username: postgres
-    password: password
+    password: postgres
     driverClassName: org.postgresql.Driver
   jpa:
     properties:
@@ -14,8 +14,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: myapplic256@gmail.com
-    password: guduardwrqxdsqjf
+    username: <email>
+    password: <password>
     properties:
       mail:
         smtp:
