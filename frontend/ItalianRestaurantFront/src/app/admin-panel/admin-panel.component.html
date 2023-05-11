@@ -1,5 +1,5 @@
 <br>
-<div class="container" *ngIf="isContentLoaded">
+<div class="container" *ngIf="isContentLoaded && orders.length > 0">
   <table class="table table-bordered bg-white" *ngFor="let order of orders">
     <thead>
     <tr>
@@ -18,6 +18,7 @@
     </tr>
     <tr>
       <td colspan="4">
+        <form class="form" [formGroup]="orderDetailsForm" (ngSubmit)="updateOrder(order.id)">
         <table class="table table-active">
           <thead>
           <tr>
@@ -30,21 +31,22 @@
           <tbody>
           <tr>
             <td>
-              <select class="form-select" [value]="order.orderStatus">
+              <select class="form-select" [value]="order.orderStatus"  formControlName="orderStatus">
                 <option value="IN_PREPARATION">In preperation</option>
                 <option value="IN_DELIVERY">In delivery</option>
                 <option value="DELIVERED">Delivered</option>
               </select>
             </td>
             <td>
-              <input type="time" class="form-control" [value]="order.delivery.deliveryDate" name="deliveryDate" required>
+              <input type="time" class="form-control" [value]="order.delivery.deliveryDate" formControlName="deliveryDate" name="deliveryDate" required>
             </td>
             <td>{{order.delivery.address}}{{order.delivery.city}} {{order.delivery.deliveryOptions}} {{order.delivery.postalCode}} {{order.delivery.info}}</td>
-            <td><button class="btn btn-primary">Change</button></td>
+            <td><button class="btn btn-primary" (click)="updateOrder(order.id)">Change</button></td>
 
           </tr>
           </tbody>
         </table>
+        </form>
       </td>
     </tr>
     <tr class="text-center">
@@ -56,4 +58,7 @@
     </tr>
     </tbody>
   </table>
+</div>
+<div class="container text-center" *ngIf="orders.length === 0">
+  <div class="alert-primary center-alert" style="width: 60%">There are no orders today.</div>
 </div>

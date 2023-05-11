@@ -26,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatProgressSpinner, MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {LoadingSpinnerComponent} from "./shared/loading-spinner/loading-spinner.component";
 import {AdminPanelComponent} from "./admin-panel/admin-panel.component";
+import {DatePipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import {AdminPanelComponent} from "./admin-panel/admin-panel.component";
     AuthService,
     MealsService,
     DataStorageService,
+    DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,

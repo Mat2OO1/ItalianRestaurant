@@ -19,6 +19,7 @@ export class OrderService {
             (res: any) => {
               res = res.filter((order: any) => order.id === this.orderId)[0]
               this.order.next(res.mealOrders);
+              console.log(res)
               this.orderDetails.next({date: res.delivery.deliveryDate, status: res.orderStatus})
             }
           )

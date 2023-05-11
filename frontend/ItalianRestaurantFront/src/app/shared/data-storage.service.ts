@@ -39,4 +39,19 @@ export class DataStorageService{
       .get<OrderRes[]>("http://localhost:8080/order/all")
   }
 
+  updateOrder(orderStatus: string, deliveryDate: string, orderId: number){
+    return this.http
+      .post("http://localhost:8080/order/change-status", {
+        orderStatus: orderStatus,
+        deliveryDate: deliveryDate,
+        orderId: orderId
+    })
+      .subscribe(
+        (res) => {
+          console.log(res)
+        }
+      )
+
+  }
+
 }
