@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -42,14 +43,14 @@ public class OrderServiceTest {
     private OrderService orderService;
 
     @Test
-    void shouldGetAllOrders() {
+    void shouldGetAllOrdersFromToday() {
         //given
         List<Order> orders = Utils.buildOrders();
 
-        given(orderRepository.findAll()).willReturn(orders);
+        given(orderRepository.findAllFromToday(any())).willReturn(orders);
 
         //when
-        val returnedOrders = orderService.getAllOrders();
+        val returnedOrders = orderService.getAllOrdersFromToday();
 
         //then
         assertThat(returnedOrders).isEqualTo(orders);
@@ -58,10 +59,10 @@ public class OrderServiceTest {
     @Test
     void shouldNotGetAllOrders() {
         //given
-        given(orderRepository.findAll()).willReturn(List.of());
+        given(orderRepository.findAllFromToday(any())).willReturn(List.of());
 
         //when
-        val returnedOrders = orderService.getAllOrders();
+        val returnedOrders = orderService.getAllOrdersFromToday();
 
         //then
         assertThat(returnedOrders).isEmpty();

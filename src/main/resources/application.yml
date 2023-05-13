@@ -29,7 +29,7 @@ application:
       secret-key: 50645367556B58703273357638792F423F4528482B4D6251655468576D597133
       expiration: 300000
 
-server-url: http://localhost:4200
+front-url: http://localhost:4200
 
 server:
   error:

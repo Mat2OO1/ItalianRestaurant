@@ -60,7 +60,7 @@ public class Utils {
 
     public static Order getOrder() {
         return Order.builder()
-                .orderDate(LocalDateTime.now())
+                .orderDate(LocalDateTime.of(2023, 1, 1, 1, 1))
                 .orderStatus(OrderStatus.IN_PREPARATION)
                 .build();
     }

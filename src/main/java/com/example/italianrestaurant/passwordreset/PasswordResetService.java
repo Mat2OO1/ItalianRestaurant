@@ -2,7 +2,6 @@ package com.example.italianrestaurant.passwordreset;
 
 import com.example.italianrestaurant.email.EmailEntity;
 import com.example.italianrestaurant.email.EmailService;
-import com.example.italianrestaurant.exceptions.InvalidTokenException;
 import com.example.italianrestaurant.passwordreset.passwordtoken.PasswordToken;
 import com.example.italianrestaurant.passwordreset.passwordtoken.PasswordTokenService;
 import com.example.italianrestaurant.user.User;
@@ -21,8 +20,8 @@ public class PasswordResetService {
     private final PasswordTokenService tokenService;
     private final EmailService emailService;
 
-    @Value("${server-url}")
-    private String serverUrl;
+    @Value("${front-url}")
+    private String frontUrl;
 
     public PasswordToken sendResetPasswordRequest(String email) throws MessagingException {
 
@@ -30,7 +29,7 @@ public class PasswordResetService {
 
         String token = tokenService.generateToken();
 
-        String resetUrl = serverUrl + "/password?token=" + token;
+        String resetUrl = frontUrl + "/password?token=" + token;
         EmailEntity emailObject = emailService.buildPasswordResetEmail(email, resetUrl);
         emailService.sendHtmlMessage(emailObject);
 

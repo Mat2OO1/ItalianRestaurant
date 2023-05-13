@@ -42,10 +42,10 @@ public class OrderControllerTest {
     OrderService orderService;
 
     @Test
-    void shouldGetAllOrders() throws Exception {
+    void shouldGetAllOrdersFromToday() throws Exception {
         //given
         val orders = Utils.buildOrders();
-        given(orderService.getAllOrders()).willReturn(orders);
+        given(orderService.getAllOrdersFromToday()).willReturn(orders);
 
         // when
         val resultActions = mockMvc.perform(get("/order/all")

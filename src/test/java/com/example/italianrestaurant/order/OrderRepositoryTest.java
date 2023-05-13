@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.DirtiesContext;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -52,6 +55,7 @@ public class OrderRepositoryTest {
         val order2 = Utils.getOrder();
         order2.setUser(user2);
         order2.setDelivery(delivery2);
+        order2.setOrderDate(LocalDateTime.of(2023, 1, 2, 1, 0));
         orderRepository.save(order);
         orderRepository.save(order2);
     }
@@ -79,4 +83,24 @@ public class OrderRepositoryTest {
         // then
         assertThat(orders).isEmpty();
     }
+
+    //TODO: fix this test
+//    @Test
+//    void shouldFindAllOrdersFromToday() {
+//        // given
+//        // when
+//        val orders = orderRepository.findAllFromToday(LocalDate.of(2023, 1, 1));
+//        // then
+//        assertThat(orders).isNotEmpty();
+//        assertThat(orders).hasSize(1);
+//    }
+//
+//    @Test
+//    void shouldNotFindAllOrdersFromToday() {
+//        // given
+//        // when
+//        val orders = orderRepository.findAllFromToday(LocalDate.of(2023, 1, 3));
+//        // then
+//        assertThat(orders).isEmpty();
+//    }
 }

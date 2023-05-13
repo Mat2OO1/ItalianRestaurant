@@ -3,18 +3,17 @@ version: '3'
 services:
   db:
     container_name: db
-    image: postgres:14.1-alpine
+    image: postgres:15-alpine
     restart: always
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=<username>
+      - POSTGRES_PASSWORD=<password>
       - POSTGRES_DB=italian_restaurant
-    expose:
-      - "5432"
     ports:
       - "5432:5432"
     volumes:
       - db:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
   backend:
     container_name: backend
@@ -28,9 +27,15 @@ services:
       - db
     environment:
       - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/italian_restaurant
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_DATASOURCE_URL=<url>
+      - SPRING_DATASOURCE_USERNAME=<username>
+      - SPRING_DATASOURCE_PASSWORD=<password>
+      - SPRING_MAIL_HOST=<host>
+      - SPRING_MAIL_PORT=<port>
+      - SPRING_MAIL_USERNAME=<email>
+      - SPRING_MAIL_PASSWORD=<password>
+      - JWT_SECRET_KEY=<secret-key>
+      - JWT_EXPIRATION=<expiration>
 
   frontend:
     container_name: frontend
