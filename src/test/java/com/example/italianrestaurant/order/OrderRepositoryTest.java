@@ -1,5 +1,6 @@
 package com.example.italianrestaurant.order;
 
+import com.example.italianrestaurant.AbstractTestcontainers;
 import com.example.italianrestaurant.Utils;
 import com.example.italianrestaurant.delivery.DeliveryRepository;
 import com.example.italianrestaurant.user.UserRepository;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -17,8 +19,9 @@ import java.time.LocalDateTime;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class OrderRepositoryTest {
+public class OrderRepositoryTest extends AbstractTestcontainers {
 
     @Autowired
     private OrderRepository orderRepository;
@@ -61,46 +64,44 @@ public class OrderRepositoryTest {
     }
 
     @Test
-    void shouldFindOrdersByUser() {
+    void shouldFindOrdersByUserEmail() {
         // given
         val user = Utils.getUser();
-        user.setId(1);
         // when
-        val orders = orderRepository.findAllByUser(user);
+        val orders = orderRepository.findAllByUserEmail(user.getEmail());
         // then
         assertThat(orders).isNotEmpty();
         assertThat(orders).hasSize(1);
-        assertThat(orders.stream().map(Order::getUser).allMatch(u -> u.getId() == 1)).isTrue();
+        assertThat(orders.stream().map(Order::getUser).allMatch(u -> u.getEmail().equals(user.getEmail()))).isTrue();
     }
 
     @Test
-    void shouldNotFindOrdersByUser() {
+    void shouldNotFindOrdersByUserEmail() {
         // given
         val user = Utils.getUser();
-        user.setId(Integer.MAX_VALUE);
+        user.setEmail("wrongEmail");
         // when
-        val orders = orderRepository.findAllByUser(user);
+        val orders = orderRepository.findAllByUserEmail(user.getEmail());
         // then
         assertThat(orders).isEmpty();
     }
 
-    //TODO: fix this test
-//    @Test
-//    void shouldFindAllOrdersFromToday() {
-//        // given
-//        // when
-//        val orders = orderRepository.findAllFromToday(LocalDate.of(2023, 1, 1));
-//        // then
-//        assertThat(orders).isNotEmpty();
-//        assertThat(orders).hasSize(1);
-//    }
-//
-//    @Test
-//    void shouldNotFindAllOrdersFromToday() {
-//        // given
-//        // when
-//        val orders = orderRepository.findAllFromToday(LocalDate.of(2023, 1, 3));
-//        // then
-//        assertThat(orders).isEmpty();
-//    }
+    @Test
+    void shouldFindAllOrdersFromToday() {
+        // given
+        // when
+        val orders = orderRepository.findAllFromToday(LocalDate.of(2023, 1, 1));
+        // then
+        assertThat(orders).isNotEmpty();
+        assertThat(orders).hasSize(1);
+    }
+
+    @Test
+    void shouldNotFindAllOrdersFromToday() {
+        // given
+        // when
+        val orders = orderRepository.findAllFromToday(LocalDate.of(2023, 1, 3));
+        // then
+        assertThat(orders).isEmpty();
+    }
 }

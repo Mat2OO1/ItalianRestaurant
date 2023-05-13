@@ -27,7 +27,7 @@ public class OrderController {
 
     @GetMapping("/user")
     public ResponseEntity<List<Order>> getOrderByUser(@AuthenticationPrincipal User user) {
-        return ResponseEntity.ok(orderService.getOrdersByUser(user));
+        return ResponseEntity.ok(orderService.getOrdersByUserEmail(user));
     }
 
     @PostMapping

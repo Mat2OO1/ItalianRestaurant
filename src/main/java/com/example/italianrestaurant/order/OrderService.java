@@ -2,13 +2,11 @@ package com.example.italianrestaurant.order;
 
 import com.example.italianrestaurant.delivery.Delivery;
 import com.example.italianrestaurant.delivery.DeliveryService;
-import com.example.italianrestaurant.exceptions.InvalidEntityException;
 import com.example.italianrestaurant.order.mealorder.MealOrder;
 import com.example.italianrestaurant.order.mealorder.MealOrderService;
 import com.example.italianrestaurant.user.User;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +23,8 @@ public class OrderService {
     private final ModelMapper modelMapper;
     private final MealOrderService mealOrderService;
 
-    public List<Order> getOrdersByUser(User user) {
-        return orderRepository.findAllByUser(user);
+    public List<Order> getOrdersByUserEmail(User user) {
+        return orderRepository.findAllByUserEmail(user.getEmail());
     }
 
     public List<Order> getAllOrdersFromToday() {

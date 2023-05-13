@@ -2,7 +2,6 @@ package com.example.italianrestaurant.order;
 
 import com.example.italianrestaurant.Utils;
 import com.example.italianrestaurant.config.security.JwtAuthenticationFilter;
-import com.example.italianrestaurant.exceptions.InvalidEntityException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.val;
 import org.junit.jupiter.api.Test;
@@ -12,10 +11,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.List;
 
@@ -62,7 +59,7 @@ public class OrderControllerTest {
     void shouldGetOrdersByUsers() throws Exception {
         //given
         val orders = Utils.buildOrders();
-        given(orderService.getOrdersByUser(any())).willReturn(List.of(orders.get(0)));
+        given(orderService.getOrdersByUserEmail(any())).willReturn(List.of(orders.get(0)));
 
         // when
         val resultActions = mockMvc.perform(get("/order/user")

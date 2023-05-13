@@ -4,7 +4,6 @@ import com.example.italianrestaurant.Utils;
 import com.example.italianrestaurant.delivery.DeliveryService;
 import com.example.italianrestaurant.exceptions.InvalidEntityException;
 import com.example.italianrestaurant.order.mealorder.MealOrder;
-import com.example.italianrestaurant.order.mealorder.MealOrderDto;
 import com.example.italianrestaurant.order.mealorder.MealOrderService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.val;
@@ -15,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -74,10 +72,10 @@ public class OrderServiceTest {
         val orders = Utils.buildOrders();
         val user = Utils.getUser();
         user.setId(1);
-        given(orderRepository.findAllByUser(user)).willReturn(List.of(orders.get(0)));
+        given(orderRepository.findAllByUserEmail(user.getEmail())).willReturn(List.of(orders.get(0)));
 
         //when
-        val ordersByUser = orderService.getOrdersByUser(user);
+        val ordersByUser = orderService.getOrdersByUserEmail(user);
 
         //then
         assertThat(ordersByUser).isNotEmpty().hasSize(1);
@@ -89,10 +87,10 @@ public class OrderServiceTest {
         //given
         val user = Utils.getUser();
         user.setId(1);
-        given(orderRepository.findAllByUser(user)).willReturn(List.of());
+        given(orderRepository.findAllByUserEmail(user.getEmail())).willReturn(List.of());
 
         //when
-        val ordersByUser = orderService.getOrdersByUser(user);
+        val ordersByUser = orderService.getOrdersByUserEmail(user);
 
         //then
         assertThat(ordersByUser).isEmpty();
