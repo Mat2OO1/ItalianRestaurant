@@ -1,6 +1,5 @@
 package com.example.italianrestaurant.passwordreset.passwordtoken;
 
-import com.example.italianrestaurant.exceptions.TokenNotFoundException;
 import com.example.italianrestaurant.user.User;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,5 @@
 package com.example.italianrestaurant.passwordreset;
 
-import com.example.italianrestaurant.exceptions.InvalidTokenException;
 import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;

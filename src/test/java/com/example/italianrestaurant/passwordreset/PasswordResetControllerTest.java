@@ -2,8 +2,6 @@ package com.example.italianrestaurant.passwordreset;
 
 import com.example.italianrestaurant.Utils;
 import com.example.italianrestaurant.config.security.JwtAuthenticationFilter;
-import com.example.italianrestaurant.exceptions.InvalidTokenException;
-import com.example.italianrestaurant.order.Order;
 import com.example.italianrestaurant.passwordreset.passwordtoken.PasswordToken;
 import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,9 +15,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;

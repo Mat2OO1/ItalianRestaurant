@@ -2,7 +2,6 @@ package com.example.italianrestaurant.passwordreset;
 
 import com.example.italianrestaurant.Utils;
 import com.example.italianrestaurant.email.EmailService;
-import com.example.italianrestaurant.exceptions.InvalidTokenException;
 import com.example.italianrestaurant.passwordreset.passwordtoken.PasswordToken;
 import com.example.italianrestaurant.passwordreset.passwordtoken.PasswordTokenService;
 import com.example.italianrestaurant.user.User;
@@ -95,7 +94,7 @@ public class PasswordResetServiceTest {
 
 
     @Test
-    void shouldResetPassword() throws InvalidTokenException {
+    void shouldResetPassword() {
         //given
         val token = Utils.getPasswordToken();
         val user = Utils.getUser();

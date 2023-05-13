@@ -118,6 +118,7 @@ public class OrderServiceTest {
         given(deliveryService.addDelivery(any())).willReturn(delivery);
         given(modelMapper.map(any(), eq(MealOrder.class))).willReturn(Utils.getMealOrder());
         given(orderRepository.save(any())).willReturn(order);
+        given(mealOrderService.addMealOrder(any())).willReturn(mealOrder);
 
         //when
         Order result = orderService.makeOrder(user, Utils.getOrderDto());

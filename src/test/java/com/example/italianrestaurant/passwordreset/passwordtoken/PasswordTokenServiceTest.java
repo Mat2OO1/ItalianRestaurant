@@ -1,7 +1,6 @@
 package com.example.italianrestaurant.passwordreset.passwordtoken;
 
 import com.example.italianrestaurant.Utils;
-import com.example.italianrestaurant.exceptions.TokenNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.val;
 import org.junit.jupiter.api.Test;
@@ -49,7 +48,7 @@ public class PasswordTokenServiceTest {
     }
 
     @Test
-    void shouldGetTokenByToken() throws TokenNotFoundException {
+    void shouldGetTokenByToken() {
         //given
         val passwordToken = Utils.getPasswordToken();
         given(tokenRepository.findTokenByToken(passwordToken.getToken())).willReturn(Optional.of(passwordToken));
