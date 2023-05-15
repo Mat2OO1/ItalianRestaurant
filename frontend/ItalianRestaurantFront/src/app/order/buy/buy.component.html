@@ -1,50 +1,50 @@
 <div class="container" style="margin-top: 20px" *ngIf="isContentLoaded">
   <div class="text-content">
-    <h2 class="title">
+    <h2 class="title text-center">
       Order Details
     </h2>
 
     <form class="form" [formGroup]="buyForm" (ngSubmit)="onBuySubmit()">
-      <div class="form-outline mb-4" [ngClass]="{'has-error': buyForm.get('address').invalid && buyForm.get('address').touched}">
+      <div class="form-group mb-4" [ngClass]="{'has-error': buyForm.get('address').invalid && buyForm.get('address').touched}">
+        <label class="form-label " for="address">Address</label>
         <input type="text" id="address" formControlName="address" class="form-control bg-white border" />
-        <label class="form-label" for="address">Address</label>
         <div *ngIf="buyForm.get('address').invalid && buyForm.get('address').touched" class="text-danger">
           <div *ngIf="buyForm.get('address').errors['required']">
             Address is required.
           </div>
         </div>
       </div>
-      <div class="form-outline mb-4" [ngClass]="{'has-error': buyForm.get('city').invalid && buyForm.get('city').touched}">
-        <input type="text" id="city" formControlName="city" class="form-control bg-white border" />
+      <div class="form-group mb-4" [ngClass]="{'has-error': buyForm.get('city').invalid && buyForm.get('city').touched}">
         <label class="form-label" for="city">City</label>
+        <input type="text" id="city" formControlName="city" class="form-control bg-white border" />
         <div *ngIf="buyForm.get('city').invalid && buyForm.get('city').touched" class="text-danger">
           <div *ngIf="buyForm.get('city').errors['required']">
             City is required.
           </div>
         </div>
       </div>
-      <div class="form-outline mb-4" [ngClass]="{'has-error': buyForm.get('pcode').invalid && buyForm.get('pcode').touched}">
-        <input type="text" id="pcode" formControlName="pcode" class="form-control bg-white border" />
+      <div class="form-group mb-4" [ngClass]="{'has-error': buyForm.get('pcode').invalid && buyForm.get('pcode').touched}">
         <label class="form-label" for="pcode">Postal Code</label>
+        <input type="text" id="pcode" formControlName="pcode" class="form-control bg-white border" />
         <div *ngIf="buyForm.get('pcode').invalid && buyForm.get('pcode').touched" class="text-danger">
           <div *ngIf="buyForm.get('pcode').errors['required']">
             Postal Code is required.
           </div>
         </div>
       </div>
-      <div class="form-outline mb-4">
-        <input type="number" id="floor" formControlName="floor" class="form-control bg-white border" />
+      <div class="form-group mb-4">
         <label class="form-label" for="floor">Floor</label>
+        <input type="number" id="floor" formControlName="floor" class="form-control bg-white border" />
       </div>
-      <div class="form-outline mb-4">
-        <textarea id="info" formControlName="info" class="form-control bg-white border" style="height:100px"></textarea>
+      <div class="form-group mb-4">
         <label class="form-label" for="info">Additional info for provider</label>
+        <textarea id="info" formControlName="info" class="form-control bg-white border" style="height:100px"></textarea>
       </div>
-      <div class="form-check mb-4" style="text-align: left">
+      <div class="form-group mb-4" style="text-align: left">
         <input class="form-check-input bg-white border" name="deliveryOption" type="radio" id="KNOCK" value="KNOCK" formControlName="deliveryOption">
         <label class="form-check-label" for="knockOnTheDoor">Knock On The Door</label>
       </div>
-      <div class="form-check mb-4" style="text-align: left">
+      <div class="form-group mb-4" style="text-align: left">
         <input class="form-check-input bg-white border" name="deliveryOption" type="radio" id="LEAVE" value="LEAVE" formControlName="deliveryOption">
         <label class="form-check-label" for="leaveAtTheDoor">Leave At The Door</label>
       </div>

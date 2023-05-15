@@ -25,7 +25,5 @@ public class DeliveryDto {
     @Min(value = 0, message = "Floor must be greater than 0")
     private int floor;
     private String info;
-    @JsonFormat(pattern = "YYYY-MM-ddTHH:mm:ss", locale = "en-GB")
-    private LocalDateTime deliveryDate;
     private DeliveryOptions deliveryOptions;
 }

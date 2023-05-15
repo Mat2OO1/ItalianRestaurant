@@ -23,6 +23,6 @@ export class SummaryComponent {
   }
 
   calculateSum(){
-    return this.cartService.calculateSum();
+    return this.cartService.calculateSum().toFixed(2);
   }
 }
