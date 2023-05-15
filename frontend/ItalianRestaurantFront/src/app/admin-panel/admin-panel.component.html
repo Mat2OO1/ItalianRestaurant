@@ -1,6 +1,6 @@
 <br>
 <div class="container" *ngIf="isContentLoaded && orders.length > 0">
-  <table class="table table-bordered bg-white" *ngFor="let order of orders">
+  <table class="table table-bordered bg-white" *ngFor="let order of orders; let i = index">
     <thead>
     <tr>
       <th style="width:70px; font-size: 9px;" scope="col">ID: {{order.id}}</th>
@@ -18,7 +18,7 @@
     </tr>
     <tr>
       <td colspan="4">
-        <form class="form" [formGroup]="orderDetailsForm" (ngSubmit)="updateOrder(order.id)">
+        <form class="form" [formGroup]="forms[i]" (ngSubmit)="updateOrder(order.id, i)">
         <table class="table table-active">
           <thead>
           <tr>
@@ -31,17 +31,17 @@
           <tbody>
           <tr>
             <td>
-              <select class="form-select" [value]="order.orderStatus"  formControlName="orderStatus">
+              <select class="form-select" formControlName="orderStatus">
                 <option value="IN_PREPARATION">In preperation</option>
                 <option value="IN_DELIVERY">In delivery</option>
                 <option value="DELIVERED">Delivered</option>
               </select>
             </td>
             <td>
-              <input type="time" class="form-control" [value]="order.delivery.deliveryDate" formControlName="deliveryDate" name="deliveryDate" required>
+              <input type="time" class="form-control"  formControlName="deliveryDate" name="deliveryDate">
             </td>
-            <td>{{order.delivery.address}}{{order.delivery.city}} {{order.delivery.deliveryOptions}} {{order.delivery.postalCode}} {{order.delivery.info}}</td>
-            <td><button class="btn btn-primary" (click)="updateOrder(order.id)">Change</button></td>
+            <td>{{order.delivery.address}} {{order.delivery.city}} {{order.delivery.deliveryOptions}} {{order.delivery.postalCode}} {{order.delivery.info}}</td>
+            <td><button class="btn btn-primary" type="submit">Change</button></td>
 
           </tr>
           </tbody>

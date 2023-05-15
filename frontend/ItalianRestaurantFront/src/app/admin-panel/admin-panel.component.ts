@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {DataStorageService} from "../shared/data-storage.service";
 import {Order, OrderRes} from "../models/order";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {DatePipe} from "@angular/common";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {DatePipe, formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-admin-panel',
@@ -12,23 +12,24 @@ import {DatePipe} from "@angular/common";
 export class AdminPanelComponent {
   orders: OrderRes[] = []
   isContentLoaded = false;
-  orderDetailsForm: FormGroup;
+  forms: FormGroup[] = [];
 
   constructor(private dataStorageService: DataStorageService,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private formBuilder: FormBuilder) {
     this.dataStorageService.getOrders()
       .subscribe(
         (res) => {
           this.orders = res;
-          for(let order of this.orders){
-          }
           this.isContentLoaded = true;
+          this.forms = this.orders.map(data =>
+            this.formBuilder.group({
+              deliveryDate: new FormControl(formatDate(data.delivery.deliveryDate!, 'HH:mm', 'en-GB')),
+              orderStatus: new FormControl(data.orderStatus),
+            })
+          );
         }
       )
-    this.orderDetailsForm = new FormGroup({
-      deliveryDate: new FormControl(''),
-      orderStatus: new FormControl(''),
-    })
   }
 
   calculateSum(order: OrderRes){
@@ -40,16 +41,17 @@ export class AdminPanelComponent {
     return sum;
   }
 
-  updateOrder(orderId: number){
-    let orderStatus = this.orderDetailsForm.value['orderStatus']
+  updateOrder(orderId: number, formId: number){
+    const form = this.forms[formId];
+    let orderStatus = form.value['orderStatus']
     let deliveryDate = new Date()
-    deliveryDate.setHours(this.orderDetailsForm.value['deliveryDate'].substring(0,2))
-    deliveryDate.setMinutes(this.orderDetailsForm.value['deliveryDate'].substring(3,5))
-    deliveryDate.setHours(deliveryDate.getHours() + 2)
-    let deliveryDateFormatted = deliveryDate.toLocaleString('en-US', { timeZone: 'Europe/Paris' });
+    deliveryDate.setHours(form.value['deliveryDate'].substring(0,2))
+    deliveryDate.setMinutes(form.value['deliveryDate'].substring(3,5))
+    let deliveryDateFormatted = formatDate(deliveryDate, 'YYYY-MM-ddTHH:mm:ss', 'en-GB')
     console.log(deliveryDateFormatted)
-    this.dataStorageService.updateOrder(orderStatus,deliveryDate.toISOString(), orderId)
+    this.dataStorageService.updateOrder(orderStatus,deliveryDateFormatted, orderId)
   }
+
 
 
 }
