@@ -71,7 +71,7 @@ public class OrderServiceTest {
         //given
         val orders = Utils.buildOrders();
         val user = Utils.getUser();
-        user.setId(1);
+        user.setId(1L);
         given(orderRepository.findAllByUserEmail(user.getEmail())).willReturn(List.of(orders.get(0)));
 
         //when
@@ -86,7 +86,7 @@ public class OrderServiceTest {
     void shouldNotGetOrderByUser() {
         //given
         val user = Utils.getUser();
-        user.setId(1);
+        user.setId(1L);
         given(orderRepository.findAllByUserEmail(user.getEmail())).willReturn(List.of());
 
         //when
@@ -104,7 +104,7 @@ public class OrderServiceTest {
         val mealOrder = Utils.getMealOrder();
         mealOrder.setId(1L);
         val user = Utils.getUser();
-        user.setId(1);
+        user.setId(1L);
 
         val order = Order.builder()
                 .id(1L)

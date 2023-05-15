@@ -1,7 +1,7 @@
 package com.example.italianrestaurant.auth;
 
 import com.example.italianrestaurant.Utils;
-import com.example.italianrestaurant.config.security.JwtAuthenticationFilter;
+import com.example.italianrestaurant.security.JwtAuthenticationFilter;
 import jakarta.persistence.EntityExistsException;
 import lombok.val;
 import org.junit.jupiter.api.Test;
@@ -16,6 +16,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -94,7 +96,7 @@ public class AuthenticationControllerTest {
                 .token("token")
                 .build();
 
-        given(authenticationService.register(registerRequest)).willReturn(authenticationResponse);
+        doNothing().when(authenticationService).register(registerRequest);
 
         // when
         val resultActions = mockMvc.perform(post("/auth/register")
@@ -116,7 +118,7 @@ public class AuthenticationControllerTest {
                 .lastname("lastname")
                 .build();
 
-        given(authenticationService.register(registerRequest)).willThrow(EntityExistsException.class);
+        doThrow(EntityExistsException.class).when(authenticationService).register(registerRequest);
 
         // when
         val resultActions = mockMvc.perform(post("/auth/register")
