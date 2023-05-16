@@ -1,11 +1,11 @@
 package com.example.italianrestaurant.order;
 
+import com.example.italianrestaurant.security.UserPrincipal;
 import com.example.italianrestaurant.user.User;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,13 +27,13 @@ public class OrderController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<List<Order>> getOrderByUser(@AuthenticationPrincipal User user) {
-        return ResponseEntity.ok(orderService.getOrdersByUserEmail(user));
+    public ResponseEntity<List<Order>> getOrderByUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        return ResponseEntity.ok(orderService.getOrdersByUserEmail(userPrincipal));
     }
 
     @PostMapping
-    public ResponseEntity<?> makeOrder(@AuthenticationPrincipal User user, @Valid @RequestBody OrderDto orderDto) {
-        return ResponseEntity.ok(orderService.makeOrder(user, orderDto));
+    public ResponseEntity<?> makeOrder(@AuthenticationPrincipal UserPrincipal userPrincipal, @Valid @RequestBody OrderDto orderDto) {
+        return ResponseEntity.ok(orderService.makeOrder(userPrincipal, orderDto));
 
     }
 

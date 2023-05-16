@@ -4,6 +4,7 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {User} from "./user.model";
 import {environment} from "../../../environments/environment";
+import jwtDecode from "jwt-decode";
 
 export interface AuthResponseData{
   token: string;
@@ -60,11 +61,7 @@ export class AuthService {
     if(!userData){
       return;
     }
-    const loadedUser = new User(
-      userData._token,
-      new Date(userData._tokenExpirationDate),
-      userData.role
-    );
+    const loadedUser = new User(userData._token, new Date(userData._tokenExpirationDate), userData.role);
     if (loadedUser.token) {
       this.user.next(loadedUser);
       const expirationDuration =
@@ -93,7 +90,7 @@ export class AuthService {
 
   handleAuthentication(token: string, expiresIn: number, role: string){
     const expirationDate: Date = new Date(new Date().getTime() + expiresIn * 1000);
-    const user = new User(token, expirationDate,role);
+    const user = new User(token, expirationDate, role);
     this.user.next(user);
     //this.autoLogout(1000000000);
     localStorage.setItem('userData', JSON.stringify(user));
@@ -107,7 +104,14 @@ export class AuthService {
           this.router.navigate([''])
         }
       )
+  }
 
+  public saveToken(token: string): void {
+    const decodedToken: any = jwtDecode(token);
+    const expirationDate = new Date(decodedToken.exp * 1000); // Multiply by 1000 to convert from seconds to milliseconds
+    const user = new User(token, expirationDate, 'USER');
+    this.user.next(user);
+    localStorage.setItem('userData', JSON.stringify(user));
   }
 
   resetPassword(password: string, token: string) {

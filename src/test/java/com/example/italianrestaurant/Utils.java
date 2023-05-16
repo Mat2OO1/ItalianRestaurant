@@ -138,9 +138,9 @@ public class Utils {
         delivery2.setAddress("address2");
 
         var user = Utils.getUser();
-        user.setId(1);
+        user.setId(1L);
         var user2 = Utils.getUser();
-        user2.setId(2);
+        user2.setId(2L);
         user2.setEmail("user2@email.com");
 
         val order = Utils.getOrder();

@@ -20,7 +20,7 @@ public class PasswordResetService {
     private final PasswordTokenService tokenService;
     private final EmailService emailService;
 
-    @Value("${front-url}")
+    @Value("${app.front-url}")
     private String frontUrl;
 
     public PasswordToken sendResetPasswordRequest(String email) throws MessagingException {

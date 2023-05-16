@@ -4,6 +4,7 @@ import com.example.italianrestaurant.meal.Meal;
 import com.example.italianrestaurant.meal.MealRepository;
 import com.example.italianrestaurant.meal.mealcategory.MealCategory;
 import com.example.italianrestaurant.meal.mealcategory.MealCategoryRepository;
+import com.example.italianrestaurant.user.AuthProvider;
 import com.example.italianrestaurant.user.Role;
 import com.example.italianrestaurant.user.User;
 import com.example.italianrestaurant.user.UserRepository;
@@ -68,11 +69,33 @@ public class DataInitializer {
 
 
     private List<User> getUserData() {
-        return List.of(new User("pawel.kluska256@gmail.com", passwordEncoder.encode("password"),
-                        "Pawel", "Kluska", Role.USER),
-                new User("mateusz.krajewski@gmail.com", passwordEncoder.encode("password"),
-                        "Mateusz", "Krajewski", Role.USER),
-                new User("admin@example.com", passwordEncoder.encode("password"),"Admin","Admin", Role.ADMIN)
-                );
+        return List.of(
+                User.builder()
+                        .email("pawel.kluska256@gmail.com")
+                        .password(passwordEncoder.encode("password"))
+                        .firstName("Pawel")
+                        .lastName("Kluska")
+                        .role(Role.USER)
+                        .provider(AuthProvider.local)
+                        .emailVerified(false)
+                        .build(),
+                User.builder()
+                        .email("mateusz.krajewski@gmail.com")
+                        .password(passwordEncoder.encode("password"))
+                        .firstName("Mateusz")
+                        .lastName("Krajewski")
+                        .provider(AuthProvider.local)
+                        .role(Role.USER)
+                        .emailVerified(false)
+                        .build(),
+                User.builder()
+                        .email("admin@example.com")
+                        .password(passwordEncoder.encode("password"))
+                        .firstName("Admin")
+                        .lastName("Admin")
+                        .provider(AuthProvider.local)
+                        .role(Role.ADMIN)
+                        .emailVerified(false)
+                        .build());
     }
 }
