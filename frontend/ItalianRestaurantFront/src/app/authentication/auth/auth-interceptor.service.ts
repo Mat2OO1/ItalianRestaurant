@@ -26,7 +26,6 @@ export class AuthInterceptorService implements HttpInterceptor {
         const modifiedReq = req.clone({
           headers: new HttpHeaders().set('Authorization', 'Bearer ' + user.token)
         });
-
         return next.handle(modifiedReq).pipe(
           catchError(error => {
             // Handle the error here
@@ -34,7 +33,7 @@ export class AuthInterceptorService implements HttpInterceptor {
               this.router.navigate(['/home']);
               // @ts-ignore
             this.authService.user.next(null);
-
+            console.log(error)
             // Throw the error again to propagate it to the subscriber
             return throwError(error);
           })
