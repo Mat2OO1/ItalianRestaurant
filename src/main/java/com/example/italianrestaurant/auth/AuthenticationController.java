@@ -18,12 +18,13 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-    private final AuthenticationService service;
+    private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
         try {
-            return ResponseEntity.ok(service.register(request));
+            authenticationService.register(request);
+            return ResponseEntity.ok("User registered");
         } catch (EntityExistsException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -32,7 +33,7 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@Valid @RequestBody AuthenticationRequest request) {
         try {
-            return ResponseEntity.ok(service.authenticate(request));
+            return ResponseEntity.ok(authenticationService.authenticate(request));
         } catch (BadCredentialsException | EntityNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Bad credentials", e);

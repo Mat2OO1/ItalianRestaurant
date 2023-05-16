@@ -1,8 +1,8 @@
 package com.example.italianrestaurant.passwordreset;
 
 import com.example.italianrestaurant.Utils;
-import com.example.italianrestaurant.config.security.JwtAuthenticationFilter;
 import com.example.italianrestaurant.passwordreset.passwordtoken.PasswordToken;
+import com.example.italianrestaurant.security.JwtAuthenticationFilter;
 import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.val;

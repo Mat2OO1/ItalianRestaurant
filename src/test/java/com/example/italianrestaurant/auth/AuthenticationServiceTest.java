@@ -1,7 +1,7 @@
 package com.example.italianrestaurant.auth;
 
 import com.example.italianrestaurant.Utils;
-import com.example.italianrestaurant.config.security.JwtService;
+import com.example.italianrestaurant.security.JwtService;
 import com.example.italianrestaurant.user.Role;
 import com.example.italianrestaurant.user.User;
 import com.example.italianrestaurant.user.UserRepository;
@@ -23,7 +23,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class AuthenticationServiceTest {
@@ -49,7 +50,7 @@ public class AuthenticationServiceTest {
                 .build();
 
         val user = Utils.getUser();
-        user.setId(1);
+        user.setId(1L);
         val token = "token";
         val date = new Date();
         val authenticationResponse = AuthenticationResponse.builder()
@@ -60,7 +61,7 @@ public class AuthenticationServiceTest {
 
         given(authenticationManager.authenticate(any())).willReturn(null);
         given(userRepository.findByEmail(authenticationRequest.getEmail())).willReturn(Optional.of(user));
-        given(jwtService.generateToken(user)).willReturn(token);
+        given(jwtService.generateToken(any())).willReturn(token);
         given(jwtService.getTokenExpiration(token)).willReturn(date);
 
         //when
@@ -79,13 +80,7 @@ public class AuthenticationServiceTest {
                 .build();
 
         val user = Utils.getUser();
-        user.setId(1);
-        val token = "token";
-        val date = new Date();
-        val authenticationResponse = AuthenticationResponse.builder()
-                .token(token)
-                .expiration(date)
-                .build();
+        user.setId(1L);
 
         given(authenticationManager.authenticate(any())).willThrow(BadCredentialsException.class);
 
@@ -119,14 +114,12 @@ public class AuthenticationServiceTest {
         given(userRepository.existsByEmail(registerRequest.getEmail())).willReturn(false);
         given(passwordEncoder.encode(registerRequest.getPassword())).willReturn("password");
         given(userRepository.save(any(User.class))).willReturn(user);
-        given(jwtService.generateToken(any(User.class))).willReturn(token);
-        given(jwtService.getTokenExpiration(token)).willReturn(date);
 
         //when
-        AuthenticationResponse response = authenticationService.register(registerRequest);
+        authenticationService.register(registerRequest);
 
         //then
-        assertThat(response).isEqualTo(authenticationResponse);
+        verify(userRepository.save(any()), times(1));
     }
 
     @Test

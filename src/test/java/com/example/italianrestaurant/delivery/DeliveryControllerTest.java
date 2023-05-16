@@ -1,8 +1,8 @@
 package com.example.italianrestaurant.delivery;
 
 import com.example.italianrestaurant.Utils;
-import com.example.italianrestaurant.config.security.JwtAuthenticationFilter;
 import com.example.italianrestaurant.exceptions.InvalidEntityException;
+import com.example.italianrestaurant.security.JwtAuthenticationFilter;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,7 +4,9 @@ import com.example.italianrestaurant.delivery.Delivery;
 import com.example.italianrestaurant.delivery.DeliveryService;
 import com.example.italianrestaurant.order.mealorder.MealOrder;
 import com.example.italianrestaurant.order.mealorder.MealOrderService;
+import com.example.italianrestaurant.security.UserPrincipal;
 import com.example.italianrestaurant.user.User;
+import com.example.italianrestaurant.user.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -22,18 +24,19 @@ public class OrderService {
     private final DeliveryService deliveryService;
     private final ModelMapper modelMapper;
     private final MealOrderService mealOrderService;
+    private final UserService userService;
 
-    public List<Order> getOrdersByUserEmail(User user) {
-        return orderRepository.findAllByUserEmail(user.getEmail());
+    public List<Order> getOrdersByUserEmail(UserPrincipal userPrincipal) {
+        return orderRepository.findAllByUserEmail(userPrincipal.getEmail());
     }
 
     public List<Order> getAllOrdersFromToday() {
         return orderRepository.findAllFromToday(LocalDateTime.now().toLocalDate());
     }
 
-    public Order makeOrder(User user, OrderDto orderDto) {
+    public Order makeOrder(UserPrincipal userPrincipal, OrderDto orderDto) {
         Delivery dbDelivery = deliveryService.addDelivery(orderDto.getDelivery());
-
+        User user = userService.getUserByEmail(userPrincipal.getEmail());
         Order order = Order.builder()
                 .delivery(dbDelivery)
                 .orderDate(LocalDateTime.now())

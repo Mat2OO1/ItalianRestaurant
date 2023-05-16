@@ -1,7 +1,7 @@
 package com.example.italianrestaurant.meal;
 
 import com.example.italianrestaurant.Utils;
-import com.example.italianrestaurant.config.security.JwtAuthenticationFilter;
+import com.example.italianrestaurant.security.JwtAuthenticationFilter;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.val;
 import org.junit.jupiter.api.Test;

@@ -10,9 +10,7 @@ export class NavComponent {
   constructor(private authService: AuthService) {
     this.authService.user.subscribe(
       (user) => {
-        if(user.token){
-          this.isLoggedIn = true;
-        }
+        this.isLoggedIn = !!user.token;
       }
     )
   }
