@@ -5,6 +5,8 @@ import com.example.italianrestaurant.delivery.DeliveryService;
 import com.example.italianrestaurant.exceptions.InvalidEntityException;
 import com.example.italianrestaurant.order.mealorder.MealOrder;
 import com.example.italianrestaurant.order.mealorder.MealOrderService;
+import com.example.italianrestaurant.security.UserPrincipal;
+import com.example.italianrestaurant.user.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.val;
 import org.junit.jupiter.api.Test;
@@ -37,6 +39,8 @@ public class OrderServiceTest {
     private ModelMapper modelMapper;
     @Mock
     private MealOrderService mealOrderService;
+    @Mock
+    private UserService userService;
     @InjectMocks
     private OrderService orderService;
 
@@ -72,10 +76,11 @@ public class OrderServiceTest {
         val orders = Utils.buildOrders();
         val user = Utils.getUser();
         user.setId(1L);
+        val userPrincipal = UserPrincipal.create(user);
         given(orderRepository.findAllByUserEmail(user.getEmail())).willReturn(List.of(orders.get(0)));
 
         //when
-        val ordersByUser = orderService.getOrdersByUserEmail(user);
+        val ordersByUser = orderService.getOrdersByUserEmail(userPrincipal);
 
         //then
         assertThat(ordersByUser).isNotEmpty().hasSize(1);
@@ -87,10 +92,11 @@ public class OrderServiceTest {
         //given
         val user = Utils.getUser();
         user.setId(1L);
+        val userPrincipal = UserPrincipal.create(user);
         given(orderRepository.findAllByUserEmail(user.getEmail())).willReturn(List.of());
 
         //when
-        val ordersByUser = orderService.getOrdersByUserEmail(user);
+        val ordersByUser = orderService.getOrdersByUserEmail(userPrincipal);
 
         //then
         assertThat(ordersByUser).isEmpty();
@@ -115,13 +121,16 @@ public class OrderServiceTest {
                 .orderDate(LocalDateTime.now())
                 .build();
 
+        val userPrincipal = UserPrincipal.create(user);
+
         given(deliveryService.addDelivery(any())).willReturn(delivery);
         given(modelMapper.map(any(), eq(MealOrder.class))).willReturn(Utils.getMealOrder());
         given(orderRepository.save(any())).willReturn(order);
         given(mealOrderService.addMealOrder(any())).willReturn(mealOrder);
+        given(userService.getUserByEmail(any())).willReturn(user);
 
         //when
-        Order result = orderService.makeOrder(user, Utils.getOrderDto());
+        Order result = orderService.makeOrder(userPrincipal, Utils.getOrderDto());
 
         //then
         assertThat(result).isNotNull();
@@ -134,10 +143,11 @@ public class OrderServiceTest {
         //given
         val user = Utils.getUser();
         val orderDto = Utils.getOrderDto();
+        val userPrincipal = UserPrincipal.create(user);
         given(deliveryService.addDelivery(any())).willThrow(InvalidEntityException.class);
 
         //when
-        assertThatThrownBy(() -> orderService.makeOrder(user, orderDto))
+        assertThatThrownBy(() -> orderService.makeOrder(userPrincipal, orderDto))
                 .isInstanceOf(InvalidEntityException.class);
 
         //then
