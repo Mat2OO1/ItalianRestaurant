@@ -36,9 +36,4 @@ public class PasswordToken {
         PasswordToken that = (PasswordToken) o;
         return Objects.equals(token, that.token);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(token);
-    }
 }

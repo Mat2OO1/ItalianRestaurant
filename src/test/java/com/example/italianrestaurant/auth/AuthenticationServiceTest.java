@@ -11,9 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Date;
@@ -58,8 +60,9 @@ public class AuthenticationServiceTest {
                 .expiration(date)
                 .role(user.getRole())
                 .build();
+        val authentication = Mockito.mock(Authentication.class);
 
-        given(authenticationManager.authenticate(any())).willReturn(null);
+        given(authenticationManager.authenticate(any())).willReturn(authentication);
         given(userRepository.findByEmail(authenticationRequest.getEmail())).willReturn(Optional.of(user));
         given(jwtService.generateToken(any())).willReturn(token);
         given(jwtService.getTokenExpiration(token)).willReturn(date);
@@ -104,10 +107,6 @@ public class AuthenticationServiceTest {
                 .build();
         val token = "token";
         val date = new Date();
-        val authenticationResponse = AuthenticationResponse.builder()
-                .token(token)
-                .expiration(date)
-                .build();
         val user = Utils.getUser();
         user.setRole(Role.USER);
 
@@ -119,7 +118,7 @@ public class AuthenticationServiceTest {
         authenticationService.register(registerRequest);
 
         //then
-        verify(userRepository.save(any()), times(1));
+        verify(userRepository, times(1)).save(any());
     }
 
     @Test

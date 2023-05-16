@@ -53,9 +53,4 @@ public class Order {
         Order order = (Order) o;
         return Objects.equals(id, order.id) && Objects.equals(user, order.user) && Objects.equals(delivery, order.delivery) && Objects.equals(mealOrders, order.mealOrders) && orderStatus == order.orderStatus && Objects.equals(orderDate, order.orderDate);
     }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

@@ -23,10 +23,6 @@ public class MealCategory {
     private String name;
     private String imgPath;
 
-    public MealCategory(String name, String imgPath) {
-        this.name = name;
-        this.imgPath = imgPath;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -36,8 +32,4 @@ public class MealCategory {
         return getId() != null && Objects.equals(getId(), mealCategory.getId());
     }
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

@@ -31,13 +31,6 @@ public class Meal {
     @Column(nullable = false)
     private double price;
 
-    public Meal(String name, String imgPath, MealCategory mealCategory, String description, double price) {
-        this.name = name;
-        this.imgPath = imgPath;
-        this.mealCategory = mealCategory;
-        this.description = description;
-        this.price = price;
-    }
 
     @Override
     public boolean equals(Object o) {

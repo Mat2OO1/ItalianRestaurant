@@ -14,6 +14,7 @@ import com.example.italianrestaurant.order.mealorder.MealOrder;
 import com.example.italianrestaurant.order.mealorder.MealOrderDto;
 import com.example.italianrestaurant.passwordreset.PasswordResetRequest;
 import com.example.italianrestaurant.passwordreset.passwordtoken.PasswordToken;
+import com.example.italianrestaurant.user.AuthProvider;
 import com.example.italianrestaurant.user.Role;
 import com.example.italianrestaurant.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -55,6 +56,7 @@ public class Utils {
                 .firstName("firstName")
                 .lastName("lastName")
                 .role(Role.USER)
+                .provider(AuthProvider.local)
                 .build();
     }
 
