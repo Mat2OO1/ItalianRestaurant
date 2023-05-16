@@ -24,7 +24,7 @@ export class AdminPanelComponent {
           this.isContentLoaded = true;
           this.forms = this.orders.map(data =>
             this.formBuilder.group({
-              deliveryDate: new FormControl(formatDate(data.delivery.deliveryDate!, 'HH:mm', 'en-GB')),
+              deliveryDate: new FormControl(this.customFormatDate(data.delivery.deliveryDate!)),
               orderStatus: new FormControl(data.orderStatus),
             })
           );
@@ -50,6 +50,15 @@ export class AdminPanelComponent {
     let deliveryDateFormatted = formatDate(deliveryDate, 'YYYY-MM-ddTHH:mm:ss', 'en-GB')
     console.log(deliveryDateFormatted)
     this.dataStorageService.updateOrder(orderStatus,deliveryDateFormatted, orderId)
+  }
+
+  customFormatDate(date: Date){
+    if(date != null){
+      return formatDate(date, 'HH:mm', 'en-GB')
+    }
+    else{
+      return '';
+    }
   }
 
 

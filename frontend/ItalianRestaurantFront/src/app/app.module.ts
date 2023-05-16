@@ -10,7 +10,6 @@ import {AppRoutingModule} from "./app.routing.module";
 import {MenuComponent} from "./order/menu/menu.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {RegisterComponent} from "./authentication/register/register.component";
-import {CartComponent} from "./order/cart/cart.component";
 import {CartService} from "./shared/cart.service";
 import {SummaryComponent} from "./order/summary/summary.component";
 import {BuyComponent} from "./order/buy/buy.component";
@@ -39,7 +38,6 @@ import { ToasterComponent } from './toast-notifications/toaster/toaster.componen
     LoginComponent,
     MenuComponent,
     RegisterComponent,
-    CartComponent,
     SummaryComponent,
     BuyComponent,
     ConfirmationComponent,

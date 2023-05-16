@@ -16,10 +16,7 @@ export class Meal{
   }
 
   equals(other: Meal): boolean {
-    return this.name === other.name &&
-      this.imgPath === other.imgPath &&
-      this.description === other.description &&
-      this.price === other.price;
+    return this.name === other.name
   }
 }
 

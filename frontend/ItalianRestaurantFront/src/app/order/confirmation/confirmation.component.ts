@@ -23,15 +23,15 @@ export class ConfirmationComponent implements OnInit {
               private http: HttpClient,
               private orderService: OrderService) {}
 
-  adjustStatus(){
+  adjustStatus(status: string){
     const circle2 = document.getElementById("circle2")!
     const circle3 = document.getElementById("circle3")!
     const progressBar = document.getElementById("indicator")!
-    if(this.orderDetails.status.toLowerCase() == 'in delivery'){
+    if(status.toLowerCase() == 'in delivery'){
       circle2.classList.add("active")
       progressBar.style.width = "50%";
     }
-    else if(this.orderDetails.status.toLowerCase() == 'delivered'){
+    else if(status.toLowerCase() == 'delivered'){
       circle2.classList.add("active")
       circle3.classList.add("active")
       progressBar.style.width = "100%";
@@ -44,8 +44,8 @@ export class ConfirmationComponent implements OnInit {
     this.orderService.orderDetails
       .subscribe(
         (res: {date: Date, status: string}) => {
-          this.adjustStatus()
           const status = res.status.toLowerCase().replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+          this.adjustStatus(status)
           this.orderDetails = {date: res.date , status: status}
         }
       )
