@@ -65,7 +65,7 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .expiration(expiration)
-                .role(Role.USER)
+                .role(user.getRole())
                 .build();
     }
 
