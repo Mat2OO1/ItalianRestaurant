@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, catchError, first, tap, throwError} from "rxjs";
+import {BehaviorSubject, catchError, tap, throwError} from "rxjs";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {User} from "./user.model";
@@ -7,19 +7,22 @@ import {environment} from "../../../environments/environment";
 import jwtDecode from "jwt-decode";
 import {ToastService} from "../../shared/toast.service";
 
-export interface AuthResponseData{
+export interface AuthResponseData {
   token: string;
   expiration: string;
   role: string;
 }
+
 @Injectable()
 export class AuthService {
   // @ts-ignore
   user = new BehaviorSubject<User>(null);
   private logoutTimer: any;
-  constructor(private http: HttpClient, private router: Router, private toastService: ToastService){}
 
-  signup(firstName: string, lastName: string, email: string, password: string){
+  constructor(private http: HttpClient, private router: Router, private toastService: ToastService) {
+  }
+
+  signup(firstName: string, lastName: string, email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
         `${environment.apiUrl}/auth/register`,
@@ -27,18 +30,20 @@ export class AuthService {
           firstname: firstName,
           lastname: lastName,
           email: email,
-          password: password}
+          password: password
+        }
       )
       .pipe(
         catchError(this.handleError),
         tap(
-        resData => {
-        this.handleAuthentication(resData.token, new Date(resData.expiration).getTime(),resData.role)
-        })
+          resData => {
+            this.handleAuthentication(resData.token, new Date(resData.expiration).getTime(), resData.role)
+            this.toastService.showSuccessToast("Login", "User registered successfully")
+          })
       )
   }
 
-  login(email: string, password: string){
+  login(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
         `${environment.apiUrl}/auth/authenticate`,
@@ -52,14 +57,19 @@ export class AuthService {
         tap(
           resData => {
             this.handleAuthentication(resData.token, new Date(resData.expiration).getTime(), resData.role)
+            this.toastService.showSuccessToast("Login", "User logged in successfully")
           })
       )
   }
 
   autoLogin() {
     // @ts-ignore
-    const userData: {_token: string, _tokenExpirationDate: string, role: string} = JSON.parse(localStorage.getItem('userData'));
-    if(!userData){
+    const userData: {
+      _token: string,
+      _tokenExpirationDate: string,
+      role: string
+    } = JSON.parse(localStorage.getItem('userData'));
+    if (!userData) {
       return;
     }
     const loadedUser = new User(userData._token, new Date(userData._tokenExpirationDate), userData.role);
@@ -82,6 +92,7 @@ export class AuthService {
     }
     this.logoutTimer = null;
   }
+
   // autoLogout(expirationDuration: number) {
   //   this.logoutTimer = setTimeout( () => {
   //     this.logout()
@@ -89,7 +100,7 @@ export class AuthService {
   // }
 
 
-  handleAuthentication(token: string, expiresIn: number, role: string){
+  handleAuthentication(token: string, expiresIn: number, role: string) {
     const expirationDate: Date = new Date(new Date().getTime() + expiresIn * 1000);
     const user = new User(token, expirationDate, role);
     this.user.next(user);
@@ -97,7 +108,7 @@ export class AuthService {
     localStorage.setItem('userData', JSON.stringify(user));
   }
 
-  requestResetPassword(email: string){
+  requestResetPassword(email: string) {
     this.http.get(`${environment.apiUrl}/password/request?email=${email}`)
       .subscribe(
         (res) => {
@@ -114,6 +125,7 @@ export class AuthService {
     const user = new User(token, expirationDate, 'USER');
     this.user.next(user);
     localStorage.setItem('userData', JSON.stringify(user));
+    this.toastService.showSuccessToast("Login", "User logged in successfully")
   }
 
   resetPassword(password: string, token: string) {
@@ -122,7 +134,7 @@ export class AuthService {
         {
           token: token,
           password: password,
-        }, { responseType: 'text' })
+        }, {responseType: 'text'})
       .subscribe(
         (res) => {
           console.log(res);
@@ -134,10 +146,9 @@ export class AuthService {
 
   private handleError(errorRes: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
-    if(errorRes.error.error === 'Not Found') {
+    if (errorRes.error.error === 'Not Found') {
       errorMessage = `Bad credentials`;
-      }
-    else if (errorRes.error === 'User already exists') {
+    } else if (errorRes.error === 'User already exists') {
       errorMessage = 'This user exists already';
     }
     return throwError(errorMessage);

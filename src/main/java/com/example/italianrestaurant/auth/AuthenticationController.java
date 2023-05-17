@@ -21,12 +21,12 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
+    public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody RegisterRequest request) {
         try {
-            authenticationService.register(request);
-            return ResponseEntity.ok("User registered");
+            return ResponseEntity.ok( authenticationService.register(request));
         } catch (EntityExistsException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "User already exists", e);
         }
     }
 
