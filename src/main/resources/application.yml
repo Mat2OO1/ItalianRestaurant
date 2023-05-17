@@ -4,6 +4,7 @@ spring:
     username: postgres
     password: postgres
     driverClassName: org.postgresql.Driver
+
   jpa:
     properties:
       hibernate:
@@ -11,6 +12,11 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+  flyway:
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+    user: postgres
+    password: postgres
   mail:
     host: smtp.gmail.com
     port: 587

@@ -3,6 +3,7 @@ import {DataStorageService} from "../shared/data-storage.service";
 import {Order, OrderRes} from "../models/order";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {DatePipe, formatDate} from "@angular/common";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-admin-panel',
@@ -30,6 +31,7 @@ export class AdminPanelComponent {
           );
         }
       )
+    setInterval(this.fetchOrders, 10000);
   }
 
   calculateSum(order: OrderRes){
@@ -60,6 +62,16 @@ export class AdminPanelComponent {
       return '';
     }
   }
+
+  fetchOrders(){
+    this.dataStorageService.getOrders()
+      .subscribe(
+        (response: OrderRes[]) => {
+          this.orders = response;
+          // You can perform any additional operations with the orders here
+        }
+      );
+  };
 
 
 
