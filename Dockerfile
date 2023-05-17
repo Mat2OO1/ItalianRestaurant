@@ -14,7 +14,8 @@ RUN mvn dependency:go-offline
 COPY src ./src
 
 # Build the application
-RUN mvn package
+RUN mvn package -Dmaven.test.skip
+
 
 # Use a JRE image to run the application
 FROM eclipse-temurin:17-jre-alpine

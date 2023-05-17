@@ -6,8 +6,8 @@ services:
     image: postgres:15-alpine
     restart: always
     environment:
-      - POSTGRES_USER=<username>
-      - POSTGRES_PASSWORD=<password>
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=italian_restaurant
     ports:
       - "5432:5432"
@@ -27,16 +27,21 @@ services:
       - db
     environment:
       - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATASOURCE_URL=<url>
-      - SPRING_DATASOURCE_USERNAME=<username>
-      - SPRING_DATASOURCE_PASSWORD=<password>
-      - SPRING_MAIL_HOST=<host>
-      - SPRING_MAIL_PORT=<port>
-      - SPRING_MAIL_USERNAME=<email>
-      - SPRING_MAIL_PASSWORD=<password>
-      - JWT_SECRET_KEY=<secret-key>
-      - JWT_EXPIRATION=<expiration>
-
+      - SPRING_DATASOURCE_URL= <url>
+      - SPRING_DATASOURCE_USERNAME= <username>
+      - SPRING_DATASOURCE_PASSWORD= <password>
+      - SPRING_MAIL_HOST= <host>
+      - SPRING_MAIL_PORT= <port>
+      - SPRING_MAIL_USERNAME= <username>
+      - SPRING_MAIL_PASSWORD= <password>
+      - JWT_SECRET_KEY= <secret>
+      - JWT_EXPIRATION=300000
+      - GOOGLE_CLIENT_ID= <id>
+      - GOOGLE_CLIENT_SECRET= <secret>
+      - FACEBOOK_CLIENT_ID= <id>
+      - FACEBOOK_CLIENT_SECRET= <secret>
+      - GITHUB_CLIENT_ID= <id>
+      - GITHUB_CLIENT_SECRET= <secret>
   frontend:
     container_name: frontend
     build:

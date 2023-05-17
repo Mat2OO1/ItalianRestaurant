@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {User} from "./user.model";
 import {environment} from "../../../environments/environment";
 import jwtDecode from "jwt-decode";
+import {ToastService} from "../../shared/toast.service";
 
 export interface AuthResponseData{
   token: string;
@@ -16,7 +17,7 @@ export class AuthService {
   // @ts-ignore
   user = new BehaviorSubject<User>(null);
   private logoutTimer: any;
-  constructor(private http: HttpClient, private router: Router){}
+  constructor(private http: HttpClient, private router: Router, private toastService: ToastService){}
 
   signup(firstName: string, lastName: string, email: string, password: string){
     return this.http
@@ -102,6 +103,7 @@ export class AuthService {
         (res) => {
           console.log(res);
           this.router.navigate([''])
+          this.toastService.showSuccessToast("Password reset", "Check your email to reset your password")
         }
       )
   }
@@ -125,6 +127,7 @@ export class AuthService {
         (res) => {
           console.log(res);
           this.router.navigate([''])
+          this.toastService.showSuccessToast("Password reset", "Password has been reset successfully")
         }
       );
   }
