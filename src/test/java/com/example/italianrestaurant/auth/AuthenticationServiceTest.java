@@ -60,9 +60,7 @@ public class AuthenticationServiceTest {
                 .expiration(date)
                 .role(user.getRole())
                 .build();
-        val authentication = Mockito.mock(Authentication.class);
 
-        given(authenticationManager.authenticate(any())).willReturn(authentication);
         given(userRepository.findByEmail(authenticationRequest.getEmail())).willReturn(Optional.of(user));
         given(jwtService.generateToken(any())).willReturn(token);
         given(jwtService.getTokenExpiration(token)).willReturn(date);
@@ -110,15 +108,24 @@ public class AuthenticationServiceTest {
         val user = Utils.getUser();
         user.setRole(Role.USER);
 
+        val authenticationResponse = AuthenticationResponse.builder()
+                .token(token)
+                .expiration(date)
+                .role(user.getRole())
+                .build();
+
         given(userRepository.existsByEmail(registerRequest.getEmail())).willReturn(false);
         given(passwordEncoder.encode(registerRequest.getPassword())).willReturn("password");
         given(userRepository.save(any(User.class))).willReturn(user);
+        given(jwtService.generateToken(any())).willReturn(token);
+        given(jwtService.getTokenExpiration(token)).willReturn(date);
 
         //when
-        authenticationService.register(registerRequest);
+        AuthenticationResponse response = authenticationService.register(registerRequest);
 
         //then
         verify(userRepository, times(1)).save(any());
+        assertThat(response).isEqualTo(authenticationResponse);
     }
 
     @Test

@@ -96,7 +96,7 @@ public class AuthenticationControllerTest {
                 .token("token")
                 .build();
 
-        doNothing().when(authenticationService).register(registerRequest);
+        given(authenticationService.register(registerRequest)).willReturn(authenticationResponse);
 
         // when
         val resultActions = mockMvc.perform(post("/auth/register")
