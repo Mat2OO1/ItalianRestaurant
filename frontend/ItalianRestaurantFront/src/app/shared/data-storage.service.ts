@@ -41,6 +41,11 @@ export class DataStorageService {
       .get<OrderRes[]>(`${environment.apiUrl}/order/all`)
   }
 
+  getUserOrders() {
+    return this.http
+      .get<OrderRes[]>(`${environment.apiUrl}/order/user`)
+  }
+
   updateOrder(orderStatus: string, deliveryDate: string, orderId: number) {
     return this.http
       .post(`${environment.apiUrl}/order/change-status`, {

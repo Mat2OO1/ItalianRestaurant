@@ -53,4 +53,10 @@ export class CartService {
     return sum;
   }
 
+  clearCart(){
+    this.cart = []
+    this.cartSubject.next([])
+    localStorage.removeItem("cartData")
+  }
+
 }

@@ -36,11 +36,11 @@ export class BuyComponent {
     let address = this.buyForm.value['address']
     let city = this.buyForm.value['city'];
     let pcode = this.buyForm.value['pcode'];
-    let floor = this.buyForm.value['floor'];
-    let info = this.buyForm.value['info'];
-    let deliveryOption = this.buyForm.value['deliveryOption'];
+    let floor = this.buyForm.value['floor'] === '' ? null : this.buyForm.value['floor'];
+    let info = this.buyForm.value['info'] === '' ? null : this.buyForm.value['info'];
+    let deliveryOption = this.buyForm.value['deliveryOption'] === '' ? null: this.buyForm.value['deliveryOption'];
     this.dataStorageService.makeAnOrder(
-      new Delivery(address,city,pcode,floor,info,deliveryOption,), this.cartService.cart
+      new Delivery(address,city,pcode,floor,info,deliveryOption), this.cartService.cart
     )
       .subscribe(
       (res: any) => {
@@ -50,7 +50,7 @@ export class BuyComponent {
         this.router.navigate(["/confirmation"])
       }
     )
-    this.cartService.cart = [];
+    this.cartService.clearCart()
   }
 
 }

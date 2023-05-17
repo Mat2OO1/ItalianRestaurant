@@ -4,7 +4,7 @@
     <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
       <!-- First name input -->
       <div class="mb-4">
-        <label class="form-label" for="name">Name</label>
+        <label class="form-label" for="name">Name<span class="text-danger">*</span></label>
         <input type="text" id="name" formControlName="firstName" class="form-control bg-white border" />
         <div *ngIf="registerForm.get('firstName').invalid && (registerForm.get('firstName').dirty || registerForm.get('firstName').touched)" class="text-danger">
           <div *ngIf="registerForm.get('firstName').errors['required']">
@@ -14,7 +14,7 @@
       </div>
       <!-- Surname input -->
       <div class="mb-4">
-        <label class="form-label" for="surname">Surname</label>
+        <label class="form-label" for="surname">Surname<span class="text-danger">*</span></label>
         <input type="text" id="surname" formControlName="lastName" class="form-control bg-white border" />
         <div *ngIf="registerForm.get('lastName').invalid && (registerForm.get('lastName').dirty || registerForm.get('lastName').touched)" class="text-danger">
           <div *ngIf="registerForm.get('lastName').errors['required']">
@@ -24,7 +24,7 @@
       </div>
       <!-- Email input -->
       <div class="mb-4">
-        <label class="form-label" for="email">Email address</label>
+        <label class="form-label" for="email">Email address<span class="text-danger">*</span></label>
         <input type="email" id="email" formControlName="email" class="form-control bg-white border" />
         <div *ngIf="registerForm.get('email').invalid && (registerForm.get('email').dirty || registerForm.get('email').touched)" class="text-danger">
           <div *ngIf="registerForm.get('email').errors['required']">
@@ -38,7 +38,7 @@
 
       <!-- Password input -->
       <div class="mb-4">
-        <label class="form-label" for="password">Password</label>
+        <label class="form-label" for="password">Password<span class="text-danger">*</span></label>
         <input type="password" id="password" formControlName="password" class="form-control bg-white border" />
         <div *ngIf="registerForm.get('password').invalid && (registerForm.get('password').dirty || registerForm.get('password').touched)" class="text-danger">
           <div *ngIf="registerForm.get('password').errors['required']">

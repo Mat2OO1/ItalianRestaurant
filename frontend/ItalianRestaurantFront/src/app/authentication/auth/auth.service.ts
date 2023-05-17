@@ -56,6 +56,7 @@ export class AuthService {
         catchError(this.handleError),
         tap(
           resData => {
+            console.log(resData)
             this.handleAuthentication(resData.token, new Date(resData.expiration).getTime(), resData.role)
             this.toastService.showSuccessToast("Login", "User logged in successfully")
           })
@@ -64,11 +65,7 @@ export class AuthService {
 
   autoLogin() {
     // @ts-ignore
-    const userData: {
-      _token: string,
-      _tokenExpirationDate: string,
-      role: string
-    } = JSON.parse(localStorage.getItem('userData'));
+    const userData: { _token: string, _tokenExpirationDate: string, role: string } = JSON.parse(localStorage.getItem('userData'));
     if (!userData) {
       return;
     }
@@ -113,8 +110,8 @@ export class AuthService {
       .subscribe(
         (res) => {
           console.log(res);
-          this.router.navigate([''])
           this.toastService.showSuccessToast("Password reset", "Check your email to reset your password")
+          this.router.navigate([''])
         }
       )
   }

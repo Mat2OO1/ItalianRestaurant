@@ -4,7 +4,7 @@
     <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
       <!-- Email input -->
       <div class="mb-3">
-        <label class="form-label" for="form2Example1">Email address</label>
+        <label class="form-label" for="form2Example1">Email address<span class="text-danger">*</span></label>
         <input type="email" id="form2Example1" formControlName="email" class="form-control bg-white border" placeholder="name@example.com"/>
         <!-- Validation message for email input -->
         <div *ngIf="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched)" class="text-danger">
@@ -15,7 +15,7 @@
 
       <!-- Password input -->
       <div class="mb-4">
-        <label class="form-label" for="form2Example2">Password</label>
+        <label class="form-label" for="form2Example2">Password<span class="text-danger">*</span></label>
 
         <input type="password" id="form2Example2" formControlName="password" class="form-control  bg-white border" />
         <!-- Validation message for password input -->

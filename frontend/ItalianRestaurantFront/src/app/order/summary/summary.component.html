@@ -20,10 +20,10 @@
         <button class="plus-minus-btn" (click)="increaseQuantity(item)">+</button>
         <button class="plus-minus-btn" (click)="removeItem(item)"><i class="bi bi-x"></i></button>
       </div>
-      <h4 class="calculated">{{item.quantity * item.meal.price}} $</h4>
+      <h4 class="calculated">{{(item.quantity * item.meal.price).toFixed(2)}} $</h4>
     </div>
     <hr style="width: 70%; margin: auto">
-    <h4 class="sum">Sum: {{sum}} $</h4>
+    <h4 class="sum">Sum: {{sum.toFixed(2)}} $</h4>
     <a href="#" class="proceed-btn" routerLink="/buy" [ngClass]="{'disabled': cart.length === 0}">Proceed</a>
     <a href="#" class="cancel-btn" routerLink="/menu" >Cancel</a>
   </div>

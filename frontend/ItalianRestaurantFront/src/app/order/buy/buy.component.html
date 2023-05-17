@@ -6,35 +6,32 @@
 
     <form class="form" [formGroup]="buyForm" (ngSubmit)="onBuySubmit()">
       <div class="form-group mb-4" [ngClass]="{'has-error': buyForm.get('address').invalid && buyForm.get('address').touched}">
-        <label class="form-label " for="address">Address</label>
+        <label class="form-label " for="address">Address<span class="text-danger">*</span></label>
         <input type="text" id="address" formControlName="address" class="form-control bg-white border" />
         <div *ngIf="buyForm.get('address').invalid && buyForm.get('address').touched" class="text-danger">
-          <div *ngIf="buyForm.get('address').errors['required']">
             Address is required.
-          </div>
         </div>
       </div>
       <div class="form-group mb-4" [ngClass]="{'has-error': buyForm.get('city').invalid && buyForm.get('city').touched}">
-        <label class="form-label" for="city">City</label>
+        <label class="form-label" for="city">City<span class="text-danger">*</span></label>
         <input type="text" id="city" formControlName="city" class="form-control bg-white border" />
         <div *ngIf="buyForm.get('city').invalid && buyForm.get('city').touched" class="text-danger">
-          <div *ngIf="buyForm.get('city').errors['required']">
             City is required.
-          </div>
         </div>
       </div>
       <div class="form-group mb-4" [ngClass]="{'has-error': buyForm.get('pcode').invalid && buyForm.get('pcode').touched}">
-        <label class="form-label" for="pcode">Postal Code</label>
+        <label class="form-label" for="pcode">Postal Code<span class="text-danger">*</span></label>
         <input type="text" id="pcode" formControlName="pcode" class="form-control bg-white border" />
         <div *ngIf="buyForm.get('pcode').invalid && buyForm.get('pcode').touched" class="text-danger">
-          <div *ngIf="buyForm.get('pcode').errors['required']">
             Postal Code is required.
-          </div>
         </div>
       </div>
       <div class="form-group mb-4">
         <label class="form-label" for="floor">Floor</label>
         <input type="number" id="floor" formControlName="floor" class="form-control bg-white border" />
+        <div *ngIf="buyForm.get('floor').invalid && buyForm.get('floor').touched" class="text-danger">
+          Address is required.
+        </div>
       </div>
       <div class="form-group mb-4">
         <label class="form-label" for="info">Additional info for provider</label>

@@ -13,6 +13,7 @@ import {EmailFormComponent} from "./authentication/password-reset/email-form/ema
 import {AdminPanelComponent} from "./admin-panel/admin-panel.component";
 import {PasswordFormComponent} from "./authentication/password-reset/password-form/password-form.component";
 import {AdminGuard} from "./authentication/auth/admin.guard";
+import {OrderHistoryComponent} from "./order-history/order-history.component";
 
 const routes: Routes = [
   {path: '', component: InfoComponent},
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path: 'summary', component: SummaryComponent, canActivate: [AuthGuard]},
   {path: 'buy', component: BuyComponent, canActivate: [AuthGuard]},
   {path: 'confirmation', component: ConfirmationComponent, canActivate: [AuthGuard]},
+  {path: 'order-history', component: OrderHistoryComponent, canActivate: [AuthGuard]},
   {path: 'admin-panel', component: AdminPanelComponent,canActivate: [AdminGuard]},
   {path: '**', redirectTo: ''}
 ]

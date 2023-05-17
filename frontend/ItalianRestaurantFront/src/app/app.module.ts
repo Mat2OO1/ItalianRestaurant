@@ -29,6 +29,7 @@ import {PasswordFormComponent} from "./authentication/password-reset/password-fo
 import {DatePipe} from "@angular/common";
 import { ToastComponent } from './toast-notifications/toast/toast.component';
 import { ToasterComponent } from './toast-notifications/toaster/toaster.component';
+import {OrderHistoryComponent} from "./order-history/order-history.component";
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ToasterComponent } from './toast-notifications/toaster/toaster.componen
     AdminPanelComponent,
     PasswordFormComponent,
     ToastComponent,
-    ToasterComponent
+    ToasterComponent,
+    OrderHistoryComponent
   ],
   imports: [
     BrowserModule,
