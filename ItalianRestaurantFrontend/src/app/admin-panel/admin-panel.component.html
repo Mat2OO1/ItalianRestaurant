@@ -1,0 +1,66 @@
+<br>
+<div class="container" *ngIf="isContentLoaded && orders.length > 0">
+  <table class="table table-bordered bg-white" *ngFor="let order of orders; let i = index">
+    <thead>
+    <tr>
+      <th style="width:70px; font-size: 9px;" scope="col">ID: {{order.id}}</th>
+      <th scope="col">Meal</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let meal of order.mealOrders">
+      <th></th>
+      <td>{{meal.meal.name}}</td>
+      <td>{{meal.quantity}}</td>
+      <td>{{meal.price}}</td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <form class="form" [formGroup]="forms[i]" (ngSubmit)="updateOrder(order.id, i)">
+          <table class="table table-active">
+            <thead>
+            <tr>
+              <th scope="col">Order Status</th>
+              <th scope="col">Estimated Delivery Date</th>
+              <th scope="col">Address</th>
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>
+                <select class="form-select" formControlName="orderStatus">
+                  <option value="IN_PREPARATION">In preperation</option>
+                  <option value="IN_DELIVERY">In delivery</option>
+                  <option value="DELIVERED">Delivered</option>
+                </select>
+              </td>
+              <td>
+                <input type="time" class="form-control" formControlName="deliveryDate" name="deliveryDate">
+              </td>
+              <td>{{order.delivery.address}} {{order.delivery.city}} {{order.delivery.deliveryOptions}} {{order.delivery.postalCode}} {{order.delivery.info}}</td>
+              <td>
+                <button class="btn btn-primary" type="submit">Change</button>
+              </td>
+
+            </tr>
+            </tbody>
+          </table>
+        </form>
+      </td>
+    </tr>
+    <tr class="text-center">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><strong>Sum: {{calculateSum(order).toFixed(2)}} $</strong></td>
+
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="container text-center" *ngIf="orders.length === 0">
+  <div class="alert-primary center-alert" style="width: 60%">There are no orders today.</div>
+</div>

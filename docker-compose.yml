@@ -1,9 +1,9 @@
-version: '3.8'
+version: '3'
 
 services:
   db:
     container_name: db
-    image: postgres:15.2-alpine
+    image: postgres:15-alpine
     restart: always
     environment:
       - POSTGRES_USER=postgres
@@ -13,6 +13,44 @@ services:
       - "5432:5432"
     volumes:
       - db:/var/lib/postgresql/data
+
+  backend:
+    container_name: backend
+    build:
+      context: ./ItalianRestaurantBackend/
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/italian_restaurant
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_MAIL_HOST=smtp.gmail.com
+      - SPRING_MAIL_PORT=587
+      - SPRING_MAIL_USERNAME=myapplic256@gmail.com
+      - SPRING_MAIL_PASSWORD=<>
+      - JWT_SECRET_KEY=50645367556B58703273357638792F423F4528482B4D6251655468576D597133
+      - JWT_EXPIRATION=300000
+      - GOOGLE_CLIENT_ID=531274359208-00pdo418t6gff50e35pivcel5tu8lkb0.apps.googleusercontent.com
+      - GOOGLE_CLIENT_SECRET=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
+      - FACEBOOK_CLIENT_ID=1583546558794561
+      - FACEBOOK_CLIENT_SECRET=f4a0746b10f77eb1b1dcc866e98c6ed8
+      - GITHUB_CLIENT_ID=Iv1.0841fdf8ebb3b002
+      - GITHUB_CLIENT_SECRET=a74d957c55433dfbb7d5a13f437d74365150cf67
+  frontend:
+    container_name: frontend
+    build:
+      context: ./ItalianRestaurantFrontend/
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    restart: always
+    expose:
+      - "80"
 
 volumes:
   db:
