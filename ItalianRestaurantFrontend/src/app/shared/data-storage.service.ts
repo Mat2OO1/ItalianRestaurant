@@ -10,7 +10,7 @@ import {MealResponse, MealsWithPagination} from "../models/MealResponse";
 @Injectable()
 export class DataStorageService {
   page = 0
-  size = 5
+  size = 3
   meals = new Subject<MealsWithPagination>();
   constructor(private http: HttpClient) {
   }

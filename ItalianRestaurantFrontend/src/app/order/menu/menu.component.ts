@@ -9,7 +9,7 @@ import {ToastService} from "../../shared/toast.service";
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
-export class MenuComponent implements OnInit{
+export class MenuComponent implements OnInit {
   categories: Category[] = []
   meals: { [key: string]: Meal[] } = {};
   currentPage = 0
@@ -17,7 +17,9 @@ export class MenuComponent implements OnInit{
 
   constructor(private cartService: CartService,
               private dataStorageService: DataStorageService,
-              private toastService: ToastService) {}
+              private toastService: ToastService) {
+  }
+
   ngOnInit(): void {
     this.dataStorageService.getCategories()
       .subscribe(
@@ -54,32 +56,26 @@ export class MenuComponent implements OnInit{
     this.toastService.showSuccessToast("Cart", "Added item to cart")
   }
 
-  getCurrentCategories(){
-    return this.categories.filter(cat => Object.keys(this.meals).includes(cat.name) )
+  getCurrentCategories() {
+    return this.categories.filter(cat => Object.keys(this.meals).includes(cat.name))
   }
 
-  toNextPage(){
-    window.scrollTo({ top: 0 });
-    window.onscroll = () => {
-      if (window.scrollY === 0) {
-        if (this.currentPage < this.totalPages) {
-          this.dataStorageService.nextPage()
-        }
-      }
+  toNextPage() {
+    window.scrollTo({top: 0});
+    if (this.currentPage + 1 < this.totalPages) {
+      setTimeout(
+        () => this.dataStorageService.nextPage(), 500)
     }
   }
 
-  toPreviousPage(){
-    window.scrollTo({ top: 0 });
-    window.onscroll = () => {
-      if (window.scrollY === 0) {
-        if(this.currentPage >= 1){
-          this.dataStorageService.previousPage()
-        }
-      }
+
+  toPreviousPage() {
+    window.scrollTo({top: 0});
+    if (this.currentPage >= 1) {
+      setTimeout(
+        () => this.dataStorageService.previousPage(), 500)
     }
   }
-
 
 
 }
