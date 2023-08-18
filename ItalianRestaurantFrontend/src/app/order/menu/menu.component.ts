@@ -59,12 +59,25 @@ export class MenuComponent implements OnInit{
   }
 
   toNextPage(){
-    this.dataStorageService.nextPage()
+    window.scrollTo({ top: 0 });
+    window.onscroll = () => {
+      if (window.scrollY === 0) {
+        if (this.currentPage < this.totalPages) {
+          this.dataStorageService.nextPage()
+        }
+      }
+    }
   }
 
   toPreviousPage(){
-    this.dataStorageService.previousPage()
-
+    window.scrollTo({ top: 0 });
+    window.onscroll = () => {
+      if (window.scrollY === 0) {
+        if(this.currentPage >= 1){
+          this.dataStorageService.previousPage()
+        }
+      }
+    }
   }
 
 
