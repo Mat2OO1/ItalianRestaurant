@@ -52,16 +52,16 @@ public class MealControllerTest {
         val meal2 = Utils.getMeal();
         meal2.setId(2L);
         meal2.setName("Pasta");
-        ArrayList<Meal> mealList = new ArrayList<>(List.of(meal,meal2));
-        Pageable pageable = PageRequest.of(0,10);
-        PageImpl<Meal> mockPage = new PageImpl<>(mealList, pageable,mealList.size());
+        ArrayList<Meal> mealList = new ArrayList<>(List.of(meal, meal2));
+        Pageable pageable = PageRequest.of(0, 10);
+        PageImpl<Meal> mockPage = new PageImpl<>(mealList, pageable, mealList.size());
         when(mealService.getAllMeals(pageable)).thenReturn(mockPage);
 
         // when then
         mockMvc.perform(get("/meals")
-                .param("page", String.valueOf(pageable.getPageNumber()))
-                .param("size", String.valueOf(pageable.getPageSize()))
-                .contentType(MediaType.APPLICATION_JSON))
+                        .param("page", String.valueOf(pageable.getPageNumber()))
+                        .param("size", String.valueOf(pageable.getPageSize()))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray())
                 .andExpect(jsonPath("$.content[0].id").value(1))
@@ -109,19 +109,15 @@ public class MealControllerTest {
         // given
 
         Pageable pageable = Pageable.unpaged();
-        PageImpl<Meal> mockPage = new PageImpl<>(List.of(), pageable,0);
+        PageImpl<Meal> mockPage = new PageImpl<>(List.of(), pageable, 0);
 
         given(mealService.getAllMeals(any())).willReturn(mockPage);
 
         // when
-        val resultActions = mockMvc.perform(get("/meals")
-                .contentType(MediaType.APPLICATION_JSON));
-
-        // then
-        resultActions.andExpect(status().isOk());
-        String contentAsString = resultActions.andReturn().getResponse().getContentAsString();
-        List<Meal> mealList = Utils.jsonStringToObject(contentAsString, List.class);
-        assertThat(mealList).hasSize(0);
+        mockMvc.perform(get("/meals")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content.length()").value(0));
     }
 
     @Test
