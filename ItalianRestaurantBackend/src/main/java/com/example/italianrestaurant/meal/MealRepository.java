@@ -1,6 +1,10 @@
 package com.example.italianrestaurant.meal;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+
 public interface MealRepository extends JpaRepository<Meal, Long> {
+    Page<Meal> findAll(Pageable pageable);
 }
