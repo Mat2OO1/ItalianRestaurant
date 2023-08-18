@@ -24,9 +24,22 @@
   padding: 20px;
 }
 
+#category-name{
+  font-size: 1em;
+  white-space: nowrap
+}
 .btn {
   margin: auto;
   font-size: 14px;
-  width: 50%
 }
+
+.page-item > .btn{
+  color: white;
+  background-color: #332d2d;
+}
+.page-active{
+  font-weight: bold;
+
+}
+
 
