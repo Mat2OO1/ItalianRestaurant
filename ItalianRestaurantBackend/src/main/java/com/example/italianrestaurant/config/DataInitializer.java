@@ -45,7 +45,7 @@ public class DataInitializer {
         return List.of(
                 Meal.builder()
                         .name("Carbonara")
-                        .imgPath("https://cdn.galleries.smcloud.net/t/photos/gf-Jyiw-FVWU-vX4E_spaghetti-carbonara-jak-zrobic-szybko-te-odmiane-pasty.jpg")
+                        .imgPath("assets/images/meals/pasta/pasta_1.jpg")
                         .mealCategory(mealCategoryRepository.findById(2L).get())
                         .description("grana padano, pasta, basil")
                         .price(35.50)
@@ -53,7 +53,7 @@ public class DataInitializer {
 
                 Meal.builder()
                         .name("Aglio Olio")
-                        .imgPath("https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/F5853F13-70A5-4A54-B38A-8F229C3050F5/Derivates/7C5F0049-A335-40D1-8EF5-D2702653584E.jpg")
+                        .imgPath("assets/images/meals/pasta/pasta_2.jpg")
                         .mealCategory(mealCategoryRepository.findById(2L).get())
                         .description("olive oil, garlic, pasta")
                         .price(15.99)
@@ -61,7 +61,7 @@ public class DataInitializer {
 
                 Meal.builder()
                         .name("Margherita")
-                        .imgPath("https://cdn.galleries.smcloud.net/t/galleries/gf-th4D-DoeK-NWgH_pizza-margherita-skad-pochodzi-nazwa-jpg-1920x1080-nocrop.jpg")
+                        .imgPath("assets/images/meals/pizza/pizza_1.jpg")
                         .mealCategory(mealCategoryRepository.findById(1L).get())
                         .description("tomato sauce, cheese")
                         .price(50)
@@ -69,7 +69,7 @@ public class DataInitializer {
 
                 Meal.builder()
                         .name("Clams")
-                        .imgPath("https://cdn.apartmenttherapy.info/image/upload/f_jpg,q_auto:eco,c_fill,g_auto,w_1500,ar_4:3/k%2FPhoto%2FRecipes%2F2019-07-recipe-20-minute-garlic-butter-steamed-clams%2F20-Minute-Garlic-Butter-Steamed-Clams_021")
+                        .imgPath("assets/images/meals/seafood/seafood_1.jpg")
                         .mealCategory(mealCategoryRepository.findById(3L).get())
                         .description("clams")
                         .price(30.25)
@@ -77,7 +77,7 @@ public class DataInitializer {
 
                 Meal.builder()
                         .name("Hawaiian")
-                        .imgPath("https://www.jessicagavin.com/wp-content/uploads/2020/07/hawaiian-pizza-16-1200.jpg")
+                        .imgPath("assets/images/meals/pizza/pizza_2.jpg")
                         .mealCategory(mealCategoryRepository.findById(1L).get())
                         .description("pizza with ham and pineapple")
                         .price(20.20)
@@ -85,7 +85,7 @@ public class DataInitializer {
 
                 Meal.builder()
                         .name("Cacio e Pepe")
-                        .imgPath("https://images.immediate.co.uk/production/volatile/sites/30/2021/03/Cacio-e-Pepe-e44b9f8.jpg")
+                        .imgPath("assets/images/meals/pasta/pasta_3.jpg")
                         .mealCategory(mealCategoryRepository.findById(2L).get())
                         .description("pasta with pecorino romano and pepper")
                         .price(15.99)
@@ -93,7 +93,7 @@ public class DataInitializer {
 
                 Meal.builder()
                         .name("Tagliatelle al Ragu")
-                        .imgPath("https://www.ocado.com/cmscontent/recipe_image_large/33362787.png?awuq")
+                        .imgPath("assets/images/meals/pasta/pasta_4.jpg")
                         .mealCategory(mealCategoryRepository.findById(2L).get())
                         .description("tagliatelle pasta with classical italian meat sauce")
                         .price(25.99)
@@ -101,7 +101,7 @@ public class DataInitializer {
 
                 Meal.builder()
                         .name("Fritto Misto")
-                        .imgPath("https://www.seriouseats.com/thmb/kH6Xqnlr1gOF2gQLuoHSHsL4Xu0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/20211201-fritto-misto-vicky-wasik-22-19140dca6eff4de7ad0637641a013627.jpg")
+                        .imgPath("assets/images/meals/seafood/seafood_2.jpg")
                         .mealCategory(mealCategoryRepository.findById(3L).get())
                         .description("italian seafood platter")
                         .price(15.49)
@@ -113,17 +113,17 @@ public class DataInitializer {
         return List.of(
                 MealCategory.builder()
                         .name("pizza")
-                        .imgPath("https://cdn.galleries.smcloud.net/t/galleries/gf-cgdk-p5yy-aE4f_pizza-pepperoni-z-jalapeno-to-jadl-joe-biden-z-zolnierzami-w-rzeszowie-1920x1080-nocrop.jpg")
+                        .imgPath("assets/images/categories/pizza.jpg")
                         .build(),
 
                 MealCategory.builder()
                         .name("pasta")
-                        .imgPath("https://www.foodandwine.com/thmb/97PY4E6Wk95IYv1_8pDZvBEi0Uw=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/cream-tomato-rigatoni-FT-RECIPE1020-139fb3fa52574e8bb06f98e7fa3e4f1e.jpg")
+                        .imgPath("assets/images/categories/pasta.jpg")
                         .build(),
 
                 MealCategory.builder()
                         .name("seafood")
-                        .imgPath("https://www.foodandwine.com/thmb/tjkyiJutr0DdYGtGFy_hpcN0bSQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/seafood-blog618-f86e8baba8834537bbffa1d55e71c999.jpg")
+                        .imgPath("assets/images/categories/seafood.jpg")
                         .build()
         );
     }

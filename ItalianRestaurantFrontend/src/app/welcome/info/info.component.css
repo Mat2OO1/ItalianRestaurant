@@ -1,8 +1,7 @@
 .background {
-  background: url("src/assets/theme2.jpg");
   background-size: cover;
   height: 40rem;
-  background-position: center;
+  background: url("src/assets/images/other/theme2.jpg") center;
   width: auto;
 }
 
