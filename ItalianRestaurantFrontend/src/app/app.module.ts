@@ -30,6 +30,12 @@ import {DatePipe} from "@angular/common";
 import {ToastComponent} from './toast-notifications/toast/toast.component';
 import {ToasterComponent} from './toast-notifications/toaster/toaster.component';
 import {OrderHistoryComponent} from "./order-history/order-history.component";
+import {AdminMenuComponent} from "./admin-menu/admin-menu.component";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {MealEditDialogComponent} from "./meal-edit-dialog/meal-edit-dialog.component";
+import {MatButtonModule} from "@angular/material/button";
+import {CategoryEditDialogComponent} from "./category-edit-dialog/category-edit-dialog.component";
 
 @NgModule({
   declarations: [
@@ -48,7 +54,10 @@ import {OrderHistoryComponent} from "./order-history/order-history.component";
     PasswordFormComponent,
     ToastComponent,
     ToasterComponent,
-    OrderHistoryComponent
+    OrderHistoryComponent,
+    AdminMenuComponent,
+    MealEditDialogComponent,
+    CategoryEditDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +67,10 @@ import {OrderHistoryComponent} from "./order-history/order-history.component";
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatButtonModule,
   ],
 
   providers: [
@@ -72,7 +84,8 @@ import {OrderHistoryComponent} from "./order-history/order-history.component";
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true
-    }
+    },
+    MatDialog
   ],
   bootstrap: [AppComponent]
 })
