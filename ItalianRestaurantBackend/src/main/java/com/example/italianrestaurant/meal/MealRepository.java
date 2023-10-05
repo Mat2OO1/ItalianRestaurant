@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MealRepository extends JpaRepository<Meal, Long> {
     Page<Meal> findAll(Pageable pageable);
+
+    boolean existsByName(String name);
 }

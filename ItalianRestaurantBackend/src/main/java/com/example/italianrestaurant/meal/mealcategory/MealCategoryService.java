@@ -21,4 +21,9 @@ public class MealCategoryService {
         Optional<MealCategory> meal = mealCategoryRepository.findById(id);
         return meal.orElseThrow(EntityNotFoundException::new);
     }
+
+    public MealCategory getMealCategoryByName(String name) {
+        Optional<MealCategory> mealCategory = mealCategoryRepository.findByName(name);
+        return mealCategory.orElseThrow(EntityNotFoundException::new);
+    }
 }

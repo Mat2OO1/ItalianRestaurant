@@ -2,6 +2,7 @@ package com.example.italianrestaurant.meal;
 
 import com.example.italianrestaurant.Utils;
 import com.example.italianrestaurant.security.JwtAuthenticationFilter;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.val;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -157,5 +159,58 @@ public class MealControllerTest {
 
         // then
         resultActions.andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldAddMeal() throws Exception {
+        // given
+        val mealDto = Utils.getMealDto();
+        val dbMeal = Utils.getMeal();
+        val mealCategory = Utils.getMealCategory();
+        dbMeal.setMealCategory(mealCategory);
+        dbMeal.setId(1L);
+        mealDto.setCategory(mealCategory.getName());
+
+        given(mealService.addMeal(mealDto)).willReturn(dbMeal);
+
+        // when
+        val resultActions = mockMvc.perform(post("/meals/add")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(Utils.objectToJsonString(mealDto)));
+
+        // then
+        resultActions.andExpect(status().isCreated());
+    }
+
+    @Test
+    void shouldNotAddMealWhenMealWithTheSameNameExists() throws Exception {
+        val mealDto = Utils.getMealDto();
+        val mealCategory = Utils.getMealCategory();
+        mealDto.setCategory(mealCategory.getName());
+        given(mealService.addMeal(any())).willThrow(EntityExistsException.class);
+
+        // when
+        val resultActions = mockMvc.perform(post("/meals/add")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(Utils.objectToJsonString(mealDto)));
+
+        // then
+        resultActions.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void shouldNotAddMealWhenCategoryDoesntExist() throws Exception {
+        val mealDto = Utils.getMealDto();
+        val mealCategory = Utils.getMealCategory();
+        mealDto.setCategory(mealCategory.getName());
+        given(mealService.addMeal(any())).willThrow(EntityNotFoundException.class);
+
+        // when
+        val resultActions = mockMvc.perform(post("/meals/add")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(Utils.objectToJsonString(mealDto)));
+
+        // then
+        resultActions.andExpect(status().isBadRequest());
     }
 }

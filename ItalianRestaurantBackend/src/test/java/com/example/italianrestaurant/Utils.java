@@ -5,6 +5,7 @@ import com.example.italianrestaurant.delivery.DeliveryDto;
 import com.example.italianrestaurant.delivery.DeliveryOptions;
 import com.example.italianrestaurant.email.EmailEntity;
 import com.example.italianrestaurant.meal.Meal;
+import com.example.italianrestaurant.meal.MealDto;
 import com.example.italianrestaurant.meal.mealcategory.MealCategory;
 import com.example.italianrestaurant.order.ChangeOrderStatusDto;
 import com.example.italianrestaurant.order.Order;
@@ -25,6 +26,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class Utils {
+
+    public static MealDto getMealDto() {
+        //given
+        return MealDto.builder()
+                .name("name")
+                .category("name")
+                .description("description")
+                .imgPath("imgPath")
+                .price(10.0)
+                .build();
+    }
 
     public static DeliveryDto getDeliveryDto() {
         return DeliveryDto.builder()

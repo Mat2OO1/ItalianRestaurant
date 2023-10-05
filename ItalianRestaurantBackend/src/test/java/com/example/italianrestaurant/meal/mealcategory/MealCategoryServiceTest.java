@@ -84,4 +84,32 @@ public class MealCategoryServiceTest {
         //then
         verify(mealCategoryRepository, times(0)).save(any());
     }
+
+    @Test
+    void shouldGetMealCategoryByName(){
+        //given
+        MealCategory mealCategory = Utils.getMealCategory();
+        given(mealCategoryRepository.findByName(mealCategory.getName())).willReturn(Optional.of(mealCategory));
+
+        //when
+        val returnedMealCategory = mealCategoryService.getMealCategoryByName(mealCategory.getName());
+
+        //then
+        assertThat(mealCategoryService.getMealCategoryByName(mealCategory.getName())).isEqualTo(returnedMealCategory);
+    }
+
+    @Test
+    void shouldNotGetMealCategoryByName(){
+        //given
+        given(mealCategoryRepository.findByName(any())).willReturn(Optional.empty());
+
+        //when
+        assertThatThrownBy(() -> mealCategoryService.getMealCategoryByName(any())).isInstanceOf(EntityNotFoundException.class);
+
+        //then
+        verify(mealCategoryRepository, times(1)).findByName(any());
+    }
+
+
+
 }

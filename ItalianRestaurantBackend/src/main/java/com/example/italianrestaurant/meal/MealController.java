@@ -1,15 +1,14 @@
 package com.example.italianrestaurant.meal;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
@@ -31,6 +30,21 @@ public class MealController {
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "There is no meal with id: " + id, e);
+        }
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<Meal> addMeal(@RequestBody MealDto mealDto) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(mealService.addMeal(mealDto));
+        } catch (EntityExistsException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "There already exists meal with name: " + mealDto.getName(), e
+            );
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "There isn't a category with name " + mealDto.getCategory(), e
+            );
         }
     }
 }

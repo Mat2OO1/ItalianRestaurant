@@ -1,6 +1,9 @@
 package com.example.italianrestaurant.meal;
 
 import com.example.italianrestaurant.Utils;
+import com.example.italianrestaurant.meal.mealcategory.MealCategory;
+import com.example.italianrestaurant.meal.mealcategory.MealCategoryService;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.val;
 import org.junit.jupiter.api.Test;
@@ -8,7 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
@@ -28,6 +31,12 @@ public class MealServiceTest {
 
     @InjectMocks
     private MealService mealService;
+
+    @Mock
+    private MealCategoryService mealCategoryService;
+
+    @Mock
+    ModelMapper modelMapper;
 
     @Test
     void shouldGetAllMeals() {
@@ -84,4 +93,60 @@ public class MealServiceTest {
         //then
         verify(mealRepository, times(0)).save(any());
     }
+
+    @Test
+    void shouldAddMeal() {
+        //given
+
+        MealDto mealDto = Utils.getMealDto();
+
+        MealCategory mealCategory = Utils.getMealCategory();
+
+        Meal mappedMeal = Utils.getMeal();
+        mappedMeal.setMealCategory(mealCategory);
+
+        Meal dbMeal = Utils.getMeal();
+        dbMeal.setMealCategory(mealCategory);
+        dbMeal.setId(1L);
+
+        given(modelMapper.map(mealDto, Meal.class)).willReturn(mappedMeal);
+        given(mealCategoryService.getMealCategoryByName(any())).willReturn(mealCategory);
+        given(mealRepository.save(mappedMeal)).willReturn(dbMeal);
+
+        //when
+        val returnedMeal = mealService.addMeal(mealDto);
+
+        //then
+        verify(mealRepository).save(mappedMeal);
+        assertThat(returnedMeal).isEqualTo(dbMeal);
+    }
+
+    @Test
+    void shouldNotAddMealWhenNameAlreadyExists() {
+        //given
+        MealDto mealDto = Utils.getMealDto();
+        given(mealRepository.existsByName(any())).willReturn(true);
+
+        //when
+        assertThatThrownBy(() -> mealService.addMeal(mealDto)).isInstanceOf(EntityExistsException.class);
+
+        //then
+        verify(mealRepository, times(0)).save(any());
+    }
+
+    @Test
+    void shouldNotAddMealWhenCategoryDoesntExist(){
+        //given
+        MealDto mealDto = Utils.getMealDto();
+        given(mealRepository.existsByName(any())).willReturn(false);
+        given(mealCategoryService.getMealCategoryByName(any())).willThrow(EntityNotFoundException.class);
+
+        //when
+        assertThatThrownBy(() -> mealService.addMeal(mealDto)).isInstanceOf(EntityNotFoundException.class);
+
+        //then
+        verify(mealRepository, times(0)).save(any());
+    }
+
+
 }
