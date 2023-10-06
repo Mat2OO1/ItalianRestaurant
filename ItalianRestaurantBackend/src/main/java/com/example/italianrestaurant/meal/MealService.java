@@ -5,6 +5,7 @@ import com.example.italianrestaurant.meal.mealcategory.MealCategoryService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class MealService {
 
     private final MealRepository mealRepository;
@@ -33,6 +35,7 @@ public class MealService {
     }
 
     public Meal addMeal(MealDto meal) {
+        log.info(meal);
         if (mealRepository.existsByName(meal.getName())) {
             throw new EntityExistsException("Meal with name: " + meal.getName() + " already exists");
         }

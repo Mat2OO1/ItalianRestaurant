@@ -17,7 +17,6 @@ public class MealDto {
     private String category;
 
     private String description;
-
     @NotNull(message = "Price is mandatory")
     private double price;
 }

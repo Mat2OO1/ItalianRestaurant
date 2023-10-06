@@ -17,16 +17,29 @@ export class DataStorageService {
 
   getMeals() {
     return this.http
-      .get<MealResponse>(
-        `${environment.apiUrl}/meals?page=${this.page}&size=${this.size}`,
-      )
+      .get<MealResponse>(`${environment.apiUrl}/meals?page=${this.page}&size=${this.size}`,)
       .subscribe(
         (res) => {
-          console.log(res)
           var menu = res.content.map(meal => new Meal(meal.id, meal.name, meal.imgPath, meal.description, meal.price, meal.mealCategory))
           this.meals.next({meals: menu, numOfPages: res.totalPages, currPage: res.number})
         }
       )
+  }
+
+  getMealsWithoutPagination(){
+    return this.http
+      .get<{content: Meal[]}>(`${environment.apiUrl}/meals`)
+  }
+
+  addMeal(meal:Meal){
+    return this.http
+      .post(`${environment.apiUrl}/meals/add`, {
+        name: meal.name,
+        imgPath: meal.imgPath,
+        category: meal.mealCategory.name,
+        description: meal.description,
+        price: meal.price
+      })
   }
 
   getCategories() {

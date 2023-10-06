@@ -194,6 +194,27 @@ public class MealServiceTest {
         assertThatThrownBy(() -> mealService.editMeal(mealDto, 1L)).isInstanceOf(EntityNotFoundException.class);
     }
 
+    @Test
+    void shouldDeleteMeal(){
+        Meal mealDb = Utils.getMeal();
+        mealDb.setId(1L);
+
+        given(mealRepository.findById(any())).willReturn(Optional.of(mealDb));
+        //when
+        mealService.deleteMeal(1L);
+        //then
+        verify(mealRepository, times(1)).delete(any());
+
+    }
+
+    @Test
+    void shouldNotDeleteMealWhenMealDoesntExist(){
+        given(mealRepository.findById(any())).willReturn(Optional.empty());
+        //when
+        //then
+        assertThatThrownBy(() -> mealService.deleteMeal(1L)).isInstanceOf(EntityNotFoundException.class);
+    }
+
 
 
 

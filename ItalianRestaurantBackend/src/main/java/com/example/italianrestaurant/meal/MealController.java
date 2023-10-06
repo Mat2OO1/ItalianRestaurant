@@ -3,6 +3,7 @@ package com.example.italianrestaurant.meal;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -48,7 +49,7 @@ public class MealController {
         }
     }
 
-    @PutMapping("/edit")
+    @PutMapping("/edit/{id}")
     public ResponseEntity<Meal> editMeal(@RequestBody MealDto mealDto, @PathVariable Long id) {
         try{
             return ResponseEntity.ok(mealService.editMeal(mealDto, id));

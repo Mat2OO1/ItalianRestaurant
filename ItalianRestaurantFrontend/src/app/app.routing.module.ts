@@ -28,7 +28,7 @@ const routes: Routes = [
   {path: 'confirmation', component: ConfirmationComponent, canActivate: [AuthGuard]},
   {path: 'order-history', component: OrderHistoryComponent, canActivate: [AuthGuard]},
   {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AdminGuard]},
-  {path: 'admin-menu', component: AdminMenuComponent},
+  {path: 'admin-menu', component: AdminMenuComponent, canActivate: [AdminGuard]},
   {path: '**', redirectTo: ''}
 ]
 

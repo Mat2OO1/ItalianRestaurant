@@ -1,0 +1,22 @@
+.table-image td {
+  vertical-align: middle;
+}
+
+.table-image th {
+  vertical-align: middle;
+}
+
+.last-row td {
+  border-bottom: none;
+}
+
+td,th {
+  text-align: center;
+}
+
+.category-with-meal{
+  background-color: white;
+  border-radius: 10px;
+  padding:10px;
+  margin-bottom:10px;
+}
