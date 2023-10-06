@@ -74,10 +74,6 @@ export class AdminPanelComponent {
     if (index !== -1) {
       this.orders.splice(index, 1);
     }
-    this.dataStorageService.deleteOrder(orderId).subscribe(response => {
-
-    });
+    this.dataStorageService.deleteOrder(orderId).subscribe();
   }
-
-
 }
