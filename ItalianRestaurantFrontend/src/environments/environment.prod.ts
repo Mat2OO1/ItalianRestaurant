@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: "http://localhost:8080",
-  frontUrl: "http://localhost"
+  apiUrl: "http://ladolcevitarestaurant.live:8080",
+  frontUrl: "http://ladolcevitarestaurant.live"
 };
