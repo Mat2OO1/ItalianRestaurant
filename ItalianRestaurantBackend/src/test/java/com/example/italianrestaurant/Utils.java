@@ -114,6 +114,16 @@ public class Utils {
                 .build();
     }
 
+    public static Meal getMealWithCategory() {
+        return Meal.builder()
+                .name("name")
+                .mealCategory(getMealCategory())
+                .description("description")
+                .price(10.0)
+                .imgPath("imgPath")
+                .build();
+    }
+
 
     public static MealOrderDto getMealOrderDto() {
         return MealOrderDto.builder()

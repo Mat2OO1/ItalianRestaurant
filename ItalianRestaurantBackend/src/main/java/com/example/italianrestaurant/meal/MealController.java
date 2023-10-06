@@ -47,4 +47,27 @@ public class MealController {
             );
         }
     }
+
+    @PutMapping("/edit")
+    public ResponseEntity<Meal> editMeal(@RequestBody MealDto mealDto, @PathVariable Long id) {
+        try{
+            return ResponseEntity.ok(mealService.editMeal(mealDto, id));
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "There isn't a meal with id " + id, e
+            );
+        }
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<Meal> delete(@PathVariable Long id) {
+        try{
+            mealService.deleteMeal(id);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "There isn't a meal with id " + id, e
+            );
+        }
+        return ResponseEntity.ok().build();
+    }
 }

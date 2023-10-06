@@ -148,5 +148,54 @@ public class MealServiceTest {
         verify(mealRepository, times(0)).save(any());
     }
 
+    @Test
+    void shouldEditMeal(){
+        //given
+        Meal dbMeal = Utils.getMealWithCategory();
+        dbMeal.setId(1L);
+        Meal mappedMeal = Utils.getMeal();
+        MealDto mealDto = Utils.getMealDto();
+        MealCategory mealCategory = Utils.getMealCategory();
+        given(mealRepository.findById(any())).willReturn(Optional.of(dbMeal));
+        given(modelMapper.map(mealDto, Meal.class)).willReturn(mappedMeal);
+        given(mealCategoryService.getMealCategoryByName(any())).willReturn(mealCategory);
+        given(mealRepository.save(any())).willReturn(dbMeal);
+
+        //when
+        val editedMeal = mealService.editMeal(mealDto,1L);
+
+        //then
+        assertThat(editedMeal).isEqualTo(dbMeal);
+        verify(mealRepository).save(mappedMeal);
+    }
+
+    @Test
+    void shouldNotEditMealWhenMealWithGivenIdDoesntExist(){
+        //given
+        MealDto mealDto = Utils.getMealDto();
+        given(mealRepository.findById(any())).willReturn(Optional.empty());
+
+        //when
+        //then
+        assertThatThrownBy(() -> mealService.editMeal(mealDto, 1L)).isInstanceOf(EntityNotFoundException.class);
+    }
+
+    @Test
+    void shouldNotEditMealWhenCategoryDoesntExist(){
+        //given
+        MealDto mealDto = Utils.getMealDto();
+        Meal mealDb = Utils.getMeal();
+
+        given(mealRepository.findById(any())).willReturn(Optional.of(mealDb));
+        given(mealCategoryService.getMealCategoryByName(any())).willThrow(EntityNotFoundException.class);
+
+        //when
+        //then
+        assertThatThrownBy(() -> mealService.editMeal(mealDto, 1L)).isInstanceOf(EntityNotFoundException.class);
+    }
+
+
+
+
 
 }

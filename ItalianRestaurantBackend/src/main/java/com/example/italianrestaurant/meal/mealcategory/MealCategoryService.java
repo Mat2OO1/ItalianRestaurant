@@ -22,7 +22,7 @@ public class MealCategoryService {
         return meal.orElseThrow(EntityNotFoundException::new);
     }
 
-    public MealCategory getMealCategoryByName(String name) {
+    public MealCategory getMealCategoryByName(String name) throws EntityNotFoundException{
         Optional<MealCategory> mealCategory = mealCategoryRepository.findByName(name);
         return mealCategory.orElseThrow(EntityNotFoundException::new);
     }

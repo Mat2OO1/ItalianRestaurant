@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
 @Service
@@ -31,14 +32,28 @@ public class MealService {
         return meal.orElseThrow(EntityNotFoundException::new);
     }
 
-    public Meal addMeal(MealDto meal){
-        if(mealRepository.existsByName(meal.getName())){
+    public Meal addMeal(MealDto meal) {
+        if (mealRepository.existsByName(meal.getName())) {
             throw new EntityExistsException("Meal with name: " + meal.getName() + " already exists");
         }
         MealCategory category = mealCategoryService.getMealCategoryByName(meal.getCategory());
         Meal mappedMeal = modelMapper.map(meal, Meal.class);
         mappedMeal.setMealCategory(category);
         return mealRepository.save(mappedMeal);
-
     }
+
+    public Meal editMeal(MealDto mealDto, Long id) {
+        Meal savedMeal = mealRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Meal meal = modelMapper.map(mealDto, Meal.class);
+        MealCategory mealCategory = mealCategoryService.getMealCategoryByName(mealDto.getName());
+        meal.setMealCategory(mealCategory);
+        meal.setId(savedMeal.getId());
+       return mealRepository.save(meal);
+    }
+
+    public void deleteMeal(long id){
+        Meal meal = mealRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        mealRepository.delete(meal);
+    }
+
 }
