@@ -8,6 +8,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,8 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class MealServiceTest {
@@ -35,26 +37,25 @@ public class MealServiceTest {
         val meal2 = Utils.getMeal();
         meal2.setId(2L);
         meal2.setName("Meal2");
-
-        given(mealRepository.findAll()).willReturn(List.of(meal, meal2));
+        when(mealRepository.findAll(Pageable.unpaged())).thenReturn(new PageImpl<>(List.of(meal, meal2), Pageable.unpaged(), 2));
 
         //when
-        val returnedMeals = mealService.getAllMeals();
+        val returnedMeals = mealService.getAllMeals(Pageable.unpaged());
 
         //then
-        assertThat(returnedMeals).containsExactly(meal, meal2);
+        assertThat(returnedMeals.getContent()).containsExactly(meal, meal2);
     }
 
     @Test
     void shouldNotGetAllMeals() {
         //given
-        given(mealRepository.findAll()).willReturn(List.of());
+        given(mealRepository.findAll(Pageable.unpaged())).willReturn(new PageImpl<>(List.of(), Pageable.unpaged(), 0));
 
         //when
-        val returnedMeals = mealService.getAllMeals();
+        val returnedMeals = mealService.getAllMeals(Pageable.unpaged());
 
         //then
-        assertThat(returnedMeals).isEmpty();
+        assertThat(returnedMeals.getContent()).isEmpty();
     }
 
     @Test

@@ -1,23 +1,31 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Meal} from "../models/meal";
-import {map} from "rxjs";
+import {map, Subject} from "rxjs";
 import {Delivery} from "../models/delivery";
 import {OrderRes} from "../models/order";
 import {environment} from "../../environments/environment";
+import {MealResponse, MealsWithPagination} from "../models/MealResponse";
 
 @Injectable()
 export class DataStorageService {
+  page = 0
+  size = 3
+  meals = new Subject<MealsWithPagination>();
   constructor(private http: HttpClient) {
   }
 
-  getMenu() {
+  getMeals() {
     return this.http
-      .get<Meal[]>(
-        `${environment.apiUrl}/meals`,
+      .get<MealResponse>(
+        `${environment.apiUrl}/meals?page=${this.page}&size=${this.size}`,
       )
-      .pipe(
-        map(meals => meals.map(meal => new Meal(meal.id, meal.name, meal.imgPath, meal.description, meal.price, meal.mealCategory)))
+      .subscribe(
+        (res) => {
+          console.log(res)
+          var menu = res.content.map(meal => new Meal(meal.id, meal.name, meal.imgPath, meal.description, meal.price, meal.mealCategory))
+          this.meals.next({meals: menu, numOfPages: res.totalPages, currPage: res.number})
+        }
       )
   }
 
@@ -59,6 +67,16 @@ export class DataStorageService {
         }
       )
 
+  }
+
+  nextPage(){
+    this.page++
+    this.getMeals();
+  }
+
+  previousPage(){
+    this.page--
+    this.getMeals();
   }
 
 }

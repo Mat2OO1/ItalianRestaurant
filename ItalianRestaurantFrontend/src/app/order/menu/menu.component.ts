@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Category, Meal} from "../../models/meal";
 import {CartService} from "../../shared/cart.service";
 import {DataStorageService} from "../../shared/data-storage.service";
@@ -9,25 +9,39 @@ import {ToastService} from "../../shared/toast.service";
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit {
   categories: Category[] = []
   meals: { [key: string]: Meal[] } = {};
+  currentPage = 0
+  totalPages = 0
 
   constructor(private cartService: CartService,
               private dataStorageService: DataStorageService,
               private toastService: ToastService) {
-    this.dataStorageService.getMenu()
+  }
+
+  ngOnInit(): void {
+    this.dataStorageService.getCategories()
+      .subscribe(
+        res => {
+          this.categories = res
+        }
+      )
+    this.dataStorageService.meals
       .subscribe(res => {
-        const meals = res;
-        for (let meal of meals) {
+        this.meals = {}
+        this.totalPages = res.numOfPages
+        this.currentPage = res.currPage
+        for (let meal of res.meals) {
           if (this.meals[meal.mealCategory.name]) {
             this.meals[meal.mealCategory.name].push(meal)
           } else {
             this.meals[meal.mealCategory.name] = [meal]
-            this.categories.push(meal.mealCategory)
           }
         }
       })
+
+    this.dataStorageService.getMeals();
   }
 
   scroll(category: string) {
@@ -41,6 +55,28 @@ export class MenuComponent {
     this.cartService.addToCart(meal);
     this.toastService.showSuccessToast("Cart", "Added item to cart")
   }
+
+  getCurrentCategories() {
+    return this.categories.filter(cat => Object.keys(this.meals).includes(cat.name))
+  }
+
+  toNextPage() {
+    window.scrollTo({top: 0});
+    if (this.currentPage + 1 < this.totalPages) {
+      setTimeout(
+        () => this.dataStorageService.nextPage(), 500)
+    }
+  }
+
+
+  toPreviousPage() {
+    window.scrollTo({top: 0});
+    if (this.currentPage >= 1) {
+      setTimeout(
+        () => this.dataStorageService.previousPage(), 500)
+    }
+  }
+
 
 }
 
