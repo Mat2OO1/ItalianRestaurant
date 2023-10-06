@@ -21,18 +21,20 @@ spring:
           github:
             clientId: ${GITHUB_CLIENT_ID}
             clientSecret: ${GITHUB_CLIENT_SECRET}
+
 app:
   security:
     jwt:
       tokenSecret: ${JWT_SECRET_KEY}
+      tokenExpirationMsec: ${JWT_EXPIRATION}
     cors:
-      allowedOrigins: http://${SERVER_IP}
+      allowedOrigins: http://localhost
     oauth2:
       authorizedRedirectUris:
-        - http://${SERVER_IP}/oauth2/redirect
+        - http://localhost/oauth2/redirect
         - myandroidapp://oauth2/redirect
         - myiosapp://oauth2/redirect
-  front-url: http://${SERVER_IP}
+  front-url: http://localhost
 
 server:
   error:

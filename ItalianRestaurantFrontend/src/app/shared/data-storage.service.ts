@@ -79,4 +79,11 @@ export class DataStorageService {
     this.getMeals();
   }
 
+  deleteOrder(id:number){
+    console.log(id)
+    return this.http
+      .delete(`${environment.apiUrl}/order/${id}`)
+  }
+
+
 }

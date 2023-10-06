@@ -64,7 +64,7 @@ app:
       tokenSecret: 50645367556B58703273357638792F423F4528482B4D6251655468576D597133
       tokenExpirationMsec: 300000
     cors:
-      allowedOrigins: \*
+      allowedOrigins: http://localhost:4200
     oauth2:
       # After successfully authenticating with the OAuth2 Provider,
       # we'll be generating an auth token for the user and sending the token to the

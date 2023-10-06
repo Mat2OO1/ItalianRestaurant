@@ -26,6 +26,7 @@
               <th scope="col">Estimated Delivery Date</th>
               <th scope="col">Address</th>
               <th scope="col"></th>
+              <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -43,6 +44,9 @@
               <td>{{order.delivery.address}} {{order.delivery.city}} {{order.delivery.deliveryOptions}} {{order.delivery.postalCode}} {{order.delivery.info}}</td>
               <td>
                 <button class="btn btn-primary" type="submit">Change</button>
+              </td>
+              <td>
+                <button class="btn btn-danger" type="submit" (click)="deleteOrder(order.id)">Delete</button>
               </td>
 
             </tr>

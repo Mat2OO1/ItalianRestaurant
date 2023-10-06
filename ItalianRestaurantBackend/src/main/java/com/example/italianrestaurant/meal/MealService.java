@@ -22,4 +22,5 @@ public class MealService {
 
         return meal.orElseThrow(EntityNotFoundException::new);
     }
+
 }
