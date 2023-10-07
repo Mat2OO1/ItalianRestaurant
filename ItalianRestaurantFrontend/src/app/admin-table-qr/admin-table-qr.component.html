@@ -7,21 +7,23 @@
       <div class="tables-container table table-image table-responsive">
         <thead>
         <tr>
-          <th scope="col">Number</th>
+          <th scope="col">Table number</th>
           <th scope="col">Nr of seats</th>
+          <th scope="col">Status</th>
           <th scope="col">Qr code</th>
+          <th scope="col">Download QR code</th>
           <th scope="col">Edit</th>
           <th scope="col">Delete</th>
-          <th scope="col">Download QR code</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <td>Test</td>
-          <td>Test</td>
+        <tr *ngFor="let table of tables">
+          <td>{{table.number}}</td>
+          <td>{{table.seats}}</td>
+          <td>{{table.status}}</td>
           <td class="w-25">
             <qrcode
-              [qrdata]="'https://github.com/Cordobo/angularx-qrcode'"
+              [qrdata]="generateQrCode(table.number)"
               [allowEmptyString]="true"
               [alt]="'A custom alt attribute'"
               [ariaLabel]="'QR Code image with the following content...'"
@@ -36,21 +38,21 @@
             ></qrcode>
           </td>
           <td>
-            <button class="btn btn-info" data-toggle="tooltip"
+            <button class="btn btn-success" data-toggle="tooltip"
+                    data-placement="top" title="Download" (click)="downloadQrCode(qrcode)">
+              <i class="bi bi-download"></i>
+            </button>
+          </td>
+          <td>
+          <button class="btn btn-info" data-toggle="tooltip"
                     data-placement="top" title="Edit">
               <i class="bi bi-pen"></i>
             </button>
           </td>
           <td>
-            <button class="btn btn-danger" data-toggle="tooltip"
+          <button class="btn btn-danger" data-toggle="tooltip"
                     data-placement="top" title="Delete">
               <i class="bi bi-trash"></i>
-            </button>
-          </td>
-          <td>
-            <button class="btn btn-success" data-toggle="tooltip"
-                    data-placement="top" title="Download" (click)="downloadQrCode(qrcode)">
-              <i class="bi bi-download"></i>
             </button>
           </td>
         </tr>

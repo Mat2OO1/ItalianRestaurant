@@ -4,6 +4,9 @@ import com.example.italianrestaurant.meal.Meal;
 import com.example.italianrestaurant.meal.MealRepository;
 import com.example.italianrestaurant.meal.mealcategory.MealCategory;
 import com.example.italianrestaurant.meal.mealcategory.MealCategoryRepository;
+import com.example.italianrestaurant.table.Table;
+import com.example.italianrestaurant.table.TableRepository;
+import com.example.italianrestaurant.table.TableStatus;
 import com.example.italianrestaurant.user.AuthProvider;
 import com.example.italianrestaurant.user.Role;
 import com.example.italianrestaurant.user.User;
@@ -24,6 +27,7 @@ public class DataInitializer {
     private final UserRepository userRepository;
     private final MealCategoryRepository mealCategoryRepository;
     private final MealRepository mealRepository;
+    private final TableRepository tableRepository;
 
     @PostConstruct
     @Transactional
@@ -38,6 +42,10 @@ public class DataInitializer {
 
         if (mealRepository.count() == 0) {
             mealRepository.saveAll(getMealData());
+        }
+
+        if (tableRepository.count() == 0) {
+            tableRepository.saveAll(getTableData());
         }
     }
 
@@ -157,6 +165,40 @@ public class DataInitializer {
                         .provider(AuthProvider.local)
                         .role(Role.ADMIN)
                         .emailVerified(false)
+                        .build());
+    }
+
+    private List<Table> getTableData() {
+        return List.of(
+                Table.builder()
+                        .number(1)
+                        .seats(4)
+                        .status(TableStatus.FREE)
+                        .build(),
+                Table.builder()
+                        .number(2)
+                        .seats(4)
+                        .status(TableStatus.FREE)
+                        .build(),
+                Table.builder()
+                        .number(3)
+                        .seats(5)
+                        .status(TableStatus.FREE)
+                        .build(),
+                Table.builder()
+                        .number(4)
+                        .seats(3)
+                        .status(TableStatus.FREE)
+                        .build(),
+                Table.builder()
+                        .number(5)
+                        .seats(2)
+                        .status(TableStatus.FREE)
+                        .build(),
+                Table.builder()
+                        .number(6)
+                        .seats(2)
+                        .status(TableStatus.FREE)
                         .build());
     }
 }
