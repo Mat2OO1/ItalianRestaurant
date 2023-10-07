@@ -4,8 +4,10 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -26,7 +28,8 @@ public class TableController {
         try {
             return ResponseEntity.ok(tableService.getTableById(id));
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "There is no order with id: " + id, e);
         }
     }
 
@@ -42,7 +45,9 @@ public class TableController {
             return ResponseEntity.noContent().build();
         }
         catch (EmptyResultDataAccessException e) {
-            return ResponseEntity.notFound().build();
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "There is no order with id: " + id, e);
         }
+
     }
 }
