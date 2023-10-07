@@ -15,6 +15,7 @@ align-items: center;
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav ms-auto d-flex align-items-center">
+        <a class="nav-item nav-link" *ngIf="role === Role.ADMIN" routerLink="/admin-tables-panel">Tables</a>
         <a class="nav-item nav-link" *ngIf="isLoggedIn" routerLink="/menu">Menu</a>
         <a class="nav-item nav-link" (click)="onLogout()" *ngIf="isLoggedIn" href="#">Logout</a>
         <a class="nav-item nav-link" *ngIf="isLoggedIn" routerLink="/order-history">Orders</a>

@@ -30,6 +30,8 @@ import {DatePipe} from "@angular/common";
 import {ToastComponent} from './toast-notifications/toast/toast.component';
 import {ToasterComponent} from './toast-notifications/toaster/toaster.component';
 import {OrderHistoryComponent} from "./order-history/order-history.component";
+import { AdminTableQrComponent } from './admin-table-qr/admin-table-qr.component';
+import {QRCodeModule} from "angularx-qrcode";
 
 @NgModule({
   declarations: [
@@ -48,7 +50,8 @@ import {OrderHistoryComponent} from "./order-history/order-history.component";
     PasswordFormComponent,
     ToastComponent,
     ToasterComponent,
-    OrderHistoryComponent
+    OrderHistoryComponent,
+    AdminTableQrComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,8 @@ import {OrderHistoryComponent} from "./order-history/order-history.component";
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    QRCodeModule
   ],
 
   providers: [

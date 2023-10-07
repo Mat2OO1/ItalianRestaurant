@@ -14,6 +14,7 @@ import {AdminPanelComponent} from "./admin-panel/admin-panel.component";
 import {PasswordFormComponent} from "./authentication/password-reset/password-form/password-form.component";
 import {AdminGuard} from "./authentication/auth/admin.guard";
 import {OrderHistoryComponent} from "./order-history/order-history.component";
+import {AdminTableQrComponent} from "./admin-table-qr/admin-table-qr.component";
 
 const routes: Routes = [
   {path: '', component: InfoComponent},
@@ -27,6 +28,7 @@ const routes: Routes = [
   {path: 'confirmation', component: ConfirmationComponent, canActivate: [AuthGuard]},
   {path: 'order-history', component: OrderHistoryComponent, canActivate: [AuthGuard]},
   {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AdminGuard]},
+  {path: 'admin-tables-panel', component: AdminTableQrComponent},
   {path: '**', redirectTo: ''}
 ]
 
