@@ -69,5 +69,11 @@ export class AdminPanelComponent {
       );
   };
 
-
+  deleteOrder(orderId: number) {
+    const index = this.orders.findIndex(order => order.id === orderId);
+    if (index !== -1) {
+      this.orders.splice(index, 1);
+    }
+    this.dataStorageService.deleteOrder(orderId).subscribe();
+  }
 }
