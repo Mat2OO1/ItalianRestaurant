@@ -32,6 +32,8 @@ import {ToasterComponent} from './toast-notifications/toaster/toaster.component'
 import {OrderHistoryComponent} from "./order-history/order-history.component";
 import { AdminTableQrComponent } from './admin-table-qr/admin-table-qr.component';
 import {QRCodeModule} from "angularx-qrcode";
+import { TableEditDialogComponent } from './table-edit-dialog/table-edit-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -51,19 +53,21 @@ import {QRCodeModule} from "angularx-qrcode";
     ToastComponent,
     ToasterComponent,
     OrderHistoryComponent,
-    AdminTableQrComponent
+    AdminTableQrComponent,
+    TableEditDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    RouterLink,
-    RouterOutlet,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatProgressSpinnerModule,
-    QRCodeModule
-  ],
+    imports: [
+        BrowserModule,
+        RouterLink,
+        RouterOutlet,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatProgressSpinnerModule,
+        QRCodeModule,
+        MatDialogModule
+    ],
 
   providers: [
     CartService,
