@@ -14,6 +14,9 @@ import com.example.italianrestaurant.order.mealorder.MealOrder;
 import com.example.italianrestaurant.order.mealorder.MealOrderDto;
 import com.example.italianrestaurant.passwordreset.PasswordResetRequest;
 import com.example.italianrestaurant.passwordreset.passwordtoken.PasswordToken;
+import com.example.italianrestaurant.table.Table;
+import com.example.italianrestaurant.table.TableDto;
+import com.example.italianrestaurant.table.TableStatus;
 import com.example.italianrestaurant.user.AuthProvider;
 import com.example.italianrestaurant.user.Role;
 import com.example.italianrestaurant.user.User;
@@ -177,6 +180,22 @@ public class Utils {
         return PasswordResetRequest.builder()
                 .password("password")
                 .token("token")
+                .build();
+    }
+
+    public static Table getTable() {
+        return Table.builder()
+                .number(1)
+                .seats(2)
+                .status(TableStatus.FREE)
+                .build();
+    }
+
+    public static TableDto getTableDto() {
+        return TableDto.builder()
+                .number(1)
+                .seats(2)
+                .status(TableStatus.FREE)
                 .build();
     }
 }

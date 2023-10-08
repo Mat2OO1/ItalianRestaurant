@@ -24,7 +24,7 @@ public class TableController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Table> getTableById(Long id) {
+    public ResponseEntity<Table> getTableById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(tableService.getTableById(id));
         } catch (EntityNotFoundException e) {
@@ -42,7 +42,7 @@ public class TableController {
     public ResponseEntity<?> deleteTable(@PathVariable Long id) {
         try {
             tableService.deleteTable(id);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok().build();
         }
         catch (EmptyResultDataAccessException e) {
             throw new ResponseStatusException(
