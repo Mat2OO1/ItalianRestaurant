@@ -23,7 +23,7 @@
           <td>{{table.status}}</td>
           <td class="w-25">
             <qrcode
-              [qrdata]="generateQrCode(table.number)"
+              [qrdata]="generateQrUrl(table.number)"
               [allowEmptyString]="true"
               [alt]="'A custom alt attribute'"
               [ariaLabel]="'QR Code image with the following content...'"
@@ -51,7 +51,7 @@
           </td>
           <td>
             <button class="btn btn-danger" data-toggle="tooltip"
-                    data-placement="top" title="Delete" (click)="deleteTable(table.id)">
+                    data-placement="top" title="Delete" (click)="openTableDialog(DialogMode.DELETE, table)">
               <i class="bi bi-trash"></i>
             </button>
           </td>

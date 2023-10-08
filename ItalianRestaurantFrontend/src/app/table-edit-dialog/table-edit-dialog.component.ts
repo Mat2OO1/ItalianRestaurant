@@ -1,9 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
 import {DIALOG_DATA} from "@angular/cdk/dialog";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Meal} from "../models/meal";
-import {DataStorageService} from "../shared/data-storage.service";
 import {DialogMode} from "../models/modal-mode";
 import {Table} from "../models/table";
 
@@ -13,16 +11,18 @@ import {Table} from "../models/table";
   styleUrls: ['./table-edit-dialog.component.css']
 })
 export class TableEditDialogComponent {
+  protected readonly DialogMode = DialogMode;
+  statuses = ['Free', 'Reserved', 'Occupied'];
+
   tableForm: FormGroup
 
   constructor(private dialogRef: MatDialogRef<TableEditDialogComponent>,
-              @Inject(DIALOG_DATA) public data: { mode: DialogMode, table?: Table },
-              private dataStorageService: DataStorageService) {
+              @Inject(DIALOG_DATA) public data: { mode: DialogMode, table?: Table }) {
 
     this.tableForm = new FormGroup({
       number: new FormControl(this.data.table ? this.data.table.number : '', [Validators.required]),
-      description: new FormControl(this.data.table ? this.data.table.seats : '', [Validators.required]),
-      price: new FormControl(this.data.table ? this.data.table.status : '', [Validators.required]),
+      seats: new FormControl(this.data.table ? this.data.table.seats : '', [Validators.required]),
+      status: new FormControl(this.data.table ? this.data.table.status : '', [Validators.required]),
     })
   }
 
@@ -30,13 +30,15 @@ export class TableEditDialogComponent {
     this.dialogRef.close();
   }
 
-  closeDialogAndEdit(): void {
-    this.dialogRef.close();
+  closeDialogAndUpdate(): void {
+    if (this.tableForm.valid) {
+      let result = this.tableForm.value;
+      result.id = this.data.table?.id;
+      this.dialogRef.close(result);
+    }
   }
 
   closeDialogAndDelete(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(this.data.table?.id);
   }
-
-  protected readonly DialogMode = DialogMode;
 }

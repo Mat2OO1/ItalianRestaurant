@@ -35,7 +35,7 @@ export class AdminTableQrComponent implements OnInit {
     this.qrCodeService.downloadQrCode(qrcode)
   }
 
-  generateQrCode(number: number) {
+  generateQrUrl(number: number) {
     return `${environment.frontUrl}/reservation/${number}`;
   }
 
@@ -44,14 +44,35 @@ export class AdminTableQrComponent implements OnInit {
       data: {mode: mode, table: table},
     });
     dialogRef.afterClosed().subscribe(result => {
+      this.handleDialogResult(mode, result);
     });
   }
 
-  deleteTable(id: number) {
-    this.dataStorageService.deleteTable(id).subscribe(
-      () => {
-        this.tables = this.tables?.filter(table => table.id !== id)
+  private handleDialogResult(mode: DialogMode, result: Table | number) {
+    if (result) {
+      if (mode === DialogMode.ADD && typeof result === 'object') {
+        this.dataStorageService.saveTable(result).subscribe(
+          (table) => {
+            this.tables?.push(table)
+          }
+        )
+      } else if (mode === DialogMode.EDIT && typeof result === 'object') {
+        this.dataStorageService.saveTable(result).subscribe(
+          (table) => {
+            const index = this.tables?.findIndex(t => t.id === table.id)
+            if (index !== undefined && index !== null) {
+              this.tables?.splice(index, 1, table)
+            }
+          }
+        )
       }
-    )
+      else if (mode === DialogMode.DELETE && typeof result === 'number') {
+        this.dataStorageService.deleteTable(result).subscribe(
+          () => {
+            this.tables = this.tables?.filter(table => table.id !== result)
+          }
+        )
+      }
+    }
   }
 }
