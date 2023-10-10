@@ -3,11 +3,11 @@ WORKDIR /app
 COPY pom.xml ./
 RUN mvn dependency:go-offline
 COPY src ./src
-COPY certs ./certs
 RUN mvn package -Dmaven.test.skip
 
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 COPY --from=maven /app/target/ItalianRestaurantBackend-0.0.1-SNAPSHOT.jar ./
+COPY certs ./certs
 EXPOSE 8443
 CMD ["java", "-jar", "ItalianRestaurantBackend-0.0.1-SNAPSHOT.jar"]
