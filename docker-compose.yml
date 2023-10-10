@@ -48,10 +48,8 @@ services:
       context: ./ItalianRestaurantFrontend/
       dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - "443:443"
     restart: always
-    expose:
-      - "80"
 
 volumes:
   db:

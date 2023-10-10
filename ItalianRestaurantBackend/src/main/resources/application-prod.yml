@@ -35,8 +35,6 @@ app:
   front-url: https://${SERVER_IP}
 
 server:
-  error:
-    include-message: never
   port: 8443
   ssl:
     key-store: file:certs/keystore.p12
@@ -46,3 +44,5 @@ server:
     trust-store: file:certs/truststore.p12
     trust-store-password: password
     trustStoreType: PKCS12
+  error:
+    include-message: never
