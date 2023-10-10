@@ -6,6 +6,7 @@ RUN npm install
 RUN npm run build --prod
 
 FROM nginx:1.23.4-alpine
+COPY /ssl /etc/nginx/ssl
 COPY --from=build /app/dist/italian-restaurant /usr/share/nginx/html
 COPY /nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 443
