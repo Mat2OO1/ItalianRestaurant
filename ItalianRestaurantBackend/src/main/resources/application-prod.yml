@@ -37,11 +37,11 @@ app:
 server:
   port: 8443
   ssl:
-    key-store: file:certs/keystore.p12
+    key-store: certs/keystore.p12
     key-store-password: password
     keyStoreType: PKCS12
     keyAlias: keystore
-    trust-store: file:certs/truststore.p12
+    trust-store: certs/truststore.p12
     trust-store-password: password
     trustStoreType: PKCS12
   error:
