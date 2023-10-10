@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {BehaviorSubject, catchError, tap, throwError} from "rxjs";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {User} from "./user.model";
+import {Role, User} from "./user.model";
 import {environment} from "../../../environments/environment";
 import jwtDecode from "jwt-decode";
 import {ToastService} from "../../shared/toast.service";
@@ -10,7 +10,7 @@ import {ToastService} from "../../shared/toast.service";
 export interface AuthResponseData {
   token: string;
   expiration: string;
-  role: string;
+  role: Role;
 }
 
 @Injectable()
@@ -68,7 +68,7 @@ export class AuthService {
     const userData: {
       _token: string,
       _tokenExpirationDate: string,
-      role: string
+      role: Role
     }
       // @ts-ignore
       = JSON.parse(localStorage.getItem('userData'));
@@ -103,7 +103,7 @@ export class AuthService {
   // }
 
 
-  handleAuthentication(token: string, expiresIn: number, role: string) {
+  handleAuthentication(token: string, expiresIn: number, role: Role) {
     const expirationDate: Date = new Date(new Date().getTime() + expiresIn * 1000);
     const user = new User(token, expirationDate, role);
     this.user.next(user);
@@ -125,7 +125,7 @@ export class AuthService {
   public saveToken(token: string): void {
     const decodedToken: any = jwtDecode(token);
     const expirationDate = new Date(decodedToken.exp * 1000); // Multiply by 1000 to convert from seconds to milliseconds
-    const user = new User(token, expirationDate, 'USER');
+    const user = new User(token, expirationDate, Role.USER);
     this.user.next(user);
     localStorage.setItem('userData', JSON.stringify(user));
     this.toastService.showSuccessToast("Login", "User logged in successfully")
