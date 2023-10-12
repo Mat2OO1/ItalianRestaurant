@@ -48,6 +48,8 @@ public class OrderController {
                     HttpStatus.NOT_FOUND, "There is no order with id: " + orderDto.getOrderId(), e);
         }
     }
+
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public ResponseEntity<Meal> deleteOrderById(@PathVariable Long id) {
         try {

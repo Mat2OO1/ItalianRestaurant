@@ -6,6 +6,7 @@ import {Delivery} from "../models/delivery";
 import {OrderRes} from "../models/order";
 import {environment} from "../../environments/environment";
 import {MealResponse, MealsWithPagination} from "../models/MealResponse";
+import {Table} from "../models/table";
 
 @Injectable()
 export class DataStorageService {
@@ -84,5 +85,18 @@ export class DataStorageService {
       .delete(`${environment.apiUrl}/order/${id}`)
   }
 
+  getTables() {
+    return this.http
+      .get<Table[]>(`${environment.apiUrl}/tables`)
+  }
 
+  saveTable(table: Table) {
+    return this.http
+      .post<Table>(`${environment.apiUrl}/tables`, table)
+  }
+
+  deleteTable(id: number) {
+    return this.http
+      .delete(`${environment.apiUrl}/tables/${id}`)
+  }
 }

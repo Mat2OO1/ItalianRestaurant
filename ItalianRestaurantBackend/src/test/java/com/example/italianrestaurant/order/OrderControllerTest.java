@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -20,8 +21,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = OrderController.class,
@@ -123,6 +125,34 @@ public class OrderControllerTest {
         val resultActions = mockMvc.perform(post("/order/change-status")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(Utils.objectToJsonString(changeStatusDto)));
+
+        // then
+        resultActions.andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldDeleteOrderById() throws Exception {
+        //given
+        val id = 1L;
+
+        // when
+        val resultActions = mockMvc.perform(delete("/order/" + id)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        // then
+        resultActions.andExpect(status().isOk());
+    }
+
+    @Test
+    void shouldNotDeleteOrderById() throws Exception {
+        //given
+        val id = 1L;
+
+        doThrow(new EmptyResultDataAccessException(0)).when(orderService).deleteOrderById(id);
+
+        // when
+        val resultActions = mockMvc.perform(delete("/order/" + id)
+                .contentType(MediaType.APPLICATION_JSON));
 
         // then
         resultActions.andExpect(status().isNotFound());
