@@ -20,7 +20,7 @@ services:
       context: ./ItalianRestaurantBackend/
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8443:8443"
     restart: always
     depends_on:
       - db
@@ -48,10 +48,8 @@ services:
       context: ./ItalianRestaurantFrontend/
       dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - "443:443"
     restart: always
-    expose:
-      - "80"
 
 volumes:
   db:
