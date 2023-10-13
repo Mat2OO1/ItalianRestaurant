@@ -40,6 +40,12 @@ public class Order {
     @ToString.Exclude
     private List<MealOrder> mealOrders;
 
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn()
+//    @ToString.Exclude
+//    private
+
+
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 

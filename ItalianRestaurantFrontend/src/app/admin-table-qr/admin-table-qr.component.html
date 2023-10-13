@@ -1,0 +1,84 @@
+<div class="container">
+  <div class="row justify-content-center" style="margin:20px">
+    <div class="col-auto">
+      <br>
+      <h1>Tables Editor</h1>
+      <br>
+      <div class="tables-container table table-image table-responsive">
+        <thead>
+        <tr>
+          <th scope="col">Table number</th>
+          <th scope="col">Nr of seats</th>
+          <th scope="col">Status</th>
+          <th scope="col">Qr code</th>
+          <th scope="col">Download QR code</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let table of tables">
+          <td>{{table.number}}</td>
+          <td>{{table.seats}}</td>
+          <td>{{table.status}}</td>
+          <td class="w-25">
+            <qrcode
+              [qrdata]="generateQrUrl(table.number)"
+              [allowEmptyString]="true"
+              [alt]="'QR code'"
+              [ariaLabel]="'QR Code image with the following content...'"
+              [cssClass]="'qr-code'"
+              [colorDark]="'#000000ff'"
+              [colorLight]="'#ffffffff'"
+              [elementType]="'img'"
+              [errorCorrectionLevel]="'M'"
+              [margin]="4"
+              [scale]="1"
+              [width]="75"
+            ></qrcode>
+            <!-- To download -->
+            <qrcode
+              [hidden]="true"
+              #qrcode
+              [qrdata]="generateQrUrl(table.number)"
+              [allowEmptyString]="true"
+              [alt]="'QR code'"
+              [ariaLabel]="'QR Code image with the following content...'"
+              [cssClass]="'qr-code'"
+              [colorDark]="'#000000ff'"
+              [colorLight]="'#ffffffff'"
+              [elementType]="'img'"
+              [errorCorrectionLevel]="'M'"
+              [margin]="4"
+              [scale]="1"
+              [width]="500"
+            ></qrcode>
+            <!--   -----   -->
+          </td>
+          <td>
+            <button class="btn btn-success" data-toggle="tooltip"
+                    data-placement="top" title="Download" (click)="downloadQrCode(qrcode)">
+              <i class="bi bi-download"></i>
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-info" data-toggle="tooltip"
+                    data-placement="top" title="Edit" (click)="openTableDialog(DialogMode.EDIT, table)">
+              <i class="bi bi-pen"></i>
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-danger" data-toggle="tooltip"
+                    data-placement="top" title="Delete" (click)="openTableDialog(DialogMode.DELETE, table)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+        <div style="margin-top: 10px">
+          <button class="btn btn-success" (click)="openTableDialog(DialogMode.ADD)">Add Category</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
