@@ -26,6 +26,7 @@ import {MealDto} from "../models/mealDto";
 })
 export class MealEditDialogComponent {
   mealForm: FormGroup
+  selectedFile: File | null = null;
 
   constructor(private dialogRef: MatDialogRef<MealEditDialogComponent>,
               @Inject(DIALOG_DATA) public data: { mode: string, category: string, meal?: Meal },
@@ -34,7 +35,6 @@ export class MealEditDialogComponent {
       name: new FormControl(data.meal !== undefined ? data.meal.name : '', [Validators.required]),
       description: new FormControl(data.meal !== undefined ? data.meal.description : '', [Validators.required]),
       price: new FormControl(data.meal !== undefined ? data.meal.price : '', [Validators.required]),
-      imgPath: new FormControl(data.meal !== undefined ? data.meal.imgPath : '', [Validators.required]),
     })
   }
 
@@ -47,7 +47,7 @@ export class MealEditDialogComponent {
       this.dataStorageService.editMeal(
         new MealDto(
           this.mealForm.value['name'],
-          this.mealForm.value['imgPath'],
+          this.selectedFile!,
           this.mealForm.value['description'],
           this.mealForm.value['price'],
           this.data.category), this.data.meal.id
@@ -73,12 +73,16 @@ export class MealEditDialogComponent {
     this.dataStorageService.addMeal(
       new MealDto(
         this.mealForm.value['name'],
-        this.mealForm.value['imgPath'],
+        this.selectedFile!,
         this.mealForm.value['description'],
         this.mealForm.value['price'],
         this.data.category)
     ).subscribe()
     this.dialogRef.close();
+  }
+
+  onFileUploaded(event: any): void {
+    this.selectedFile = event.target.files[0] as File;
   }
 
 }

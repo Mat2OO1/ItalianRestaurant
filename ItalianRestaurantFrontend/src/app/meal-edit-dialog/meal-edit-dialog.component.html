@@ -7,8 +7,8 @@
     <input class="form-control" id="description" type="text" formControlName="description">
     <label class="form-label" for="price">Price</label>
     <input class="form-control" id="price" type="text" formControlName="price">
-    <label class="form-label" for="imgPath">Image Path</label>
-    <input class="form-control" id="imgPath" type="text" formControlName="imgPath">
+    <label class="form-label" for="fileInput">Image Path</label>
+    <input class="form-control" type="file" id="fileInput" #fileInput (change)="onFileUploaded($event)"/>
   </form>
   <div class="d-flex justify-content-center align-items-center" *ngIf="data.mode === 'DELETE'">
     <h5>Are you sure you want to delete a meal with name: {{data.meal.name}}</h5>
