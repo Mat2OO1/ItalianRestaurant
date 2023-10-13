@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {DataStorageService} from "../shared/data-storage.service";
 import {OrderRes} from "../models/order";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
@@ -9,10 +9,11 @@ import {formatDate} from "@angular/common";
   templateUrl: './admin-panel.component.html',
   styleUrls: ['./admin-panel.component.css']
 })
-export class AdminPanelComponent {
+export class AdminPanelComponent implements OnDestroy{
   orders: OrderRes[] = []
   isContentLoaded = false;
   forms: FormGroup[] = [];
+  interval
 
   constructor(private dataStorageService: DataStorageService,
               private formBuilder: FormBuilder) {
@@ -29,7 +30,7 @@ export class AdminPanelComponent {
           );
         }
       )
-    setInterval(this.fetchOrders, 10000);
+    this.interval = setInterval(this.fetchOrders, 10000);
   }
 
   calculateSum(order: OrderRes) {
@@ -68,5 +69,9 @@ export class AdminPanelComponent {
         }
       );
   };
+
+  ngOnDestroy(): void {
+    clearInterval(this.interval)
+  }
 
 }

@@ -80,7 +80,7 @@ public class MealCategoryControllerTest {
         val mealcategory2 = Utils.getMealCategory();
         mealcategory2.setId(2L);
         mealcategory2.setName("Pasta");
-        given(mealCategoryService.getMealById(mealCategory.getId())).willReturn(mealCategory);
+        given(mealCategoryService.getMealCategoryById(mealCategory.getId())).willReturn(mealCategory);
 
         // when
         val resultActions = mockMvc.perform(get("/meal-categories/" + mealCategory.getId())
@@ -101,7 +101,7 @@ public class MealCategoryControllerTest {
         mealCategory.setId(1L);
         val badId = 2L;
 
-        given(mealCategoryService.getMealById(badId)).willThrow(EntityNotFoundException.class);
+        given(mealCategoryService.getMealCategoryById(badId)).willThrow(EntityNotFoundException.class);
 
         // when
         val resultActions = mockMvc.perform(get("/meal-categories/" + badId)

@@ -66,7 +66,7 @@ public class MealCategoryServiceTest {
         given(mealCategoryRepository.findById(1L)).willReturn(Optional.of(mealCategory));
 
         //when
-        val returnedMealCategory = mealCategoryService.getMealById(1L);
+        val returnedMealCategory = mealCategoryService.getMealCategoryById(1L);
 
         //then
         assertThat(returnedMealCategory).isEqualTo(mealCategory);
@@ -78,7 +78,7 @@ public class MealCategoryServiceTest {
         given(mealCategoryRepository.findById(1L)).willReturn(Optional.empty());
 
         //when
-        assertThatThrownBy(() -> mealCategoryService.getMealById(1L))
+        assertThatThrownBy(() -> mealCategoryService.getMealCategoryById(1L))
                 .isInstanceOf(EntityNotFoundException.class);
 
         //then

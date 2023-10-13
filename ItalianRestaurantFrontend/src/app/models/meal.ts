@@ -1,12 +1,14 @@
+import {CategoryDto} from "./categoryDto";
+
 export class Meal {
   id: number
   name: string
   imgPath: string
   description: string
-  price: number
-  mealCategory: Category
+  price: number;
+  mealCategory: CategoryDto
 
-  constructor(id: number, name: string, imgPath: string, description: string, price: number, mealCategory: Category) {
+  constructor(id: number, name: string, imgPath: string, description: string, price: number, mealCategory: CategoryDto) {
     this.id = id
     this.name = name;
     this.imgPath = imgPath;
@@ -15,17 +17,4 @@ export class Meal {
     this.mealCategory = mealCategory;
   }
 
-  equals(other: Meal): boolean {
-    return this.name === other.name
-  }
-}
-
-export class Category {
-  name: string;
-  imgPath: string;
-
-  constructor(name: string, imgPath: string) {
-    this.name = name;
-    this.imgPath = imgPath;
-  }
 }

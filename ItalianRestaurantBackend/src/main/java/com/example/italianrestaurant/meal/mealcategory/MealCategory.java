@@ -1,9 +1,12 @@
 package com.example.italianrestaurant.meal.mealcategory;
 
+import com.example.italianrestaurant.meal.Meal;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -22,7 +25,10 @@ public class MealCategory {
     @Column(nullable = false)
     private String name;
     private String imgPath;
-
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "mealCategory", cascade = CascadeType.ALL)
+    private List<Meal> meals;
 
     @Override
     public boolean equals(Object o) {

@@ -1,13 +1,13 @@
 <h2 mat-dialog-title>{{data.mode}} Category</h2>
 <mat-dialog-content class="mat-typography">
-  <form [formGroup]="mealForm" *ngIf="data.mode !== 'DELETE'">
+  <form [formGroup]="categoryForm" *ngIf="data.mode !== 'DELETE'">
     <label class="form-label" for="name">Name</label>
     <input class="form-control" id="name" type="text" formControlName="name">
-    <label class="form-label" for="imgPath">Image Path</label>
-    <input class="form-control" id="imgPath" type="text" formControlName="imgPath">
+    <label class="form-label" for="fileInput">Image Path</label>
+    <input class="form-control" type="file" id="fileInput" #fileInput (change)="onFileUploaded($event)"/>
   </form>
   <div class="d-flex justify-content-center align-items-center" *ngIf="data.mode === 'DELETE'">
-    <h5>Are you sure you want to delete a meal with name: {{data.category.name}}</h5>
+    <h5>Are you sure you want to delete a category with name: {{data.category.name}} and all corresponding meals?</h5>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end" *ngIf="data.mode === 'EDIT'">

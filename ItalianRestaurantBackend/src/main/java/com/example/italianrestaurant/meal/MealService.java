@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,7 +36,6 @@ public class MealService {
     }
 
     public Meal addMeal(MealDto meal) {
-        log.info(meal);
         if (mealRepository.existsByName(meal.getName())) {
             throw new EntityExistsException("Meal with name: " + meal.getName() + " already exists");
         }
@@ -48,10 +48,10 @@ public class MealService {
     public Meal editMeal(MealDto mealDto, Long id) {
         Meal savedMeal = mealRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         Meal meal = modelMapper.map(mealDto, Meal.class);
-        MealCategory mealCategory = mealCategoryService.getMealCategoryByName(mealDto.getName());
+        MealCategory mealCategory = mealCategoryService.getMealCategoryByName(savedMeal.getMealCategory().getName());
         meal.setMealCategory(mealCategory);
         meal.setId(savedMeal.getId());
-       return mealRepository.save(meal);
+        return mealRepository.save(meal);
     }
 
     public void deleteMeal(long id){

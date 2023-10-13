@@ -28,7 +28,6 @@ export class AuthInterceptorService implements HttpInterceptor {
             this.router.navigate(['/home']);
             // @ts-ignore
             this.authService.user.next(null);
-            console.log(error)
             return throwError(error);
           })
         );

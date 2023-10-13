@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Category, Meal} from "../../models/meal";
+import {Meal} from "../../models/meal";
 import {CartService} from "../../shared/cart.service";
 import {DataStorageService} from "../../shared/data-storage.service";
 import {ToastService} from "../../shared/toast.service";
+import {CategoryDto} from "../../models/categoryDto";
 
 @Component({
   selector: 'app-menu',
@@ -10,7 +11,7 @@ import {ToastService} from "../../shared/toast.service";
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-  categories: Category[] = []
+  categories: CategoryDto[] = []
   meals: { [key: string]: Meal[] } = {};
   currentPage = 0
   totalPages = 0

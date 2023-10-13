@@ -35,12 +35,12 @@
             <td>{{meal.description}}</td>
             <td>{{meal.price}} $</td>
             <td>
-              <button matTooltip="Edit" matTooltipPosition="above" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Edit" (click)="openDialog('EDIT', meal)">
+              <button matTooltip="Edit" matTooltipPosition="above" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Edit" (click)="openDialog('EDIT', category, meal)">
                 <i class="bi bi-pen"></i>
               </button>
             </td>
             <td>
-              <button matTooltip="Delete" matTooltipPosition="above" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete" (click)="openDialog('DELETE',meal)">
+              <button matTooltip="Delete" matTooltipPosition="above" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete" (click)="openDialog('DELETE', category,meal)">
                 <i class="bi bi-trash"></i>
               </button>
             </td>
@@ -52,7 +52,7 @@
             <td></td>
             <td></td>
             <td class="text-right">
-              <button matTooltip="Add" matTooltipPosition="above" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Delete" (click)="openDialog('ADD')">
+              <button matTooltip="Add" matTooltipPosition="above" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Delete" (click)="openDialog('ADD', category)">
                 <i class="bi bi-plus-square"></i>
               </button>
             </td>
@@ -60,7 +60,7 @@
           </tbody>
         </div>
         <div style="text-align:right; padding: 16px 22.4px;" *ngIf="getMealsWithCategory(category.name).length ==0">
-          <button matTooltip="Add" matTooltipPosition="above" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Delete" (click)="openDialog('ADD')">
+          <button matTooltip="Add" matTooltipPosition="above" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Delete" (click)="openDialog('ADD', category)">
             <i class="bi bi-plus-square"></i>
           </button>
         </div>

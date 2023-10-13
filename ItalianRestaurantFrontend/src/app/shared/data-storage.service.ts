@@ -6,12 +6,16 @@ import {Delivery} from "../models/delivery";
 import {OrderRes} from "../models/order";
 import {environment} from "../../environments/environment";
 import {MealResponse, MealsWithPagination} from "../models/MealResponse";
+import {MealDto} from "../models/mealDto";
+import {CategoryDto} from "../models/categoryDto";
+import {Category} from "../models/category";
 
 @Injectable()
 export class DataStorageService {
   page = 0
   size = 3
   meals = new Subject<MealsWithPagination>();
+
   constructor(private http: HttpClient) {
   }
 
@@ -26,25 +30,60 @@ export class DataStorageService {
       )
   }
 
-  getMealsWithoutPagination(){
+  getMealsWithoutPagination() {
     return this.http
-      .get<{content: Meal[]}>(`${environment.apiUrl}/meals`)
+      .get<{ content: Meal[] }>(`${environment.apiUrl}/meals`)
   }
 
-  addMeal(meal:Meal){
+  addMeal(meal: MealDto) {
     return this.http
       .post(`${environment.apiUrl}/meals/add`, {
         name: meal.name,
         imgPath: meal.imgPath,
-        category: meal.mealCategory.name,
+        category: meal.mealCategory,
         description: meal.description,
         price: meal.price
       })
   }
 
+  editMeal(meal: MealDto, id: number){
+    return this.http.put(`${environment.apiUrl}/meals/edit/${id}`, {
+      name: meal.name,
+      imgPath: meal.imgPath,
+      category: meal.mealCategory,
+      description: meal.description,
+      price: meal.price
+    })
+  }
+  deleteMeal(id: number){
+    return this.http
+      .delete(`${environment.apiUrl}/meals/delete/${id}`)
+  }
+
+  addCategory(categoryName: string, img: File) {
+    return this.http
+      .post(`${environment.apiUrl}/meal-categories/add`, {
+        name: categoryName,
+        imgPath: img
+      })
+  }
+
+  editCategory(categoryName: string, img: File, id: number) {
+    return this.http
+      .put(`${environment.apiUrl}/meal-categories/edit/${id}`, {
+        name: categoryName,
+        imgPath: img
+      })
+  }
+
+  deleteCategory(id: number) {
+    return this.http
+      .delete(`${environment.apiUrl}/meal-categories/delete/${id}`);
+  }
+
   getCategories() {
     return this.http
-      .get<{ name: string, imgPath: string }[]>(`${environment.apiUrl}/meal-categories`)
+      .get<Category[]>(`${environment.apiUrl}/meal-categories`)
   }
 
   makeAnOrder(delivery: Delivery, order: { meal: Meal, quantity: number, price: number }[]) {
@@ -82,12 +121,12 @@ export class DataStorageService {
 
   }
 
-  nextPage(){
+  nextPage() {
     this.page++
     this.getMeals();
   }
 
-  previousPage(){
+  previousPage() {
     this.page--
     this.getMeals();
   }
