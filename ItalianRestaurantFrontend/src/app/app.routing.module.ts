@@ -21,7 +21,7 @@ const routes: Routes = [
   {path: 'reset', component: EmailFormComponent},
   {path: 'password', component: PasswordFormComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'menu', component: MenuComponent, canActivate: [AuthGuard]},
+  {path: 'menu', component: MenuComponent},
   {path: 'summary', component: SummaryComponent, canActivate: [AuthGuard]},
   {path: 'buy', component: BuyComponent, canActivate: [AuthGuard]},
   {path: 'confirmation', component: ConfirmationComponent, canActivate: [AuthGuard]},
