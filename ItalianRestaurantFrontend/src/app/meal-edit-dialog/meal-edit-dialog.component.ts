@@ -43,11 +43,12 @@ export class MealEditDialogComponent {
   }
 
   closeDialogAndEdit(): void {
+    console.log(this.selectedFile!)
     if(this.data.meal !== undefined){
       this.dataStorageService.editMeal(
         new MealDto(
           this.mealForm.value['name'],
-          this.selectedFile!,
+          new Blob([this.selectedFile!], { type: this.selectedFile!.type }),
           this.mealForm.value['description'],
           this.mealForm.value['price'],
           this.data.category), this.data.meal.id
@@ -73,7 +74,7 @@ export class MealEditDialogComponent {
     this.dataStorageService.addMeal(
       new MealDto(
         this.mealForm.value['name'],
-        this.selectedFile!,
+        new Blob([this.selectedFile!], { type: this.selectedFile!.type }),
         this.mealForm.value['description'],
         this.mealForm.value['price'],
         this.data.category)

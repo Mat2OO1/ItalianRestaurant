@@ -49,7 +49,7 @@ export class DataStorageService {
   editMeal(meal: MealDto, id: number){
     return this.http.put(`${environment.apiUrl}/meals/edit/${id}`, {
       name: meal.name,
-      imgPath: meal.img,
+      imgPath:  meal.img,
       category: meal.mealCategory,
       description: meal.description,
       price: meal.price
@@ -60,7 +60,7 @@ export class DataStorageService {
       .delete(`${environment.apiUrl}/meals/delete/${id}`)
   }
 
-  addCategory(categoryName: string, img: File) {
+  addCategory(categoryName: string, img: Blob) {
     return this.http
       .post(`${environment.apiUrl}/meal-categories/add`, {
         name: categoryName,
@@ -68,7 +68,7 @@ export class DataStorageService {
       })
   }
 
-  editCategory(categoryName: string, img: File, id: number) {
+  editCategory(categoryName: string, img: Blob, id: number) {
     return this.http
       .put(`${environment.apiUrl}/meal-categories/edit/${id}`, {
         name: categoryName,

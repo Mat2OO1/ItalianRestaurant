@@ -42,9 +42,12 @@ export class CategoryEditDialogComponent {
   }
 
   closeDialogAndEdit(): void {
+    var blob = new Blob([this.selectedFile!], { type: this.selectedFile!.type })
     if(this.data.category !== undefined){
       this.selectedFile!.name
-      this.dataStorageService.editCategory(this.categoryForm.value['name'], this.selectedFile!, this.data.category.id)
+      this.dataStorageService.editCategory(this.categoryForm.value['name'],
+        new Blob([this.selectedFile!], { type: this.selectedFile!.type }),
+        this.data.category.id)
         .subscribe()
     }
     this.dialogRef.close();
@@ -60,7 +63,9 @@ export class CategoryEditDialogComponent {
 
   closeDialogAndAdd(): void {
     console.log(`Selected file: ${this.selectedFile!.name}`);
-    this.dataStorageService.addCategory(this.categoryForm.value['name'], this.selectedFile!)
+    this.dataStorageService.addCategory(this.categoryForm.value['name'],
+      new Blob([this.selectedFile!], { type: this.selectedFile!.type }),
+    )
       .subscribe()
     this.dialogRef.close();
   }
