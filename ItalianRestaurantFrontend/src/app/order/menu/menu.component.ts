@@ -3,12 +3,14 @@ import {Category, Meal} from "../../models/meal";
 import {CartService} from "../../shared/cart.service";
 import {DataStorageService} from "../../shared/data-storage.service";
 import {ToastService} from "../../shared/toast.service";
+import {AuthService} from "../../authentication/auth/auth.service";
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
+
 export class MenuComponent implements OnInit {
   categories: Category[] = []
   meals: { [key: string]: Meal[] } = {};
@@ -17,8 +19,18 @@ export class MenuComponent implements OnInit {
 
   constructor(private cartService: CartService,
               private dataStorageService: DataStorageService,
-              private toastService: ToastService) {
+              private toastService: ToastService,
+              private authService: AuthService) {
+
+          this.authService.user.subscribe(
+            (user) => {
+              this.isLoggedIn = !!user.token;
+            }
+          )
   }
+
+  isLoggedIn = false;
+
 
   ngOnInit(): void {
     this.dataStorageService.getCategories()

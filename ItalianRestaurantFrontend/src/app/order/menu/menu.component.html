@@ -26,7 +26,7 @@
           <p>{{meal.description}}</p>
           <h4><strong>{{meal.price.toFixed(2)}} $</strong></h4>
           <div>
-            <button type="button" class="btn btn-dark" (click)="addToCart(meal)">
+            <button type="button" class="btn btn-dark" *ngIf="isLoggedIn" (click)="addToCart(meal)">
               <i class="bi bi-cart me-1"></i>
               To Cart
             </button>

@@ -21,7 +21,11 @@ align-items: center;
         <a class="nav-item nav-link" *ngIf="isLoggedIn" routerLink="/order-history">Orders</a>
         <a class="nav-item nav-link" *ngIf="isLoggedIn" routerLink="/summary"><i class="bi bi-cart"
                                                                                  style="font-size: 1.5em;"></i></a>
-
+        <a class="nav-item nav-link active" routerLink="/menu" *ngIf="!isLoggedIn">
+          <button class="btn rounded-pill" style="background-color: #005B47; text-decoration: none; color: #FFFFFF">
+            Menu
+          </button>
+        </a>
         <a class="nav-item nav-link active" routerLink="register" *ngIf="!isLoggedIn">
           <button class="btn rounded-pill" style="background-color: #005B47; text-decoration: none; color: #FFFFFF">
             Register
