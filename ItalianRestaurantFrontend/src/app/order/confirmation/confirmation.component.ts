@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Meal} from "../../models/meal";
 import {ActivatedRoute, Router} from "@angular/router";
-import {interval, Subscription} from "rxjs";
+import {interval, Subscription, timer} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 
@@ -56,7 +56,7 @@ export class ConfirmationComponent implements OnInit, OnDestroy {
   }
 
   getOrderDetails() {
-    this.timeSubscription = interval(5000).subscribe(() => {
+    this.timeSubscription = timer(0, 5000).subscribe(() => {
         return this.http
           .get(`${environment.apiUrl}/order/user`)
           .subscribe(
