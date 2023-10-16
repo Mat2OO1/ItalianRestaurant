@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Meal} from "../../models/meal";
-import {CartService} from "../../shared/cart.service";
-import {OrderService} from "../../shared/order.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {interval, Subscription} from "rxjs";
+import {environment} from "../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 
 @Component({
@@ -9,20 +10,21 @@ import {HttpClient} from "@angular/common/http";
   templateUrl: './confirmation.component.html',
   styleUrls: ['./confirmation.component.css']
 })
-export class ConfirmationComponent implements OnInit {
+export class ConfirmationComponent implements OnInit, OnDestroy {
   order: { meal: Meal, quantity: number }[] = []
-  orderNumber: number | undefined
+  orderNumber: number | null = null;
   sum: number | undefined;
-  orderDetails: { date: Date, status: string } = {
-    // @ts-ignore
+  orderDetails: { date: Date | null, status: string } = {
     date: null,
     status: ''
   }
-  isContentLoaded: boolean | undefined
+  isContentLoaded: boolean = false;
 
-  constructor(private cartService: CartService,
-              private http: HttpClient,
-              private orderService: OrderService) {
+  timeSubscription: Subscription | null = null;
+
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private http: HttpClient) {
   }
 
   adjustStatus(status: string) {
@@ -40,30 +42,11 @@ export class ConfirmationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.orderService.orderId = Number(localStorage.getItem("orderId"));
-    this.orderService.getOrderDetails()
-    this.orderService.orderDetails
-      .subscribe(
-        (res: { date: Date, status: string }) => {
-          const status = res.status.toLowerCase().replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
-          this.adjustStatus(status)
-          this.orderDetails = {date: res.date, status: status}
-        }
-      )
-    if (this.cartService.cart.length > 0) {
-      this.order = this.cartService.cart;
-    } else {
-      this.orderService.order
-        .subscribe(
-          (order) => {
-            this.order = order
-            this.isContentLoaded = true;
-          }
-        )
-    }
-    this.sum = this.cartService.calculateSum()
-    this.orderNumber = this.orderService.orderId;
-    this.isContentLoaded = this.order.length > 0;
+    this.route.paramMap
+      .subscribe(params => {
+        this.orderNumber = Number(params.get('orderId'))
+        this.getOrderDetails()
+      })
   }
 
   calculateOrder() {
@@ -72,4 +55,28 @@ export class ConfirmationComponent implements OnInit {
     return sum;
   }
 
+  getOrderDetails() {
+    this.timeSubscription = interval(5000).subscribe(() => {
+        return this.http
+          .get(`${environment.apiUrl}/order/user`)
+          .subscribe(
+            (res: any) => {
+              res = res.filter((order: any) => order.id === this.orderNumber)[0]
+              if(res === undefined) {
+                this.router.navigate([''])
+                return
+              }
+              this.order = res.mealOrders;
+              this.orderDetails = {date: res.delivery.deliveryDate, status: res.orderStatus}
+              const status = res.orderStatus.toLowerCase().replace(/_/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase());
+              this.adjustStatus(status)
+              this.isContentLoaded = true;
+            })
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.timeSubscription?.unsubscribe();
+  }
 }

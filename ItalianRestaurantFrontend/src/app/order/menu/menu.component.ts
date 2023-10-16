@@ -17,6 +17,7 @@ export class MenuComponent implements OnInit {
   meals: { [key: string]: Meal[] } = {};
   currentPage = 0
   totalPages = 0
+  isLoggedIn = false;
 
   constructor(private cartService: CartService,
               private dataStorageService: DataStorageService,
@@ -25,12 +26,10 @@ export class MenuComponent implements OnInit {
 
           this.authService.user.subscribe(
             (user) => {
-              this.isLoggedIn = !!user.token;
+              this.isLoggedIn = !!user?.token;
             }
           )
   }
-
-  isLoggedIn = false;
 
 
   ngOnInit(): void {

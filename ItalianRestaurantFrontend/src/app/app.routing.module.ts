@@ -26,7 +26,7 @@ const routes: Routes = [
   {path: 'menu', component: MenuComponent},
   {path: 'summary', component: SummaryComponent, canActivate: [AuthGuard]},
   {path: 'buy', component: BuyComponent, canActivate: [AuthGuard]},
-  {path: 'confirmation', component: ConfirmationComponent, canActivate: [AuthGuard]},
+  {path: 'confirmation/:orderId', component: ConfirmationComponent, canActivate: [AuthGuard]},
   {path: 'order-history', component: OrderHistoryComponent, canActivate: [AuthGuard]},
   {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AdminGuard]},
   {path: 'admin-tables-panel', component: AdminTableQrComponent},

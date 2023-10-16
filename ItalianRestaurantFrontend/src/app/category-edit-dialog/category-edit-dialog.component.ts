@@ -62,7 +62,6 @@ export class CategoryEditDialogComponent {
   }
 
   closeDialogAndAdd(): void {
-    console.log(`Selected file: ${this.selectedFile!.name}`);
     this.dataStorageService.addCategory(this.categoryForm.value['name'],
       new Blob([this.selectedFile!], { type: this.selectedFile!.type }),
     )
