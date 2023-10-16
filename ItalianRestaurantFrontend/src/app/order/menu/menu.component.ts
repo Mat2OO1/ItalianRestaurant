@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Meal} from "../../models/meal";
 import {CartService} from "../../shared/cart.service";
 import {DataStorageService} from "../../shared/data-storage.service";
 import {ToastService} from "../../shared/toast.service";
 import {CategoryDto} from "../../models/categoryDto";
 import {AuthService} from "../../authentication/auth/auth.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-menu',
@@ -12,23 +13,26 @@ import {AuthService} from "../../authentication/auth/auth.service";
   styleUrls: ['./menu.component.css']
 })
 
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, OnDestroy {
   categories: CategoryDto[] = []
   meals: { [key: string]: Meal[] } = {};
   currentPage = 0
   totalPages = 0
   isLoggedIn = false;
 
+  authSubscription?: Subscription | null;
+  mealsSubscription?: Subscription | null;
+
   constructor(private cartService: CartService,
               private dataStorageService: DataStorageService,
               private toastService: ToastService,
               private authService: AuthService) {
 
-          this.authService.user.subscribe(
-            (user) => {
-              this.isLoggedIn = !!user?.token;
-            }
-          )
+    this.authSubscription = this.authService.user.subscribe(
+      (user) => {
+        this.isLoggedIn = !!user?.token;
+      }
+    );
   }
 
 
@@ -39,7 +43,7 @@ export class MenuComponent implements OnInit {
           this.categories = res
         }
       )
-    this.dataStorageService.meals
+    this.mealsSubscription = this.dataStorageService.meals
       .subscribe(res => {
         this.meals = {}
         this.totalPages = res.numOfPages
@@ -51,7 +55,7 @@ export class MenuComponent implements OnInit {
             this.meals[meal.mealCategory.name] = [meal]
           }
         }
-      })
+      });
 
     this.dataStorageService.getMeals();
   }
@@ -89,7 +93,10 @@ export class MenuComponent implements OnInit {
     }
   }
 
-
+  ngOnDestroy() {
+    this.authSubscription?.unsubscribe()
+    this.mealsSubscription?.unsubscribe()
+  }
 }
 
 

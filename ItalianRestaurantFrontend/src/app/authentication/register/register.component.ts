@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../auth/auth.service";
 import {Router} from "@angular/router";
 
@@ -14,7 +13,6 @@ export class RegisterComponent {
   error: string = '';
 
   constructor(private router: Router,
-              private http: HttpClient,
               private authService: AuthService) {
     this.registerForm = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
