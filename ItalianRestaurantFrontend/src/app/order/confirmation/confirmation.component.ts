@@ -30,7 +30,10 @@ export class ConfirmationComponent implements OnInit, OnDestroy {
     const circle2 = document.getElementById("circle2")
     const circle3 = document.getElementById("circle3")
     const progressBar = document.getElementById("indicator")
-    if (!circle2 || !circle3 || !progressBar) return;
+    if (!circle2 || !circle3 || !progressBar) {
+      console.log("lala")
+      return;
+    }
     if (status.toLowerCase() == 'in delivery') {
       circle2.classList.add("active")
       progressBar.style.width = "50%";
