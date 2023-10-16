@@ -31,14 +31,20 @@ public class Order {
     @JsonIgnore
     private User user;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(cascade =CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn
     @ToString.Exclude
     private Delivery delivery;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order", fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<MealOrder> mealOrders;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn()
+//    @ToString.Exclude
+//    private
+
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;

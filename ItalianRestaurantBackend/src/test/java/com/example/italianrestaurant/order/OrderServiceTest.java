@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,8 +26,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class OrderServiceTest {
@@ -186,5 +186,29 @@ public class OrderServiceTest {
         verify(orderRepository, times(0)).save(any());
     }
 
+    @Test
+    void shouldDeleteOrderById() {
+        //given
+        val id = 1L;
+        doNothing().when(orderRepository).deleteById(id);
+
+        //when
+        orderService.deleteOrderById(id);
+
+        //then
+        verify(orderRepository).deleteById(id);
+    }
+
+    @Test
+    void shouldNotDeleteOrderById() {
+        //given
+        val id = 1L;
+        doThrow(new EmptyResultDataAccessException(0)).when(orderRepository).deleteById(id);
+
+        //when
+        //then
+        assertThatThrownBy(() -> orderService.deleteOrderById(id))
+                .isInstanceOf(EmptyResultDataAccessException.class);
+    }
 
 }

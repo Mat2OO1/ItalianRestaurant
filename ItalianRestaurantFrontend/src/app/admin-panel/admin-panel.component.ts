@@ -74,4 +74,14 @@ export class AdminPanelComponent implements OnDestroy{
     clearInterval(this.interval)
   }
 
+  deleteOrder(orderId: number) {
+    this.dataStorageService.deleteOrder(orderId).subscribe(
+      () => {
+        const index = this.orders.findIndex(order => order.id === orderId);
+        if (index !== -1) {
+          this.orders.splice(index, 1);
+        }
+      }
+    );
+  }
 }

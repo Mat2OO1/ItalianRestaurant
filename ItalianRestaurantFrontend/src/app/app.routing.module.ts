@@ -14,6 +14,7 @@ import {AdminPanelComponent} from "./admin-panel/admin-panel.component";
 import {PasswordFormComponent} from "./authentication/password-reset/password-form/password-form.component";
 import {AdminGuard} from "./authentication/auth/admin.guard";
 import {OrderHistoryComponent} from "./order-history/order-history.component";
+import {AdminTableQrComponent} from "./admin-table-qr/admin-table-qr.component";
 import {AdminMenuComponent} from "./admin-menu/admin-menu.component";
 
 const routes: Routes = [
@@ -22,12 +23,13 @@ const routes: Routes = [
   {path: 'reset', component: EmailFormComponent},
   {path: 'password', component: PasswordFormComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'menu', component: MenuComponent, canActivate: [AuthGuard]},
+  {path: 'menu', component: MenuComponent},
   {path: 'summary', component: SummaryComponent, canActivate: [AuthGuard]},
   {path: 'buy', component: BuyComponent, canActivate: [AuthGuard]},
   {path: 'confirmation', component: ConfirmationComponent, canActivate: [AuthGuard]},
   {path: 'order-history', component: OrderHistoryComponent, canActivate: [AuthGuard]},
   {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AdminGuard]},
+  {path: 'admin-tables-panel', component: AdminTableQrComponent},
   {path: 'admin-menu', component: AdminMenuComponent, canActivate: [AdminGuard]},
   {path: '**', redirectTo: ''}
 ]

@@ -1,9 +1,11 @@
 package com.example.italianrestaurant.order;
 
+import com.example.italianrestaurant.meal.Meal;
 import com.example.italianrestaurant.security.UserPrincipal;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -44,6 +46,18 @@ public class OrderController {
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "There is no order with id: " + orderDto.getOrderId(), e);
+        }
+    }
+
+    @Secured("ROLE_ADMIN")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Meal> deleteOrderById(@PathVariable Long id) {
+        try {
+            orderService.deleteOrderById(id);
+            return ResponseEntity.ok().build();
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "There is no order with id: " + id, e);
         }
     }
 }

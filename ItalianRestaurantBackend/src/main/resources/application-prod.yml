@@ -21,21 +21,28 @@ spring:
           github:
             clientId: ${GITHUB_CLIENT_ID}
             clientSecret: ${GITHUB_CLIENT_SECRET}
-
 app:
   security:
     jwt:
       tokenSecret: ${JWT_SECRET_KEY}
-      tokenExpirationMsec: ${JWT_EXPIRATION}
     cors:
-      allowedOrigins: http://localhost
+      allowedOrigins: https://${SERVER_IP}
     oauth2:
       authorizedRedirectUris:
-        - http://localhost/oauth2/redirect
+        - https://${SERVER_IP}/oauth2/redirect
         - myandroidapp://oauth2/redirect
         - myiosapp://oauth2/redirect
-  front-url: http://localhost
+  front-url: https://${SERVER_IP}
 
 server:
+  port: 8443
+  ssl:
+    key-store: certs/keystore.p12
+    key-store-password: password
+    keyStoreType: PKCS12
+    keyAlias: keystore
+    trust-store: certs/truststore.p12
+    trust-store-password: password
+    trustStoreType: PKCS12
   error:
     include-message: never

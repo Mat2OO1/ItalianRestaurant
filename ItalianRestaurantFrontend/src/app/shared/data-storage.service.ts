@@ -6,6 +6,7 @@ import {Delivery} from "../models/delivery";
 import {OrderRes} from "../models/order";
 import {environment} from "../../environments/environment";
 import {MealResponse, MealsWithPagination} from "../models/MealResponse";
+import {Table} from "../models/table";
 import {MealDto} from "../models/mealDto";
 import {CategoryDto} from "../models/categoryDto";
 import {Category} from "../models/category";
@@ -15,15 +16,17 @@ export class DataStorageService {
   page = 0
   size = 3
   meals = new Subject<MealsWithPagination>();
-
   constructor(private http: HttpClient) {
   }
 
   getMeals() {
     return this.http
-      .get<MealResponse>(`${environment.apiUrl}/meals?page=${this.page}&size=${this.size}`,)
+      .get<MealResponse>(
+        `${environment.apiUrl}/meals?page=${this.page}&size=${this.size}`,
+      )
       .subscribe(
         (res) => {
+          console.log(res)
           var menu = res.content.map(meal => new Meal(meal.id, meal.name, meal.imgPath, meal.description, meal.price, meal.mealCategory))
           this.meals.next({meals: menu, numOfPages: res.totalPages, currPage: res.number})
         }
@@ -83,7 +86,7 @@ export class DataStorageService {
 
   getCategories() {
     return this.http
-      .get<Category[]>(`${environment.apiUrl}/meal-categories`)
+      .get<{ name: string, imgPath: string }[]>(`${environment.apiUrl}/meal-categories`)
   }
 
   makeAnOrder(delivery: Delivery, order: { meal: Meal, quantity: number, price: number }[]) {
@@ -131,4 +134,23 @@ export class DataStorageService {
     this.getMeals();
   }
 
+  deleteOrder(id:number){
+    return this.http
+      .delete(`${environment.apiUrl}/order/${id}`)
+  }
+
+  getTables() {
+    return this.http
+      .get<Table[]>(`${environment.apiUrl}/tables`)
+  }
+
+  saveTable(table: Table) {
+    return this.http
+      .post<Table>(`${environment.apiUrl}/tables`, table)
+  }
+
+  deleteTable(id: number) {
+    return this.http
+      .delete(`${environment.apiUrl}/tables/${id}`)
+  }
 }

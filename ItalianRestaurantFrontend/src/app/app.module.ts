@@ -30,6 +30,9 @@ import {DatePipe} from "@angular/common";
 import {ToastComponent} from './toast-notifications/toast/toast.component';
 import {ToasterComponent} from './toast-notifications/toaster/toaster.component';
 import {OrderHistoryComponent} from "./order-history/order-history.component";
+import { AdminTableQrComponent } from './admin-table-qr/admin-table-qr.component';
+import {QRCodeModule} from "angularx-qrcode";
+import { TableEditDialogComponent } from './table-edit-dialog/table-edit-dialog.component';
 import {AdminMenuComponent} from "./admin-menu/admin-menu.component";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
@@ -55,23 +58,27 @@ import {CategoryEditDialogComponent} from "./category-edit-dialog/category-edit-
     ToastComponent,
     ToasterComponent,
     OrderHistoryComponent,
+    AdminTableQrComponent,
+    TableEditDialogComponent,
+    OrderHistoryComponent,
     AdminMenuComponent,
     MealEditDialogComponent,
     CategoryEditDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    RouterLink,
-    RouterOutlet,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatProgressSpinnerModule,
-    MatTooltipModule,
-    MatDialogModule,
-    MatButtonModule,
-  ],
+    imports: [
+        BrowserModule,
+        RouterLink,
+        RouterOutlet,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatProgressSpinnerModule,
+        QRCodeModule,
+        MatDialogModule,
+      MatTooltipModule,
+      MatButtonModule,
+    ],
 
   providers: [
     CartService,

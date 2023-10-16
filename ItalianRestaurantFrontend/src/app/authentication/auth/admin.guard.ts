@@ -3,6 +3,7 @@ import {ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree} from "@ang
 import {map, Observable} from "rxjs";
 import {AuthService} from "./auth.service";
 import {take} from "rxjs/operators";
+import {Role} from "./user.model";
 
 @Injectable({providedIn: "root"})
 export class AdminGuard {
@@ -20,7 +21,7 @@ export class AdminGuard {
     return this.authService.user.pipe(
       take(1),
       map(user => {
-        if (user.role === 'ADMIN') {
+        if (user.role === Role.ADMIN) {
           return true;
         }
         return this.router.createUrlTree(['login'])
