@@ -43,7 +43,6 @@ export class MealEditDialogComponent {
   }
 
   closeDialogAndEdit(): void {
-    console.log(this.selectedFile!)
     if(this.data.meal !== undefined){
       this.dataStorageService.editMeal(
         new MealDto(
@@ -61,11 +60,7 @@ export class MealEditDialogComponent {
     if(this.data.meal !== undefined) {
       this.dataStorageService.deleteMeal(
         this.data.meal.id
-      ).subscribe(
-        (response) => {
-          console.log(response)
-        }
-      )
+      ).subscribe()
     }
     this.dialogRef.close();
   }

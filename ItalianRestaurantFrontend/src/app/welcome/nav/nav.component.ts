@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {AuthService} from "../../authentication/auth/auth.service";
-import {Role} from "../../authentication/auth/user.model";
+import {Role, User} from "../../authentication/auth/user.model";
 
 @Component({
   selector: 'app-nav',
@@ -10,20 +10,18 @@ import {Role} from "../../authentication/auth/user.model";
 export class NavComponent {
 
   protected readonly Role = Role;
-  isLoggedIn = false;
-  role?: Role;
+  currentUser: User | null = null;
 
   constructor(private authService: AuthService) {
     this.authService.user.subscribe(
       (user) => {
-        this.isLoggedIn = !!user.token;
-        this.role = user.role;
+        this.currentUser = user;
       }
     )
   }
+
   onLogout() {
-    this.isLoggedIn = false;
-    this.role = undefined;
     this.authService.logout();
   }
+
 }

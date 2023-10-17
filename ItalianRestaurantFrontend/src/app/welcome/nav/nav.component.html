@@ -15,25 +15,26 @@ align-items: center;
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav ms-auto d-flex align-items-center">
-        <a class="nav-item nav-link" *ngIf="role === Role.ADMIN" routerLink="/admin-tables-panel">Tables</a>
-        <a class="nav-item nav-link" *ngIf="role === Role.ADMIN" routerLink="/admin-menu">Edit Menu</a>
-        <a class="nav-item nav-link" *ngIf="role === Role.ADMIN" routerLink="/admin-panel">Orders</a>
-        <a class="nav-item nav-link" *ngIf="isLoggedIn" routerLink="/menu">Menu</a>
-        <a class="nav-item nav-link" (click)="onLogout()" *ngIf="isLoggedIn" href="#">Logout</a>
-        <a class="nav-item nav-link" *ngIf="isLoggedIn && role === Role.USER" routerLink="/order-history">Orders</a>
-        <a class="nav-item nav-link" *ngIf="isLoggedIn && role === Role.USER" routerLink="/summary"><i class="bi bi-cart"
-                                                                                 style="font-size: 1.5em;"></i></a>
-        <a class="nav-item nav-link active" routerLink="/menu" *ngIf="!isLoggedIn">
+        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.ADMIN"
+           routerLink="/admin-tables-panel">Tables</a>
+        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.ADMIN" routerLink="/admin-menu">Edit Menu</a>
+        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.ADMIN" routerLink="/admin-panel">Orders</a>
+        <a class="nav-item nav-link" *ngIf="currentUser" routerLink="/menu">Menu</a>
+        <a class="nav-item nav-link" *ngIf="currentUser !== null" (click)="onLogout()" href="#">Logout</a>
+        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.USER" routerLink="/order-history">Orders</a>
+        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.USER" routerLink="/summary"><i class="bi bi-cart"
+                                                                                                      style="font-size: 1.5em;"></i></a>
+        <a class="nav-item nav-link active" routerLink="/menu" *ngIf="!currentUser">
           <button class="btn rounded-pill" style="background-color: #005B47; text-decoration: none; color: #FFFFFF">
             Menu
           </button>
         </a>
-        <a class="nav-item nav-link active" routerLink="register" *ngIf="!isLoggedIn">
+        <a class="nav-item nav-link active" routerLink="register" *ngIf="!currentUser">
           <button class="btn rounded-pill" style="background-color: #005B47; text-decoration: none; color: #FFFFFF">
             Register
           </button>
         </a>
-        <a class="nav-item nav-link active" routerLink="login" *ngIf="!isLoggedIn">
+        <a class="nav-item nav-link active" routerLink="login" *ngIf="!currentUser">
           <button class="btn rounded-pill" style="background-color: #005B47; text-decoration: none; color: #FFFFFF">Log
             In
           </button>

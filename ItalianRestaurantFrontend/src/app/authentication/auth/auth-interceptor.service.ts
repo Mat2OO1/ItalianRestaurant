@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {HttpErrorResponse, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {catchError, exhaustMap, take} from 'rxjs/operators';
-import {throwError} from 'rxjs';
+import {EMPTY, Observable, throwError} from 'rxjs';
 
 import {AuthService} from './auth.service';
 
@@ -15,23 +15,28 @@ export class AuthInterceptorService implements HttpInterceptor {
     return this.authService.user.pipe(
       take(1),
       exhaustMap(user => {
-        if (!user) {
-          return next.handle(req);
+          if (!user) {
+            return next.handle(req);
+          }
+          const modifiedReq = req.clone({
+            headers: new HttpHeaders()
+              .set('Authorization', 'Bearer ' + user.token)
+              .set('Content-Type', 'application/json;charset=UTF-8')
+          });
+          return next.handle(modifiedReq).pipe(
+            catchError(this.handleAuthError)
+          );
         }
-        const modifiedReq = req.clone({
-          headers: new HttpHeaders()
-            .set('Authorization', 'Bearer ' + user.token)
-            .set('Content-Type', 'application/json;charset=UTF-8')
-        });
-        return next.handle(modifiedReq).pipe(
-          catchError(error => {
-            this.router.navigate(['/home']);
-            // @ts-ignore
-            this.authService.user.next(null);
-            return throwError(error);
-          })
-        );
-      })
-    );
+      ))
+  }
+
+  private handleAuthError(err: HttpErrorResponse): Observable<any> {
+    if (err.status === 401 || err.status === 403) {
+      this.router.navigate(['/login']);
+      this.authService.user.next(null);
+      localStorage.removeItem("userData")
+      return EMPTY;
+    }
+    return throwError(err);
   }
 }

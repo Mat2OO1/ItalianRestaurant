@@ -26,7 +26,6 @@ export class DataStorageService {
       )
       .subscribe(
         (res) => {
-          console.log(res)
           var menu = res.content.map(meal => new Meal(meal.id, meal.name, meal.imgPath, meal.description, meal.price, meal.mealCategory))
           this.meals.next({meals: menu, numOfPages: res.totalPages, currPage: res.number})
         }
@@ -116,12 +115,7 @@ export class DataStorageService {
         deliveryDate: deliveryDate,
         orderId: orderId
       })
-      .subscribe(
-        (res) => {
-          console.log(res)
-        }
-      )
-
+      .subscribe()
   }
 
   nextPage() {

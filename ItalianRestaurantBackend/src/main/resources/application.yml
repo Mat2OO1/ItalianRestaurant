@@ -62,7 +62,7 @@ app:
   security:
     jwt:
       tokenSecret: 50645367556B58703273357638792F423F4528482B4D6251655468576D597133
-      tokenExpirationMsec: 300000
+      tokenExpirationHours: 168
     cors:
       allowedOrigins: \*
     oauth2:

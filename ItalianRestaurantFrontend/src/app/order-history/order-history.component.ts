@@ -55,8 +55,7 @@ export class OrderHistoryComponent {
 
 
   goToDetails(orderId: number) {
-    localStorage.setItem("orderId", String(orderId))
-    this.router.navigate(['confirmation'])
+    this.router.navigate(['/confirmation', orderId])
   }
 
 

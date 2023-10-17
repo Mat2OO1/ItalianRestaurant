@@ -16,7 +16,6 @@ export class CartService {
   }
 
   addToCart(meal: Meal) {
-    console.log("ADDED")
     let item = this.cart.find(item => item.meal.name === meal.name)
     if (item) {
       item.quantity += 1;

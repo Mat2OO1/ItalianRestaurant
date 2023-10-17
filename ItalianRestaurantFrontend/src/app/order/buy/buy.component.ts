@@ -4,7 +4,6 @@ import {Router} from "@angular/router";
 import {DataStorageService} from "../../shared/data-storage.service";
 import {CartService} from "../../shared/cart.service";
 import {Delivery} from "../../models/delivery";
-import {OrderService} from "../../shared/order.service";
 
 @Component({
   selector: 'app-buy',
@@ -17,7 +16,6 @@ export class BuyComponent {
 
   constructor(private router: Router,
               private dataStorageService: DataStorageService,
-              private orderService: OrderService,
               private cartService: CartService) {
     this.buyForm = new FormGroup({
       address: new FormControl('', [Validators.required]),
@@ -44,10 +42,7 @@ export class BuyComponent {
     )
       .subscribe(
         (res: any) => {
-          this.orderService.orderId = res.id
-          console.log(this.orderService.orderId)
-          localStorage.setItem('orderId', JSON.stringify(res.id));
-          this.router.navigate(["/confirmation"])
+          this.router.navigate(['/confirmation', res.id])
         }
       )
     this.cartService.clearCart()

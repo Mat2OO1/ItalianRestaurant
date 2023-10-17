@@ -28,7 +28,6 @@ export class QrCodeService {
     for (let i = 0; i < decodedData.length; ++i) {
       uInt8Array[i] = decodedData.charCodeAt(i)
     }
-    // return blob image after conversion
     return new Blob([uInt8Array], {type: imageType})
   }
 }

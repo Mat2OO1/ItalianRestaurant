@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Meal} from "../../models/meal";
-import {CartService} from "../../shared/cart.service";
-import {OrderService} from "../../shared/order.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Subscription, timer} from "rxjs";
+import {environment} from "../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 
 @Component({
@@ -9,26 +10,30 @@ import {HttpClient} from "@angular/common/http";
   templateUrl: './confirmation.component.html',
   styleUrls: ['./confirmation.component.css']
 })
-export class ConfirmationComponent implements OnInit {
+export class ConfirmationComponent implements OnInit, OnDestroy {
   order: { meal: Meal, quantity: number }[] = []
-  orderNumber: number | undefined
-  sum: number | undefined;
-  orderDetails: { date: Date, status: string } = {
-    // @ts-ignore
+  orderNumber: number | null = null;
+  orderDetails: { date: Date | null, status: string } = {
     date: null,
     status: ''
   }
-  isContentLoaded: boolean | undefined
+  isContentLoaded: boolean = false;
 
-  constructor(private cartService: CartService,
-              private http: HttpClient,
-              private orderService: OrderService) {
+  timeSubscription: Subscription | null = null;
+
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private http: HttpClient) {
   }
 
   adjustStatus(status: string) {
-    const circle2 = document.getElementById("circle2")!
-    const circle3 = document.getElementById("circle3")!
-    const progressBar = document.getElementById("indicator")!
+    const circle2 = document.getElementById("circle2")
+    const circle3 = document.getElementById("circle3")
+    const progressBar = document.getElementById("indicator")
+    if (!circle2 || !circle3 || !progressBar) {
+      console.log("lala")
+      return;
+    }
     if (status.toLowerCase() == 'in delivery') {
       circle2.classList.add("active")
       progressBar.style.width = "50%";
@@ -40,30 +45,11 @@ export class ConfirmationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.orderService.orderId = Number(localStorage.getItem("orderId"));
-    this.orderService.getOrderDetails()
-    this.orderService.orderDetails
-      .subscribe(
-        (res: { date: Date, status: string }) => {
-          const status = res.status.toLowerCase().replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
-          this.adjustStatus(status)
-          this.orderDetails = {date: res.date, status: status}
-        }
-      )
-    if (this.cartService.cart.length > 0) {
-      this.order = this.cartService.cart;
-    } else {
-      this.orderService.order
-        .subscribe(
-          (order) => {
-            this.order = order
-            this.isContentLoaded = true;
-          }
-        )
-    }
-    this.sum = this.cartService.calculateSum()
-    this.orderNumber = this.orderService.orderId;
-    this.isContentLoaded = this.order.length > 0;
+    this.route.paramMap
+      .subscribe(params => {
+        this.orderNumber = Number(params.get('orderId'))
+        this.getOrderDetails()
+      })
   }
 
   calculateOrder() {
@@ -72,4 +58,28 @@ export class ConfirmationComponent implements OnInit {
     return sum;
   }
 
+  getOrderDetails() {
+    this.timeSubscription = timer(0, 5000).subscribe(() => {
+        return this.http
+          .get(`${environment.apiUrl}/order/user`)
+          .subscribe(
+            (res: any) => {
+              res = res.filter((order: any) => order.id === this.orderNumber)[0]
+              if (res === undefined) {
+                this.router.navigate([''])
+                return
+              }
+              const status = res.orderStatus.toLowerCase().replace(/_/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase());
+              this.order = res.mealOrders;
+              this.orderDetails = {date: res.delivery.deliveryDate, status: status}
+              this.isContentLoaded = true;
+              this.adjustStatus(status)
+            })
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.timeSubscription?.unsubscribe();
+  }
 }
