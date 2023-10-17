@@ -15,8 +15,7 @@ export interface AuthResponseData {
 
 @Injectable()
 export class AuthService {
-  // @ts-ignore
-  user = new BehaviorSubject<User>(null);
+  user = new BehaviorSubject<User | null>(null);
   private logoutTimer: any;
 
   constructor(private http: HttpClient, private router: Router, private toastService: ToastService) {
@@ -56,26 +55,22 @@ export class AuthService {
         catchError(this.handleError),
         tap(
           resData => {
-            console.log(resData)
             this.handleAuthentication(resData.token, new Date(resData.expiration).getTime(), resData.role)
-            this.toastService.showSuccessToast("Login", "User logged in successfully")
           })
       )
   }
 
   autoLogin() {
-    // @ts-ignore
     const userData: {
       _token: string,
       _tokenExpirationDate: string,
-      role: Role
+      _role: Role
     }
-      // @ts-ignore
-      = JSON.parse(localStorage.getItem('userData'));
+      = JSON.parse(localStorage.getItem('userData')!);
     if (!userData) {
       return;
     }
-    const loadedUser = new User(userData._token, new Date(userData._tokenExpirationDate), userData.role);
+    const loadedUser = new User(userData._token, new Date(userData._tokenExpirationDate), userData._role);
     if (loadedUser.token) {
       this.user.next(loadedUser);
       const expirationDuration =
@@ -86,7 +81,6 @@ export class AuthService {
   }
 
   logout() {
-    // @ts-ignore
     this.user.next(null);
     this.router.navigate(['/']);
     localStorage.removeItem('userData');
@@ -103,9 +97,8 @@ export class AuthService {
   // }
 
 
-  handleAuthentication(token: string, expiresIn: number, role: Role) {
-    const expirationDate: Date = new Date(new Date().getTime() + expiresIn * 1000);
-    const user = new User(token, expirationDate, role);
+  handleAuthentication(token: string, expirationDate: number, role: Role) {
+    const user = new User(token, new Date(expirationDate), role);
     this.user.next(user);
     //this.autoLogout(1000000000);
     localStorage.setItem('userData', JSON.stringify(user));
@@ -115,7 +108,6 @@ export class AuthService {
     this.http.get(`${environment.apiUrl}/password/request?email=${email}`)
       .subscribe(
         (res) => {
-          console.log(res);
           this.toastService.showSuccessToast("Password reset", "Check your email to reset your password")
           this.router.navigate([''])
         }
@@ -128,7 +120,6 @@ export class AuthService {
     const user = new User(token, expirationDate, Role.USER);
     this.user.next(user);
     localStorage.setItem('userData', JSON.stringify(user));
-    this.toastService.showSuccessToast("Login", "User logged in successfully")
   }
 
   resetPassword(password: string, token: string) {
@@ -139,8 +130,7 @@ export class AuthService {
           password: password,
         }, {responseType: 'text'})
       .subscribe(
-        (res) => {
-          console.log(res);
+        () => {
           this.router.navigate([''])
           this.toastService.showSuccessToast("Password reset", "Password has been reset successfully")
         }

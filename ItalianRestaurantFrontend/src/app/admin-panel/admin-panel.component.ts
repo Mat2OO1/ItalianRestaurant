@@ -49,7 +49,6 @@ export class AdminPanelComponent implements OnDestroy{
     deliveryDate.setHours(form.value['deliveryDate'].substring(0, 2))
     deliveryDate.setMinutes(form.value['deliveryDate'].substring(3, 5))
     let deliveryDateFormatted = formatDate(deliveryDate, 'YYYY-MM-ddTHH:mm:ss', 'en-GB')
-    console.log(deliveryDateFormatted)
     this.dataStorageService.updateOrder(orderStatus, deliveryDateFormatted, orderId)
   }
 

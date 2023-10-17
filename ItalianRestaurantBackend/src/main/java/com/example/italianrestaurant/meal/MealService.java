@@ -1,5 +1,6 @@
 package com.example.italianrestaurant.meal;
 
+import com.example.italianrestaurant.aws.AwsService;
 import com.example.italianrestaurant.meal.mealcategory.MealCategory;
 import com.example.italianrestaurant.meal.mealcategory.MealCategoryService;
 import jakarta.persistence.EntityExistsException;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +24,8 @@ public class MealService {
     private final ModelMapper modelMapper;
 
     private final MealCategoryService mealCategoryService;
+
+    private final AwsService awsService;
 
     public Page<Meal> getAllMeals(Pageable pageable) {
         return mealRepository.findAll(pageable);
@@ -42,7 +44,9 @@ public class MealService {
         MealCategory category = mealCategoryService.getMealCategoryByName(meal.getCategory());
         Meal mappedMeal = modelMapper.map(meal, Meal.class);
         mappedMeal.setMealCategory(category);
-        return mealRepository.save(mappedMeal);
+        Meal saved = mealRepository.save(mappedMeal);
+        awsService.uploadFile(meal.getImgData());
+        return saved;
     }
 
     public Meal editMeal(MealDto mealDto, Long id) {

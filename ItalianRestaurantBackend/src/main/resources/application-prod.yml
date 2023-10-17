@@ -25,6 +25,7 @@ app:
   security:
     jwt:
       tokenSecret: ${JWT_SECRET_KEY}
+      tokenExpirationHours: ${JWT_EXPIRATION}
     cors:
       allowedOrigins: https://${SERVER_IP}
     oauth2:

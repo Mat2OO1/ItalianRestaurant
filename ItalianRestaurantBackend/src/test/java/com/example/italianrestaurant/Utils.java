@@ -36,7 +36,7 @@ public class Utils {
                 .name("name")
                 .category("name")
                 .description("description")
-                .imgPath("imgPath")
+                .imgData("imgPath")
                 .price(10.0)
                 .build();
     }

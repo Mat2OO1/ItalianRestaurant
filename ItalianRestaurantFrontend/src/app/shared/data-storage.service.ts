@@ -26,7 +26,6 @@ export class DataStorageService {
       )
       .subscribe(
         (res) => {
-          console.log(res)
           var menu = res.content.map(meal => new Meal(meal.id, meal.name, meal.imgPath, meal.description, meal.price, meal.mealCategory))
           this.meals.next({meals: menu, numOfPages: res.totalPages, currPage: res.number})
         }
@@ -63,19 +62,19 @@ export class DataStorageService {
       .delete(`${environment.apiUrl}/meals/delete/${id}`)
   }
 
-  addCategory(categoryName: string, img: Blob) {
+  addCategory(categoryName: string, img: string) {
     return this.http
       .post(`${environment.apiUrl}/meal-categories/add`, {
         name: categoryName,
-        imgPath: img
+        imageData: img
       })
   }
 
-  editCategory(categoryName: string, img: Blob, id: number) {
+  editCategory(categoryName: string, img: FormData, id: number) {
     return this.http
       .put(`${environment.apiUrl}/meal-categories/edit/${id}`, {
         name: categoryName,
-        imgPath: img
+        imageData: img
       })
   }
 
@@ -116,12 +115,7 @@ export class DataStorageService {
         deliveryDate: deliveryDate,
         orderId: orderId
       })
-      .subscribe(
-        (res) => {
-          console.log(res)
-        }
-      )
-
+      .subscribe()
   }
 
   nextPage() {

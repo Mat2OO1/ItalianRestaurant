@@ -14,7 +14,6 @@ import {CartService} from "./shared/cart.service";
 import {SummaryComponent} from "./order/summary/summary.component";
 import {BuyComponent} from "./order/buy/buy.component";
 import {ConfirmationComponent} from "./order/confirmation/confirmation.component";
-import {OrderService} from "./shared/order.service";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthService} from "./authentication/auth/auth.service";
 import {AuthInterceptorService} from "./authentication/auth/auth-interceptor.service";
@@ -82,7 +81,6 @@ import {CategoryEditDialogComponent} from "./category-edit-dialog/category-edit-
 
   providers: [
     CartService,
-    OrderService,
     AuthService,
     MealsService,
     DataStorageService,

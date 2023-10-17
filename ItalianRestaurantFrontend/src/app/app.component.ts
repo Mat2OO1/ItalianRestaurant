@@ -10,8 +10,6 @@ import {AuthService} from "./authentication/auth/auth.service";
 export class AppComponent implements OnInit, AfterViewInit {
   constructor(private authService: AuthService) {
   }
-
-
   ngAfterViewInit() {
     AOS.init();
   }

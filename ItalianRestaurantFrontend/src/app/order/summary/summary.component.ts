@@ -1,22 +1,24 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Meal} from "../../models/meal";
 import {CartService} from "../../shared/cart.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.css']
 })
-export class SummaryComponent implements OnInit {
+export class SummaryComponent implements OnInit, OnDestroy {
   cart: { meal: Meal, quantity: number, price: number }[] = [];
   sum: number = 0;
 
+  cartSubscription!: Subscription | null
   constructor(private cartService: CartService) {
     this.cart = this.cartService.cart
-    this.cartService.cartSubject
+    this.cartSubscription = this.cartService.cartSubject
       .subscribe(
         (cartChanged => this.cart = cartChanged)
-      )
+      );
     this.calculateSum()
   }
 
@@ -46,4 +48,7 @@ export class SummaryComponent implements OnInit {
     this.calculateSum()
   }
 
+  ngOnDestroy() {
+    this.cartSubscription?.unsubscribe()
+  }
 }

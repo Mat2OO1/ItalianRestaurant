@@ -2,7 +2,6 @@ import {Component, Inject} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {DIALOG_DATA} from "@angular/cdk/dialog";
-import {CategoryDto} from "../models/categoryDto";
 import {DataStorageService} from "../shared/data-storage.service";
 import {Category} from "../models/category";
 
@@ -18,6 +17,7 @@ import {Category} from "../models/category";
       border-radius: 8px;
       padding: 16px;
     }
+
     :host * {
       color: black;
     }
@@ -30,7 +30,7 @@ export class CategoryEditDialogComponent {
 
 
   constructor(private dialogRef: MatDialogRef<CategoryEditDialogComponent>,
-              @Inject(DIALOG_DATA) public data: {mode: string, category ?: Category},
+              @Inject(DIALOG_DATA) public data: { mode: string, category?: Category },
               private dataStorageService: DataStorageService) {
     this.categoryForm = new FormGroup({
       name: new FormControl(data.category !== undefined ? data.category.name : '', [Validators.required]),
@@ -42,11 +42,11 @@ export class CategoryEditDialogComponent {
   }
 
   closeDialogAndEdit(): void {
-    var blob = new Blob([this.selectedFile!], { type: this.selectedFile!.type })
-    if(this.data.category !== undefined){
-      this.selectedFile!.name
+    if (this.data.category !== undefined) {
+      const imageData = new FormData();
+      imageData.append('imageFile', this.selectedFile!, this.selectedFile!.name);
       this.dataStorageService.editCategory(this.categoryForm.value['name'],
-        new Blob([this.selectedFile!], { type: this.selectedFile!.type }),
+        imageData,
         this.data.category.id)
         .subscribe()
     }
@@ -54,7 +54,7 @@ export class CategoryEditDialogComponent {
   }
 
   closeDialogAndDelete(): void {
-    if(this.data.category !== undefined){
+    if (this.data.category !== undefined) {
       this.dataStorageService.deleteCategory(this.data.category.id)
         .subscribe()
     }
@@ -62,9 +62,19 @@ export class CategoryEditDialogComponent {
   }
 
   closeDialogAndAdd(): void {
-    console.log(`Selected file: ${this.selectedFile!.name}`);
+    let byteImage: string | null = null;
+    if (this.selectedFile) {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        const base64Image = e.target.result;
+        byteImage = base64Image;
+      };
+
+      reader.readAsDataURL(this.selectedFile);
+    }
     this.dataStorageService.addCategory(this.categoryForm.value['name'],
-      new Blob([this.selectedFile!], { type: this.selectedFile!.type }),
+      byteImage!
     )
       .subscribe()
     this.dialogRef.close();

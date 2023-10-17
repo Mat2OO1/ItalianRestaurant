@@ -1,4 +1,4 @@
-<div class="container" style="margin-top: 20px; min-width:400px" *ngIf="isContentLoaded">
+<div class="container" style="margin-top: 20px; min-width:400px" [hidden]="!isContentLoaded">
   <div class="text-content">
     <h2 class="title">
       Confirmation
@@ -43,7 +43,7 @@
       </div>
     </div>
     <br>
-    <div class="info">
+    <div class="info pt-5">
       <h3 class="text-center">{{orderDetails.status ? orderDetails.status : 'Processing' }}</h3>
     </div>
     <br>
