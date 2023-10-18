@@ -65,8 +65,7 @@ export class DataStorageService {
   addCategory(categoryName: string, img: File) {
     const formData = new FormData();
     formData.append('image', img);
-    const mealCategoryPart = new Blob([JSON.stringify({ name: categoryName })], { type: 'application/json' });
-    formData.append('meal_category', mealCategoryPart);
+    formData.append('meal_category', JSON.stringify({name: categoryName}));
     return this.http
       .post(`${environment.apiUrl}/meal-categories/add`, formData)
   }
@@ -74,8 +73,7 @@ export class DataStorageService {
   editCategory(categoryName: string, img: File, id: number) {
     const formData = new FormData();
     formData.append('image', img);
-    const mealCategoryPart = new Blob([JSON.stringify({ name: categoryName })], { type: 'application/json' });
-    formData.append('meal_category', mealCategoryPart);
+    formData.append('meal_category', JSON.stringify({name: categoryName}));
     return this.http
       .put(`${environment.apiUrl}/meal-categories/edit/${id}`, formData)
   }

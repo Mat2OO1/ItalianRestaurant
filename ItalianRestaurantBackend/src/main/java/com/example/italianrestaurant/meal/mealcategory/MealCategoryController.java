@@ -1,10 +1,11 @@
 package com.example.italianrestaurant.meal.mealcategory;
 
 import com.example.italianrestaurant.exceptions.InvalidEntityException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +18,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/meal-categories")
 @RequiredArgsConstructor
-@Log4j2
 public class MealCategoryController {
 
     private final MealCategoryService mealCategoryService;
+    private final ObjectMapper objectMapper;
 
     @GetMapping
     public ResponseEntity<List<MealCategory>> getAllMealCategories() {
@@ -39,7 +40,8 @@ public class MealCategoryController {
 
     @PostMapping(path = "/add")
     public ResponseEntity<MealCategory> addCategory(@RequestPart("image") MultipartFile image,
-                                                    @RequestPart("meal_category") MealCategoryDto mealCategoryDto) {
+                                                    @RequestPart("meal_category") String mealCategoryJson) throws JsonProcessingException {
+        MealCategoryDto mealCategoryDto = objectMapper.readValue(mealCategoryJson, MealCategoryDto.class);
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(mealCategoryService.addCategory(mealCategoryDto, image));
         } catch (EntityExistsException e) {
@@ -54,7 +56,8 @@ public class MealCategoryController {
     @PutMapping(path = "/edit/{id}")
     public ResponseEntity<MealCategory> editCategory(@PathVariable Long id,
                                                      @RequestPart("image") MultipartFile image,
-                                                     @RequestPart("meal_category") MealCategoryDto mealCategoryDto) {
+                                                     @RequestPart("meal_category") String mealCategoryJson) throws JsonProcessingException {
+        MealCategoryDto mealCategoryDto = objectMapper.readValue(mealCategoryJson, MealCategoryDto.class);
         try {
             return ResponseEntity.ok(mealCategoryService.editCategory(mealCategoryDto, id, image));
         } catch (EntityExistsException e) {
