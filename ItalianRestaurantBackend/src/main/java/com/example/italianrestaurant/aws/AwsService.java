@@ -1,21 +1,19 @@
 package com.example.italianrestaurant.aws;
 
-import com.amazonaws.AmazonClientException;
-import com.amazonaws.AmazonServiceException;
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,22 +23,43 @@ public class AwsService {
     @Value("${aws.bucket-name}")
     private String bucketName;
 
-    @Value("${aws.secret-key}")
-    private String secretKey;
-
     private final AmazonS3 s3Client;
 
-    public void uploadFile(byte[] fileBytes) {
-        try {
-            InputStream inputStream = new ByteArrayInputStream(fileBytes);
-            ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setContentType("application/octet-stream");
-            s3Client.putObject(bucketName, secretKey, inputStream, metadata);
-            log.info("File uploaded successfully to S3.");
-        } catch (AmazonServiceException e) {
-            log.error(e.getErrorMessage());
-        } catch (AmazonClientException e) {
-            log.error(e.getMessage());
+    public String uploadFile(byte[] fileBytes, String contentType) {
+        InputStream inputStream = new ByteArrayInputStream(fileBytes);
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentType(contentType);
+        String imageName = generateImageName();
+        s3Client.putObject(bucketName, imageName, inputStream, metadata);
+        s3Client.setObjectAcl(bucketName, imageName, CannedAccessControlList.PublicRead);
+        return imageName;
+    }
+
+    public void deleteFile(String objectKey) {
+        s3Client.deleteObject(bucketName, objectKey);
+    }
+
+    public void deleteAllImages() {
+        List<S3ObjectSummary> objectSummaries = s3Client.listObjects(bucketName).getObjectSummaries();
+
+        for (S3ObjectSummary objectSummary : objectSummaries) {
+            String key = objectSummary.getKey();
+            s3Client.deleteObject(new DeleteObjectRequest(bucketName, key));
         }
     }
+
+
+    public String getObjectUrl(String objectKey) {
+        String region = s3Client.getRegionName();
+        String endpoint = "s3." + region + ".amazonaws.com";
+        return "https://" + bucketName + "." + endpoint + "/" + objectKey;
+    }
+
+    private String generateImageName() {
+        String prefix = "image_";
+        String randomComponent = RandomStringUtils.randomAlphanumeric(6);
+        return prefix + randomComponent;
+
+    }
+
 }

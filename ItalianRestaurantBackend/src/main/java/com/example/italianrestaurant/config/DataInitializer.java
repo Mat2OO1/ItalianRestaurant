@@ -1,5 +1,6 @@
 package com.example.italianrestaurant.config;
 
+import com.example.italianrestaurant.aws.AwsService;
 import com.example.italianrestaurant.meal.Meal;
 import com.example.italianrestaurant.meal.MealRepository;
 import com.example.italianrestaurant.meal.mealcategory.MealCategory;
@@ -17,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @Component
@@ -28,19 +31,21 @@ public class DataInitializer {
     private final MealCategoryRepository mealCategoryRepository;
     private final MealRepository mealRepository;
     private final TableRepository tableRepository;
+    private final AwsService awsService;
 
     @PostConstruct
     @Transactional
-    public void addData() {
+    public void addData() throws IOException {
         if (userRepository.count() == 0) {
             userRepository.saveAll(getUserData());
         }
 
-        if (mealCategoryRepository.count() == 0) {
-            mealCategoryRepository.saveAll(getMealCategoriesData());
-        }
+        if (mealCategoryRepository.count() == 0 || mealRepository.count() == 0) {
+            awsService.deleteAllImages();
+            mealRepository.deleteAll();
+            mealCategoryRepository.deleteAll();
 
-        if (mealRepository.count() == 0) {
+            mealCategoryRepository.saveAll(getMealCategoriesData());
             mealRepository.saveAll(getMealData());
         }
 
@@ -49,11 +54,24 @@ public class DataInitializer {
         }
     }
 
-    private List<Meal> getMealData() {
+    private List<Meal> getMealData() throws IOException {
+
+        String pasta1Image = uploadImage("meals/pasta/pasta_1.jpg");
+        String pasta2Image = uploadImage("meals/pasta/pasta_2.jpg");
+        String pasta3Image = uploadImage("meals/pasta/pasta_3.jpg");
+        String pasta4Image = uploadImage("meals/pasta/pasta_4.jpg");
+
+        String pizza1Image = uploadImage("meals/pizza/pizza_1.jpg");
+        String pizza2Image = uploadImage("meals/pizza/pizza_2.jpg");
+
+        String seafood1Image = uploadImage("meals/seafood/seafood_1.jpg");
+        String seafood2Image = uploadImage("meals/seafood/seafood_2.jpg");
+
         return List.of(
+
                 Meal.builder()
                         .name("Carbonara")
-                        .imgPath("assets/images/meals/pasta/pasta_1.jpg")
+                        .image(pasta1Image)
                         .mealCategory(mealCategoryRepository.findById(2L).get())
                         .description("grana padano, pasta, basil")
                         .price(35.50)
@@ -61,7 +79,7 @@ public class DataInitializer {
 
                 Meal.builder()
                         .name("Aglio Olio")
-                        .imgPath("assets/images/meals/pasta/pasta_2.jpg")
+                        .image(pasta2Image)
                         .mealCategory(mealCategoryRepository.findById(2L).get())
                         .description("olive oil, garlic, pasta")
                         .price(15.99)
@@ -69,7 +87,7 @@ public class DataInitializer {
 
                 Meal.builder()
                         .name("Margherita")
-                        .imgPath("assets/images/meals/pizza/pizza_1.jpg")
+                        .image(pizza1Image)
                         .mealCategory(mealCategoryRepository.findById(1L).get())
                         .description("tomato sauce, cheese")
                         .price(50)
@@ -77,7 +95,7 @@ public class DataInitializer {
 
                 Meal.builder()
                         .name("Clams")
-                        .imgPath("assets/images/meals/seafood/seafood_1.jpg")
+                        .image(seafood1Image)
                         .mealCategory(mealCategoryRepository.findById(3L).get())
                         .description("clams")
                         .price(30.25)
@@ -85,7 +103,7 @@ public class DataInitializer {
 
                 Meal.builder()
                         .name("Hawaiian")
-                        .imgPath("assets/images/meals/pizza/pizza_2.jpg")
+                        .image(pizza2Image)
                         .mealCategory(mealCategoryRepository.findById(1L).get())
                         .description("pizza with ham and pineapple")
                         .price(20.20)
@@ -93,7 +111,7 @@ public class DataInitializer {
 
                 Meal.builder()
                         .name("Cacio e Pepe")
-                        .imgPath("assets/images/meals/pasta/pasta_3.jpg")
+                        .image(pasta3Image)
                         .mealCategory(mealCategoryRepository.findById(2L).get())
                         .description("pasta with pecorino romano and pepper")
                         .price(15.99)
@@ -101,7 +119,7 @@ public class DataInitializer {
 
                 Meal.builder()
                         .name("Tagliatelle al Ragu")
-                        .imgPath("assets/images/meals/pasta/pasta_4.jpg")
+                        .image(pasta4Image)
                         .mealCategory(mealCategoryRepository.findById(2L).get())
                         .description("tagliatelle pasta with classical italian meat sauce")
                         .price(25.99)
@@ -109,7 +127,7 @@ public class DataInitializer {
 
                 Meal.builder()
                         .name("Fritto Misto")
-                        .imgPath("assets/images/meals/seafood/seafood_2.jpg")
+                        .image(seafood2Image)
                         .mealCategory(mealCategoryRepository.findById(3L).get())
                         .description("italian seafood platter")
                         .price(15.49)
@@ -117,23 +135,38 @@ public class DataInitializer {
         );
     }
 
-    private List<MealCategory> getMealCategoriesData() {
+    private List<MealCategory> getMealCategoriesData() throws IOException {
+
+        String pizzaImage = uploadImage("categories/pizza.jpg");
+        String pastaImage = uploadImage("categories/pasta.jpg");
+        String seafoodImage = uploadImage("categories/seafood.jpg");
+
         return List.of(
                 MealCategory.builder()
                         .name("pizza")
-                        .imgPath("assets/images/categories/pizza.jpg")
+                        .image(pizzaImage)
                         .build(),
 
                 MealCategory.builder()
                         .name("pasta")
-                        .imgPath("assets/images/categories/pasta.jpg")
+                        .image(pastaImage)
                         .build(),
 
                 MealCategory.builder()
                         .name("seafood")
-                        .imgPath("assets/images/categories/seafood.jpg")
+                        .image(seafoodImage)
                         .build()
         );
+    }
+
+    private String uploadImage(String path) throws IOException {
+        InputStream is1 = getClass().getClassLoader().getResourceAsStream("images/" + path);
+        if (is1 != null) {
+            byte[] image1 = is1.readAllBytes();
+            is1.close();
+            return awsService.uploadFile(image1, "image/jpeg");
+        }
+        return "";
     }
 
 

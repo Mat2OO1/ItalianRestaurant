@@ -15,7 +15,7 @@ create table if not exists meal_categories
 (
     id       bigserial
         primary key,
-    img_path varchar(255),
+    image varchar(255),
     name     varchar(255) not null
 );
 
@@ -24,7 +24,7 @@ create table if not exists meals
     id               bigserial
         primary key,
     description      varchar(255),
-    img_path         varchar(255),
+    image         varchar(255),
     name             varchar(255)     not null,
     price            double precision not null,
     meal_category_id bigint           not null

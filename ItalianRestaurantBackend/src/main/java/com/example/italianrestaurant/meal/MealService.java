@@ -45,7 +45,6 @@ public class MealService {
         Meal mappedMeal = modelMapper.map(meal, Meal.class);
         mappedMeal.setMealCategory(category);
         Meal saved = mealRepository.save(mappedMeal);
-        awsService.uploadFile(meal.getImgData());
         return saved;
     }
 

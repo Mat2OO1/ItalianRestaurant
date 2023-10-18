@@ -41,6 +41,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       .subscribe(
         res => {
           this.categories = res
+          console.log(this.categories)
         }
       )
     this.mealsSubscription = this.dataStorageService.meals

@@ -113,7 +113,7 @@ public class Utils {
                 .name("name")
                 .description("description")
                 .price(10.0)
-                .imgPath("imgPath")
+                .image("imgPath")
                 .build();
     }
 
@@ -123,7 +123,7 @@ public class Utils {
                 .mealCategory(getMealCategory())
                 .description("description")
                 .price(10.0)
-                .imgPath("imgPath")
+                .image("imgPath")
                 .build();
     }
 

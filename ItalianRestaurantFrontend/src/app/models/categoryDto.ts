@@ -1,9 +1,9 @@
 export class CategoryDto {
   name: string;
-  imgPath: string;
+  image: string;
 
-  constructor(name: string, imgPath : string) {
+  constructor(name: string, image : string) {
     this.name = name;
-    this.imgPath = imgPath;
+    this.image = image;
   }
 }

@@ -10,5 +10,4 @@ import lombok.*;
 
 public class MealCategoryDto {
     private String name;
-    private byte[] imageData;
 }

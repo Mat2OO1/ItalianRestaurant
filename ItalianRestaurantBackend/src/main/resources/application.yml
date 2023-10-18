@@ -4,6 +4,11 @@ spring:
     username: postgres
     password: postgres
     driverClassName: org.postgresql.Driver
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      location: uploads
 
   jpa:
     properties:
@@ -80,8 +85,9 @@ app:
 aws:
   access-key: AKIASFDMWQF5EJDJCFHP
   secret-key: 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
-  bucket-name: italian-restaurant
+  bucket-name: italianrestaurantimages
 
 server:
   error:
     include-message: always
+

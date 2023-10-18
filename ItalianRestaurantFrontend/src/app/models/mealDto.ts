@@ -1,14 +1,14 @@
 export class MealDto{
   name: string
-  img: Blob
+  image: Blob
   description: string
   price: number
   mealCategory: string
 
 
-  constructor(name: string, img: Blob, description: string, price: number, mealCategory: string) {
+  constructor(name: string, image: Blob, description: string, price: number, mealCategory: string) {
     this.name = name;
-    this.img = img;
+    this.image = image;
     this.description = description;
     this.price = price;
     this.mealCategory = mealCategory;

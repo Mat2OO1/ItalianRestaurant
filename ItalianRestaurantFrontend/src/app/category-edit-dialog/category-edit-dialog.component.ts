@@ -43,10 +43,8 @@ export class CategoryEditDialogComponent {
 
   closeDialogAndEdit(): void {
     if (this.data.category !== undefined) {
-      const imageData = new FormData();
-      imageData.append('imageFile', this.selectedFile!, this.selectedFile!.name);
       this.dataStorageService.editCategory(this.categoryForm.value['name'],
-        imageData,
+        this.selectedFile!,
         this.data.category.id)
         .subscribe()
     }
@@ -62,19 +60,8 @@ export class CategoryEditDialogComponent {
   }
 
   closeDialogAndAdd(): void {
-    let byteImage: string | null = null;
-    if (this.selectedFile) {
-      const reader = new FileReader();
-
-      reader.onload = (e: any) => {
-        const base64Image = e.target.result;
-        byteImage = base64Image;
-      };
-
-      reader.readAsDataURL(this.selectedFile);
-    }
     this.dataStorageService.addCategory(this.categoryForm.value['name'],
-      byteImage!
+      this.selectedFile!
     )
       .subscribe()
     this.dialogRef.close();
