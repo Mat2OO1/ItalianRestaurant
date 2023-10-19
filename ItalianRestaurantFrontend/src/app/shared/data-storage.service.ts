@@ -37,6 +37,7 @@ export class DataStorageService {
   }
 
   addMeal(meal: MealDto, file: File) {
+    console.log(file)
     const formData = new FormData();
     formData.append('image', file);
     formData.append('meal', JSON.stringify(meal));

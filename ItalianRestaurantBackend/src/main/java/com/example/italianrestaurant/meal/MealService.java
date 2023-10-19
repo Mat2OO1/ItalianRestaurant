@@ -52,14 +52,18 @@ public class MealService {
 
     public Meal editMeal(MealDto mealDto, Long id, MultipartFile image) throws IOException {
         Meal savedMeal = mealRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        MealCategory mealCategory = mealCategoryService.getMealCategoryByName(savedMeal.getMealCategory().getName());
-        Meal meal = modelMapper.map(mealDto, Meal.class);
-        if (savedMeal.getImage() != null) awsService.deleteFile(savedMeal.getImage());
-        String imgName = awsService.uploadFile(image.getBytes(), image.getContentType());
-        meal.setMealCategory(mealCategory);
-        meal.setId(savedMeal.getId());
-        meal.setImage(imgName);
-        return mealRepository.save(meal);
+        MealCategory mealCategory = mealCategoryService.getMealCategoryByName(mealDto.getCategory());
+        Meal mappedMeal = modelMapper.map(mealDto, Meal.class);
+        mappedMeal.setMealCategory(mealCategory);
+        mappedMeal.setId(savedMeal.getId());
+        if (image == null) {
+            mappedMeal.setImage(savedMeal.getImage());
+        } else {
+            if (savedMeal.getImage() != null) awsService.deleteFile(savedMeal.getImage());
+            String imgName = awsService.uploadFile(image.getBytes(), image.getContentType());
+            mappedMeal.setImage(imgName);
+        }
+        return mealRepository.save(mappedMeal);
     }
 
     public void deleteMeal(long id){

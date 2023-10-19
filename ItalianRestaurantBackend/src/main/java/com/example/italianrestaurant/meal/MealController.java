@@ -63,7 +63,7 @@ public class MealController {
 
     @PutMapping("/edit/{id}")
     public ResponseEntity<Meal> editMeal(@PathVariable Long id,
-                                         @RequestPart("image") MultipartFile image,
+                                         @RequestPart(name = "image", required = false) MultipartFile image,
                                          @RequestPart("meal") String mealJson) throws JsonProcessingException {
         MealDto mealDto = objectMapper.readValue(mealJson, MealDto.class);
         try{
