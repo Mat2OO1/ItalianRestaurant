@@ -36,25 +36,19 @@ export class DataStorageService {
       .get<{ content: Meal[] }>(`${environment.apiUrl}/meals`)
   }
 
-  addMeal(meal: MealDto) {
+  addMeal(meal: MealDto, file: File) {
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('meal', JSON.stringify(meal));
     return this.http
-      .post(`${environment.apiUrl}/meals/add`, {
-        name: meal.name,
-        image: meal.image,
-        category: meal.mealCategory,
-        description: meal.description,
-        price: meal.price
-      })
+      .post(`${environment.apiUrl}/meals/add`, formData)
   }
 
-  editMeal(meal: MealDto, id: number) {
-    return this.http.put(`${environment.apiUrl}/meals/edit/${id}`, {
-      name: meal.name,
-      image: meal.image,
-      category: meal.mealCategory,
-      description: meal.description,
-      price: meal.price
-    })
+  editMeal(meal: MealDto, id: number, file: File) {
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('meal', JSON.stringify(meal));
+    return this.http.put(`${environment.apiUrl}/meals/edit/${id}`, formData)
   }
 
   deleteMeal(id: number) {

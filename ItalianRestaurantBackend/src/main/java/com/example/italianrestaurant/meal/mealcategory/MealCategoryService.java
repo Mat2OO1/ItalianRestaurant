@@ -35,7 +35,9 @@ public class MealCategoryService {
 
     public MealCategory getMealCategoryByName(String name) throws EntityNotFoundException {
         Optional<MealCategory> mealCategory = mealCategoryRepository.findByName(name);
-        return mealCategory.orElseThrow(EntityNotFoundException::new);
+        MealCategory savedMealCategory = mealCategory.orElseThrow(EntityNotFoundException::new);
+        savedMealCategory.setImage(awsService.getObjectUrl(savedMealCategory.getImage()));
+        return savedMealCategory;
     }
 
     public MealCategory addCategory(MealCategoryDto mealCategoryDto, MultipartFile image) throws IOException {
@@ -50,7 +52,7 @@ public class MealCategoryService {
 
     public MealCategory editCategory(MealCategoryDto mealCategoryDto, Long id, MultipartFile image) throws IOException {
         MealCategory mealCategory = mealCategoryRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        awsService.deleteFile(mealCategory.getImage());
+        if (mealCategory.getImage() != null) awsService.deleteFile(mealCategory.getImage());
         String imgName = awsService.uploadFile(image.getBytes(), image.getContentType());
         MealCategory mappedCategory = modelMapper.map(mealCategoryDto, MealCategory.class);
         mappedCategory.setId(mealCategory.getId());
@@ -60,7 +62,7 @@ public class MealCategoryService {
 
     public void deleteCategory(Long id){
         MealCategory mealCategory = mealCategoryRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        awsService.deleteFile(mealCategory.getImage());
+        if (mealCategory.getImage() != null) awsService.deleteFile(mealCategory.getImage());
         mealCategoryRepository.delete(mealCategory);
     }
 

@@ -11,7 +11,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -20,45 +22,49 @@ import java.util.Optional;
 public class MealService {
 
     private final MealRepository mealRepository;
-
     private final ModelMapper modelMapper;
-
     private final MealCategoryService mealCategoryService;
-
     private final AwsService awsService;
 
     public Page<Meal> getAllMeals(Pageable pageable) {
-        return mealRepository.findAll(pageable);
+        Page<Meal> meals = mealRepository.findAll(pageable);
+        meals.forEach(meal -> meal.setImage(awsService.getObjectUrl(meal.getImage())));
+        return meals;
     }
 
     public Meal getMealById(Long id) {
-        Optional<Meal> meal = mealRepository.findById(id);
-
-        return meal.orElseThrow(EntityNotFoundException::new);
+        Meal meal = mealRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        meal.setImage(awsService.getObjectUrl(meal.getImage()));
+        return meal;
     }
 
-    public Meal addMeal(MealDto meal) {
+    public Meal addMeal(MealDto meal, MultipartFile image) throws IOException {
         if (mealRepository.existsByName(meal.getName())) {
             throw new EntityExistsException("Meal with name: " + meal.getName() + " already exists");
         }
         MealCategory category = mealCategoryService.getMealCategoryByName(meal.getCategory());
+        String imgName = awsService.uploadFile(image.getBytes(), image.getContentType());
         Meal mappedMeal = modelMapper.map(meal, Meal.class);
         mappedMeal.setMealCategory(category);
-        Meal saved = mealRepository.save(mappedMeal);
-        return saved;
+        mappedMeal.setImage(imgName);
+        return mealRepository.save(mappedMeal);
     }
 
-    public Meal editMeal(MealDto mealDto, Long id) {
+    public Meal editMeal(MealDto mealDto, Long id, MultipartFile image) throws IOException {
         Meal savedMeal = mealRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        Meal meal = modelMapper.map(mealDto, Meal.class);
         MealCategory mealCategory = mealCategoryService.getMealCategoryByName(savedMeal.getMealCategory().getName());
+        Meal meal = modelMapper.map(mealDto, Meal.class);
+        if (savedMeal.getImage() != null) awsService.deleteFile(savedMeal.getImage());
+        String imgName = awsService.uploadFile(image.getBytes(), image.getContentType());
         meal.setMealCategory(mealCategory);
         meal.setId(savedMeal.getId());
+        meal.setImage(imgName);
         return mealRepository.save(meal);
     }
 
     public void deleteMeal(long id){
         Meal meal = mealRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        if (meal.getImage() != null) awsService.deleteFile(meal.getImage());
         mealRepository.delete(meal);
     }
 

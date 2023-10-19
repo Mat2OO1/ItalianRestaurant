@@ -44,9 +44,9 @@ public class MealCategoryController {
         MealCategoryDto mealCategoryDto = objectMapper.readValue(mealCategoryJson, MealCategoryDto.class);
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(mealCategoryService.addCategory(mealCategoryDto, image));
-        } catch (EntityExistsException e) {
+        } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "There is already a category with name " + mealCategoryDto.getName(), e);
+                    HttpStatus.NOT_FOUND, "There is already a category with name " + mealCategoryDto.getName(), e);
         } catch (IOException e) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Invalid image", e);
@@ -60,7 +60,7 @@ public class MealCategoryController {
         MealCategoryDto mealCategoryDto = objectMapper.readValue(mealCategoryJson, MealCategoryDto.class);
         try {
             return ResponseEntity.ok(mealCategoryService.editCategory(mealCategoryDto, id, image));
-        } catch (EntityExistsException e) {
+        } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "There is no category with id " + id, e);
         } catch (IOException e) {
@@ -74,9 +74,9 @@ public class MealCategoryController {
         try {
             mealCategoryService.deleteCategory(id);
             return ResponseEntity.ok().build();
-        } catch (InvalidEntityException e) {
+        } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, e.getMessage(), e);
+                    HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
 }

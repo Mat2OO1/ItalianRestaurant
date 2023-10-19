@@ -43,21 +43,22 @@ export class MealEditDialogComponent {
   }
 
   closeDialogAndEdit(): void {
-    if(this.data.meal !== undefined){
+    if (this.data.meal !== undefined) {
       this.dataStorageService.editMeal(
         new MealDto(
           this.mealForm.value['name'],
-          new Blob([this.selectedFile!], { type: this.selectedFile!.type }),
           this.mealForm.value['description'],
           this.mealForm.value['price'],
-          this.data.category), this.data.meal.id
+          this.data.category),
+        this.data.meal.id,
+        this.selectedFile!
       ).subscribe()
     }
     this.dialogRef.close();
   }
 
   closeDialogAndDelete(): void {
-    if(this.data.meal !== undefined) {
+    if (this.data.meal !== undefined) {
       this.dataStorageService.deleteMeal(
         this.data.meal.id
       ).subscribe()
@@ -69,10 +70,10 @@ export class MealEditDialogComponent {
     this.dataStorageService.addMeal(
       new MealDto(
         this.mealForm.value['name'],
-        new Blob([this.selectedFile!], { type: this.selectedFile!.type }),
         this.mealForm.value['description'],
         this.mealForm.value['price'],
-        this.data.category)
+        this.data.category),
+      this.selectedFile!
     ).subscribe()
     this.dialogRef.close();
   }
@@ -80,5 +81,4 @@ export class MealEditDialogComponent {
   onFileUploaded(event: any): void {
     this.selectedFile = event.target.files[0] as File;
   }
-
 }

@@ -12,13 +12,21 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.mockito.Mockito.doThrow;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = MealCategoryController.class,
@@ -31,7 +39,6 @@ public class MealCategoryControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
     @MockBean
     private MealCategoryService mealCategoryService;
 
@@ -108,6 +115,107 @@ public class MealCategoryControllerTest {
                 .contentType(MediaType.APPLICATION_JSON));
 
         // then
+        resultActions.andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldAddMealCategory() throws Exception {
+        //given
+        val mealCategoryDto = Utils.getMealCategoryDto();
+        val mealCategory = Utils.getMealCategory();
+
+        val mealCategoryJson = Utils.objectToJsonString(mealCategoryDto);
+        val image = new MockMultipartFile("image", new byte[1]);
+
+        given(mealCategoryService.addCategory(mealCategoryDto, image)).willReturn(mealCategory);
+
+        //when
+        val resultActions = mockMvc.perform(multipart("/meal-categories/add")
+                .file("image", image.getBytes())
+                .file("meal_category", mealCategoryJson.getBytes()));
+        //then
+        resultActions.andExpect(status().isCreated());
+    }
+
+    @Test
+    void shouldNotAddCategory() throws Exception {
+        //given
+        val mealCategoryDto = Utils.getMealCategoryDto();
+
+        val mealCategoryJson = Utils.objectToJsonString(mealCategoryDto);
+        val image = new MockMultipartFile("image", new byte[1]);
+
+        given(mealCategoryService.addCategory(any(), any())).willThrow(EntityNotFoundException.class);
+
+        //when
+        val resultActions = mockMvc.perform(multipart("/meal-categories/add")
+                .file("image", image.getBytes())
+                .file("meal_category", mealCategoryJson.getBytes()));
+        //then
+        resultActions.andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldEditCategory() throws Exception {
+        //given
+        val mealCategoryDto = Utils.getMealCategoryDto();
+        val mealCategory = Utils.getMealCategory();
+        val id = 1L;
+
+        val mealCategoryJson = Utils.objectToJsonString(mealCategoryDto);
+        val image = new MockMultipartFile("image", new byte[1]);
+
+        given(mealCategoryService.editCategory(mealCategoryDto, id, image)).willReturn(mealCategory);
+
+        //when
+        val resultActions = mockMvc.perform(Utils.multipartPutRequest("/meal-categories/edit/" + id)
+                .file("image", image.getBytes())
+                .file("meal_category", mealCategoryJson.getBytes())
+                .contentType(MediaType.MULTIPART_FORM_DATA));
+        //then
+        resultActions.andExpect(status().isOk());
+    }
+
+    @Test
+    void shouldNotEditCategory() throws Exception {
+        //given
+        val mealCategoryDto = Utils.getMealCategoryDto();
+        val mealCategoryJson = Utils.objectToJsonString(mealCategoryDto);
+        val id = 1L;
+        val image = new MockMultipartFile("image", new byte[1]);
+
+        given(mealCategoryService.editCategory(any(), eq(id), any())).willThrow(EntityNotFoundException.class);
+
+        //when
+        val resultActions = mockMvc.perform(Utils.multipartPutRequest("/meal-categories/edit/" + id)
+                .file("image", image.getBytes())
+                .file("meal_category", mealCategoryJson.getBytes()));
+        //then
+        resultActions.andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldDeleteCategory() throws Exception {
+        //given
+        val id = 1L;
+        //when
+        val resultActions = mockMvc.perform(delete("/meal-categories/delete/" + id)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        //then
+        resultActions.andExpect(status().isOk());
+    }
+
+    @Test
+    void shouldNotDelete() throws Exception {
+        //given
+        val id = 1L;
+        doThrow(new EntityNotFoundException()).when(mealCategoryService).deleteCategory(id);
+        //when
+        val resultActions = mockMvc.perform(delete("/meal-categories/delete/" + id)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        //then
         resultActions.andExpect(status().isNotFound());
     }
 }

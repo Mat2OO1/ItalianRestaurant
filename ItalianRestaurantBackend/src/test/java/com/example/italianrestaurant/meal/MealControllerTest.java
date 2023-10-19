@@ -4,7 +4,6 @@ import com.example.italianrestaurant.Utils;
 import com.example.italianrestaurant.security.JwtAuthenticationFilter;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -25,7 +25,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -38,7 +40,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                 type = FilterType.ASSIGNABLE_TYPE,
                 classes = JwtAuthenticationFilter.class))
 @AutoConfigureMockMvc(addFilters = false)
-@Log4j2
 public class MealControllerTest {
 
     @Autowired
@@ -61,7 +62,7 @@ public class MealControllerTest {
         when(mealService.getAllMeals(pageable)).thenReturn(mockPage);
 
         // when then
-        mockMvc.perform(get("/images/meals")
+        mockMvc.perform(get("/meals")
                         .param("page", String.valueOf(pageable.getPageNumber()))
                         .param("size", String.valueOf(pageable.getPageSize()))
                         .contentType(MediaType.APPLICATION_JSON))
@@ -97,7 +98,7 @@ public class MealControllerTest {
         PageImpl mockPage = new PageImpl<>(pages.getPageList(), pageable, mealList.size());
         when(mealService.getAllMeals(pageable)).thenReturn(mockPage);
         // when then
-        mockMvc.perform(get("/images/meals")
+        mockMvc.perform(get("/meals")
                         .param("page", String.valueOf(pageable.getPageNumber()))
                         .param("size", String.valueOf(pageable.getPageSize()))
                         .contentType(MediaType.APPLICATION_JSON))
@@ -117,7 +118,7 @@ public class MealControllerTest {
         given(mealService.getAllMeals(any())).willReturn(mockPage);
 
         // when
-        mockMvc.perform(get("/images/meals")
+        mockMvc.perform(get("/meals")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content.length()").value(0));
@@ -134,7 +135,7 @@ public class MealControllerTest {
         given(mealService.getMealById(meal.getId())).willReturn(meal);
 
         // when
-        val resultActions = mockMvc.perform(get("/images/meals/" + meal.getId())
+        val resultActions = mockMvc.perform(get("/meals/" + meal.getId())
                 .contentType(MediaType.APPLICATION_JSON));
 
         // then
@@ -155,7 +156,7 @@ public class MealControllerTest {
         given(mealService.getMealById(badId)).willThrow(EntityNotFoundException.class);
 
         // when
-        val resultActions = mockMvc.perform(get("/images/meals/" + badId)
+        val resultActions = mockMvc.perform(get("/meals/" + badId)
                 .contentType(MediaType.APPLICATION_JSON));
 
         // then
@@ -172,12 +173,15 @@ public class MealControllerTest {
         dbMeal.setId(1L);
         mealDto.setCategory(mealCategory.getName());
 
-        given(mealService.addMeal(mealDto)).willReturn(dbMeal);
+        val mealJson = Utils.objectToJsonString(mealDto);
+        val image = new MockMultipartFile("image", new byte[1]);
+
+        given(mealService.addMeal(eq(mealDto), any())).willReturn(dbMeal);
 
         // when
-        val resultActions = mockMvc.perform(post("/images/meals/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(Utils.objectToJsonString(mealDto)));
+        val resultActions = mockMvc.perform(multipart("/meals/add")
+                .file("image", image.getBytes())
+                .file("meal", mealJson.getBytes()));
 
         // then
         resultActions.andExpect(status().isCreated());
@@ -188,12 +192,15 @@ public class MealControllerTest {
         val mealDto = Utils.getMealDto();
         val mealCategory = Utils.getMealCategory();
         mealDto.setCategory(mealCategory.getName());
-        given(mealService.addMeal(any())).willThrow(EntityExistsException.class);
+        given(mealService.addMeal(any(), any())).willThrow(EntityExistsException.class);
+
+        val mealJson = Utils.objectToJsonString(mealDto);
+        val image = new MockMultipartFile("image", new byte[1]);
 
         // when
-        val resultActions = mockMvc.perform(post("/images/meals/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(Utils.objectToJsonString(mealDto)));
+        val resultActions = mockMvc.perform(multipart("/meals/add")
+                .file("image", image.getBytes())
+                .file("meal", mealJson.getBytes()));
 
         // then
         resultActions.andExpect(status().isBadRequest());
@@ -204,31 +211,37 @@ public class MealControllerTest {
         val mealDto = Utils.getMealDto();
         val mealCategory = Utils.getMealCategory();
         mealDto.setCategory(mealCategory.getName());
-        given(mealService.addMeal(any())).willThrow(EntityNotFoundException.class);
+        given(mealService.addMeal(any(), any())).willThrow(EntityNotFoundException.class);
+        val mealJson = Utils.objectToJsonString(mealDto);
+        val image = new MockMultipartFile("image", new byte[1]);
 
         // when
-        val resultActions = mockMvc.perform(post("/images/meals/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(Utils.objectToJsonString(mealDto)));
+        val resultActions = mockMvc.perform(multipart("/meals/add")
+                .file("image", image.getBytes())
+                .file("meal", mealJson.getBytes()));
 
         // then
-        resultActions.andExpect(status().isBadRequest());
+        resultActions.andExpect(status().isNotFound());
     }
 
     @Test
-    void shouldEditMeal() throws Exception{
+    void shouldEditMeal() throws Exception {
         //given
         val mealDto = Utils.getMealDto();
         val dbMeal = Utils.getMealWithCategory();
         dbMeal.setId(1L);
         mealDto.setName("new name");
-        given(mealService.editMeal(any(), any())).willReturn(dbMeal);
+        val mealJson = Utils.objectToJsonString(mealDto);
+        val image = new MockMultipartFile("image", new byte[1]);
+        given(mealService.editMeal(any(), any(), any())).willReturn(dbMeal);
 
-        //when then
-        val resultActions = mockMvc.perform(put("/images/meals/edit/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(Utils.objectToJsonString(mealDto)));
+        //when
+        val resultActions = mockMvc.perform(Utils.multipartPutRequest("/meals/edit/" + 1L)
+                .file("image", image.getBytes())
+                .file("meal", mealJson.getBytes())
+                .contentType(MediaType.MULTIPART_FORM_DATA));
 
+        //then
         resultActions.andExpect(jsonPath("$.id").value(dbMeal.getId()))
                 .andExpect(jsonPath("$.name").value(dbMeal.getName()))
                 .andExpect(jsonPath("$.description").value(dbMeal.getDescription()))
@@ -236,31 +249,45 @@ public class MealControllerTest {
                 .andExpect(jsonPath("$.price").value(dbMeal.getPrice()));
     }
 
+
     @Test
-    void shouldEditMealWhenMealDoesntExist() throws Exception{
+    void shouldNotEditMealWhenCategoryDoesntExist() throws Exception {
         //given
         MealDto mealDto = Utils.getMealDto();
-        given(mealService.editMeal(any(), any())).willThrow(EntityNotFoundException.class);
+        val mealJson = Utils.objectToJsonString(mealDto);
+        val image = new MockMultipartFile("image", new byte[1]);
+        given(mealService.editMeal(any(), any(), any())).willThrow(EntityNotFoundException.class);
 
-        //when then
-        val resultActions = mockMvc.perform(put("/images/meals/edit/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(Utils.objectToJsonString(mealDto)));
+        //when
+        val resultActions = mockMvc.perform(Utils.multipartPutRequest("/meals/edit/" + 1L)
+                .file("image", image.getBytes())
+                .file("meal", mealJson.getBytes())
+                .contentType(MediaType.MULTIPART_FORM_DATA));
 
-        resultActions.andExpect(status().isBadRequest());
+        resultActions.andExpect(status().isNotFound());
     }
 
     @Test
-    void shouldEditMealWhenCategoryDoesntExist() throws Exception{
+    void shouldDeleteMeal() throws Exception {
         //given
-        MealDto mealDto = Utils.getMealDto();
-        given(mealService.editMeal(any(), any())).willThrow(EntityNotFoundException.class);
+        val id = 1L;
 
-        //when then
-        val resultActions = mockMvc.perform(put("/images/meals/edit/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(Utils.objectToJsonString(mealDto)));
+        // when
+        val resultActions = mockMvc.perform(delete("/meals/delete/" + id));
 
-        resultActions.andExpect(status().isBadRequest());
+        // then
+        resultActions.andExpect(status().isOk());
+    }
+
+    @Test
+    void shouldNotDeleteMeal() throws Exception {
+        //given
+        val id = 1L;
+        doThrow(EntityNotFoundException.class).when(mealService).deleteMeal(id);
+        // when
+        val resultActions = mockMvc.perform(delete("/meals/delete/" + id));
+
+        // then
+        resultActions.andExpect(status().isNotFound());
     }
 }
