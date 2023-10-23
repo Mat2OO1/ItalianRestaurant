@@ -93,7 +93,6 @@ public class MealCategoryServiceTest {
         //given
         MealCategory mealCategory = Utils.getMealCategory();
         given(mealCategoryRepository.findByName(mealCategory.getName())).willReturn(Optional.of(mealCategory));
-        given(awsService.getObjectUrl(any())).willReturn("url");
         //when
         val returnedMealCategory = mealCategoryService.getMealCategoryByName(mealCategory.getName());
 

@@ -18,7 +18,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Log4j2
 public class MealService {
 
     private final MealRepository mealRepository;

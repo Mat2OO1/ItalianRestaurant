@@ -1,6 +1,7 @@
 package com.example.italianrestaurant.meal.mealcategory;
 
 import com.example.italianrestaurant.aws.AwsService;
+import com.example.italianrestaurant.meal.Meal;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -35,9 +36,7 @@ public class MealCategoryService {
 
     public MealCategory getMealCategoryByName(String name) throws EntityNotFoundException {
         Optional<MealCategory> mealCategory = mealCategoryRepository.findByName(name);
-        MealCategory savedMealCategory = mealCategory.orElseThrow(EntityNotFoundException::new);
-        savedMealCategory.setImage(awsService.getObjectUrl(savedMealCategory.getImage()));
-        return savedMealCategory;
+        return mealCategory.orElseThrow(EntityNotFoundException::new);
     }
 
     public MealCategory addCategory(MealCategoryDto mealCategoryDto, MultipartFile image) throws IOException {
@@ -70,7 +69,9 @@ public class MealCategoryService {
     public void deleteCategory(Long id){
         MealCategory mealCategory = mealCategoryRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         if (mealCategory.getImage() != null) awsService.deleteFile(mealCategory.getImage());
+        List<Meal> meals = mealCategory.getMeals();
         mealCategoryRepository.delete(mealCategory);
+        meals.forEach(meal -> awsService.deleteFile(meal.getImage()));
     }
 
 }
