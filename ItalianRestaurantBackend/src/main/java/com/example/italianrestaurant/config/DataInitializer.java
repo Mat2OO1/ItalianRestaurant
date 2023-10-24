@@ -41,7 +41,8 @@ public class DataInitializer {
         }
 
         if (mealCategoryRepository.count() == 0 || mealRepository.count() == 0) {
-            awsService.deleteAllImages();
+            // TODO: when project finished uncomment this line
+            // awsService.deleteAllImages();
             mealRepository.deleteAll();
             mealCategoryRepository.deleteAll();
 
