@@ -46,9 +46,9 @@ public class MealServiceTest {
     @Test
     void shouldGetAllMeals() {
         //given
-        val meal = Utils.getMeal();
+        val meal = Utils.getMealWithCategory();
         meal.setId(1L);
-        val meal2 = Utils.getMeal();
+        val meal2 = Utils.getMealWithCategory();
         meal2.setId(2L);
         meal2.setName("Meal2");
         given(mealRepository.findAll(Pageable.unpaged())).willReturn(new PageImpl<>(List.of(meal, meal2), Pageable.unpaged(), 2));
@@ -75,7 +75,7 @@ public class MealServiceTest {
     @Test
     void shouldGetMealById() {
         //given
-        val meal = Utils.getMeal();
+        val meal = Utils.getMealWithCategory();
         meal.setId(1L);
         given(mealRepository.findById(meal.getId())).willReturn(Optional.of(meal));
         given(awsService.getObjectUrl(any())).willReturn("url");
