@@ -4,7 +4,6 @@ import {MatDialogRef} from "@angular/material/dialog";
 import {DIALOG_DATA} from "@angular/cdk/dialog";
 import {DataStorageService} from "../shared/data-storage.service";
 import {Category} from "../models/category";
-import {MealDto} from "../models/mealDto";
 
 @Component({
   selector: 'app-category-edit-dialog',
