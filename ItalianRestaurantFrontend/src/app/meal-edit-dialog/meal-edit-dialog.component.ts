@@ -42,40 +42,23 @@ export class MealEditDialogComponent {
     this.dialogRef.close();
   }
 
-  closeDialogAndEdit(): void {
-    if (this.data.meal !== undefined) {
-      this.dataStorageService.editMeal(
-        new MealDto(
+  closeDialogAndUpdate(): void {
+    if (this.mealForm.valid) {
+      let result = {
+        mealDto: new MealDto(
           this.mealForm.value['name'],
           this.mealForm.value['description'],
           this.mealForm.value['price'],
           this.data.category),
-        this.data.meal.id,
-        this.selectedFile!
-      ).subscribe()
+        id: this.data.meal?.id,
+        file: this.selectedFile
+      }
+      this.dialogRef.close(result);
     }
-    this.dialogRef.close();
   }
 
   closeDialogAndDelete(): void {
-    if (this.data.meal !== undefined) {
-      this.dataStorageService.deleteMeal(
-        this.data.meal.id
-      ).subscribe()
-    }
-    this.dialogRef.close();
-  }
-
-  closeDialogAndAdd(): void {
-    this.dataStorageService.addMeal(
-      new MealDto(
-        this.mealForm.value['name'],
-        this.mealForm.value['description'],
-        this.mealForm.value['price'],
-        this.data.category),
-      this.selectedFile!
-    ).subscribe()
-    this.dialogRef.close();
+    this.dialogRef.close(this.data.meal?.id);
   }
 
   onFileUploaded(event: any): void {

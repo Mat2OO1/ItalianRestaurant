@@ -16,7 +16,7 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end" *ngIf="data.mode === 'EDIT'">
   <button class="btn btn-primary" (click)="closeDialog()">Cancel</button>
-  <button class="btn btn-info" (click)="closeDialogAndEdit()">Edit</button>
+  <button class="btn btn-info" (click)="closeDialogAndUpdate()">Edit</button>
 </mat-dialog-actions>
 
 <mat-dialog-actions align="end" *ngIf="data.mode === 'DELETE'">
@@ -26,5 +26,5 @@
 
 <mat-dialog-actions align="end" *ngIf="data.mode === 'ADD'">
   <button class="btn btn-primary" (click)="closeDialog()">Cancel</button>
-  <button class="btn btn-success" (click)="closeDialogAndAdd()">ADD</button>
+  <button class="btn btn-success" (click)="closeDialogAndUpdate()">ADD</button>
 </mat-dialog-actions>

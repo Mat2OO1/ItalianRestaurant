@@ -28,12 +28,14 @@ public class MealService {
     public Page<Meal> getAllMeals(Pageable pageable) {
         Page<Meal> meals = mealRepository.findAll(pageable);
         meals.forEach(meal -> meal.setImage(awsService.getObjectUrl(meal.getImage())));
+        meals.forEach(meal -> meal.getMealCategory().setImage(awsService.getObjectUrl(meal.getMealCategory().getImage())));
         return meals;
     }
 
     public Meal getMealById(Long id) {
         Meal meal = mealRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         meal.setImage(awsService.getObjectUrl(meal.getImage()));
+        meal.getMealCategory().setImage(awsService.getObjectUrl(meal.getMealCategory().getImage()));
         return meal;
     }
 
