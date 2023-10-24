@@ -2,7 +2,6 @@ import {Component, Inject} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {DIALOG_DATA} from "@angular/cdk/dialog";
-import {CategoryDto} from "../models/categoryDto";
 import {DataStorageService} from "../shared/data-storage.service";
 import {Category} from "../models/category";
 
@@ -18,6 +17,7 @@ import {Category} from "../models/category";
       border-radius: 8px;
       padding: 16px;
     }
+
     :host * {
       color: black;
     }
@@ -30,7 +30,7 @@ export class CategoryEditDialogComponent {
 
 
   constructor(private dialogRef: MatDialogRef<CategoryEditDialogComponent>,
-              @Inject(DIALOG_DATA) public data: {mode: string, category ?: Category},
+              @Inject(DIALOG_DATA) public data: { mode: string, category?: Category },
               private dataStorageService: DataStorageService) {
     this.categoryForm = new FormGroup({
       name: new FormControl(data.category !== undefined ? data.category.name : '', [Validators.required]),
@@ -41,32 +41,19 @@ export class CategoryEditDialogComponent {
     this.dialogRef.close();
   }
 
-  closeDialogAndEdit(): void {
-    var blob = new Blob([this.selectedFile!], { type: this.selectedFile!.type })
-    if(this.data.category !== undefined){
-      this.selectedFile!.name
-      this.dataStorageService.editCategory(this.categoryForm.value['name'],
-        new Blob([this.selectedFile!], { type: this.selectedFile!.type }),
-        this.data.category.id)
-        .subscribe()
+  closeDialogAndUpdate(): void {
+    if (this.categoryForm.valid) {
+      let result = {
+        name: this.categoryForm.value['name'],
+        file: this.selectedFile!,
+        id: this.data.category?.id
+      }
+      this.dialogRef.close(result);
     }
-    this.dialogRef.close();
   }
 
   closeDialogAndDelete(): void {
-    if(this.data.category !== undefined){
-      this.dataStorageService.deleteCategory(this.data.category.id)
-        .subscribe()
-    }
-    this.dialogRef.close();
-  }
-
-  closeDialogAndAdd(): void {
-    this.dataStorageService.addCategory(this.categoryForm.value['name'],
-      new Blob([this.selectedFile!], { type: this.selectedFile!.type }),
-    )
-      .subscribe()
-    this.dialogRef.close();
+    this.dialogRef.close(this.data.category?.id);
   }
 
   onFileUploaded(event: any): void {

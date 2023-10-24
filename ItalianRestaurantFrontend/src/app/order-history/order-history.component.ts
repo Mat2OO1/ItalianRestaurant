@@ -37,7 +37,7 @@ export class OrderHistoryComponent {
       mealOrder.quantity > maxMeal.quantity ? mealOrder : maxMeal
     );
 
-    return mealWithMaxQuantity.meal.imgPath
+    return mealWithMaxQuantity.meal.image
   }
 
   formatDeliveryStatus(status: string) {

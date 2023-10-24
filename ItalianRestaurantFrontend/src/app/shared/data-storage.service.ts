@@ -1,21 +1,20 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Meal} from "../models/meal";
-import {map, Subject} from "rxjs";
+import {Subject} from "rxjs";
 import {Delivery} from "../models/delivery";
 import {OrderRes} from "../models/order";
 import {environment} from "../../environments/environment";
 import {MealResponse, MealsWithPagination} from "../models/MealResponse";
 import {Table} from "../models/table";
 import {MealDto} from "../models/mealDto";
-import {CategoryDto} from "../models/categoryDto";
-import {Category} from "../models/category";
 
 @Injectable()
 export class DataStorageService {
   page = 0
   size = 3
   meals = new Subject<MealsWithPagination>();
+
   constructor(private http: HttpClient) {
   }
 
@@ -26,7 +25,7 @@ export class DataStorageService {
       )
       .subscribe(
         (res) => {
-          var menu = res.content.map(meal => new Meal(meal.id, meal.name, meal.imgPath, meal.description, meal.price, meal.mealCategory))
+          var menu = res.content.map(meal => new Meal(meal.id, meal.name, meal.image, meal.description, meal.price, meal.mealCategory))
           this.meals.next({meals: menu, numOfPages: res.totalPages, currPage: res.number})
         }
       )
@@ -37,45 +36,40 @@ export class DataStorageService {
       .get<{ content: Meal[] }>(`${environment.apiUrl}/meals`)
   }
 
-  addMeal(meal: MealDto) {
+  addMeal(meal: MealDto, file: File) {
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('meal', JSON.stringify(meal));
     return this.http
-      .post(`${environment.apiUrl}/meals/add`, {
-        name: meal.name,
-        imgPath: meal.img,
-        category: meal.mealCategory,
-        description: meal.description,
-        price: meal.price
-      })
+      .post(`${environment.apiUrl}/meals/add`, formData)
   }
 
-  editMeal(meal: MealDto, id: number){
-    return this.http.put(`${environment.apiUrl}/meals/edit/${id}`, {
-      name: meal.name,
-      imgPath:  meal.img,
-      category: meal.mealCategory,
-      description: meal.description,
-      price: meal.price
-    })
+  editMeal(meal: MealDto, id: number, file: File) {
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('meal', JSON.stringify(meal));
+    return this.http.put(`${environment.apiUrl}/meals/edit/${id}`, formData)
   }
-  deleteMeal(id: number){
+
+  deleteMeal(id: number) {
     return this.http
       .delete(`${environment.apiUrl}/meals/delete/${id}`)
   }
 
-  addCategory(categoryName: string, img: Blob) {
+  addCategory(categoryName: string, img: File) {
+    const formData = new FormData();
+    formData.append('image', img);
+    formData.append('meal_category', JSON.stringify({name: categoryName}));
     return this.http
-      .post(`${environment.apiUrl}/meal-categories/add`, {
-        name: categoryName,
-        imgPath: img
-      })
+      .post(`${environment.apiUrl}/meal-categories/add`, formData)
   }
 
-  editCategory(categoryName: string, img: Blob, id: number) {
+  editCategory(categoryName: string, img: File, id: number) {
+    const formData = new FormData();
+    formData.append('image', img);
+    formData.append('meal_category', JSON.stringify({name: categoryName}));
     return this.http
-      .put(`${environment.apiUrl}/meal-categories/edit/${id}`, {
-        name: categoryName,
-        imgPath: img
-      })
+      .put(`${environment.apiUrl}/meal-categories/edit/${id}`, formData)
   }
 
   deleteCategory(id: number) {
@@ -85,7 +79,7 @@ export class DataStorageService {
 
   getCategories() {
     return this.http
-      .get<{ name: string, imgPath: string }[]>(`${environment.apiUrl}/meal-categories`)
+      .get<{ name: string, image: string }[]>(`${environment.apiUrl}/meal-categories`)
   }
 
   makeAnOrder(delivery: Delivery, order: { meal: Meal, quantity: number, price: number }[]) {
@@ -128,7 +122,7 @@ export class DataStorageService {
     this.getMeals();
   }
 
-  deleteOrder(id:number){
+  deleteOrder(id: number) {
     return this.http
       .delete(`${environment.apiUrl}/order/${id}`)
   }

@@ -8,15 +8,15 @@
     <label class="form-label" for="price">Price</label>
     <input class="form-control" id="price" type="text" formControlName="price">
     <label class="form-label" for="fileInput">Image Path</label>
-    <input class="form-control" type="file" id="fileInput" #fileInput (change)="onFileUploaded($event)"/>
+    <input class="form-control" type="file" id="fileInput" (change)="onFileUploaded($event)"/>
   </form>
   <div class="d-flex justify-content-center align-items-center" *ngIf="data.mode === 'DELETE'">
-    <h5>Are you sure you want to delete a meal with name: {{data.meal.name}}</h5>
+    <h5>Are you sure you want to delete a meal with name: {{data.meal?.name}}</h5>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end" *ngIf="data.mode === 'EDIT'">
   <button class="btn btn-primary" (click)="closeDialog()">Cancel</button>
-  <button class="btn btn-info" (click)="closeDialogAndEdit()">Edit</button>
+  <button class="btn btn-info" (click)="closeDialogAndUpdate()">Edit</button>
 </mat-dialog-actions>
 
 <mat-dialog-actions align="end" *ngIf="data.mode === 'DELETE'">
@@ -26,5 +26,5 @@
 
 <mat-dialog-actions align="end" *ngIf="data.mode === 'ADD'">
   <button class="btn btn-primary" (click)="closeDialog()">Cancel</button>
-  <button class="btn btn-success" (click)="closeDialogAndAdd()">ADD</button>
+  <button class="btn btn-success" (click)="closeDialogAndUpdate()">ADD</button>
 </mat-dialog-actions>

@@ -25,6 +25,10 @@ export class AdminTableQrComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getTables()
+  }
+
+  getTables() {
     this.dataStorageService.getTables().subscribe(
       (tables) => {
         this.tables = tables
@@ -51,28 +55,14 @@ export class AdminTableQrComponent implements OnInit {
   private handleDialogResult(mode: DialogMode, result: Table | number) {
     if (result) {
       if (mode === DialogMode.ADD && typeof result === 'object') {
-        this.dataStorageService.saveTable(result).subscribe(
-          (table) => {
-            this.tables?.push(table)
-          }
-        )
+        this.dataStorageService.saveTable(result).subscribe()
       } else if (mode === DialogMode.EDIT && typeof result === 'object') {
-        this.dataStorageService.saveTable(result).subscribe(
-          (table) => {
-            const index = this.tables?.findIndex(t => t.id === table.id)
-            if (index !== undefined && index !== null) {
-              this.tables?.splice(index, 1, table)
-            }
-          }
-        )
+        this.dataStorageService.saveTable(result).subscribe()
       }
       else if (mode === DialogMode.DELETE && typeof result === 'number') {
-        this.dataStorageService.deleteTable(result).subscribe(
-          () => {
-            this.tables = this.tables?.filter(table => table.id !== result)
-          }
-        )
+        this.dataStorageService.deleteTable(result).subscribe()
       }
+      this.getTables();
     }
   }
 }

@@ -11,10 +11,9 @@ public class MealDto {
     @NotNull(message = "Name is mandatory")
     private String name;
     @NotNull(message = "Image Path is mandatory")
-    private String imgPath;
+    private byte[] imgData;
     @NotNull(message = "Category is mandatory")
     private String category;
-
     private String description;
     @NotNull(message = "Price is mandatory")
     private double price;

@@ -24,7 +24,7 @@ public class MealCategory {
     private Long id;
     @Column(nullable = false)
     private String name;
-    private String imgPath;
+    private String image;
     @JsonIgnore
     @ToString.Exclude
     @OneToMany(mappedBy = "mealCategory", cascade = CascadeType.ALL)

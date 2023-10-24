@@ -22,7 +22,7 @@ public class Meal {
     private Long id;
     @Column(nullable = false)
     private String name;
-    private String imgPath;
+    private String image;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
     @ToString.Exclude

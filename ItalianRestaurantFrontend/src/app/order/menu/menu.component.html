@@ -5,7 +5,7 @@
          *ngFor="let category of categories"
          style="max-width: 20%; padding: 0;"
          (click)="scroll(category.name)">
-      <img class="card-img-top rounded mx-auto d-block" src="{{category.imgPath}}" alt="Card image cap"
+      <img class="card-img-top rounded mx-auto d-block" src="{{category.image}}" alt="Card image cap"
            style="max-width: 200px">
       <div class="card-body">
         <h5 class="card-title text-center" id="category-name">{{category.name}}</h5>
@@ -19,7 +19,7 @@
   <div *ngFor="let category of getCurrentCategories()" id="{{category.name}}">
     <div class="row" *ngFor="let meal of meals[category.name]">
       <div class="menu-item">
-        <img class="menu-item-img" src="{{meal.imgPath}}" alt="pizza">
+        <img class="menu-item-img" src="{{meal.image}}" alt="pizza">
         <div class="menu-item-desc">
           <h5 style="color: #8a8a8a;"><strong>{{category.name}}</strong></h5>
           <h3>{{meal.name}}</h3>

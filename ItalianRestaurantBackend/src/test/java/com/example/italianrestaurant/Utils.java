@@ -7,6 +7,7 @@ import com.example.italianrestaurant.email.EmailEntity;
 import com.example.italianrestaurant.meal.Meal;
 import com.example.italianrestaurant.meal.MealDto;
 import com.example.italianrestaurant.meal.mealcategory.MealCategory;
+import com.example.italianrestaurant.meal.mealcategory.MealCategoryDto;
 import com.example.italianrestaurant.order.ChangeOrderStatusDto;
 import com.example.italianrestaurant.order.Order;
 import com.example.italianrestaurant.order.OrderDto;
@@ -24,6 +25,8 @@ import com.example.italianrestaurant.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.val;
+import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,8 +38,8 @@ public class Utils {
         return MealDto.builder()
                 .name("name")
                 .category("name")
+                .imgData(new byte[1])
                 .description("description")
-                .imgPath("imgPath")
                 .price(10.0)
                 .build();
     }
@@ -88,6 +91,12 @@ public class Utils {
                 .build();
     }
 
+    public static MealCategoryDto getMealCategoryDto() {
+        return MealCategoryDto.builder()
+                .name("name")
+                .build();
+    }
+
     public static String objectToJsonString(final Object obj) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -113,7 +122,7 @@ public class Utils {
                 .name("name")
                 .description("description")
                 .price(10.0)
-                .imgPath("imgPath")
+                .image("imageName")
                 .build();
     }
 
@@ -123,7 +132,7 @@ public class Utils {
                 .mealCategory(getMealCategory())
                 .description("description")
                 .price(10.0)
-                .imgPath("imgPath")
+                .image("imgPath")
                 .build();
     }
 
@@ -219,5 +228,15 @@ public class Utils {
                 .seats(2)
                 .status(TableStatus.FREE)
                 .build();
+    }
+
+    public static MockMultipartHttpServletRequestBuilder multipartPutRequest(String url) {
+        MockMultipartHttpServletRequestBuilder builder =
+                MockMvcRequestBuilders.multipart(url);
+        builder.with(request -> {
+            request.setMethod("PUT");
+            return request;
+        });
+        return builder;
     }
 }
