@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class PaymentResponse {
+public class OrderPaidResponse {
     private String sessionId;
     private String url;
 }

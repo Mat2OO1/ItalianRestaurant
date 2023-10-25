@@ -29,7 +29,7 @@ public class PaymentService {
 
     private final PaymentRepository paymentRepository;
 
-    public PaymentResponse payment(List<PaymentRequest> paymentList, long orderId) throws StripeException {
+    public OrderPaidResponse payment(List<PaymentRequest> paymentList, long orderId) throws StripeException {
 
         Stripe.apiKey = secretKey;
         SessionCreateParams params = SessionCreateParams.builder()
@@ -39,7 +39,7 @@ public class PaymentService {
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.P24)
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.PAYPAL)
                 .setMode(SessionCreateParams.Mode.PAYMENT).setSuccessUrl(frontUrl + "/confirmation/" + orderId)
-                .setCancelUrl(frontUrl + "/basket")
+                .setCancelUrl(frontUrl + "/menu")
                 .addAllLineItem(
                         paymentList.stream().map(paymentRequest -> SessionCreateParams.LineItem.builder()
                                 .setQuantity(paymentRequest.getQuantity())
@@ -61,7 +61,7 @@ public class PaymentService {
                 .build();
 
         paymentRepository.save(payment);
-        return new PaymentResponse(session.getId(), session.getUrl());
+        return new OrderPaidResponse(session.getId(), session.getUrl());
     }
 
     public void updatePayment(String payload, String sigHeader) throws StripeException {
@@ -91,6 +91,10 @@ public class PaymentService {
                 System.out.println("Unhandled event type: " + event.getType());
         }
 
+    }
+
+    public Payment getPaymentBySessionId(String sessionId) {
+        return paymentRepository.findBySessionId(sessionId);
     }
 
     private Long getCentsFromDollars(double dollars) {

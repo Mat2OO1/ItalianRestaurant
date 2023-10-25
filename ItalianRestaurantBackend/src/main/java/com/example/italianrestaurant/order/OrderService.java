@@ -1,12 +1,12 @@
 package com.example.italianrestaurant.order;
 
-import com.example.italianrestaurant.aws.AwsService;
 import com.example.italianrestaurant.delivery.Delivery;
 import com.example.italianrestaurant.delivery.DeliveryService;
 import com.example.italianrestaurant.order.mealorder.MealOrder;
 import com.example.italianrestaurant.order.mealorder.MealOrderService;
+import com.example.italianrestaurant.payments.Payment;
 import com.example.italianrestaurant.payments.PaymentRequest;
-import com.example.italianrestaurant.payments.PaymentResponse;
+import com.example.italianrestaurant.payments.OrderPaidResponse;
 import com.example.italianrestaurant.payments.PaymentService;
 import com.example.italianrestaurant.security.UserPrincipal;
 import com.example.italianrestaurant.user.User;
@@ -40,7 +40,7 @@ public class OrderService {
         return orderRepository.findAllFromToday(LocalDateTime.now().toLocalDate());
     }
 
-    public PaymentResponse makeOrder(UserPrincipal userPrincipal, OrderDto orderDto) throws StripeException {
+    public OrderPaidResponse makeOrder(UserPrincipal userPrincipal, OrderDto orderDto) throws StripeException {
         Delivery dbDelivery = deliveryService.addDelivery(orderDto.getDelivery());
         User user = userService.getUserByEmail(userPrincipal.getEmail());
         Order order = Order.builder()
@@ -55,12 +55,16 @@ public class OrderService {
         List<MealOrder> mealOrders = orderDto.getMealOrders().stream()
                 .map(mealOrderDto -> modelMapper.map(mealOrderDto, MealOrder.class))
                 .toList();
+
+        OrderPaidResponse orderPaidResponse = paymentService.payment(getPaymentRequestList(mealOrders), savedOrder.getId());
+        Payment payment = paymentService.getPaymentBySessionId(orderPaidResponse.getSessionId());
+        savedOrder.setPayment(payment);
+        orderRepository.save(savedOrder);
+
         mealOrders.forEach(mealOrder -> mealOrder.setOrder(savedOrder));
         mealOrders.forEach(mealOrderService::addMealOrder);
 
-        savedOrder.setMealOrders(mealOrders);
-
-        return paymentService.payment(getPaymentRequestList(savedOrder), savedOrder.getId());
+        return orderPaidResponse;
     }
 
     public Order changeStatus(ChangeOrderStatusDto orderDto) {
@@ -78,10 +82,9 @@ public class OrderService {
         orderRepository.deleteById(id);
     }
 
-    private List<PaymentRequest> getPaymentRequestList(Order order) {
-        return order.getMealOrders().stream()
+    private List<PaymentRequest> getPaymentRequestList(List<MealOrder> mealOrders) {
+        return mealOrders.stream()
                 .map(mealOrder -> PaymentRequest.builder()
-                        .userEmail(order.getUser().getEmail())
                         .productName(mealOrder.getMeal().getName())
                         .price(mealOrder.getMeal().getPrice())
                         .quantity(mealOrder.getQuantity())

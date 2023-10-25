@@ -1,5 +1,6 @@
 package com.example.italianrestaurant.payments;
 
+import com.example.italianrestaurant.order.Order;
 import com.example.italianrestaurant.user.User;
 import jakarta.persistence.*;
 import lombok.*;

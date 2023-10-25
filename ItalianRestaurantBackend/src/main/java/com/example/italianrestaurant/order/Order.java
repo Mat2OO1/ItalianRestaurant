@@ -32,7 +32,7 @@ public class Order {
     @JsonIgnore
     private User user;
 
-    @OneToOne(cascade =CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn
     @ToString.Exclude
     private Delivery delivery;
@@ -46,8 +46,9 @@ public class Order {
 
     private LocalDateTime orderDate;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn
+    @ToString.Exclude
     private Payment payment;
 
     @Override

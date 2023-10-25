@@ -1,7 +1,6 @@
 package com.example.italianrestaurant.order;
 
 import com.example.italianrestaurant.meal.Meal;
-import com.example.italianrestaurant.payments.PaymentResponse;
 import com.example.italianrestaurant.security.UserPrincipal;
 import com.stripe.exception.StripeException;
 import jakarta.persistence.EntityNotFoundException;
