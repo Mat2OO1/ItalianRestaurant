@@ -31,12 +31,9 @@ public class OrderService {
     private final MealOrderService mealOrderService;
     private final UserService userService;
     private final PaymentService paymentService;
-    private final AwsService awsService;
 
     public List<Order> getOrdersByUserEmail(UserPrincipal userPrincipal) {
-        List<Order> allByUserEmail = orderRepository.findAllByUserEmail(userPrincipal.getEmail());
-        allByUserEmail.forEach(order -> order.getMealOrders().forEach(mealOrder -> mealOrder.getMeal().setImage(awsService.getObjectUrl(mealOrder.getMeal().getImage()))));
-        return allByUserEmail;
+        return orderRepository.findAllByUserEmail(userPrincipal.getEmail());
     }
 
     public List<Order> getAllOrdersFromToday() {
@@ -61,6 +58,8 @@ public class OrderService {
         mealOrders.forEach(mealOrder -> mealOrder.setOrder(savedOrder));
         mealOrders.forEach(mealOrderService::addMealOrder);
 
+        savedOrder.setMealOrders(mealOrders);
+
         return paymentService.payment(getPaymentRequestList(savedOrder), savedOrder.getId());
     }
 
@@ -74,6 +73,7 @@ public class OrderService {
         return orderRepository.save(order.get());
 
     }
+
     public void deleteOrderById(Long id) {
         orderRepository.deleteById(id);
     }

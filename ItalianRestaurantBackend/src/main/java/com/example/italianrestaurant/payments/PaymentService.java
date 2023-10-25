@@ -1,10 +1,5 @@
 package com.example.italianrestaurant.payments;
 
-import com.example.italianrestaurant.meal.MealService;
-import com.example.italianrestaurant.order.Order;
-import com.example.italianrestaurant.order.OrderDto;
-import com.example.italianrestaurant.order.OrderService;
-import com.example.italianrestaurant.security.UserPrincipal;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Event;
@@ -62,6 +57,7 @@ public class PaymentService {
         Payment payment = Payment.builder()
                 .sessionId(session.getId())
                 .isPaid(false)
+                .createdAt(LocalDateTime.now())
                 .build();
 
         paymentRepository.save(payment);

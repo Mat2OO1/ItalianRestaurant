@@ -26,17 +26,11 @@ public class MealService {
     private final AwsService awsService;
 
     public Page<Meal> getAllMeals(Pageable pageable) {
-        Page<Meal> meals = mealRepository.findAll(pageable);
-        meals.forEach(meal -> meal.setImage(awsService.getObjectUrl(meal.getImage())));
-        meals.forEach(meal -> meal.getMealCategory().setImage(awsService.getObjectUrl(meal.getMealCategory().getImage())));
-        return meals;
+        return mealRepository.findAll(pageable);
     }
 
     public Meal getMealById(Long id) {
-        Meal meal = mealRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        meal.setImage(awsService.getObjectUrl(meal.getImage()));
-        meal.getMealCategory().setImage(awsService.getObjectUrl(meal.getMealCategory().getImage()));
-        return meal;
+        return mealRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public Meal addMeal(MealDto meal, MultipartFile image) throws IOException {
@@ -47,7 +41,7 @@ public class MealService {
         String imgName = awsService.uploadFile(image.getBytes(), image.getContentType());
         Meal mappedMeal = modelMapper.map(meal, Meal.class);
         mappedMeal.setMealCategory(category);
-        mappedMeal.setImage(imgName);
+        mappedMeal.setImage(awsService.getObjectUrl(imgName));
         return mealRepository.save(mappedMeal);
     }
 
@@ -62,7 +56,7 @@ public class MealService {
         } else {
             if (savedMeal.getImage() != null) awsService.deleteFile(savedMeal.getImage());
             String imgName = awsService.uploadFile(image.getBytes(), image.getContentType());
-            mappedMeal.setImage(imgName);
+            mappedMeal.setImage(awsService.getObjectUrl(imgName));
         }
         return mealRepository.save(mappedMeal);
     }

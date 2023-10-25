@@ -35,8 +35,8 @@ public class AwsService {
         return imageName;
     }
 
-    public void deleteFile(String objectKey) {
-        s3Client.deleteObject(bucketName, objectKey);
+    public void deleteFile(String objectUrl) {
+        s3Client.deleteObject(bucketName, getImageNameFromUrl(objectUrl));
     }
 
     public void deleteAllImages() {
@@ -55,11 +55,14 @@ public class AwsService {
         return "https://" + bucketName + "." + endpoint + "/" + objectKey;
     }
 
+    public String getImageNameFromUrl(String objectUrl) {
+        String[] split = objectUrl.split("/");
+        return split[split.length - 1];
+    }
     private String generateImageName() {
         String prefix = "image_";
         String randomComponent = RandomStringUtils.randomAlphanumeric(6);
         return prefix + randomComponent;
 
     }
-
 }
