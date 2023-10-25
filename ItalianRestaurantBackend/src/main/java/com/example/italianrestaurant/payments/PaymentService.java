@@ -4,7 +4,6 @@ import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Event;
 import com.stripe.model.EventDataObjectDeserializer;
-import com.stripe.model.PaymentIntent;
 import com.stripe.model.checkout.Session;
 import com.stripe.net.Webhook;
 import com.stripe.param.checkout.SessionCreateParams;
@@ -34,6 +33,7 @@ public class PaymentService {
 
         Stripe.apiKey = secretKey;
         SessionCreateParams params = SessionCreateParams.builder()
+                .setCustomerEmail(paymentList.get(0).getUserEmail())
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.BLIK)
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.P24)
@@ -53,10 +53,10 @@ public class PaymentService {
                 .build();
 
         Session session = Session.create(params);
-
         Payment payment = Payment.builder()
                 .sessionId(session.getId())
                 .isPaid(false)
+                .amount(session.getAmountTotal())
                 .createdAt(LocalDateTime.now())
                 .build();
 
@@ -64,25 +64,27 @@ public class PaymentService {
         return new PaymentResponse(session.getId(), session.getUrl());
     }
 
-    public void updateOrder(String payload, String sigHeader) throws StripeException {
+    public void updatePayment(String payload, String sigHeader) throws StripeException {
         Event event;
         event = Webhook.constructEvent(
                 payload, sigHeader, webhookSecret);
-
         EventDataObjectDeserializer dataObjectDeserializer = event.getDataObjectDeserializer();
-        PaymentIntent paymentIntent;
-        if (dataObjectDeserializer.getObject().isPresent()) {
-            paymentIntent = (PaymentIntent) dataObjectDeserializer.getObject().get();
-        } else {
-            throw new RuntimeException("Unable to deserialize event: " + payload);
-        }
+
         switch (event.getType()) {
-            case "payment_intent.succeeded": {
-                Payment payment = paymentRepository.findBySessionId(event.getId());
+            case "checkout.session.completed": {
+
+                Session sessionObject;
+                if (dataObjectDeserializer.getObject().isPresent()) {
+                    sessionObject = (Session) dataObjectDeserializer.getObject().get();
+                } else {
+                    throw new RuntimeException("Unable to deserialize event: " + payload);
+                }
+
+                Payment payment = paymentRepository.findBySessionId(sessionObject.getId());
                 payment.setPaid(true);
-                payment.setAmount(paymentIntent.getAmount());
-                payment.setPaymentType(paymentIntent.getPaymentMethodTypes().get(0));
+                payment.setAmount(sessionObject.getAmountTotal());
                 payment.setCreatedAt(LocalDateTime.now());
+                paymentRepository.save(payment);
                 break;
             }
             default:

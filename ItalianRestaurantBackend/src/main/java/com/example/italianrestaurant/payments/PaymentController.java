@@ -18,7 +18,7 @@ public class PaymentController {
             @RequestHeader("Stripe-Signature") String sigHeader
     ) {
         try {
-            paymentService.updateOrder(payload, sigHeader);
+            paymentService.updatePayment(payload, sigHeader);
         } catch (StripeException e) {
             throw new RuntimeException(e);
         }

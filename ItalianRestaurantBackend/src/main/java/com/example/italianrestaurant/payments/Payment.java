@@ -28,7 +28,5 @@ public class Payment {
 
     private Long amount;
 
-    private String paymentType;
-
     private LocalDateTime createdAt;
 }

@@ -81,6 +81,7 @@ public class OrderService {
     private List<PaymentRequest> getPaymentRequestList(Order order) {
         return order.getMealOrders().stream()
                 .map(mealOrder -> PaymentRequest.builder()
+                        .userEmail(order.getUser().getEmail())
                         .productName(mealOrder.getMeal().getName())
                         .price(mealOrder.getMeal().getPrice())
                         .quantity(mealOrder.getQuantity())
