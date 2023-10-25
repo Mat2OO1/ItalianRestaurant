@@ -2,6 +2,7 @@ package com.example.italianrestaurant.order;
 
 import com.example.italianrestaurant.delivery.Delivery;
 import com.example.italianrestaurant.order.mealorder.MealOrder;
+import com.example.italianrestaurant.payments.Payment;
 import com.example.italianrestaurant.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -40,16 +41,14 @@ public class Order {
     @ToString.Exclude
     private List<MealOrder> mealOrders;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn()
-//    @ToString.Exclude
-//    private
-
-
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
     private LocalDateTime orderDate;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn
+    private Payment payment;
 
     @Override
     public boolean equals(Object o) {

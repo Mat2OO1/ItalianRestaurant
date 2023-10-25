@@ -1,12 +1,17 @@
 package com.example.italianrestaurant.order;
 
+import com.example.italianrestaurant.aws.AwsService;
 import com.example.italianrestaurant.delivery.Delivery;
 import com.example.italianrestaurant.delivery.DeliveryService;
 import com.example.italianrestaurant.order.mealorder.MealOrder;
 import com.example.italianrestaurant.order.mealorder.MealOrderService;
+import com.example.italianrestaurant.payments.PaymentRequest;
+import com.example.italianrestaurant.payments.PaymentResponse;
+import com.example.italianrestaurant.payments.PaymentService;
 import com.example.italianrestaurant.security.UserPrincipal;
 import com.example.italianrestaurant.user.User;
 import com.example.italianrestaurant.user.UserService;
+import com.stripe.exception.StripeException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -25,16 +30,20 @@ public class OrderService {
     private final ModelMapper modelMapper;
     private final MealOrderService mealOrderService;
     private final UserService userService;
+    private final PaymentService paymentService;
+    private final AwsService awsService;
 
     public List<Order> getOrdersByUserEmail(UserPrincipal userPrincipal) {
-        return orderRepository.findAllByUserEmail(userPrincipal.getEmail());
+        List<Order> allByUserEmail = orderRepository.findAllByUserEmail(userPrincipal.getEmail());
+        allByUserEmail.forEach(order -> order.getMealOrders().forEach(mealOrder -> mealOrder.getMeal().setImage(awsService.getObjectUrl(mealOrder.getMeal().getImage()))));
+        return allByUserEmail;
     }
 
     public List<Order> getAllOrdersFromToday() {
         return orderRepository.findAllFromToday(LocalDateTime.now().toLocalDate());
     }
 
-    public Order makeOrder(UserPrincipal userPrincipal, OrderDto orderDto) {
+    public PaymentResponse makeOrder(UserPrincipal userPrincipal, OrderDto orderDto) throws StripeException {
         Delivery dbDelivery = deliveryService.addDelivery(orderDto.getDelivery());
         User user = userService.getUserByEmail(userPrincipal.getEmail());
         Order order = Order.builder()
@@ -49,11 +58,10 @@ public class OrderService {
         List<MealOrder> mealOrders = orderDto.getMealOrders().stream()
                 .map(mealOrderDto -> modelMapper.map(mealOrderDto, MealOrder.class))
                 .toList();
-
         mealOrders.forEach(mealOrder -> mealOrder.setOrder(savedOrder));
-        List<MealOrder> dbMealOrders = mealOrders.stream().map(mealOrderService::addMealOrder).toList();
-        savedOrder.setMealOrders(dbMealOrders);
-        return savedOrder;
+        mealOrders.forEach(mealOrderService::addMealOrder);
+
+        return paymentService.payment(getPaymentRequestList(savedOrder), savedOrder.getId());
     }
 
     public Order changeStatus(ChangeOrderStatusDto orderDto) {
@@ -68,5 +76,15 @@ public class OrderService {
     }
     public void deleteOrderById(Long id) {
         orderRepository.deleteById(id);
+    }
+
+    private List<PaymentRequest> getPaymentRequestList(Order order) {
+        return order.getMealOrders().stream()
+                .map(mealOrder -> PaymentRequest.builder()
+                        .productName(mealOrder.getMeal().getName())
+                        .price(mealOrder.getMeal().getPrice())
+                        .quantity(mealOrder.getQuantity())
+                        .build())
+                .toList();
     }
 }

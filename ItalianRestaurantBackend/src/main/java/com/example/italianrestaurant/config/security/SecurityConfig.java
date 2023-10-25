@@ -103,7 +103,8 @@ public class SecurityConfig {
             "/swagger-ui/**",
             "/swagger-ui.html",
             "/meal-categories/**",
-            "/images/meals/**"
+            "/images/meals/**",
+            "/payment/webhook"
     };
 
 }

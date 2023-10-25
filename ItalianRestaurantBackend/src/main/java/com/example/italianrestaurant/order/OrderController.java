@@ -1,7 +1,9 @@
 package com.example.italianrestaurant.order;
 
 import com.example.italianrestaurant.meal.Meal;
+import com.example.italianrestaurant.payments.PaymentResponse;
 import com.example.italianrestaurant.security.UserPrincipal;
+import com.stripe.exception.StripeException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +36,11 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<?> makeOrder(@AuthenticationPrincipal UserPrincipal userPrincipal, @Valid @RequestBody OrderDto orderDto) {
-        return ResponseEntity.ok(orderService.makeOrder(userPrincipal, orderDto));
+        try {
+            return ResponseEntity.ok(orderService.makeOrder(userPrincipal, orderDto));
+        } catch (StripeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
 
     }
 

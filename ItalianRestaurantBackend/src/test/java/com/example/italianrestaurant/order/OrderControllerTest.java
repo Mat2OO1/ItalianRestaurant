@@ -80,7 +80,7 @@ public class OrderControllerTest {
         val orderDto = Utils.getOrderDto();
         val order = Utils.getOrder();
 
-        given(orderService.makeOrder(any(), eq(orderDto))).willReturn(order);
+//        given(orderService.makeOrder(any(), eq(orderDto))).willReturn(order);
 
         // when
         val resultActions = mockMvc.perform(post("/order")

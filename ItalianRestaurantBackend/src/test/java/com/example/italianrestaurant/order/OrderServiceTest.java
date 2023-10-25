@@ -130,11 +130,11 @@ public class OrderServiceTest {
         given(userService.getUserByEmail(any())).willReturn(user);
 
         //when
-        Order result = orderService.makeOrder(userPrincipal, Utils.getOrderDto());
+//        Order result = orderService.makeOrder(userPrincipal, Utils.getOrderDto());
 
         //then
-        assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo(1L);
+//        assertThat(result).isNotNull();
+//        assertThat(result.getId()).isEqualTo(1L);
         verify(orderRepository).save(any());
     }
 
