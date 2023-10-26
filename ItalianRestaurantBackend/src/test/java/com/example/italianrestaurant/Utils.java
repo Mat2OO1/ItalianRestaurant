@@ -147,7 +147,6 @@ public class Utils {
     public static MealOrder getMealOrder() {
         return MealOrder.builder()
                 .quantity(3)
-                .price(23)
                 .build();
     }
 

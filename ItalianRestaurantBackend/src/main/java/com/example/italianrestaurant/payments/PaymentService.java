@@ -29,11 +29,11 @@ public class PaymentService {
 
     private final PaymentRepository paymentRepository;
 
-    public OrderPaidResponse payment(List<PaymentRequest> paymentList, long orderId) throws StripeException {
+    public OrderPaidResponse payment(List<PaymentRequest> paymentList, long orderId, String email) throws StripeException {
 
         Stripe.apiKey = secretKey;
         SessionCreateParams params = SessionCreateParams.builder()
-                .setCustomerEmail(paymentList.get(0).getUserEmail())
+                .setCustomerEmail(email)
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.BLIK)
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.P24)

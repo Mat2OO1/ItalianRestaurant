@@ -33,11 +33,11 @@ public class OrderService {
     private final PaymentService paymentService;
 
     public List<Order> getOrdersByUserEmail(UserPrincipal userPrincipal) {
-        return orderRepository.findAllByUserEmail(userPrincipal.getEmail());
+        return orderRepository.findAllByUserEmailAndPaymentPaid(userPrincipal.getEmail(), true);
     }
 
     public List<Order> getAllOrdersFromToday() {
-        return orderRepository.findAllFromToday(LocalDateTime.now().toLocalDate());
+        return orderRepository.findAllFromTodayAndPaymentPaid(LocalDateTime.now().toLocalDate(), true);
     }
 
     public OrderPaidResponse makeOrder(UserPrincipal userPrincipal, OrderDto orderDto) throws StripeException {
@@ -56,7 +56,7 @@ public class OrderService {
                 .map(mealOrderDto -> modelMapper.map(mealOrderDto, MealOrder.class))
                 .toList();
 
-        OrderPaidResponse orderPaidResponse = paymentService.payment(getPaymentRequestList(mealOrders), savedOrder.getId());
+        OrderPaidResponse orderPaidResponse = paymentService.payment(getPaymentRequestList(mealOrders), savedOrder.getId(), userPrincipal.getEmail());
         Payment payment = paymentService.getPaymentBySessionId(orderPaidResponse.getSessionId());
         savedOrder.setPayment(payment);
         orderRepository.save(savedOrder);
