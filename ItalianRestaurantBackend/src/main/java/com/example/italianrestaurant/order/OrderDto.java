@@ -2,6 +2,7 @@ package com.example.italianrestaurant.order;
 
 import com.example.italianrestaurant.delivery.DeliveryDto;
 import com.example.italianrestaurant.order.mealorder.MealOrderDto;
+import com.example.italianrestaurant.payments.Payment;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

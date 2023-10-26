@@ -8,6 +8,7 @@ import {environment} from "../../environments/environment";
 import {MealResponse, MealsWithPagination} from "../models/MealResponse";
 import {Table} from "../models/table";
 import {MealDto} from "../models/mealDto";
+import {PaymentResponse} from "../models/payment-response";
 
 @Injectable()
 export class DataStorageService {
@@ -84,13 +85,15 @@ export class DataStorageService {
 
   makeAnOrder(delivery: Delivery, order: { meal: Meal, quantity: number, price: number }[]) {
     return this.http
-      .post(`${environment.apiUrl}/order`,
+      .post<PaymentResponse>(`${environment.apiUrl}/order`,
         {
           delivery: delivery,
           mealOrders: order,
           orderStatus: "IN_PREPARATION"
         })
   }
+
+
 
   getOrders() {
     return this.http

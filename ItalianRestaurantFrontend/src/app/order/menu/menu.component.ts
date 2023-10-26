@@ -6,6 +6,7 @@ import {ToastService} from "../../shared/toast.service";
 import {CategoryDto} from "../../models/categoryDto";
 import {AuthService} from "../../authentication/auth/auth.service";
 import {Subscription} from "rxjs";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-menu',
@@ -26,7 +27,8 @@ export class MenuComponent implements OnInit, OnDestroy {
   constructor(private cartService: CartService,
               private dataStorageService: DataStorageService,
               private toastService: ToastService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private activatedRoute: ActivatedRoute) {
 
     this.authSubscription = this.authService.user.subscribe(
       (user) => {
@@ -37,6 +39,9 @@ export class MenuComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    if (this.activatedRoute.snapshot.queryParams['payment'] === 'failed') {
+      this.toastService.showErrorToast('Payment', 'Payment failed. Order not placed. Please try again.')
+    }
     this.dataStorageService.getCategories()
       .subscribe(
         res => {

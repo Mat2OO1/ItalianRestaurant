@@ -1,6 +1,7 @@
 package com.example.italianrestaurant.order;
 
 import com.example.italianrestaurant.Utils;
+import com.example.italianrestaurant.payments.OrderPaidResponse;
 import com.example.italianrestaurant.security.JwtAuthenticationFilter;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.val;
@@ -77,10 +78,10 @@ public class OrderControllerTest {
     @Test
     void shouldMakeOrder() throws Exception {
         //given
+        val orderPaidRequest = Utils.getOrderPaidResponse();
         val orderDto = Utils.getOrderDto();
-        val order = Utils.getOrder();
 
-        given(orderService.makeOrder(any(), eq(orderDto))).willReturn(order);
+        given(orderService.makeOrder(any(), any())).willReturn(orderPaidRequest);
 
         // when
         val resultActions = mockMvc.perform(post("/order")
@@ -90,8 +91,8 @@ public class OrderControllerTest {
         // then
         resultActions.andExpect(status().isOk());
         String contentAsString = resultActions.andReturn().getResponse().getContentAsString();
-        val resultOrder = Utils.jsonStringToObject(contentAsString, Order.class);
-        assertThat(resultOrder).isEqualTo(order);
+        val resultOrder = Utils.jsonStringToObject(contentAsString, OrderPaidResponse.class);
+        assertThat(resultOrder).isEqualTo(orderPaidRequest);
     }
 
     @Test

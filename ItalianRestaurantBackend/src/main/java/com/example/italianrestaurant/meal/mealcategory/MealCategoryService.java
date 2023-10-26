@@ -22,16 +22,12 @@ public class MealCategoryService {
     private final AwsService awsService;
 
     public List<MealCategory> getAllMealCategories() {
-        List<MealCategory> mealCategories = mealCategoryRepository.findAll();
-        mealCategories.forEach(mealCategory -> mealCategory.setImage(awsService.getObjectUrl(mealCategory.getImage())));
-        return mealCategories;
+        return mealCategoryRepository.findAll();
     }
 
     public MealCategory getMealCategoryById(Long id) {
         Optional<MealCategory> meal = mealCategoryRepository.findById(id);
-        MealCategory mealCategory = meal.orElseThrow(EntityNotFoundException::new);
-        mealCategory.setImage(awsService.getObjectUrl(mealCategory.getImage()));
-        return mealCategory;
+        return meal.orElseThrow(EntityNotFoundException::new);
     }
 
     public MealCategory getMealCategoryByName(String name) throws EntityNotFoundException {
@@ -43,7 +39,7 @@ public class MealCategoryService {
         if (mealCategoryRepository.findByName(mealCategoryDto.getName()).isEmpty()) {
             String imgName = awsService.uploadFile(image.getBytes(), image.getContentType());
             MealCategory mealCategory = modelMapper.map(mealCategoryDto, MealCategory.class);
-            mealCategory.setImage(imgName);
+            mealCategory.setImage(awsService.getObjectUrl(imgName));
             return mealCategoryRepository.save(mealCategory);
         }
         throw new EntityExistsException();
@@ -59,7 +55,7 @@ public class MealCategoryService {
         else {
             if (mealCategory.getImage() != null) awsService.deleteFile(mealCategory.getImage());
             String imgName = awsService.uploadFile(image.getBytes(), image.getContentType());
-            mappedCategory.setImage(imgName);
+            mappedCategory.setImage(awsService.getObjectUrl(imgName));
         }
         mealCategory.setName(mealCategoryDto.getName());
         mappedCategory.setId(mealCategory.getId());

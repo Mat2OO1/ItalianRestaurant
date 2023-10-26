@@ -87,6 +87,11 @@ aws:
   secret-key: XxDgXoeMKb8oJCNVaF9dr/qlY6tqPrt6/nKUWdh7
   bucket-name: italianrestaurantimages
 
+stripe:
+  secret-key: sk_test_51Nyyu7FZ3JHqacATnIsXD4Lz83qpF0n9IL5XDAa1D3wIki6Kr1HdERJKy5gWdlTtxuVFI2V2yqZchQvhtVzbTRU300Dx4lkXCT
+  webhook-secret: whsec_c0745b6ebe4116701ad6e6d60970289acfce4a1d2c853090e8d3ebd0ae678ce6
+
+
 server:
   error:
     include-message: always

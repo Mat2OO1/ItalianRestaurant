@@ -165,7 +165,7 @@ public class DataInitializer {
         if (is1 != null) {
             byte[] image1 = is1.readAllBytes();
             is1.close();
-            return awsService.uploadFile(image1, "image/jpeg");
+            return awsService.getObjectUrl(awsService.uploadFile(image1, "image/jpeg"));
         }
         return "";
     }

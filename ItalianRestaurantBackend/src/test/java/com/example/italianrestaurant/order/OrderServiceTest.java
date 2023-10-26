@@ -5,8 +5,11 @@ import com.example.italianrestaurant.delivery.DeliveryService;
 import com.example.italianrestaurant.exceptions.InvalidEntityException;
 import com.example.italianrestaurant.order.mealorder.MealOrder;
 import com.example.italianrestaurant.order.mealorder.MealOrderService;
+import com.example.italianrestaurant.payments.OrderPaidResponse;
+import com.example.italianrestaurant.payments.PaymentService;
 import com.example.italianrestaurant.security.UserPrincipal;
 import com.example.italianrestaurant.user.UserService;
+import com.stripe.exception.StripeException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.val;
 import org.junit.jupiter.api.Test;
@@ -41,6 +44,8 @@ public class OrderServiceTest {
     private MealOrderService mealOrderService;
     @Mock
     private UserService userService;
+    @Mock
+    private PaymentService paymentService;
     @InjectMocks
     private OrderService orderService;
 
@@ -49,7 +54,7 @@ public class OrderServiceTest {
         //given
         List<Order> orders = Utils.buildOrders();
 
-        given(orderRepository.findAllFromToday(any())).willReturn(orders);
+        given(orderRepository.findAllFromTodayAndPaymentPaid(any(), eq(true))).willReturn(orders);
 
         //when
         val returnedOrders = orderService.getAllOrdersFromToday();
@@ -61,7 +66,7 @@ public class OrderServiceTest {
     @Test
     void shouldNotGetAllOrders() {
         //given
-        given(orderRepository.findAllFromToday(any())).willReturn(List.of());
+        given(orderRepository.findAllFromTodayAndPaymentPaid(any(), eq(true))).willReturn(List.of());
 
         //when
         val returnedOrders = orderService.getAllOrdersFromToday();
@@ -77,7 +82,7 @@ public class OrderServiceTest {
         val user = Utils.getUser();
         user.setId(1L);
         val userPrincipal = UserPrincipal.create(user);
-        given(orderRepository.findAllByUserEmail(user.getEmail())).willReturn(List.of(orders.get(0)));
+        given(orderRepository.findAllByUserEmailAndPaymentPaid(user.getEmail(), true)).willReturn(List.of(orders.get(0)));
 
         //when
         val ordersByUser = orderService.getOrdersByUserEmail(userPrincipal);
@@ -93,7 +98,7 @@ public class OrderServiceTest {
         val user = Utils.getUser();
         user.setId(1L);
         val userPrincipal = UserPrincipal.create(user);
-        given(orderRepository.findAllByUserEmail(user.getEmail())).willReturn(List.of());
+        given(orderRepository.findAllByUserEmailAndPaymentPaid(user.getEmail(), true)).willReturn(List.of());
 
         //when
         val ordersByUser = orderService.getOrdersByUserEmail(userPrincipal);
@@ -103,14 +108,17 @@ public class OrderServiceTest {
     }
 
     @Test
-    void shouldMakeOrder() {
+    void shouldMakeOrder() throws StripeException {
         //given
         val delivery = Utils.getDelivery();
         delivery.setId(1L);
+        val meal = Utils.getMeal();
         val mealOrder = Utils.getMealOrder();
         mealOrder.setId(1L);
+        mealOrder.setMeal(meal);
         val user = Utils.getUser();
         user.setId(1L);
+        val orderPaidResponse = Utils.getOrderPaidResponse();
 
         val order = Order.builder()
                 .id(1L)
@@ -124,18 +132,19 @@ public class OrderServiceTest {
         val userPrincipal = UserPrincipal.create(user);
 
         given(deliveryService.addDelivery(any())).willReturn(delivery);
-        given(modelMapper.map(any(), eq(MealOrder.class))).willReturn(Utils.getMealOrder());
+        given(modelMapper.map(any(), eq(MealOrder.class))).willReturn(mealOrder);
         given(orderRepository.save(any())).willReturn(order);
         given(mealOrderService.addMealOrder(any())).willReturn(mealOrder);
         given(userService.getUserByEmail(any())).willReturn(user);
+        given(paymentService.payment(any(), eq(order.getId()), any())).willReturn(orderPaidResponse);
+        given(paymentService.getPaymentBySessionId(any())).willReturn(Utils.getPayment());
 
         //when
-        Order result = orderService.makeOrder(userPrincipal, Utils.getOrderDto());
+        OrderPaidResponse result = orderService.makeOrder(userPrincipal, Utils.getOrderDto());
 
         //then
         assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo(1L);
-        verify(orderRepository).save(any());
+        verify(orderRepository, times(2)).save(any());
     }
 
     @Test

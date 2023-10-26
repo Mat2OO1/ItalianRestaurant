@@ -3,6 +3,7 @@ package com.example.italianrestaurant.order;
 import com.example.italianrestaurant.AbstractTestcontainers;
 import com.example.italianrestaurant.Utils;
 import com.example.italianrestaurant.delivery.DeliveryRepository;
+import com.example.italianrestaurant.payments.PaymentRepository;
 import com.example.italianrestaurant.user.UserRepository;
 import lombok.val;
 import org.junit.jupiter.api.AfterEach;
@@ -31,11 +32,15 @@ public class OrderRepositoryTest extends AbstractTestcontainers {
     @Autowired
     private DeliveryRepository deliveryRepository;
 
+    @Autowired
+    private PaymentRepository paymentRepository;
+
     @AfterEach
     void tearDown() {
         orderRepository.deleteAll();
         deliveryRepository.deleteAll();
         userRepository.deleteAll();
+        paymentRepository.deleteAll();
     }
 
     @BeforeEach
@@ -52,9 +57,13 @@ public class OrderRepositoryTest extends AbstractTestcontainers {
         userRepository.save(user);
         userRepository.save(user2);
 
+        var payment = Utils.getPayment();
+        paymentRepository.save(payment);
+
         val order = Utils.getOrder();
         order.setUser(user);
         order.setDelivery(delivery);
+        order.setPayment(payment);
         val order2 = Utils.getOrder();
         order2.setUser(user2);
         order2.setDelivery(delivery2);
@@ -68,7 +77,7 @@ public class OrderRepositoryTest extends AbstractTestcontainers {
         // given
         val user = Utils.getUser();
         // when
-        val orders = orderRepository.findAllByUserEmail(user.getEmail());
+        val orders = orderRepository.findAllByUserEmailAndPaymentPaid(user.getEmail(), true);
         // then
         assertThat(orders).isNotEmpty();
         assertThat(orders).hasSize(1);
@@ -81,7 +90,7 @@ public class OrderRepositoryTest extends AbstractTestcontainers {
         val user = Utils.getUser();
         user.setEmail("wrongEmail");
         // when
-        val orders = orderRepository.findAllByUserEmail(user.getEmail());
+        val orders = orderRepository.findAllByUserEmailAndPaymentPaid(user.getEmail(), true);
         // then
         assertThat(orders).isEmpty();
     }
@@ -90,7 +99,7 @@ public class OrderRepositoryTest extends AbstractTestcontainers {
     void shouldFindAllOrdersFromToday() {
         // given
         // when
-        val orders = orderRepository.findAllFromToday(LocalDate.of(2023, 1, 1));
+        val orders = orderRepository.findAllFromTodayAndPaymentPaid(LocalDate.of(2023, 1, 1), true);
         // then
         assertThat(orders).isNotEmpty();
         assertThat(orders).hasSize(1);
@@ -100,7 +109,7 @@ public class OrderRepositoryTest extends AbstractTestcontainers {
     void shouldNotFindAllOrdersFromToday() {
         // given
         // when
-        val orders = orderRepository.findAllFromToday(LocalDate.of(2023, 1, 3));
+        val orders = orderRepository.findAllFromTodayAndPaymentPaid(LocalDate.of(2023, 1, 3), true);
         // then
         assertThat(orders).isEmpty();
     }

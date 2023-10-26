@@ -40,7 +40,6 @@ public class MealCategoryServiceTest {
         mealCategory2.setName("Meal2");
 
         given(mealCategoryRepository.findAll()).willReturn(List.of(mealCategory, mealCategory2));
-        given(awsService.getObjectUrl(any())).willReturn("url");
 
         //when
         val returnedMealCategories = mealCategoryService.getAllMealCategories();
@@ -67,7 +66,6 @@ public class MealCategoryServiceTest {
         val mealCategory = Utils.getMealCategory();
         mealCategory.setId(1L);
         given(mealCategoryRepository.findById(1L)).willReturn(Optional.of(mealCategory));
-        given(awsService.getObjectUrl(any())).willReturn("url");
         //when
         val returnedMealCategory = mealCategoryService.getMealCategoryById(1L);
 

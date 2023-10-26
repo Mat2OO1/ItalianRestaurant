@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {DataStorageService} from "../../shared/data-storage.service";
 import {CartService} from "../../shared/cart.service";
 import {Delivery} from "../../models/delivery";
+import {PaymentResponse} from "../../models/payment-response";
 
 @Component({
   selector: 'app-buy',
@@ -41,8 +42,9 @@ export class BuyComponent {
       new Delivery(address, city, pcode, floor, info, deliveryOption), this.cartService.cart
     )
       .subscribe(
-        (res: any) => {
-          this.router.navigate(['/confirmation', res.id])
+        (res: PaymentResponse) => {
+          console.log("lala")
+          window.location.href = res.url;
         }
       )
     this.cartService.clearCart()

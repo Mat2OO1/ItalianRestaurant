@@ -16,7 +16,7 @@ public class MealOrderDto {
     @NotBlank(message = "Meal is mandatory")
     private Meal meal;
     @Min(1)
-    private int quantity;
+    private long quantity;
     @Min(0)
     private double price;
 }
