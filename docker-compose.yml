@@ -45,6 +45,7 @@ services:
       - AWS_ACCESS_KEY=AKIASFDMWQF5EJDJCFHP
       - AWS_SECRET_KEY=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
       - AWS_BUCKET_NAME=italianrestaurantimagesprod
+      - STRIPE_SECRET_KEY=we_1O5W40FZ3JHqacATjLM0aYP6
   frontend:
     container_name: frontend
     build:

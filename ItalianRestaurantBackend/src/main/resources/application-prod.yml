@@ -52,3 +52,7 @@ server:
     trustStoreType: PKCS12
   error:
     include-message: never
+
+stripe:
+#  secret-key: ${STRIPE_SECRET_KEY} TODO: change to prod mode when ready
+  webhook-secret: ${STRIPE_WEBHOOK_SECRET}
