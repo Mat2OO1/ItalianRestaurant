@@ -2,6 +2,7 @@ package com.example.italianrestaurant.payments;
 
 import com.stripe.exception.StripeException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,14 +14,15 @@ public class PaymentController {
 
 
     @PostMapping("/webhook")
-    public void handleWebhookEvent(
+    public ResponseEntity<?> handleWebhookEvent(
             @RequestBody String payload,
             @RequestHeader("Stripe-Signature") String sigHeader
     ) {
         try {
             paymentService.updatePayment(payload, sigHeader);
+            return ResponseEntity.ok().build();
         } catch (StripeException e) {
-            throw new RuntimeException(e);
+            return ResponseEntity.badRequest().build();
         }
     }
 }

@@ -16,6 +16,8 @@ import com.example.italianrestaurant.order.mealorder.MealOrder;
 import com.example.italianrestaurant.order.mealorder.MealOrderDto;
 import com.example.italianrestaurant.passwordreset.PasswordResetRequest;
 import com.example.italianrestaurant.passwordreset.passwordtoken.PasswordToken;
+import com.example.italianrestaurant.payments.OrderPaidResponse;
+import com.example.italianrestaurant.payments.Payment;
 import com.example.italianrestaurant.table.Table;
 import com.example.italianrestaurant.table.TableDto;
 import com.example.italianrestaurant.table.TableStatus;
@@ -141,6 +143,7 @@ public class Utils {
         return MealOrderDto.builder()
                 .quantity(3)
                 .price(23)
+                .meal(getMeal())
                 .build();
     }
 
@@ -237,5 +240,18 @@ public class Utils {
             return request;
         });
         return builder;
+    }
+
+    public static Payment getPayment() {
+        return Payment.builder()
+                .amount(100L)
+                .sessionId("sessionId")
+                .createdAt(LocalDateTime.now())
+                .isPaid(true)
+                .build();
+    }
+
+    public static OrderPaidResponse getOrderPaidResponse() {
+        return new OrderPaidResponse("sessionId", "url");
     }
 }

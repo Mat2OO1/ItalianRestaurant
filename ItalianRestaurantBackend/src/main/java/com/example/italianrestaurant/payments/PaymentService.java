@@ -39,7 +39,7 @@ public class PaymentService {
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.P24)
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.PAYPAL)
                 .setMode(SessionCreateParams.Mode.PAYMENT).setSuccessUrl(frontUrl + "/confirmation/" + orderId)
-                .setCancelUrl(frontUrl + "/menu")
+                .setCancelUrl(frontUrl + "/menu?payment=failed")
                 .addAllLineItem(
                         paymentList.stream().map(paymentRequest -> SessionCreateParams.LineItem.builder()
                                 .setQuantity(paymentRequest.getQuantity())

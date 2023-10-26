@@ -52,7 +52,6 @@ public class MealServiceTest {
         meal2.setId(2L);
         meal2.setName("Meal2");
         given(mealRepository.findAll(Pageable.unpaged())).willReturn(new PageImpl<>(List.of(meal, meal2), Pageable.unpaged(), 2));
-        given(awsService.getObjectUrl(any())).willReturn("url");
         //when
         val returnedMeals = mealService.getAllMeals(Pageable.unpaged());
 
@@ -78,7 +77,6 @@ public class MealServiceTest {
         val meal = Utils.getMealWithCategory();
         meal.setId(1L);
         given(mealRepository.findById(meal.getId())).willReturn(Optional.of(meal));
-        given(awsService.getObjectUrl(any())).willReturn("url");
         //when
         val returnedMeal = mealService.getMealById(1L);
 
