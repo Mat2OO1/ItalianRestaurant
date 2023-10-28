@@ -22,7 +22,7 @@ public class PaymentController {
             paymentService.updatePayment(payload, sigHeader);
             return ResponseEntity.ok().build();
         } catch (StripeException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }
