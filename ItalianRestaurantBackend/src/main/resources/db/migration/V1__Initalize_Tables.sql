@@ -4,7 +4,6 @@ create table if not exists deliveries
         primary key,
     address          varchar(255) not null,
     city             varchar(255) not null,
-    delivery_date    timestamp(6),
     delivery_options varchar(255),
     floor            varchar(255) not null,
     info             varchar(255),
@@ -56,6 +55,7 @@ create table if not exists orders
         primary key,
     order_date   timestamp(6),
     order_status varchar(255),
+    delivery_date    timestamp(6),
     delivery_id  bigint
         constraint fk8w9m21riko8j8eit0yvog02nr
             references deliveries,

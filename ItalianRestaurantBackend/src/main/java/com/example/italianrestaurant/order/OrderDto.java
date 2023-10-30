@@ -17,8 +17,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDto {
-    @NotNull(message = "Delivery is mandatory")
+
     private DeliveryDto delivery;
+    private long tableNr;
+
     @NotEmpty(message = "Meal orders are mandatory")
     private List<MealOrderDto> mealOrders;
     @NotNull(message = "Order status is mandatory")

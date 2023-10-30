@@ -2,6 +2,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Meal} from "../../models/meal";
 import {CartService} from "../../shared/cart.service";
 import {Subscription} from "rxjs";
+import {Cart} from "../../models/cart";
+import {Router} from "@angular/router";
+import {DataStorageService} from "../../shared/data-storage.service";
 
 @Component({
   selector: 'app-summary',
@@ -9,11 +12,13 @@ import {Subscription} from "rxjs";
   styleUrls: ['./summary.component.css']
 })
 export class SummaryComponent implements OnInit, OnDestroy {
-  cart: { meal: Meal, quantity: number, price: number }[] = [];
+  cart: Cart;
   sum: number = 0;
 
   cartSubscription!: Subscription | null
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService,
+              private router: Router,
+              private dataStorageService: DataStorageService) {
     this.cart = this.cartService.cart
     this.cartSubscription = this.cartService.cartSubject
       .subscribe(
@@ -50,5 +55,24 @@ export class SummaryComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.cartSubscription?.unsubscribe()
+  }
+
+  removeTable() {
+    this.cartService.removeTable()
+  }
+
+  proceed() {
+    if (this.cart.table) {
+      this.dataStorageService.makeAnOrder(this.cart)
+        .subscribe(
+          (res) => {
+            this.cartService.clearCart()
+            window.location.href = res.url;
+          }
+        )
+    }
+    else {
+      this.router.navigate(['buy'])
+    }
   }
 }

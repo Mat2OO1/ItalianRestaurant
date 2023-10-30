@@ -47,7 +47,8 @@
       <h3 class="text-center">{{orderDetails.status ? orderDetails.status : 'Processing' }}</h3>
     </div>
     <br>
-    <h3>Estimated delivery time:</h3>
+    <h3 *ngIf="orderDetails.table">Your order will be on table {{ orderDetails.table}} on:</h3>
+    <h3 *ngIf="!orderDetails.table">Estimated delivery time:</h3>
     <div class="info">
       <h3 class="text-center">{{ orderDetails.date ? (orderDetails.date | date:"HH:mm") : 'Processing' }}</h3>
     </div>

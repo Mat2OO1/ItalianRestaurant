@@ -9,6 +9,7 @@ import {MealResponse, MealsWithPagination} from "../models/MealResponse";
 import {Table} from "../models/table";
 import {MealDto} from "../models/mealDto";
 import {PaymentResponse} from "../models/payment-response";
+import {Cart} from "../models/cart";
 
 @Injectable()
 export class DataStorageService {
@@ -83,12 +84,13 @@ export class DataStorageService {
       .get<{ name: string, image: string }[]>(`${environment.apiUrl}/meal-categories`)
   }
 
-  makeAnOrder(delivery: Delivery, order: { meal: Meal, quantity: number, price: number }[]) {
+  makeAnOrder(cart: Cart, delivery?: Delivery) {
     return this.http
       .post<PaymentResponse>(`${environment.apiUrl}/order`,
         {
           delivery: delivery,
-          mealOrders: order,
+          tableNr: cart.table,
+          mealOrders: cart.meals,
           orderStatus: "IN_PREPARATION"
         })
   }

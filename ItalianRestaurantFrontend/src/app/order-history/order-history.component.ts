@@ -45,7 +45,7 @@ export class OrderHistoryComponent {
 
   }
 
-  customFormatDate(date: Date) {
+  customFormatDate(date: Date | undefined) {
     if (date != null) {
       return formatDate(date, 'HH:mm', 'en-GB')
     } else {

@@ -6,7 +6,7 @@
     <h2 class="title">
       Order Summary
     </h2>
-    <div class="plan-box" *ngFor="let item of cart">
+    <div class="plan-box" *ngFor="let item of cart.meals">
       <div class="plan-box-left">
         <img class="img-preview" src="{{item.meal.image}}">
         <div>
@@ -24,7 +24,14 @@
     </div>
     <hr style="width: 70%; margin: auto">
     <h4 class="sum">Sum: {{sum.toFixed(2)}} $</h4>
-    <a href="#" class="proceed-btn" routerLink="/buy" [ngClass]="{'disabled': cart.length === 0}">Proceed</a>
+    <div class="mt-4 plan-box" *ngIf="cart.table">
+      <h4>
+        You are ordering to table number {{ cart.table }}.
+        To cancel, click the following button:
+      </h4>
+      <button class="btn btn-danger btn-lg py-2 px-3" (click)="removeTable()" style="white-space: nowrap; margin-left: 80px;">Cancel Table</button>
+    </div>
+    <button class="proceed-btn" (click)="proceed()" [ngClass]="{'disabled': cart.meals.length === 0}">Proceed</button>
     <a href="#" class="cancel-btn" routerLink="/menu">Cancel</a>
   </div>
 </div>

@@ -39,15 +39,14 @@ export class BuyComponent {
     let info = this.buyForm.value['info'] === '' ? null : this.buyForm.value['info'];
     let deliveryOption = this.buyForm.value['deliveryOption'] === '' ? null : this.buyForm.value['deliveryOption'];
     this.dataStorageService.makeAnOrder(
-      new Delivery(address, city, pcode, floor, info, deliveryOption), this.cartService.cart
+      this.cartService.cart, new Delivery(address, city, pcode, floor, info, deliveryOption)
     )
       .subscribe(
         (res: PaymentResponse) => {
-          console.log("lala")
+          this.cartService.clearCart();
           window.location.href = res.url;
         }
       )
-    this.cartService.clearCart()
   }
 
 }

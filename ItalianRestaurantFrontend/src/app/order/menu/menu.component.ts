@@ -42,6 +42,10 @@ export class MenuComponent implements OnInit, OnDestroy {
     if (this.activatedRoute.snapshot.queryParams['payment'] === 'failed') {
       this.toastService.showErrorToast('Payment', 'Payment failed. Order not placed. Please try again.')
     }
+    if (this.activatedRoute.snapshot.queryParams['table']) {
+      this.cartService.addTable(this.activatedRoute.snapshot.queryParams['table'])
+      this.toastService.showSuccessToast('Table', 'You are ordering to table ' + this.activatedRoute.snapshot.queryParams['table'])
+    }
     this.dataStorageService.getCategories()
       .subscribe(
         res => {

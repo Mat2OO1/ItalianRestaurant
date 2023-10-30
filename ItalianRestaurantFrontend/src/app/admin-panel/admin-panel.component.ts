@@ -24,7 +24,7 @@ export class AdminPanelComponent implements OnDestroy{
           this.isContentLoaded = true;
           this.forms = this.orders.map(data =>
             this.formBuilder.group({
-              deliveryDate: new FormControl(this.customFormatDate(data.delivery.deliveryDate!)),
+              deliveryDate: new FormControl(this.customFormatDate(data.deliveryDate!)),
               orderStatus: new FormControl(data.orderStatus),
             })
           );

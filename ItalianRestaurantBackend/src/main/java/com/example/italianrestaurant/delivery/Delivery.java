@@ -30,7 +30,6 @@ public class Delivery {
     @Column(nullable = false)
     private String floor;
     private String info;
-    private LocalDateTime deliveryDate;
 
     @Enumerated(EnumType.STRING)
     private DeliveryOptions deliveryOptions;

@@ -104,6 +104,7 @@ public class SecurityConfig {
             "/swagger-ui.html",
             "/meal-categories/**",
             "/images/meals/**",
+            "/meals",
             "/payment/webhook"
     };
 

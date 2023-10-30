@@ -40,7 +40,7 @@ export class AdminTableQrComponent implements OnInit {
   }
 
   generateQrUrl(number: number) {
-    return `${environment.frontUrl}/reservation/${number}`;
+    return `${environment.frontUrl}/menu?table=${number}`;
   }
 
   openTableDialog(mode: DialogMode, table?: Table) {

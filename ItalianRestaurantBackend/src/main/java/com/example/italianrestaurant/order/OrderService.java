@@ -9,6 +9,8 @@ import com.example.italianrestaurant.payments.PaymentRequest;
 import com.example.italianrestaurant.payments.OrderPaidResponse;
 import com.example.italianrestaurant.payments.PaymentService;
 import com.example.italianrestaurant.security.UserPrincipal;
+import com.example.italianrestaurant.table.Table;
+import com.example.italianrestaurant.table.TableService;
 import com.example.italianrestaurant.user.User;
 import com.example.italianrestaurant.user.UserService;
 import com.stripe.exception.StripeException;
@@ -27,10 +29,11 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final DeliveryService deliveryService;
-    private final ModelMapper modelMapper;
     private final MealOrderService mealOrderService;
     private final UserService userService;
     private final PaymentService paymentService;
+    private final TableService tableService;
+    private final ModelMapper modelMapper;
 
     public List<Order> getOrdersByUserEmail(UserPrincipal userPrincipal) {
         return orderRepository.findAllByUserEmailAndPaymentPaid(userPrincipal.getEmail(), true);
@@ -41,12 +44,19 @@ public class OrderService {
     }
 
     public OrderPaidResponse makeOrder(UserPrincipal userPrincipal, OrderDto orderDto) throws StripeException {
-        Delivery dbDelivery = deliveryService.addDelivery(orderDto.getDelivery());
+        Delivery dbDelivery = null;
+        if (orderDto.getDelivery() != null)
+            dbDelivery = deliveryService.addDelivery(orderDto.getDelivery());
         User user = userService.getUserByEmail(userPrincipal.getEmail());
+        Table table = null;
+        if (orderDto.getTableNr() != 0)
+            table = tableService.getTableById(orderDto.getTableNr());
+
         Order order = Order.builder()
                 .delivery(dbDelivery)
                 .orderDate(LocalDateTime.now())
                 .user(user)
+                .table(table)
                 .orderStatus(orderDto.getOrderStatus())
                 .build();
 
@@ -73,7 +83,7 @@ public class OrderService {
             throw new EntityNotFoundException("Order with id " + orderDto.getOrderId() + " not found");
 
         order.get().setOrderStatus(orderDto.getOrderStatus());
-        order.get().getDelivery().setDeliveryDate(orderDto.getDeliveryDate());
+        order.get().setDeliveryDate(orderDto.getDeliveryDate());
         return orderRepository.save(order.get());
 
     }

@@ -13,9 +13,10 @@ import {HttpClient} from "@angular/common/http";
 export class ConfirmationComponent implements OnInit, OnDestroy {
   order: { meal: Meal, quantity: number }[] = []
   orderNumber: number | null = null;
-  orderDetails: { date: Date | null, status: string } = {
+  orderDetails: { date: Date | null, status: string, table: number | null } = {
     date: null,
-    status: ''
+    status: '',
+    table: null
   }
   isContentLoaded: boolean = false;
 
@@ -70,7 +71,7 @@ export class ConfirmationComponent implements OnInit, OnDestroy {
               }
               const status = res.orderStatus.toLowerCase().replace(/_/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase());
               this.order = res.mealOrders;
-              this.orderDetails = {date: res.delivery.deliveryDate, status: status}
+              this.orderDetails = {date: res.deliveryDate, status: status, table: res.table?.number}
               this.isContentLoaded = true;
               this.adjustStatus(status)
             })
