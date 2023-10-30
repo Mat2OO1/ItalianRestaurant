@@ -64,7 +64,6 @@ public class Utils {
                 .postalCode("postalCode")
                 .floor("floor")
                 .info("info")
-                .deliveryDate(LocalDateTime.now())
                 .deliveryOptions(DeliveryOptions.KNOCK)
                 .build();
     }
@@ -84,6 +83,7 @@ public class Utils {
         return Order.builder()
                 .orderDate(LocalDateTime.of(2023, 1, 1, 1, 1))
                 .orderStatus(OrderStatus.IN_PREPARATION)
+                .deliveryDate(LocalDateTime.now())
                 .build();
     }
 
