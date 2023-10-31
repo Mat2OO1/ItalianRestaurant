@@ -1,6 +1,6 @@
 <div class="container" style="margin-top: 20px">
   <div class="title-img">
-    <img src="assets/images/other/delivery.png" alt="Delivery">
+    <img src="../../../assets/images/delivery.png" alt="Delivery">
   </div>
   <div class="text-content">
     <h2 class="title">
@@ -31,6 +31,15 @@
       </h4>
       <button class="btn btn-danger btn-lg py-2 px-3" (click)="removeTable()" style="white-space: nowrap; margin-left: 80px;">Cancel Table</button>
     </div>
+
+    <div class="mt-4" *ngIf="!cart.table">
+      <h2>Takeaway or on-site?</h2>
+      <input class="form-check-input bg-white border" [(ngModel)]="selectedDeliveryOption" name="deliveryOption" type="radio" id="TAKEAWAY" value="TAKEAWAY">
+      <label class="form-check-label me-4" for="TAKEAWAY">Takeaway</label>
+      <input class="form-check-input bg-white border ms-4" [(ngModel)]="selectedDeliveryOption" name="deliveryOption" type="radio" id="ONSITE" value="ONSITE">
+      <label class="form-check-label" for="ONSITE">On-site</label>
+    </div>
+
     <button class="proceed-btn" (click)="proceed()" [ngClass]="{'disabled': cart.meals.length === 0}">Proceed</button>
     <a href="#" class="cancel-btn" routerLink="/menu">Cancel</a>
   </div>

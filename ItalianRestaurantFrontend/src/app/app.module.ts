@@ -8,7 +8,7 @@ import {LoginComponent} from './authentication/login/login.component';
 import {RouterLink, RouterOutlet} from "@angular/router";
 import {AppRoutingModule} from "./app.routing.module";
 import {MenuComponent} from "./order/menu/menu.component";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RegisterComponent} from "./authentication/register/register.component";
 import {CartService} from "./shared/cart.service";
 import {SummaryComponent} from "./order/summary/summary.component";
@@ -38,6 +38,9 @@ import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {MealEditDialogComponent} from "./meal-edit-dialog/meal-edit-dialog.component";
 import {MatButtonModule} from "@angular/material/button";
 import {CategoryEditDialogComponent} from "./category-edit-dialog/category-edit-dialog.component";
+import {TableComponent} from "./order/table/table.component";
+import {MatCardModule} from "@angular/material/card";
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -62,22 +65,26 @@ import {CategoryEditDialogComponent} from "./category-edit-dialog/category-edit-
     OrderHistoryComponent,
     AdminMenuComponent,
     MealEditDialogComponent,
-    CategoryEditDialogComponent
+    CategoryEditDialogComponent,
+    TableComponent
   ],
-    imports: [
-        BrowserModule,
-        RouterLink,
-        RouterOutlet,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        MatProgressSpinnerModule,
-        QRCodeModule,
-        MatDialogModule,
-      MatTooltipModule,
-      MatButtonModule,
-    ],
+  imports: [
+    BrowserModule,
+    RouterLink,
+    RouterOutlet,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule,
+    QRCodeModule,
+    MatDialogModule,
+    MatTooltipModule,
+    MatButtonModule,
+    FormsModule,
+    MatCardModule,
+    MatListModule,
+  ],
 
   providers: [
     CartService,

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Meal} from "../../models/meal";
 import {CartService} from "../../shared/cart.service";
 import {Subscription} from "rxjs";
@@ -16,6 +16,7 @@ export class SummaryComponent implements OnInit, OnDestroy {
   sum: number = 0;
 
   cartSubscription!: Subscription | null
+  selectedDeliveryOption?: string;
   constructor(private cartService: CartService,
               private router: Router,
               private dataStorageService: DataStorageService) {
@@ -71,8 +72,11 @@ export class SummaryComponent implements OnInit, OnDestroy {
           }
         )
     }
-    else {
+    else if(this.selectedDeliveryOption === "TAKEAWAY") {
       this.router.navigate(['buy'])
+    }
+    else if(this.selectedDeliveryOption === "ONSITE") {
+      this.router.navigate(['table'])
     }
   }
 }

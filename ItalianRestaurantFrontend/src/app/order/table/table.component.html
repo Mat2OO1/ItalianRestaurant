@@ -1,0 +1,22 @@
+<div class="container mt-4">
+  <h1>Choose table</h1>
+  <div class="flex-container">
+    <div class="flex-item" *ngFor="let table of tables">
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>Table {{ table.number }}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image src="/assets/images/table.jpg" alt="table">
+        <mat-card-content>
+          <mat-list role="list">
+            <mat-list-item role="listitem">Number of seats: {{ table.seats }}</mat-list-item>
+            <mat-list-item role="listitem">Status: {{ table.status }}</mat-list-item>
+          </mat-list>
+        </mat-card-content>
+        <mat-card-actions>
+          <button class="proceed-btn" [disabled]="table.status !== 'FREE'" (click)="proceedOrder(table.number)">Order to this table</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -212,7 +212,7 @@ public class DataInitializer {
                 Table.builder()
                         .number(2)
                         .seats(4)
-                        .status(TableStatus.FREE)
+                        .status(TableStatus.OCCUPIED)
                         .build(),
                 Table.builder()
                         .number(3)
@@ -222,12 +222,12 @@ public class DataInitializer {
                 Table.builder()
                         .number(4)
                         .seats(3)
-                        .status(TableStatus.FREE)
+                        .status(TableStatus.RESERVED)
                         .build(),
                 Table.builder()
                         .number(5)
                         .seats(2)
-                        .status(TableStatus.FREE)
+                        .status(TableStatus.OCCUPIED)
                         .build(),
                 Table.builder()
                         .number(6)

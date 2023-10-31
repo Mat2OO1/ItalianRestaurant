@@ -16,6 +16,7 @@ import {AdminGuard} from "./authentication/auth/admin.guard";
 import {OrderHistoryComponent} from "./order-history/order-history.component";
 import {AdminTableQrComponent} from "./admin-table-qr/admin-table-qr.component";
 import {AdminMenuComponent} from "./admin-menu/admin-menu.component";
+import {TableComponent} from "./order/table/table.component";
 
 const routes: Routes = [
   {path: '', component: InfoComponent},
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path: 'buy', component: BuyComponent, canActivate: [AuthGuard]},
   {path: 'confirmation/:orderId', component: ConfirmationComponent, canActivate: [AuthGuard]},
   {path: 'order-history', component: OrderHistoryComponent, canActivate: [AuthGuard]},
+  {path: 'table', component: TableComponent, canActivate: [AuthGuard]},
   {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AdminGuard]},
   {path: 'admin-tables-panel', component: AdminTableQrComponent},
   {path: 'admin-menu', component: AdminMenuComponent, canActivate: [AdminGuard]},
