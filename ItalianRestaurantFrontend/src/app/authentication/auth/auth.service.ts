@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {BehaviorSubject, catchError, tap, throwError} from "rxjs";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {Role, User} from "./user.model";
 import {environment} from "../../../environments/environment";
@@ -61,29 +61,28 @@ export class AuthService {
   }
 
   autoLogin() {
-    const userData: {
-      _token: string,
-      _tokenExpirationDate: string,
-      _role: Role
-    }
-      = JSON.parse(localStorage.getItem('userData')!);
-    if (!userData) {
-      return;
-    }
-    const loadedUser = new User(userData._token, new Date(userData._tokenExpirationDate), userData._role);
-    if (loadedUser.token) {
-      this.user.next(loadedUser);
-      const expirationDuration =
-        new Date(userData._tokenExpirationDate).getTime() -
-        new Date().getTime();
-      //this.autoLogout(100000000);
-    }
+    const token: string = localStorage.getItem('token')!;
+    if (!token) return;
+    this.http.get<AuthResponseData>(`${environment.apiUrl}/auth/user`,
+      {headers: new HttpHeaders({'Authorization': token})})
+      .subscribe((res) => {
+          const loadedUser = new User(res.token, new Date(res.expiration), res.role);
+          if (loadedUser.token) {
+            this.user.next(loadedUser);
+            const expirationDuration =
+              new Date(res.expiration).getTime() -
+              new Date().getTime();
+            //this.autoLogout(100000000);
+          }
+        }
+      )
   }
+
 
   logout() {
     this.user.next(null);
     this.router.navigate(['/']);
-    localStorage.removeItem('userData');
+    localStorage.removeItem('token');
     if (this.logoutTimer) {
       clearTimeout(this.logoutTimer);
     }
@@ -101,7 +100,7 @@ export class AuthService {
     const user = new User(token, new Date(expirationDate), role);
     this.user.next(user);
     //this.autoLogout(1000000000);
-    localStorage.setItem('userData', JSON.stringify(user));
+    localStorage.setItem('token', token);
   }
 
   requestResetPassword(email: string) {
@@ -119,7 +118,7 @@ export class AuthService {
     const expirationDate = new Date(decodedToken.exp * 1000); // Multiply by 1000 to convert from seconds to milliseconds
     const user = new User(token, expirationDate, Role.USER);
     this.user.next(user);
-    localStorage.setItem('userData', JSON.stringify(user));
+    localStorage.setItem('token', token);
   }
 
   resetPassword(password: string, token: string) {

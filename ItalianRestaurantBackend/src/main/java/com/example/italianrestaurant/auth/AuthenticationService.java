@@ -69,4 +69,15 @@ public class AuthenticationService {
                 .build();
     }
 
+    public AuthenticationResponse getUser(String token) {
+        var email = jwtService.extractUsername(token);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(EntityNotFoundException::new);
+        var expiration = jwtService.getTokenExpiration(token);
+        return AuthenticationResponse.builder()
+                .token(token)
+                .expiration(expiration)
+                .role(user.getRole())
+                .build();
+    }
 }
