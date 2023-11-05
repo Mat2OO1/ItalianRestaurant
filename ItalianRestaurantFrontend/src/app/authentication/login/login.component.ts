@@ -17,7 +17,7 @@ export class LoginComponent implements OnDestroy {
   googleURL = AppConstants.GOOGLE_AUTH_URL
   githubURL = AppConstants.GITHUB_AUTH_URL
 
-  authSubscription!: Subscription;
+  authSubscription ?: Subscription;
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -51,7 +51,9 @@ export class LoginComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.authSubscription.unsubscribe()
+    if(this.authSubscription){
+      this.authSubscription.unsubscribe()
+    }
   }
 
 }
