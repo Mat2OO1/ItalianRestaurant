@@ -155,6 +155,7 @@ cancel-btn {
 .number {
   font-size: 10px;
   width: 5%;
+  margin: auto;
   text-align: center;
 }
 
