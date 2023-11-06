@@ -63,8 +63,7 @@ export class AuthService {
   autoLogin() {
     const token: string = localStorage.getItem('token')!;
     if (!token) return;
-    this.http.get<AuthResponseData>(`${environment.apiUrl}/auth/user`,
-      {headers: new HttpHeaders({'Authorization': token})})
+    this.getUserDetails(token)
       .subscribe((res) => {
           const loadedUser = new User(res.token, new Date(res.expiration), res.role);
           if (loadedUser.token) {
@@ -78,6 +77,10 @@ export class AuthService {
       )
   }
 
+  getUserDetails(token: string) {
+    return this.http.get<AuthResponseData>(`${environment.apiUrl}/auth/user`,
+      {headers: new HttpHeaders({'Authorization': token})})
+  }
 
   logout() {
     this.user.next(null);
