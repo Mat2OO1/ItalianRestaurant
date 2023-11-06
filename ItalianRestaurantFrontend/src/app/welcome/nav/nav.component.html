@@ -26,18 +26,23 @@ align-items: center;
                                                                                                       style="font-size: 1.5em;"></i></a>
         <a class="nav-item nav-link active" routerLink="/menu" *ngIf="!currentUser">
           <button class="btn rounded-pill" style="background-color: #005B47; text-decoration: none; color: #FFFFFF">
-            Menu
+            {{'menu'|translate}}
           </button>
         </a>
         <a class="nav-item nav-link active" routerLink="register" *ngIf="!currentUser">
           <button class="btn rounded-pill" style="background-color: #005B47; text-decoration: none; color: #FFFFFF">
-            Register
+            {{'register'|translate}}
           </button>
         </a>
         <a class="nav-item nav-link active" routerLink="login" *ngIf="!currentUser">
-          <button class="btn rounded-pill" style="background-color: #005B47; text-decoration: none; color: #FFFFFF">Log
-            In
+          <button class="btn rounded-pill" style="background-color: #005B47; text-decoration: none; color: #FFFFFF">{{'login'|translate}}
           </button>
+        </a>
+        <a class="nav-item nav-link active">
+          <select (change)="ChangeLang($event)" class="form-select">
+            <option [selected]="lang==='en'" value = "en">English</option>
+            <option [selected]="lang==='pl'" value = "pl">Polski</option>
+          </select>
         </a>
       </div>
     </div>
