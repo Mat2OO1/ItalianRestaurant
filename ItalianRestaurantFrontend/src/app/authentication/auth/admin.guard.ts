@@ -21,7 +21,7 @@ export class AdminGuard {
     return this.authService.user.pipe(
       take(1),
       map(user => {
-        if (user.role === Role.ADMIN) {
+        if (user?.role === Role.ADMIN) {
           return true;
         }
         return this.router.createUrlTree(['login'])
