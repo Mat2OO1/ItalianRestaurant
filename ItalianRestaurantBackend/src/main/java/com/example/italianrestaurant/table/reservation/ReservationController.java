@@ -9,6 +9,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -34,13 +36,18 @@ public class ReservationController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("")
+    @GetMapping("/user")
     public ResponseEntity<List<Reservation>> getReservations(@AuthenticationPrincipal UserPrincipal userPrincipal){
         return ResponseEntity.ok(this.reservationService.getReservations(userPrincipal));
     }
 
-    @GetMapping("reserved")
+    @GetMapping("/reserved/all")
     public ResponseEntity<List<Table>> getReservedTables(){
         return ResponseEntity.ok(this.reservationService.getReservedTables());
+    }
+
+    @GetMapping("/reserved")
+    public ResponseEntity<List<LocalDateTime>> getReservationsForTable(@RequestParam("tableId") int tableId, @RequestParam("date") LocalDate date){
+        return ResponseEntity.ok(this.reservationService.getReservationsForTable(tableId, date));
     }
 }

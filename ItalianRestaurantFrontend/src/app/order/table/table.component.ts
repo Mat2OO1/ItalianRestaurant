@@ -12,12 +12,20 @@ import {PaymentResponse} from "../../models/payment-response";
 export class TableComponent {
 
   tables?: Table[];
+  reservations?: Table[]
 
   constructor(private dataStorageService: DataStorageService, private cartService: CartService) {
     this.dataStorageService.getTables()
       .subscribe(
         res => {
           this.tables = res
+        }
+      )
+    this.dataStorageService.getReservedTables()
+      .subscribe(
+        res => {
+          this.reservations = res
+          this.assignStatusToTable()
         }
       )
   }
@@ -30,5 +38,14 @@ export class TableComponent {
           this.cartService.clearCart();
           window.location.href = res.url;
         })
+  }
+
+  assignStatusToTable(){
+    const reservedTablesIds = this.reservations!.map( table => table.id);
+    reservedTablesIds.forEach(id => {
+      let table = this.tables?.filter(table => table.id === id)[0]
+      table!.reserved = true
+    })
+    console.log(this.tables)
   }
 }

@@ -17,6 +17,7 @@ import {OrderHistoryComponent} from "./order-history/order-history.component";
 import {AdminTableQrComponent} from "./admin-table-qr/admin-table-qr.component";
 import {AdminMenuComponent} from "./admin-menu/admin-menu.component";
 import {TableComponent} from "./order/table/table.component";
+import {ReserveTableComponent} from "./reserve-table/reserve-table.component";
 
 const routes: Routes = [
   {path: '', component: InfoComponent},
@@ -30,6 +31,7 @@ const routes: Routes = [
   {path: 'confirmation/:orderId', component: ConfirmationComponent, canActivate: [AuthGuard]},
   {path: 'order-history', component: OrderHistoryComponent, canActivate: [AuthGuard]},
   {path: 'table', component: TableComponent, canActivate: [AuthGuard]},
+  {path: 'reserve-table', component: ReserveTableComponent, canActivate: [AuthGuard]},
   {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AdminGuard]},
   {path: 'admin-tables-panel', component: AdminTableQrComponent},
   {path: 'admin-menu', component: AdminMenuComponent, canActivate: [AdminGuard]},

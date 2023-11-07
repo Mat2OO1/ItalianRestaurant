@@ -5,10 +5,6 @@
     <input class="form-control" id="name" type="number" formControlName="number">
     <label class="form-label" for="description">Number of seats</label>
     <input class="form-control" id="description" type="text" formControlName="seats">
-    <label class="form-label" for="status">Status</label>
-    <select class="form-control" id="status" formControlName="status">
-      <option *ngFor="let status of statuses" [value]="status.toUpperCase()">{{status}}</option>
-    </select>
   </form>
 
   <div class="d-flex justify-content-center align-items-center" *ngIf="data.mode === DialogMode.DELETE">

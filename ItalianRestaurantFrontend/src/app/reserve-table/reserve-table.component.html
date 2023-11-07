@@ -10,12 +10,11 @@
         <mat-card-content>
           <mat-list role="list">
             <mat-list-item role="listitem">Number of seats: {{ table.seats }}</mat-list-item>
-            <mat-list-item role="listitem">Status: {{ !!table.reserved ? "RESERVED" : "FREE"  }}</mat-list-item>
           </mat-list>
         </mat-card-content>
-        <mat-card-actions>
-          <button class="proceed-btn" [disabled]="table.reserved" (click)="proceedOrder(table.number)">Order to this table</button>
-        </mat-card-actions>
+            <mat-card-actions>
+              <button class="proceed-btn" (click)="openTableDialog(table)">Reserve table</button>
+            </mat-card-actions>
       </mat-card>
     </div>
   </div>

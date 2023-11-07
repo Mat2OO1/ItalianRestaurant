@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Reserve Table</h2>
+<h4>Table Number: {{data.table.number}}</h4>
+<h4>Table Seats: {{data.table.seats}}</h4>
+
+<mat-dialog-content class="mat-typography">
+  <mat-form-field>
+    <mat-label>Choose a date</mat-label>
+    <input matInput [matDatepicker]="picker" (dateChange)="onChangeDate($event)">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <br>
+  <mat-form-field *ngIf="dateFetched">
+    <mat-label>Choose an option</mat-label>
+    <mat-select (selectionChange)="onSelectTime($event)">
+      <mat-option *ngFor="let hour of this.availableHours" value="{{hour}}">{{hour}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button class="btn btn-danger" (click)="onCloseDialog()">Cancel</button>
+  <button class="btn btn-success" (click)="onCloseDialog()">Reserve</button>
+</mat-dialog-actions>

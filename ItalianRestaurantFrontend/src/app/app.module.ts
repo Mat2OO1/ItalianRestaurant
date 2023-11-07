@@ -41,6 +41,12 @@ import {CategoryEditDialogComponent} from "./category-edit-dialog/category-edit-
 import {TableComponent} from "./order/table/table.component";
 import {MatCardModule} from "@angular/material/card";
 import {MatListModule} from "@angular/material/list";
+import {ReserveTableComponent} from "./reserve-table/reserve-table.component";
+import {ReserveTableDialogComponent} from "./reserve-table/reserve-table-dialog/reserve-table-dialog.component";
+import {MatInputModule} from "@angular/material/input";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -66,7 +72,9 @@ import {MatListModule} from "@angular/material/list";
     AdminMenuComponent,
     MealEditDialogComponent,
     CategoryEditDialogComponent,
-    TableComponent
+    TableComponent,
+    ReserveTableComponent,
+    ReserveTableDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -84,6 +92,10 @@ import {MatListModule} from "@angular/material/list";
     FormsModule,
     MatCardModule,
     MatListModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
   ],
 
   providers: [

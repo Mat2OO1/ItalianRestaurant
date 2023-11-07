@@ -10,6 +10,7 @@ import {Table} from "../models/table";
 import {MealDto} from "../models/mealDto";
 import {PaymentResponse} from "../models/payment-response";
 import {Cart} from "../models/cart";
+import {Reservation} from "../models/reservation";
 
 @Injectable()
 export class DataStorageService {
@@ -145,5 +146,20 @@ export class DataStorageService {
   deleteTable(id: number) {
     return this.http
       .delete(`${environment.apiUrl}/tables/${id}`)
+  }
+
+  getReservedTables(){
+    return this.http
+      .get<Table[]>(`${environment.apiUrl}/reservations/reserved/all`)
+  }
+
+  makeReservation(reservation: Reservation){
+    return this.http
+      .post(`${environment.apiUrl}/reservations/add`, reservation)
+  }
+
+  getReservationsForTable(tableId: number, date: string){
+    return this.http
+      .get<string[]>(`${environment.apiUrl}/reservations/reserved?tableId=${tableId}&date=${date}`)
   }
 }

@@ -1,0 +1,40 @@
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.flex-item {
+  flex: 1;
+  max-width: calc(33.33% - 16px);
+  margin-bottom: 16px;
+}
+
+.card {
+  max-width: 400px;
+}
+
+@media (max-width: 768px) {
+  .flex-item {
+    max-width: calc(50% - 16px); /* Adjust for two cards per row on smaller screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .flex-item {
+    max-width: 100%;
+  }
+}
+
+.proceed-btn {
+  display: block;
+  text-decoration: none;
+  color: white;
+  background-color: #005B47;
+  padding: 20px 0;
+  border-radius: 12px;
+  margin: 30px auto;
+  transition: background-color .3s ease;
+  width: 80%;
+  border: 0;
+}

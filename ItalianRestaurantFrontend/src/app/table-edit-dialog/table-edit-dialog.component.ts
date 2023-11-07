@@ -12,8 +12,6 @@ import {Table} from "../models/table";
 })
 export class TableEditDialogComponent {
   protected readonly DialogMode = DialogMode;
-  statuses = ['Free', 'Reserved', 'Occupied'];
-
   tableForm: FormGroup
 
   constructor(private dialogRef: MatDialogRef<TableEditDialogComponent>,
@@ -22,7 +20,6 @@ export class TableEditDialogComponent {
     this.tableForm = new FormGroup({
       number: new FormControl(this.data.table ? this.data.table.number : '', [Validators.required]),
       seats: new FormControl(this.data.table ? this.data.table.seats : '', [Validators.required]),
-      status: new FormControl(this.data.table ? this.data.table.status : '', [Validators.required]),
     })
   }
 

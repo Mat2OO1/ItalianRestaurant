@@ -14,5 +14,4 @@ import java.time.LocalDateTime;
 public class ReservationDto {
     private Long tableId;
     private LocalDateTime reservationDateStart;
-    private LocalDateTime reservationDateEnd;
 }

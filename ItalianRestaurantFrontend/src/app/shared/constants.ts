@@ -6,4 +6,7 @@ export class AppConstants {
   private static REDIRECT_URL = `?redirect_uri=${environment.frontUrl}/oauth2/redirect`
   public static GOOGLE_AUTH_URL = AppConstants.OAUTH2_URL + "google" + AppConstants.REDIRECT_URL;
   public static GITHUB_AUTH_URL = AppConstants.OAUTH2_URL + "github" + AppConstants.REDIRECT_URL;
+  public static RESTAURANT_OPENING_TIME = 12
+  public static RESERVATION_TIME = 1
+  public static RESTAURANT_CLOSE_TIME = 22
 }

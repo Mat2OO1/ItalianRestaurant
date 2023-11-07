@@ -20,7 +20,6 @@
         <tr *ngFor="let table of tables">
           <td>{{table.number}}</td>
           <td>{{table.seats}}</td>
-          <td>{{table.status}}</td>
           <td class="w-25">
             <qrcode
               [qrdata]="generateQrUrl(table.number)"

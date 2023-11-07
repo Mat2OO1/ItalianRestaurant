@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,10 +48,16 @@ public class ReservationService {
 
     public List<Table> getReservedTables(){
         LocalDateTime timeFrom = LocalDateTime.now().minusHours(1);
-        LocalDateTime timeTo = LocalDateTime.now().plusHours(2);
-        //table is reserved one hour before reservation starts, and the reservation lasts two hours
+        LocalDateTime timeTo = LocalDateTime.now().plusHours(1);
+        //table is reserved one hour before reservation starts, and the reservation lasts one hour
         return this.reservationRepository.getReservedTables(timeFrom,timeTo)
                 .stream().map(Reservation::getTable)
+                .collect(Collectors.toList());
+    }
+
+    public List<LocalDateTime> getReservationsForTable(int tableId, LocalDate date){
+        return this.reservationRepository.getReservationForTable(tableId, date)
+                .stream().map(Reservation::getReservationDateStart)
                 .collect(Collectors.toList());
     }
 }
