@@ -1,5 +1,6 @@
 package com.example.italianrestaurant.table;
 
+import com.example.italianrestaurant.table.reservation.ReservationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -13,6 +14,7 @@ public class TableService {
 
     private final TableRepository tableRepository;
     private final ModelMapper modelMapper;
+
 
     public List<Table> getAllTables() {
         return tableRepository.findAll();

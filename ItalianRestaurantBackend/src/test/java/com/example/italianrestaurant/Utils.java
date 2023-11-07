@@ -220,7 +220,7 @@ public class Utils {
         return Table.builder()
                 .number(1)
                 .seats(2)
-                .status(TableStatus.FREE)
+//                .status(TableStatus.FREE)
                 .build();
     }
 
@@ -228,7 +228,7 @@ public class Utils {
         return TableDto.builder()
                 .number(1)
                 .seats(2)
-                .status(TableStatus.FREE)
+//                .status(TableStatus.FREE)
                 .build();
     }
 

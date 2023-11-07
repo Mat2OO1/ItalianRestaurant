@@ -1,6 +1,7 @@
 package com.example.italianrestaurant.table.reservation;
 
 import com.example.italianrestaurant.security.UserPrincipal;
+import com.example.italianrestaurant.table.Table;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +37,10 @@ public class ReservationController {
     @GetMapping("")
     public ResponseEntity<List<Reservation>> getReservations(@AuthenticationPrincipal UserPrincipal userPrincipal){
         return ResponseEntity.ok(this.reservationService.getReservations(userPrincipal));
+    }
+
+    @GetMapping("reserved")
+    public ResponseEntity<List<Table>> getReservedTables(){
+        return ResponseEntity.ok(this.reservationService.getReservedTables());
     }
 }

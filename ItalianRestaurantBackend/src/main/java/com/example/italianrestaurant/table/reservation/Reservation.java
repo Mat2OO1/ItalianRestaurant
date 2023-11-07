@@ -30,18 +30,16 @@ public class Reservation {
     private Table table;
 
     private LocalDateTime reservationDateStart;
-    private LocalDateTime reservationDateEnd;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Reservation that = (Reservation) o;
-        return Objects.equals(id, that.id) && Objects.equals(user, that.user) && Objects.equals(table, that.table) && Objects.equals(reservationDateStart, that.reservationDateStart) && Objects.equals(reservationDateEnd, that.reservationDateEnd);
+        return Objects.equals(id, that.id) && Objects.equals(user, that.user) && Objects.equals(table, that.table) && Objects.equals(reservationDateStart, that.reservationDateStart);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, table, reservationDateStart, reservationDateEnd);
+        return Objects.hash(id, user, table, reservationDateStart);
     }
 }

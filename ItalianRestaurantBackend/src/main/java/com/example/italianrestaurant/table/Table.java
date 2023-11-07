@@ -26,9 +26,9 @@ public class Table {
     @Column(name = "seats_nr", nullable = false)
     private int seats;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private TableStatus status;
+//    @Enumerated(EnumType.STRING)
+//    @Column(nullable = false)
+//    private TableStatus status;
 
     @Override
     public final boolean equals(Object o) {

@@ -207,32 +207,32 @@ public class DataInitializer {
                 Table.builder()
                         .number(1)
                         .seats(4)
-                        .status(TableStatus.FREE)
+//                        .status(TableStatus.FREE)
                         .build(),
                 Table.builder()
                         .number(2)
                         .seats(4)
-                        .status(TableStatus.OCCUPIED)
+//                        .status(TableStatus.OCCUPIED)
                         .build(),
                 Table.builder()
                         .number(3)
                         .seats(5)
-                        .status(TableStatus.FREE)
+//                        .status(TableStatus.FREE)
                         .build(),
                 Table.builder()
                         .number(4)
                         .seats(3)
-                        .status(TableStatus.RESERVED)
+//                        .status(TableStatus.RESERVED)
                         .build(),
                 Table.builder()
                         .number(5)
                         .seats(2)
-                        .status(TableStatus.OCCUPIED)
+//                        .status(TableStatus.OCCUPIED)
                         .build(),
                 Table.builder()
                         .number(6)
                         .seats(2)
-                        .status(TableStatus.FREE)
+//                        .status(TableStatus.FREE)
                         .build());
     }
 }

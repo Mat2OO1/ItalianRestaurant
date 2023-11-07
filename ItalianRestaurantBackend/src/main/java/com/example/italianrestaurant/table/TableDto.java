@@ -16,6 +16,6 @@ public class TableDto {
     private long number;
     @NotNull(message = "Table seats number is mandatory")
     private int seats;
-    @NotNull(message = "Table status is mandatory")
-    private TableStatus status;
+//    @NotNull(message = "Table status is mandatory")
+//    private TableStatus status;
 }
