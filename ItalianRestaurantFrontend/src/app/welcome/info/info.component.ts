@@ -17,6 +17,7 @@ export class InfoComponent implements OnInit {
   ngOnInit(): void {
     const token = this.route.snapshot.queryParamMap.get('token');
     const error = this.route.snapshot.queryParamMap.get('error');
+    const lang = localStorage.getItem('lang') || 'en'
     if (token) {
       this.authService.saveToken(token);
       this.authService.user.subscribe(

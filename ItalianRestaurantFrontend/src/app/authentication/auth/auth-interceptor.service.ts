@@ -32,7 +32,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     if (err.status === 401 || err.status === 403) {
       this.router.navigate(['/login']);
       this.authService.user.next(null);
-      localStorage.removeItem("userData")
+      localStorage.removeItem("token")
       return EMPTY;
     }
     return throwError(err);

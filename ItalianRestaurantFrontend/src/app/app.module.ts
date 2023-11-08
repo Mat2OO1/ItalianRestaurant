@@ -14,7 +14,7 @@ import {CartService} from "./shared/cart.service";
 import {SummaryComponent} from "./order/summary/summary.component";
 import {BuyComponent} from "./order/buy/buy.component";
 import {ConfirmationComponent} from "./order/confirmation/confirmation.component";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {AuthService} from "./authentication/auth/auth.service";
 import {AuthInterceptorService} from "./authentication/auth/auth-interceptor.service";
 import {MealsService} from "./shared/meals.service";
@@ -41,6 +41,11 @@ import {CategoryEditDialogComponent} from "./category-edit-dialog/category-edit-
 import {TableComponent} from "./order/table/table.component";
 import {MatCardModule} from "@angular/material/card";
 import {MatListModule} from "@angular/material/list";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+export function HttpLoaderFactory(http:HttpClient){
+  return new TranslateHttpLoader(http);
+}
 import {ReserveTableComponent} from "./reserve-table/reserve-table.component";
 import {ReserveTableDialogComponent} from "./reserve-table/reserve-table-dialog/reserve-table-dialog.component";
 import {MatInputModule} from "@angular/material/input";
@@ -96,6 +101,7 @@ import {
     FormsModule,
     MatCardModule,
     MatListModule,
+    TranslateModule.forRoot({loader:{provide:TranslateLoader, useFactory:HttpLoaderFactory, deps:[HttpClient]}}),
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
@@ -114,7 +120,8 @@ import {
       useClass: AuthInterceptorService,
       multi: true
     },
-    MatDialog
+    MatDialog,
+    HttpClient,
   ],
   bootstrap: [AppComponent]
 })
