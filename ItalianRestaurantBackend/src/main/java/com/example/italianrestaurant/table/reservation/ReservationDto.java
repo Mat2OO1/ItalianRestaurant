@@ -1,5 +1,6 @@
 package com.example.italianrestaurant.table.reservation;
 
+import com.example.italianrestaurant.table.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +13,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReservationDto {
-    private Long tableId;
+    private Table table;
     private LocalDateTime reservationDateStart;
 }

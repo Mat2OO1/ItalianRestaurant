@@ -1,21 +1,56 @@
-<div class="container mt-4">
-  <h1>Choose table</h1>
-  <div class="flex-container">
-    <div class="flex-item" *ngFor="let table of tables">
-      <mat-card class="card">
-        <mat-card-header>
-          <mat-card-title>Table {{ table.number }}</mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src="/assets/images/table.jpg" alt="table">
-        <mat-card-content>
-          <mat-list role="list">
-            <mat-list-item role="listitem">Number of seats: {{ table.seats }}</mat-list-item>
-          </mat-list>
-        </mat-card-content>
+<mat-tab-group [backgroundColor]="'primary'" [color]="'primary'" dynamicHeight>
+  <mat-tab label="Reserve Table">
+    <div class="container mt-4">
+      <h1>Choose table</h1>
+      <div class="flex-container">
+        <div class="flex-item" *ngFor="let table of tables">
+          <mat-card class="card">
+            <mat-card-header>
+              <mat-card-title>Table {{ table.number }}</mat-card-title>
+            </mat-card-header>
+            <img mat-card-image src="/assets/images/table.jpg" alt="table">
+            <mat-card-content>
+              <mat-list role="list">
+                <mat-list-item role="listitem">Number of seats: {{ table.seats }}</mat-list-item>
+              </mat-list>
+            </mat-card-content>
             <mat-card-actions>
               <button class="proceed-btn" (click)="openTableDialog(table)">Reserve table</button>
             </mat-card-actions>
-      </mat-card>
+          </mat-card>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  </mat-tab>
+  <mat-tab label="My Reservations">
+    <div class="container mt-4" *ngIf="userReservations.length > 0">
+      <h1 class="text-center">Upcoming reservations</h1>
+      <div class="flex-container">
+        <div class="flex-item" *ngFor="let reservation of userReservations">
+          <mat-card class="small-card">
+            <mat-card-header>
+              <mat-card-title>{{ reservation.reservationDateStart | date: "dd.MM.yyyy"}}</mat-card-title>
+            </mat-card-header>
+            <img mat-card-image src="/assets/images/table.jpg" alt="table">
+            <mat-card-content>
+              <mat-list role="list">
+                <mat-list-item role="listitem">Hour: {{ reservation.reservationDateStart | date: "HH:mm" }}</mat-list-item>
+                <mat-list-item role="listitem">Table number: {{ reservation.table.number }}</mat-list-item>
+                <mat-list-item role="listitem">Number of seats: {{ reservation.table.seats }}</mat-list-item>
+              </mat-list>
+            </mat-card-content>
+            <mat-card-actions>
+              <button class="cancel-btn btn-danger" (click)="openCancelationDialog(reservation)">Cancel</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+    <div class="container mt-4 text-center" *ngIf="userReservations.length === 0">
+          <br>
+          <h3>You don't have any reservations.</h3>
+          <br>
+          <button class="btn btn-rounded" routerLink="/menu">Return to menu</button>
+        </div>
+  </mat-tab>
+</mat-tab-group>

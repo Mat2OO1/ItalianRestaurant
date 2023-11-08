@@ -1,12 +1,15 @@
 import {Table} from "./table";
+import {Tab} from "bootstrap";
 
 export class Reservation{
-  tableId: number;
+  id?: number;
+  table: Table;
   reservationDateStart: Date;
 
 
-  constructor(tableId: number, reservationDateStart: Date) {
-    this.tableId = tableId;
+  constructor(table: Table, reservationDateStart: Date, id?: number) {
+    this.id = id;
+    this.table = table;
     this.reservationDateStart = reservationDateStart;
   }
 }

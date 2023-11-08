@@ -38,3 +38,36 @@
   width: 80%;
   border: 0;
 }
+
+.cancel-btn {
+  display: block;
+  text-decoration: none;
+  color: white;
+  background-color: #f44336;
+  padding: 20px 0;
+  border-radius: 12px;
+  margin: 30px auto;
+  transition: background-color .3s ease;
+  width: 50%;
+  border: 0;
+}
+
+.small-card {
+  max-width: 250px;
+}
+
+.info{
+  margin: auto;
+  max-width: 50%;
+  text-align: center;
+  background-color: #0d6efd;
+  border-radius: 10px;
+  height: 100px;
+}
+
+.btn {
+  background-color: #005B47;
+  text-decoration: none;
+  color: #FFFFFF
+}
+

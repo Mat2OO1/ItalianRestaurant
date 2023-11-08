@@ -47,6 +47,10 @@ import {MatInputModule} from "@angular/material/input";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
+import {MatTabsModule} from "@angular/material/tabs";
+import {
+  CancelReservationDialogComponent
+} from "./reserve-table/cancel-reservation-dialog/cancel-reservation-dialog.component";
 
 @NgModule({
   declarations: [
@@ -96,6 +100,7 @@ import {MatSelectModule} from "@angular/material/select";
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
+    MatTabsModule,
   ],
 
   providers: [

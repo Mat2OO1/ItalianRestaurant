@@ -20,8 +20,9 @@ align-items: center;
         <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.ADMIN" routerLink="/admin-menu">Edit Menu</a>
         <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.ADMIN" routerLink="/admin-panel">Orders</a>
         <a class="nav-item nav-link" *ngIf="currentUser" routerLink="/menu">Menu</a>
-        <a class="nav-item nav-link" *ngIf="currentUser !== null" (click)="onLogout()" href="#">Logout</a>
+        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.USER" routerLink="/reserve-table">Reserve Table</a>
         <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.USER" routerLink="/order-history">Orders</a>
+        <a class="nav-item nav-link" *ngIf="currentUser !== null" (click)="onLogout()" href="#">Logout</a>
         <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.USER" routerLink="/summary"><i class="bi bi-cart"
                                                                                                       style="font-size: 1.5em;"></i></a>
         <a class="nav-item nav-link active" routerLink="/menu" *ngIf="!currentUser">

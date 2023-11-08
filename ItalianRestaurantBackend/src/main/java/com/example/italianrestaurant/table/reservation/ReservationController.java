@@ -4,6 +4,7 @@ import com.example.italianrestaurant.security.UserPrincipal;
 import com.example.italianrestaurant.table.Table;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -16,14 +17,19 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/reservations")
-
 public class ReservationController {
 
     private final ReservationService reservationService;
 
     @PostMapping("/add")
-    public ResponseEntity<Reservation> addReservation(@RequestBody ReservationDto reservationDto, @AuthenticationPrincipal UserPrincipal userPrincipal){
-        return ResponseEntity.ok(this.reservationService.addReservation(userPrincipal,reservationDto));
+    public ResponseEntity<?> addReservation(@RequestBody ReservationDto reservationDto, @AuthenticationPrincipal UserPrincipal userPrincipal){
+        try{
+            Reservation reservation = this.reservationService.addReservation(userPrincipal,reservationDto);
+            return ResponseEntity.ok(reservation);
+        }
+        catch (UserReservationConflictException | TableAlreadyReservedException e ){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/cancel")

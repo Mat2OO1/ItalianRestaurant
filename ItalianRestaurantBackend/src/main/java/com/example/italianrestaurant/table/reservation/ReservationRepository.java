@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
-    List<Reservation> getAllByUserEmail(String email);
+    @Query("FROM Reservation r WHERE r.user.email = :email AND r.reservationDateStart > :date")
+    List<Reservation> getAllByUserEmailAndDateAfter(String email, LocalDateTime date);
 
     @Query("FROM Reservation r WHERE (r.reservationDateStart >= :timeFrom AND r.reservationDateStart <= :timeTo)")
     List<Reservation> getReservedTables(LocalDateTime timeFrom, LocalDateTime timeTo);
@@ -18,4 +19,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "WHERE r.table.id = :tableId " +
             "AND DATE(r.reservationDateStart) = DATE(:date)")
     List<Reservation> getReservationForTable(int tableId, LocalDate date);
+
+    @Query("FROM Reservation r WHERE DATE(r.reservationDateStart) = DATE(:date) AND r.user.email = :email")
+
+    List<Reservation> getReservationsByUserAndDate(String email, LocalDateTime date);
 }

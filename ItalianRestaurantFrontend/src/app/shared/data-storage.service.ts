@@ -162,4 +162,14 @@ export class DataStorageService {
     return this.http
       .get<string[]>(`${environment.apiUrl}/reservations/reserved?tableId=${tableId}&date=${date}`)
   }
+
+  getUserReservations(){
+    return this.http
+      .get<Reservation[]>(`${environment.apiUrl}/reservations/user`)
+  }
+
+  cancelReservation(reservation: Reservation){
+    return this.http
+      .delete(`${environment.apiUrl}/reservations/cancel?reservationId=${reservation.id}`)
+  }
 }

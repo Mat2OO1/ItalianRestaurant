@@ -64,7 +64,7 @@ export class ReserveTableDialogComponent {
   onCloseDialog() {
     if(this.selectedTime && this.selectedDate){
       const date = new Date(Date.parse(this.selectedDate + 'T'+this.selectedTime))
-      this.dialogRef.close(new Reservation(this.data.table.id,date))
+      this.dialogRef.close(new Reservation(this.data.table,date))
     }
     else{
       this.dialogRef.close()

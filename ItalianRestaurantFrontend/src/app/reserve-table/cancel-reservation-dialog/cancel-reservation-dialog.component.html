@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Cancel Reservation</h2>
+<mat-dialog-content class="mat-typography">
+  <h4>Are you sure you want to cancel reservation?</h4>
+  <h6>Table: {{data.reservation.table.id}}</h6>
+  <h6>Date: {{data.reservation.reservationDateStart | date: "dd.MM.yyyy HH:mm"}}</h6>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button class="btn btn-danger" (click)="onCloseDialog(false)">Back</button>
+  <button class="btn btn-success" (click)="onCloseDialog(true)">Cancel</button>
+</mat-dialog-actions>
