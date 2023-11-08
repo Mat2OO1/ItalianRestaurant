@@ -4,7 +4,6 @@ import com.example.italianrestaurant.security.UserPrincipal;
 import com.example.italianrestaurant.table.Table;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

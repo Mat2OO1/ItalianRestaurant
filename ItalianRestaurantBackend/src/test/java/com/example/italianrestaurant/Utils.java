@@ -233,16 +233,17 @@ public class Utils {
 
     public static Reservation getReservation(){
         return Reservation.builder()
+                .id(1L)
                 .table(getTable())
                 .user(getUser())
-                .reservationDateStart(LocalDateTime.of(2024,11,11,15,0))
+                .reservationDateStart(LocalDateTime.of(2024,11,11,15,0,0))
                 .build();
     }
 
     public static ReservationDto getReservationDto(){
         return ReservationDto.builder()
                 .table(getTable())
-                .reservationDateStart(LocalDateTime.of(2024,11,11,15,0))
+                .reservationDateStart(LocalDateTime.of(2024,11,11,15,0,0))
                 .build();
     }
 
