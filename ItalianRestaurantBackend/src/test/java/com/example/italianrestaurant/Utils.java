@@ -20,7 +20,8 @@ import com.example.italianrestaurant.payments.OrderPaidResponse;
 import com.example.italianrestaurant.payments.Payment;
 import com.example.italianrestaurant.table.Table;
 import com.example.italianrestaurant.table.TableDto;
-import com.example.italianrestaurant.table.TableStatus;
+import com.example.italianrestaurant.table.reservation.Reservation;
+import com.example.italianrestaurant.table.reservation.ReservationDto;
 import com.example.italianrestaurant.user.AuthProvider;
 import com.example.italianrestaurant.user.Role;
 import com.example.italianrestaurant.user.User;
@@ -220,7 +221,6 @@ public class Utils {
         return Table.builder()
                 .number(1)
                 .seats(2)
-//                .status(TableStatus.FREE)
                 .build();
     }
 
@@ -228,7 +228,21 @@ public class Utils {
         return TableDto.builder()
                 .number(1)
                 .seats(2)
-//                .status(TableStatus.FREE)
+                .build();
+    }
+
+    public static Reservation getReservation(){
+        return Reservation.builder()
+                .table(getTable())
+                .user(getUser())
+                .reservationDateStart(LocalDateTime.of(2024,11,11,15,0))
+                .build();
+    }
+
+    public static ReservationDto getReservationDto(){
+        return ReservationDto.builder()
+                .table(getTable())
+                .reservationDateStart(LocalDateTime.of(2024,11,11,15,0))
                 .build();
     }
 

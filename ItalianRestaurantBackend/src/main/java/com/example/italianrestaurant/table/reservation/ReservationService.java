@@ -2,11 +2,11 @@ package com.example.italianrestaurant.table.reservation;
 
 import com.example.italianrestaurant.security.UserPrincipal;
 import com.example.italianrestaurant.table.Table;
-import com.example.italianrestaurant.table.TableService;
 import com.example.italianrestaurant.user.User;
 import com.example.italianrestaurant.user.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final UserService userService;
-    private final TableService tableService;
     private final ModelMapper modelMapper;
 
     public Reservation addReservation(UserPrincipal userPrincipal, ReservationDto reservationDto) {
@@ -35,6 +35,7 @@ public class ReservationService {
                 .stream().anyMatch(reservation -> Objects.equals(reservation.getTable().getId(), reservationDto.getTable().getId()))) {
             throw new TableAlreadyReservedException();
         }
+        log.info(reservationDto);
         Reservation reservation = modelMapper.map(reservationDto, Reservation.class);
         reservation.setUser(user);
         return reservationRepository.save(reservation);
