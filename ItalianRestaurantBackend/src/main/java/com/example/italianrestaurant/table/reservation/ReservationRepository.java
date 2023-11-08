@@ -12,7 +12,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("FROM Reservation r WHERE r.user.email = :email AND r.reservationDateStart > :date")
     List<Reservation> getAllByUserEmailAndDateAfter(String email, LocalDateTime date);
 
-    @Query("FROM Reservation r WHERE (r.reservationDateStart >= :timeFrom AND r.reservationDateStart <= :timeTo)")
+    @Query("FROM Reservation r WHERE (r.reservationDateStart > :timeFrom AND r.reservationDateStart < :timeTo)")
     List<Reservation> getReservedTables(LocalDateTime timeFrom, LocalDateTime timeTo);
 
     @Query("SELECT r FROM Reservation r " +

@@ -54,7 +54,7 @@ export class ReserveTableDialogComponent {
     const reservationDuration = AppConstants.RESERVATION_TIME
     const numbers = []
     for (let i = openingTime; i < closeTime; i++) {
-      if (!hoursBooked.some(date => (date.getHours() > i - reservationDuration && date.getHours() < i + reservationDuration))) {
+      if (!hoursBooked.some(date => (date.getHours() === i))) {
         numbers.push(i + ":00");
       }
     }
@@ -64,7 +64,7 @@ export class ReserveTableDialogComponent {
   onCloseDialog() {
     if(this.selectedTime && this.selectedDate){
       const date = new Date(Date.parse(this.selectedDate + 'T'+this.selectedTime))
-      this.dialogRef.close(new Reservation(this.data.table,date))
+      this.dialogRef.close(new Reservation(this.data.table,this.datePipe.transform(date, "yyyy-MM-ddTHH:mm")!))
     }
     else{
       this.dialogRef.close()

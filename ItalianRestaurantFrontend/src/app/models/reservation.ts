@@ -4,10 +4,10 @@ import {Tab} from "bootstrap";
 export class Reservation{
   id?: number;
   table: Table;
-  reservationDateStart: Date;
+  reservationDateStart: string;
 
 
-  constructor(table: Table, reservationDateStart: Date, id?: number) {
+  constructor(table: Table, reservationDateStart: string, id?: number) {
     this.id = id;
     this.table = table;
     this.reservationDateStart = reservationDateStart;

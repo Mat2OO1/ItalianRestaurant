@@ -26,16 +26,17 @@ public class ReservationService {
     private final ModelMapper modelMapper;
 
     public Reservation addReservation(UserPrincipal userPrincipal, ReservationDto reservationDto) {
+        log.warn(reservationDto.getReservationDateStart());
         User user = userService.getUserByEmail(userPrincipal.getEmail());
+        log.info(this.reservationRepository.getReservationForTable(reservationDto.getTable().getId().intValue(), LocalDate.from(reservationDto.getReservationDateStart())));
         if (this.reservationRepository.getReservationsByUserAndDate(userPrincipal.getEmail(), reservationDto.getReservationDateStart()).size() != 0) {
             throw new UserReservationConflictException();
         } else if (this.reservationRepository.getReservedTables(
-                        reservationDto.getReservationDateStart().minusHours(1),
-                        reservationDto.getReservationDateStart().plusHours(1))
+                        reservationDto.getReservationDateStart(),
+                        reservationDto.getReservationDateStart().plusMinutes(59))
                 .stream().anyMatch(reservation -> Objects.equals(reservation.getTable().getId(), reservationDto.getTable().getId()))) {
             throw new TableAlreadyReservedException();
         }
-        log.info(reservationDto);
         Reservation reservation = modelMapper.map(reservationDto, Reservation.class);
         reservation.setUser(user);
         return reservationRepository.save(reservation);
@@ -55,7 +56,7 @@ public class ReservationService {
     }
 
     public List<Table> getReservedTables() {
-        LocalDateTime timeFrom = LocalDateTime.now().minusHours(1);
+        LocalDateTime timeFrom = LocalDateTime.now();
         LocalDateTime timeTo = LocalDateTime.now().plusHours(1);
         //table is reserved one hour before reservation starts, and the reservation lasts one hour
         return this.reservationRepository.getReservedTables(timeFrom, timeTo)

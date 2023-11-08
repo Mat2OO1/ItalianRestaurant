@@ -59,7 +59,6 @@ export class ReserveTableComponent {
       this.dataStorageService.makeReservation(result).subscribe(
         (res) => {
           this.toastService.showSuccessToast("Reservation", "Table reserved successfully")
-          console.log(res)
           this.getReservations();
         },
         (err) => {
