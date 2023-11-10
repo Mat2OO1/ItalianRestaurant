@@ -45,8 +45,8 @@ spring:
               - email
               - profile
           facebook:
-            clientId: 1583546558794561
-            clientSecret: f4a0746b10f77eb1b1dcc866e98c6ed8
+            clientId: 1087986735980329
+            clientSecret: d48c729ca99791c0568df176c4684da6
             redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
               - email
@@ -58,11 +58,6 @@ spring:
             scope:
               - user:email
               - read:user
-        provider:
-          facebook:
-            authorizationUri: https://www.facebook.com/v3.0/dialog/oauth
-            tokenUri: https://graph.facebook.com/v3.0/oauth/access_token
-            userInfoUri: https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)
 app:
   security:
     jwt:

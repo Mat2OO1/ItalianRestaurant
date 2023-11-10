@@ -15,6 +15,7 @@ export class LoginComponent implements OnDestroy {
   loginForm: FormGroup;
   error: string = ''
   googleURL = AppConstants.GOOGLE_AUTH_URL
+  facebookURL = AppConstants.FACEBOOK_AUTH_URL
   githubURL = AppConstants.GITHUB_AUTH_URL
 
   authSubscription ?: Subscription;
