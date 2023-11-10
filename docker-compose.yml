@@ -27,25 +27,25 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/italian_restaurant
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
-      - SPRING_MAIL_HOST=smtp.gmail.com
-      - SPRING_MAIL_PORT=587
-      - SPRING_MAIL_USERNAME=myapplic256@gmail.com
-      - SPRING_MAIL_PASSWORD=oezlfcuimxrmjaai
-      - JWT_SECRET_KEY=50645367556B58703273357638792F423F4528482B4D6251655468576D597133
+      - SPRING_DATASOURCE_USERNAME=<username>
+      - SPRING_DATASOURCE_PASSWORD=<password>
+      - SPRING_MAIL_HOST=<host>
+      - SPRING_MAIL_PORT=<port>
+      - SPRING_MAIL_USERNAME=<username>
+      - SPRING_MAIL_PASSWORD=<password>
+      - JWT_SECRET_KEY=<secret>
       - JWT_EXPIRATION=168
-      - GOOGLE_CLIENT_ID=531274359208-00pdo418t6gff50e35pivcel5tu8lkb0.apps.googleusercontent.com
-      - GOOGLE_CLIENT_SECRET=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
-      - FACEBOOK_CLIENT_ID=1033884851271218
-      - FACEBOOK_CLIENT_SECRET=73ee627c3cd4a4abf893ec32f8adb07e
-      - GITHUB_CLIENT_ID=Iv1.0841fdf8ebb3b002
-      - GITHUB_CLIENT_SECRET=a74d957c55433dfbb7d5a13f437d74365150cf67
-      - SERVER_IP=ladolcevitarestaurant.live
-      - AWS_ACCESS_KEY=AKIASFDMWQF5EJDJCFHP
-      - AWS_SECRET_KEY=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
-      - AWS_BUCKET_NAME=italianrestaurantimagesprod
-      - STRIPE_WEBHOOK_SECRET=whsec_OmruWVKmwmXzvZ1K0FCHUsVB9m2UOue2
+      - GOOGLE_CLIENT_ID=<id>
+      - GOOGLE_CLIENT_SECRET=<secret>
+      - FACEBOOK_CLIENT_ID=<id>
+      - FACEBOOK_CLIENT_SECRET=<secret>
+      - GITHUB_CLIENT_ID=<id>
+      - GITHUB_CLIENT_SECRET=<secret>
+      - SERVER_IP=<ip>
+      - AWS_ACCESS_KEY=<key>
+      - AWS_SECRET_KEY=<key>
+      - AWS_BUCKET_NAME=<name>
+      - STRIPE_WEBHOOK_SECRET=<secret>
   frontend:
     container_name: frontend
     build:
