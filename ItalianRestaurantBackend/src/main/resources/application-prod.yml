@@ -54,5 +54,5 @@ server:
     include-message: never
 
 stripe:
-#  secret-key: ${STRIPE_SECRET_KEY} TODO: change to prod mode when ready
+  secret-key: ${STRIPE_SECRET_KEY}
   webhook-secret: ${STRIPE_WEBHOOK_SECRET}

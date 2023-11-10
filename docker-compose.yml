@@ -45,6 +45,7 @@ services:
       - AWS_ACCESS_KEY=<key>
       - AWS_SECRET_KEY=<key>
       - AWS_BUCKET_NAME=<name>
+      - STRIPE_SECRET_KEY=<key>
       - STRIPE_WEBHOOK_SECRET=<secret>
   frontend:
     container_name: frontend
