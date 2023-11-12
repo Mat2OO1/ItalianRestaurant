@@ -46,6 +46,5 @@ export class TableComponent {
       let table = this.tables?.filter(table => table.id === id)[0]
       table!.reserved = true
     })
-    console.log(this.tables)
   }
 }

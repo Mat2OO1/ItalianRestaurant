@@ -62,7 +62,7 @@ app:
   security:
     jwt:
       tokenSecret: ${JWT_SECRET_KEY}
-      tokenExpirationHours: 168
+      tokenExpirationSeconds: 1209600 # 14 days
     cors:
       allowedOrigins: \*
     oauth2:

@@ -154,7 +154,6 @@ export class DataStorageService {
   }
 
   makeReservation(reservation: Reservation){
-    console.log(reservation)
     return this.http
       .post(`${environment.apiUrl}/reservations/add`, reservation)
   }

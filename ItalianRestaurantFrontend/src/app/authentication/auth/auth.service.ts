@@ -71,10 +71,12 @@ export class AuthService {
             const expirationDuration =
               new Date(res.expiration).getTime() -
               new Date().getTime();
-            //this.autoLogout(100000000);
+            this.autoLogout(expirationDuration);
           }
-        }
-      )
+
+        }, () => {
+          this.logout()
+        })
   }
 
   getUserDetails(token: string) {
@@ -92,17 +94,18 @@ export class AuthService {
     this.logoutTimer = null;
   }
 
-  // autoLogout(expirationDuration: number) {
-  //   this.logoutTimer = setTimeout( () => {
-  //     this.logout()
-  //   }, expirationDuration)
-  // }
+  autoLogout(expirationDuration: number) {
+    this.logoutTimer = setTimeout(() => {
+      this.logout()
+    }, expirationDuration);
+  }
 
 
   handleAuthentication(token: string, expirationDate: number, role: Role) {
-    const user = new User(token, new Date(expirationDate), role);
+    const expirationDuration = expirationDate - new Date().getTime();
+    const user = new User(token, new Date(expirationDuration), role);
     this.user.next(user);
-    //this.autoLogout(1000000000);
+    this.autoLogout(expirationDate);
     localStorage.setItem('token', token);
   }
 

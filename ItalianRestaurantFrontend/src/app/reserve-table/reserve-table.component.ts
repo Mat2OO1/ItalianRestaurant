@@ -62,7 +62,6 @@ export class ReserveTableComponent {
           this.getReservations();
         },
         (err) => {
-          console.log(err)
           this.toastService.showErrorToast("Reservation", err.error)
         }
       )

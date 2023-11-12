@@ -22,11 +22,11 @@ public class AppProperties {
             this.tokenSecret = tokenSecret;
         }
 
-        public long getTokenExpirationHours() {
+        public long getTokenExpirationSeconds() {
             return tokenExpirationHours;
         }
 
-        public void setTokenExpirationHours(long tokenExpirationHours) {
+        public void setTokenExpirationSeconds(long tokenExpirationHours) {
             this.tokenExpirationHours = tokenExpirationHours;
         }
     }
