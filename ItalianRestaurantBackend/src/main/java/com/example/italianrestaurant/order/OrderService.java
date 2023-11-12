@@ -88,6 +88,11 @@ public class OrderService {
 
     }
 
+    public Delivery getLastDelivery(UserPrincipal userPrincipal){
+        Order order = orderRepository.findFirstByUserEmailOrderByOrderDateDesc(userPrincipal.getEmail()).orElseThrow(EntityNotFoundException::new);
+        return order.getDelivery();
+    }
+
     public void deleteOrderById(Long id) {
         orderRepository.deleteById(id);
     }

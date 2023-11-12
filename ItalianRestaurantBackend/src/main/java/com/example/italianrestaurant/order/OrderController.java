@@ -1,5 +1,6 @@
 package com.example.italianrestaurant.order;
 
+import com.example.italianrestaurant.delivery.Delivery;
 import com.example.italianrestaurant.meal.Meal;
 import com.example.italianrestaurant.security.UserPrincipal;
 import com.stripe.exception.StripeException;
@@ -31,6 +32,15 @@ public class  OrderController {
     @GetMapping("/user")
     public ResponseEntity<List<Order>> getOrderByUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         return ResponseEntity.ok(orderService.getOrdersByUserEmail(userPrincipal));
+    }
+
+    @GetMapping("/last")
+    public ResponseEntity<Delivery> getLastDelivery(@AuthenticationPrincipal UserPrincipal userPrincipal){
+        try{
+            return ResponseEntity.ok(this.orderService.getLastDelivery(userPrincipal));
+        } catch (EntityNotFoundException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping

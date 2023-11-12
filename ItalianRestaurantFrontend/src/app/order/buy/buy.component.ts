@@ -14,19 +14,26 @@ import {PaymentResponse} from "../../models/payment-response";
 export class BuyComponent {
   isContentLoaded = false;
   buyForm: FormGroup;
+  lastDelivery ?: Delivery
+  showHint = true;
 
   constructor(private router: Router,
               private dataStorageService: DataStorageService,
               private cartService: CartService) {
+    this.dataStorageService.getLastDeliveryInfo()
+      .subscribe(
+        (res) => {
+          console.log(res)
+          this.lastDelivery = res;
+        }
+      )
     this.buyForm = new FormGroup({
       address: new FormControl('', [Validators.required]),
       city: new FormControl('', [Validators.required]),
       pcode: new FormControl('', [Validators.required]),
       floor: new FormControl(''),
       info: new FormControl(''),
-      deliveryOption: new FormControl(''),
-
-
+      deliveryOption: new FormControl('')
     })
     this.isContentLoaded = true;
   }
@@ -47,6 +54,17 @@ export class BuyComponent {
           window.location.href = res.url;
         }
       )
+  }
+
+
+  onPopulateInput(){
+    this.buyForm.get('address')?.setValue(this.lastDelivery?.address);
+    this.buyForm.get('city')?.setValue(this.lastDelivery?.city);
+    this.buyForm.get('pcode')?.setValue(this.lastDelivery?.postalCode);
+    this.buyForm.get('floor')?.setValue(this.lastDelivery?.floor);
+    this.buyForm.get('info')?.setValue(this.lastDelivery?.info);
+    this.buyForm.get('deliveryOption')?.setValue(this.lastDelivery?.deliveryOptions);
+    this.showHint = false;
   }
 
 }
