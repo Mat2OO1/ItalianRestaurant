@@ -14,23 +14,13 @@ import {Reservation} from "../models/reservation";
 
 @Injectable()
 export class DataStorageService {
-  page = 0
-  size = 3
-  meals = new Subject<MealsWithPagination>();
-
   constructor(private http: HttpClient) {
   }
 
-  getMeals() {
+  getMeals(page: number, size: number) {
     return this.http
       .get<MealResponse>(
-        `${environment.apiUrl}/meals?page=${this.page}&size=${this.size}`,
-      )
-      .subscribe(
-        (res) => {
-          var menu = res.content.map(meal => new Meal(meal.id, meal.name, meal.image, meal.description, meal.price, meal.mealCategory))
-          this.meals.next({meals: menu, numOfPages: res.totalPages, currPage: res.number})
-        }
+        `${environment.apiUrl}/meals?page=${page}&size=${size}`,
       )
   }
 
@@ -116,16 +106,6 @@ export class DataStorageService {
         orderId: orderId
       })
       .subscribe()
-  }
-
-  nextPage() {
-    this.page++
-    this.getMeals();
-  }
-
-  previousPage() {
-    this.page--
-    this.getMeals();
   }
 
   deleteOrder(id: number) {

@@ -7,6 +7,8 @@ import {CategoryDto} from "../../models/categoryDto";
 import {AuthService} from "../../authentication/auth/auth.service";
 import {Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
+import {Category} from "../../models/category";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-menu',
@@ -15,14 +17,17 @@ import {ActivatedRoute} from "@angular/router";
 })
 
 export class MenuComponent implements OnInit, OnDestroy {
-  categories: CategoryDto[] = []
-  meals: { [key: string]: Meal[] } = {};
+  categories: Category[] = []
+  meals: Meal[] = [];
   currentPage = 0
   totalPages = 0
+  size = 5;
+  mealsNumber = 0;
   isLoggedIn = false;
+  filteredCategory ?: Category;
+
 
   authSubscription?: Subscription | null;
-  mealsSubscription?: Subscription | null;
 
   constructor(private cartService: CartService,
               private dataStorageService: DataStorageService,
@@ -52,21 +57,50 @@ export class MenuComponent implements OnInit, OnDestroy {
           this.categories = res
         }
       )
-    this.mealsSubscription = this.dataStorageService.meals
-      .subscribe(res => {
-        this.meals = {}
-        this.totalPages = res.numOfPages
-        this.currentPage = res.currPage
-        for (let meal of res.meals) {
-          if (this.meals[meal.mealCategory.name]) {
-            this.meals[meal.mealCategory.name].push(meal)
-          } else {
-            this.meals[meal.mealCategory.name] = [meal]
-          }
-        }
-      });
+    this.sentMealsRequest();
+      // .subscribe(res => {
+      //   this.meals = {}
+      //   this.totalPages = res.numOfPages
+      //   this.currentPage = res.currPage
+      //   for (let meal of res.meals) {
+      //     if (this.meals[meal.mealCategory.name]) {
+      //       this.meals[meal.mealCategory.name].push(meal)
+      //     } else {
+      //       this.meals[meal.mealCategory.name] = [meal]
+      //     }
+      //   }
+      // });
+  }
 
-    this.dataStorageService.getMeals();
+  sentMealsRequest(){
+    this.dataStorageService.getMeals(this.currentPage, this.size)
+      .subscribe(
+        (res) => {
+          this.totalPages = res.totalPages
+          this.mealsNumber = res.totalElements
+          this.currentPage = res.number
+          this.meals = res.content.map(meal => new Meal(meal.id, meal.name, meal.image, meal.description, meal.price, meal.mealCategory))
+        }
+      )
+  }
+
+  onCategoryChange(category: Category){
+    if(this.filteredCategory !== undefined && this.filteredCategory.name === category.name){
+      this.filteredCategory = undefined;
+    } else {
+      this.filteredCategory = category;
+    }
+  }
+
+  addToCart(meal: Meal) {
+    this.cartService.addToCart(meal);
+    this.toastService.showSuccessToast("Cart", "Added item to cart")
+  }
+
+  onChangePage(event: PageEvent){
+    this.currentPage = event.pageIndex;
+    this.sentMealsRequest();
+    window.scrollTo({top: 0});
   }
 
   scroll(category: string) {
@@ -76,35 +110,8 @@ export class MenuComponent implements OnInit, OnDestroy {
     }
   }
 
-  addToCart(meal: Meal) {
-    this.cartService.addToCart(meal);
-    this.toastService.showSuccessToast("Cart", "Added item to cart")
-  }
-
-  getCurrentCategories() {
-    return this.categories.filter(cat => Object.keys(this.meals).includes(cat.name))
-  }
-
-  toNextPage() {
-    window.scrollTo({top: 0});
-    if (this.currentPage + 1 < this.totalPages) {
-      setTimeout(
-        () => this.dataStorageService.nextPage(), 500)
-    }
-  }
-
-
-  toPreviousPage() {
-    window.scrollTo({top: 0});
-    if (this.currentPage >= 1) {
-      setTimeout(
-        () => this.dataStorageService.previousPage(), 500)
-    }
-  }
-
   ngOnDestroy() {
     this.authSubscription?.unsubscribe()
-    this.mealsSubscription?.unsubscribe()
   }
 }
 

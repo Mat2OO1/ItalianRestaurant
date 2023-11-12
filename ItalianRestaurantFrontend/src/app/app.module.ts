@@ -56,6 +56,8 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {
   CancelReservationDialogComponent
 } from "./reserve-table/cancel-reservation-dialog/cancel-reservation-dialog.component";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
   declarations: [
@@ -101,12 +103,20 @@ import {
     FormsModule,
     MatCardModule,
     MatListModule,
-    TranslateModule.forRoot({loader:{provide:TranslateLoader, useFactory:HttpLoaderFactory, deps:[HttpClient]}}),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
     MatTabsModule,
+    MatCheckboxModule,
+    MatPaginatorModule,
   ],
 
   providers: [

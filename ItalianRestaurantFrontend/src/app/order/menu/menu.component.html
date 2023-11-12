@@ -1,62 +1,33 @@
 <div class="container" style="margin-top: 10px">
-  <br>
-  <div class="row justify-content-center" id="top">
-    <div class="card bg-transparent shadow-none hover-overlay hover-zoom hover-shadow"
-         *ngFor="let category of categories"
-         style="max-width: 20%; padding: 0;"
-         (click)="scroll(category.name)">
-      <img class="card-img-top rounded mx-auto d-block" src="{{category.image}}" alt="Card image cap"
-           style="max-width: 200px">
-      <div class="card-body">
-        <h5 class="card-title text-center" id="category-name">{{category.name}}</h5>
+  <div class="row justify-content-around">
+    <div class="col-lg-2 col-sm-3 col-6" style="border-radius: 10px; background-color: #8a8a8a; max-height: 300px">
+      <h4>Categories:</h4>
+      <p *ngFor="let category of categories">
+        <mat-checkbox (change)="onCategoryChange(category)">{{category.name}}</mat-checkbox>
+      </p>
+    </div>
+    <div class="col-lg-7 col-sm-8 col-11">
+      <div class="meals">
+        <mat-card class="meal-card" *ngFor="let meal of meals">
+          <mat-card-header>
+            <img mat-card-lg-image [src]="meal.image">
+          </mat-card-header>
+          <mat-card-title-group>
+            <mat-card-title>{{meal.name}}</mat-card-title>
+            <mat-card-subtitle>{{meal.mealCategory.name}}</mat-card-subtitle>
+            <mat-card-content>
+              <p>{{meal.description}}</p>
+              <p>{{meal.price}} $</p>
+              <button type="button" class="btn btn-dark" *ngIf="isLoggedIn" (click)="addToCart(meal)">
+                <i class="bi bi-cart me-1"></i>
+                To Cart
+              </button>
+            </mat-card-content>
+          </mat-card-title-group>
+        </mat-card>
       </div>
+      <mat-paginator [length]="mealsNumber" [pageSizeOptions]="[5, 10, 20]" aria-label="Select page"
+                     (page)="onChangePage($event)"></mat-paginator>
     </div>
   </div>
-</div>
-
-
-<div class="container">
-  <div *ngFor="let category of getCurrentCategories()" id="{{category.name}}">
-    <div class="row" *ngFor="let meal of meals[category.name]">
-      <div class="menu-item">
-        <img class="menu-item-img" src="{{meal.image}}" alt="pizza">
-        <div class="menu-item-desc">
-          <h5 style="color: #8a8a8a;"><strong>{{category.name}}</strong></h5>
-          <h3>{{meal.name}}</h3>
-          <p>{{meal.description}}</p>
-          <h4><strong>{{meal.price.toFixed(2)}} $</strong></h4>
-          <div>
-            <button type="button" class="btn btn-dark" *ngIf="isLoggedIn" (click)="addToCart(meal)">
-              <i class="bi bi-cart me-1"></i>
-              To Cart
-            </button>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-  <div class="row justify-content-center">
-    <nav class="col-auto">
-      <ul class="pagination">
-        <li class="page-item">
-          <button class="btn page-link" [ngClass]="{'disabled': currentPage<1}" (click)="toPreviousPage()">Previous</button>
-        </li>
-        <li *ngIf="currentPage > 0" class="page-item">
-          <a class="page-link" (click)="toPreviousPage()">{{this.currentPage}}</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link page-active">{{currentPage + 1}}</a>
-        </li>
-        <li *ngIf="currentPage+1 !== totalPages" class="page-item">
-          <a class="page-link" (click)="toNextPage()">{{currentPage + 2}}</a>
-        </li>
-        <li class="page-item">
-          <button class="btn page-link" [ngClass]="{'disabled': currentPage+1 === totalPages }" (click)="toNextPage()">Next</button>
-        </li>
-      </ul>
-    </nav>
-  </div>
-
 </div>
