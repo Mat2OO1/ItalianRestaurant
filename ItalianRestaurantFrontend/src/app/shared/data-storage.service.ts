@@ -173,4 +173,9 @@ export class DataStorageService {
     return this.http
       .delete(`${environment.apiUrl}/reservations/cancel?reservationId=${reservation.id}`)
   }
+
+  getLastDeliveryInfo(){
+    return this.http
+      .get<Delivery>(`${environment.apiUrl}/order/last`)
+  }
 }
