@@ -105,6 +105,7 @@ public class SecurityConfig {
             "/meal-categories/**",
             "/images/meals/**",
             "/meals",
+            "/meals/filter/**",
             "/payment/webhook"
     };
 

@@ -29,6 +29,15 @@ public class MealService {
         return mealRepository.findAll(pageable);
     }
 
+    public Page<Meal> getMealsByCategory(Pageable pageable, String category){
+        MealCategory mealCategory = mealCategoryService.getMealCategoryByName(category);
+        if(mealCategory != null){
+            return mealRepository.getMealsByMealCategoryName(pageable, mealCategory.getName());
+        }
+        else {
+            throw new EntityNotFoundException();
+        }
+    }
     public Meal getMealById(Long id) {
         return mealRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }

@@ -11,5 +11,5 @@ public interface MealRepository extends JpaRepository<Meal, Long> {
     Page<Meal> findAll(Pageable pageable);
     boolean existsByName(String name);
 
-    List<Meal> getMealsByMealCategoryName(String name);
+    Page<Meal> getMealsByMealCategoryName(Pageable pageable, String name);
 }

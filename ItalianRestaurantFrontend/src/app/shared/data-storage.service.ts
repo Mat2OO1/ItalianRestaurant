@@ -24,6 +24,13 @@ export class DataStorageService {
       )
   }
 
+  getFilteredMeals(page: number, size: number, category: string) {
+    return this.http
+      .get<MealResponse>(
+        `${environment.apiUrl}/meals/filter/${category}?page=${page}&size=${size}`,
+      )
+  }
+
   getMealsWithoutPagination() {
     return this.http
       .get<{ content: Meal[] }>(`${environment.apiUrl}/meals`)

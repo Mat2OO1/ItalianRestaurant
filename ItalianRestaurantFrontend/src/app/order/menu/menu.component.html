@@ -1,9 +1,9 @@
-<div class="container" style="margin-top: 10px">
+<div class="container">
   <div class="row justify-content-around">
-    <div class="col-lg-2 col-sm-3 col-6" style="border-radius: 10px; background-color: #8a8a8a; max-height: 300px">
-      <h4>Categories:</h4>
+    <div class="col-lg-2 col-sm-3 col-6 categories">
+      <h4 class="text-center">Categories:</h4>
       <p *ngFor="let category of categories">
-        <mat-checkbox (change)="onCategoryChange(category)">{{category.name}}</mat-checkbox>
+        <mat-checkbox [checked]="category === filteredCategory"  color="#005B47" (change)="onCategoryChange(category)">{{category.name}}</mat-checkbox>
       </p>
     </div>
     <div class="col-lg-7 col-sm-8 col-11">

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {Meal} from "../../models/meal";
 import {CartService} from "../../shared/cart.service";
 import {DataStorageService} from "../../shared/data-storage.service";
@@ -34,12 +34,12 @@ export class MenuComponent implements OnInit, OnDestroy {
               private toastService: ToastService,
               private authService: AuthService,
               private activatedRoute: ActivatedRoute) {
-
     this.authSubscription = this.authService.user.subscribe(
       (user) => {
         this.isLoggedIn = !!user?.token;
       }
     );
+    this.sentMealsRequest();
   }
 
 
@@ -58,37 +58,40 @@ export class MenuComponent implements OnInit, OnDestroy {
         }
       )
     this.sentMealsRequest();
-      // .subscribe(res => {
-      //   this.meals = {}
-      //   this.totalPages = res.numOfPages
-      //   this.currentPage = res.currPage
-      //   for (let meal of res.meals) {
-      //     if (this.meals[meal.mealCategory.name]) {
-      //       this.meals[meal.mealCategory.name].push(meal)
-      //     } else {
-      //       this.meals[meal.mealCategory.name] = [meal]
-      //     }
-      //   }
-      // });
   }
 
-  sentMealsRequest(){
-    this.dataStorageService.getMeals(this.currentPage, this.size)
-      .subscribe(
-        (res) => {
-          this.totalPages = res.totalPages
-          this.mealsNumber = res.totalElements
-          this.currentPage = res.number
-          this.meals = res.content.map(meal => new Meal(meal.id, meal.name, meal.image, meal.description, meal.price, meal.mealCategory))
-        }
-      )
+  sentMealsRequest(category?: string) {
+    if (category) {
+      this.dataStorageService.getFilteredMeals(this.currentPage, this.size, category)
+        .subscribe(
+          (res) => {
+            this.totalPages = res.totalPages
+            this.mealsNumber = res.totalElements
+            this.currentPage = res.number
+            this.meals = res.content.map(meal => new Meal(meal.id, meal.name, meal.image, meal.description, meal.price, meal.mealCategory))
+          }
+        )
+    }
+    else{
+      this.dataStorageService.getMeals(this.currentPage, this.size)
+        .subscribe(
+          (res) => {
+            this.totalPages = res.totalPages
+            this.mealsNumber = res.totalElements
+            this.currentPage = res.number
+            this.meals = res.content.map(meal => new Meal(meal.id, meal.name, meal.image, meal.description, meal.price, meal.mealCategory))
+          }
+        )
+    }
   }
 
-  onCategoryChange(category: Category){
-    if(this.filteredCategory !== undefined && this.filteredCategory.name === category.name){
+  onCategoryChange(category: Category) {
+    if (this.filteredCategory !== undefined && this.filteredCategory.name === category.name) {
       this.filteredCategory = undefined;
+      this.sentMealsRequest()
     } else {
       this.filteredCategory = category;
+      this.sentMealsRequest(category.name)
     }
   }
 
@@ -97,17 +100,10 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.toastService.showSuccessToast("Cart", "Added item to cart")
   }
 
-  onChangePage(event: PageEvent){
+  onChangePage(event: PageEvent) {
     this.currentPage = event.pageIndex;
     this.sentMealsRequest();
     window.scrollTo({top: 0});
-  }
-
-  scroll(category: string) {
-    var target = document.getElementById(category);
-    if (target !== null) {
-      target.scrollIntoView({behavior: 'smooth', block: 'start'});
-    }
   }
 
   ngOnDestroy() {

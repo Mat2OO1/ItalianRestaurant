@@ -30,6 +30,11 @@ public class MealController {
         return ResponseEntity.ok(mealService.getAllMeals(pageable));
     }
 
+    @GetMapping("/filter/{category}")
+    public ResponseEntity<Page<Meal>> getAllMeals(@PathVariable String category, Pageable pageable) {
+        return ResponseEntity.ok(mealService.getMealsByCategory(pageable, category));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Meal> getMealById(@PathVariable Long id) {
         try {
