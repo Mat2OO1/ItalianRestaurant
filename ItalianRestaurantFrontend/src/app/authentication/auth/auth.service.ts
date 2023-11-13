@@ -102,11 +102,16 @@ export class AuthService {
 
 
   handleAuthentication(token: string, expirationDate: number, role: Role) {
-    const expirationDuration = expirationDate - new Date().getTime();
-    const user = new User(token, new Date(expirationDuration), role);
-    this.user.next(user);
-    this.autoLogout(expirationDate);
-    localStorage.setItem('token', token);
+    const loadedUser = new User(token, new Date(expirationDate), role);
+    if (loadedUser.token) {
+      this.user.next(loadedUser);
+      const expirationDuration =
+        new Date(expirationDate).getTime() -
+        new Date().getTime();
+      this.autoLogout(expirationDuration);
+      localStorage.setItem('token', token);
+
+    }
   }
 
   requestResetPassword(email: string) {
