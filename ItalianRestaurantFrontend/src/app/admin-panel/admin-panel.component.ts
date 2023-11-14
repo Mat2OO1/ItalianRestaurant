@@ -20,7 +20,6 @@ export class AdminPanelComponent implements OnDestroy{
     this.dataStorageService.getOrders()
       .subscribe(
         (res) => {
-          console.log(res)
           this.orders = res;
           this.isContentLoaded = true;
           this.forms = this.orders.map(data =>
@@ -39,7 +38,6 @@ export class AdminPanelComponent implements OnDestroy{
     for (let meals of order.mealOrders) {
       sum += meals.meal.price
     }
-
     return sum;
   }
 
