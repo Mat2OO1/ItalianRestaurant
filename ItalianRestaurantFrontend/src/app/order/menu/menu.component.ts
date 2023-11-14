@@ -19,8 +19,8 @@ import {MatPaginator, PageEvent} from "@angular/material/paginator";
 export class MenuComponent implements OnInit, OnDestroy {
   categories: Category[] = []
   meals: Meal[] = [];
-  currentPage = 0
   totalPages = 0
+  pageIndex = 0
   size = 5;
   mealsNumber = 0;
   isLoggedIn = false;
@@ -62,23 +62,23 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   sentMealsRequest(category?: string) {
     if (category) {
-      this.dataStorageService.getFilteredMeals(this.currentPage, this.size, category)
+      this.dataStorageService.getFilteredMeals(this.pageIndex, this.size, category)
         .subscribe(
           (res) => {
             this.totalPages = res.totalPages
             this.mealsNumber = res.totalElements
-            this.currentPage = res.number
+            this.pageIndex = res.number
             this.meals = res.content.map(meal => new Meal(meal.id, meal.name, meal.image, meal.description, meal.price, meal.mealCategory))
           }
         )
     }
     else{
-      this.dataStorageService.getMeals(this.currentPage, this.size)
+      this.dataStorageService.getMeals(this.pageIndex, this.size)
         .subscribe(
           (res) => {
             this.totalPages = res.totalPages
             this.mealsNumber = res.totalElements
-            this.currentPage = res.number
+            this.pageIndex = res.number
             this.meals = res.content.map(meal => new Meal(meal.id, meal.name, meal.image, meal.description, meal.price, meal.mealCategory))
           }
         )
@@ -86,6 +86,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   onCategoryChange(category: Category) {
+    this.pageIndex = 0;
     if (this.filteredCategory !== undefined && this.filteredCategory.name === category.name) {
       this.filteredCategory = undefined;
       this.sentMealsRequest()
@@ -101,7 +102,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(event: PageEvent) {
-    this.currentPage = event.pageIndex;
+    this.pageIndex = event.pageIndex;
     this.sentMealsRequest();
     window.scrollTo({top: 0});
   }

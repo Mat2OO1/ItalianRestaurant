@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class MealService {
 
     private final MealRepository mealRepository;
@@ -32,6 +33,7 @@ public class MealService {
     public Page<Meal> getMealsByCategory(Pageable pageable, String category){
         MealCategory mealCategory = mealCategoryService.getMealCategoryByName(category);
         if(mealCategory != null){
+            log.info(mealRepository.getMealsByMealCategoryName(pageable, mealCategory.getName()));
             return mealRepository.getMealsByMealCategoryName(pageable, mealCategory.getName());
         }
         else {
