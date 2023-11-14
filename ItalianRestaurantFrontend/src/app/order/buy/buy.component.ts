@@ -23,7 +23,6 @@ export class BuyComponent {
     this.dataStorageService.getLastDeliveryInfo()
       .subscribe(
         (res) => {
-          console.log(res)
           this.lastDelivery = res;
         }
       )

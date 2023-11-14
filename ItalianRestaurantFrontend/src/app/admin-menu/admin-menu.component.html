@@ -64,7 +64,7 @@
           </tr>
           </tbody>
         </div>
-        <div style="text-align:right; padding: 16px 22.4px;" *ngIf="mealsByCategory[category.name] && mealsByCategory[category.name].length == 0">
+        <div style="text-align:right; padding: 16px 22.4px;" *ngIf="mealsByCategory[category.name] == undefined">
           <button matTooltip="Add" matTooltipPosition="above" class="btn btn-success" data-toggle="tooltip"
                   data-placement="top" title="Add" (click)="openDialog(DialogMode.ADD, category)">
             <i class="bi bi-plus-square"></i>
