@@ -32,13 +32,20 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String targetUrl = determineTargetUrl(request, response, authentication);
-
         if (response.isCommitted()) {
             logger.debug("Response has already been committed. Unable to redirect to " + targetUrl);
             return;
         }
-
+        String token = jwtService.generateToken((UserPrincipal) authentication.getPrincipal());
         clearAuthenticationAttributes(request, response);
+
+        Cookie cookie = new Cookie("token", token);
+        cookie.setPath("/oauth2/redirect");
+        cookie.setHttpOnly(false);
+        cookie.setMaxAge(180);
+        response.addCookie(cookie);
+
+        response.addCookie(cookie);
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 
@@ -50,13 +57,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             throw new BadRequestException("Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication");
         }
 
-        String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
-
-        String token = jwtService.generateToken((UserPrincipal) authentication.getPrincipal());
-
-        return UriComponentsBuilder.fromUriString(targetUrl)
-                .queryParam("token", token)
-                .build().toUriString();
+        return redirectUri.orElse(getDefaultTargetUrl());
     }
 
     protected void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response) {

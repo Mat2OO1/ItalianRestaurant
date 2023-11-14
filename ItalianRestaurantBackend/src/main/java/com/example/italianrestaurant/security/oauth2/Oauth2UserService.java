@@ -52,9 +52,7 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
         if (userOptional.isPresent()) {
             user = userOptional.get();
             if (!user.getProvider().equals(AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))) {
-                throw new OAuth2AuthenticationProcessingException("Looks like you're signed up with " +
-                        user.getProvider() + " account. Please use your " + user.getProvider() +
-                        " account to login.");
+                throw new OAuth2AuthenticationProcessingException(user.getProvider().toString());
             }
             user = updateExistingUser(user, oAuth2UserInfo);
         } else {

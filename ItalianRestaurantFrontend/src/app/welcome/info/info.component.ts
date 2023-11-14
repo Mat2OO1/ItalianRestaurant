@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {AuthService} from "../../authentication/auth/auth.service";
 
 @Component({
   selector: 'app-info',
@@ -9,23 +7,11 @@ import {AuthService} from "../../authentication/auth/auth.service";
 })
 export class InfoComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute,
-              private authService: AuthService,
-              private router: Router) {
+  constructor() {
   }
 
   ngOnInit(): void {
-    const token = this.route.snapshot.queryParamMap.get('token');
-    const error = this.route.snapshot.queryParamMap.get('error');
     const lang = localStorage.getItem('lang') || 'en'
-    if (token) {
-      this.authService.saveToken(token);
-      this.authService.user.subscribe(
-        data => {
-          this.router.navigate(['./menu'])
-        }
-      );
-    }
   }
 
 }

@@ -1,17 +1,18 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../auth/auth.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AppConstants} from "../../shared/constants";
 import {CartService} from "../../shared/cart.service";
 import {Subscription} from "rxjs";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent implements OnDestroy, OnInit {
   loginForm: FormGroup;
   error: string = ''
   googleURL = AppConstants.GOOGLE_AUTH_URL
@@ -22,11 +23,32 @@ export class LoginComponent implements OnDestroy {
 
   constructor(private authService: AuthService,
               private router: Router,
-              private cartService: CartService) {
+              private cartService: CartService,
+              private cookieService: CookieService,
+              private activatedRoute: ActivatedRoute) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
     })
+  }
+
+  ngOnInit() {
+    let token = this.cookieService.get('token');
+    if (token) {
+      this.authService.saveToken(token);
+      this.cookieService.delete('token', '/oauth2/redirect');
+      this.authService.user.subscribe(
+        data => {
+          this.router.navigate(['./menu'])
+        }
+      );
+    }
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params['error']) {
+        this.error = `Looks like you're signed up with ${params['error']} account.
+        Please use your ${params['error']} account to login.`
+      }
+    });
   }
 
   onLoginSubmit() {
@@ -52,7 +74,7 @@ export class LoginComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    if(this.authSubscription){
+    if (this.authSubscription) {
       this.authSubscription.unsubscribe()
     }
   }

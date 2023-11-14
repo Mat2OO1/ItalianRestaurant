@@ -35,6 +35,7 @@ const routes: Routes = [
   {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AdminGuard]},
   {path: 'admin-tables-panel', component: AdminTableQrComponent},
   {path: 'admin-menu', component: AdminMenuComponent, canActivate: [AdminGuard]},
+  {path: 'oauth2/redirect', component: LoginComponent, },
   {path: '**', redirectTo: ''}
 ]
 
