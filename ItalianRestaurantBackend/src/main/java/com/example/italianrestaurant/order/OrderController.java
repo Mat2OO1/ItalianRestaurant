@@ -7,6 +7,7 @@ import com.stripe.exception.StripeException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/order")
 @RequiredArgsConstructor
+@Log4j2
 public class  OrderController {
 
     private final OrderService orderService;

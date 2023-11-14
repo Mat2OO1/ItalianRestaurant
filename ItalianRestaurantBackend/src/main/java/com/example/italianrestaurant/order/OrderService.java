@@ -16,6 +16,7 @@ import com.example.italianrestaurant.user.UserService;
 import com.stripe.exception.StripeException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class OrderService {
 
     private final OrderRepository orderRepository;

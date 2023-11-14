@@ -4,7 +4,7 @@
       Order Details
     </h2>
     <form class="form" [formGroup]="buyForm" (ngSubmit)="onBuySubmit()">
-      <div class="form-group mb-4" style="text-align: left" *ngIf="showHint">
+      <div class="form-group mb-4" style="text-align: left" *ngIf="showHint && lastDelivery">
         <input class="form-check-input bg-white border" type="radio" id="hint" (change)="onPopulateInput()">
         <label class="form-check-label" for="hint">Fill in the form with previous delivery values</label>
       </div>
