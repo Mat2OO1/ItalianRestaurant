@@ -4,57 +4,69 @@
       Order Details
     </h2>
     <form class="form" [formGroup]="buyForm" (ngSubmit)="onBuySubmit()">
-      <div class="form-group mb-4" style="text-align: left" *ngIf="showHint && lastDelivery">
-        <input class="form-check-input bg-white border" type="radio" id="hint" (change)="onPopulateInput()">
-        <label class="form-check-label" for="hint">Fill in the form with previous delivery values</label>
-      </div>
-      <div class="form-group mb-4"
-           [ngClass]="{'has-error': buyForm.get('address')?.invalid && buyForm.get('address')?.touched}">
-        <label class="form-label " for="address">Address<span class="text-danger">*</span></label>
-        <input type="text" id="address" formControlName="address" class="form-control bg-white border"/>
-        <div *ngIf="buyForm.get('address')?.invalid && buyForm.get('address')?.touched" class="text-danger">
-          Address is required.
-        </div>
-      </div>
-      <div class="form-group mb-4"
-           [ngClass]="{'has-error': buyForm.get('city')?.invalid && buyForm.get('city')?.touched}">
-        <label class="form-label" for="city">City<span class="text-danger">*</span></label>
-        <input type="text" id="city" formControlName="city" class="form-control bg-white border"/>
-        <div *ngIf="buyForm.get('city')?.invalid && buyForm.get('city')?.touched" class="text-danger">
-          City is required.
-        </div>
-      </div>
-      <div class="form-group mb-4"
-           [ngClass]="{'has-error': buyForm.get('pcode')?.invalid && buyForm.get('pcode')?.touched}">
-        <label class="form-label" for="pcode">Postal Code<span class="text-danger">*</span></label>
-        <input type="text" id="pcode" formControlName="pcode" class="form-control bg-white border"/>
-        <div *ngIf="buyForm.get('pcode')?.invalid && buyForm.get('pcode')?.touched" class="text-danger">
-          Postal Code is required.
-        </div>
-      </div>
-      <div class="form-group mb-4">
-        <label class="form-label" for="floor">Floor</label>
-        <input type="number" id="floor" formControlName="floor" class="form-control bg-white border"/>
-        <div *ngIf="buyForm.get('floor')?.invalid && buyForm.get('floor')?.touched" class="text-danger">
-          Address is required.
-        </div>
-      </div>
-      <div class="form-group mb-4">
-        <label class="form-label" for="info">Additional info for provider</label>
-        <textarea id="info" formControlName="info" class="form-control bg-white border" style="height:100px"></textarea>
-      </div>
-      <div class="form-group mb-4" style="text-align: left">
-        <input class="form-check-input bg-white border" name="deliveryOption" type="radio" id="KNOCK" value="KNOCK"
-               formControlName="deliveryOption">
-        <label class="form-check-label" for="KNOCK">Knock On The Door</label>
-      </div>
-      <div class="form-group mb-4" style="text-align: left">
-        <input class="form-check-input bg-white border" name="deliveryOption" type="radio" id="LEAVE" value="LEAVE"
-               formControlName="deliveryOption">
-        <label class="form-check-label" for="LEAVE">Leave At The Door</label>
-      </div>
-      <button type="submit" class="proceed-btn" [disabled]="buyForm.invalid">Make An Order</button>
 
+
+      <mat-radio-button [style.visibility]="!(showHint && lastDelivery) ? 'hidden' : 'visible' "
+                        (change)="onPopulateInput()" id="hint">
+        Fill in the form with previous delivery values
+      </mat-radio-button>
+
+      <mat-form-field class="form-element">
+        <mat-label>Address</mat-label>
+        <input type="text" matInput formControlName="address" placeholder="Ex. Kwiatowa 23">
+        <mat-error *ngIf="buyForm.get('address')?.hasError('required')">
+          Address is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <mat-label>City</mat-label>
+        <input type="text" matInput formControlName="city" placeholder="Ex. Wroclaw">
+        <mat-error *ngIf="buyForm.get('city')?.hasError('required')">
+          City is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <mat-label>Postal code</mat-label>
+        <input type="text" matInput maxlength="6" formControlName="pcode" placeholder="Ex. 50-527">
+        <mat-error *ngIf="buyForm.get('pcode')?.hasError('pattern') && !buyForm.get('pcode')?.hasError('required')">
+          Please enter a valid postal code
+        </mat-error>
+        <mat-error *ngIf="buyForm.get('pcode')?.hasError('required')">
+          Postal code is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <mat-label>Floor</mat-label>
+        <input type="text" matInput formControlName="floor" placeholder="Ex. 3"/>
+        <mat-error *ngIf="buyForm.get('floor')?.hasError('pattern')">
+          Please enter a valid floor number (only digits are allowed).
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <mat-label>Additional info for provider</mat-label>
+        <textarea formControlName="info" rows="5" matInput></textarea>
+      </mat-form-field>
+
+      <mat-radio-group
+        formControlName="deliveryOption"
+        class="radio-group">
+        <mat-radio-button id="KNOCK" value="KNOCK">
+          Knock On The Door
+        </mat-radio-button>
+        <mat-radio-button id="LEAVE" value="LEAVE">
+          Leave At The Door
+        </mat-radio-button>
+        <mat-error *ngIf="buyForm.get('deliveryOption')?.hasError('required')">
+          Please select a delivery option.
+        </mat-error>
+
+      </mat-radio-group>
+
+      <button type="submit" class="proceed-btn" [disabled]="buyForm.invalid">Make An Order</button>
     </form>
   </div>
 </div>

@@ -29,8 +29,8 @@ export class BuyComponent {
     this.buyForm = new FormGroup({
       address: new FormControl('', [Validators.required]),
       city: new FormControl('', [Validators.required]),
-      pcode: new FormControl('', [Validators.required]),
-      floor: new FormControl(''),
+      pcode: new FormControl('', [Validators.pattern('^\\d{2}-\\d{3}$'), Validators.required]),
+      floor: new FormControl('', [Validators.pattern('^[0-9]*$')]),
       info: new FormControl(''),
       deliveryOption: new FormControl('')
     })
@@ -38,6 +38,7 @@ export class BuyComponent {
   }
 
   onBuySubmit() {
+    if (this.buyForm.invalid) return;
     let address = this.buyForm.value['address']
     let city = this.buyForm.value['city'];
     let pcode = this.buyForm.value['pcode'];
@@ -56,7 +57,7 @@ export class BuyComponent {
   }
 
 
-  onPopulateInput(){
+  onPopulateInput() {
     this.buyForm.get('address')?.setValue(this.lastDelivery?.address);
     this.buyForm.get('city')?.setValue(this.lastDelivery?.city);
     this.buyForm.get('pcode')?.setValue(this.lastDelivery?.postalCode);

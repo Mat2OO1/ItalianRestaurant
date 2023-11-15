@@ -58,6 +58,7 @@ import {
 } from "./reserve-table/cancel-reservation-dialog/cancel-reservation-dialog.component";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatRadioModule} from "@angular/material/radio";
 
 @NgModule({
   declarations: [
@@ -87,37 +88,38 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     ReserveTableComponent,
     ReserveTableDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    RouterLink,
-    RouterOutlet,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatProgressSpinnerModule,
-    QRCodeModule,
-    MatDialogModule,
-    MatTooltipModule,
-    MatButtonModule,
-    FormsModule,
-    MatCardModule,
-    MatListModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatSelectModule,
-    MatTabsModule,
-    MatCheckboxModule,
-    MatPaginatorModule,
-  ],
+    imports: [
+        BrowserModule,
+        RouterLink,
+        RouterOutlet,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatProgressSpinnerModule,
+        QRCodeModule,
+        MatDialogModule,
+        MatTooltipModule,
+        MatButtonModule,
+        FormsModule,
+        MatCardModule,
+        MatListModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatSelectModule,
+        MatTabsModule,
+        MatCheckboxModule,
+        MatPaginatorModule,
+        MatRadioModule,
+    ],
 
   providers: [
     CartService,
