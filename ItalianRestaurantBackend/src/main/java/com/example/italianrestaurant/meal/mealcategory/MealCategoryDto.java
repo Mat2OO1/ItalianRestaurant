@@ -9,4 +9,5 @@ import lombok.*;
 @Builder
 public class MealCategoryDto {
     private String name;
+    private String name_pl;
 }

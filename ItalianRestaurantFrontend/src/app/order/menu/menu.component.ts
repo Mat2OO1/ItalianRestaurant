@@ -25,6 +25,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   mealsNumber = 0;
   isLoggedIn = false;
   filteredCategory ?: Category;
+  lang = localStorage.getItem('lang') || 'en';
 
 
   authSubscription?: Subscription | null;
@@ -106,6 +107,9 @@ export class MenuComponent implements OnInit, OnDestroy {
     window.scrollTo({top: 0});
   }
 
+  getCategoryName(category: Category): string {
+    return this.lang === 'pl' ? category.name_pl || category.name : category.name || '';
+  }
   ngOnDestroy() {
     this.authSubscription?.unsubscribe()
   }

@@ -24,6 +24,8 @@ public class MealCategory {
     private Long id;
     @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
+    private String name_pl;
     private String image;
     @JsonIgnore
     @ToString.Exclude

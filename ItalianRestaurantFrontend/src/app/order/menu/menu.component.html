@@ -3,7 +3,9 @@
     <div class="col-lg-2 col-sm-3 col-6 categories">
       <h4 class="text-center">{{'category'|translate}}:</h4>
       <p *ngFor="let category of categories">
-        <mat-checkbox [checked]="category === filteredCategory"  color="#005B47" (change)="onCategoryChange(category)">{{category.name}}</mat-checkbox>
+        <mat-checkbox [checked]="category === filteredCategory"  color="#005B47" (change)="onCategoryChange(category)">
+          {{getCategoryName(category)}}
+        </mat-checkbox>
       </p>
     </div>
     <div class="col-lg-7 col-sm-8 col-11">

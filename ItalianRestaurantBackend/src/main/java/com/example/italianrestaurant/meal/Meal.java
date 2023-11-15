@@ -22,12 +22,15 @@ public class Meal {
     private Long id;
     @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
+    private String name_pl;
     private String image;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
     @ToString.Exclude
     private MealCategory mealCategory;
     private String description;
+    private String description_pl;
     @Column(nullable = false)
     private double price;
 
