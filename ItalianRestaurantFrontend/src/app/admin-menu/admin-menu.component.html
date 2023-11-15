@@ -7,8 +7,6 @@
       <div class="category-with-meal" *ngFor="let category of categories">
         <div style="margin: 0" class="d-inline-flex align-items-center">
           <h3 style="font-weight: bold; margin:0 10px">{{category.name}}</h3>
-          <img class="img-fluid img-thumbnail" style="max-width:40px; height: auto; margin:0 10px"
-               src="{{category.image}}">
           <button class="btn btn-info" style="margin:0 10px" (click)="openCategoryDialog(DialogMode.EDIT,category)">
             <i class="bi bi-pen"></i>
           </button>

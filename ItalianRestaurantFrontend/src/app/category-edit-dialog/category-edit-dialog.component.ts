@@ -2,7 +2,6 @@ import {Component, Inject} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {DIALOG_DATA} from "@angular/cdk/dialog";
-import {DataStorageService} from "../shared/data-storage.service";
 import {Category} from "../models/category";
 
 @Component({
@@ -30,8 +29,8 @@ export class CategoryEditDialogComponent {
 
 
   constructor(private dialogRef: MatDialogRef<CategoryEditDialogComponent>,
-              @Inject(DIALOG_DATA) public data: { mode: string, category?: Category },
-              private dataStorageService: DataStorageService) {
+              @Inject(DIALOG_DATA) public data: { mode: string, category?: Category }
+  ) {
     this.categoryForm = new FormGroup({
       name: new FormControl(data.category !== undefined ? data.category.name : '', [Validators.required]),
     })
@@ -45,7 +44,6 @@ export class CategoryEditDialogComponent {
     if (this.categoryForm.valid) {
       let result = {
         name: this.categoryForm.value['name'],
-        file: this.selectedFile!,
         id: this.data.category?.id
       }
       this.dialogRef.close(result);
@@ -55,9 +53,4 @@ export class CategoryEditDialogComponent {
   closeDialogAndDelete(): void {
     this.dialogRef.close(this.data.category?.id);
   }
-
-  onFileUploaded(event: any): void {
-    this.selectedFile = event.target.files[0] as File;
-  }
-
 }

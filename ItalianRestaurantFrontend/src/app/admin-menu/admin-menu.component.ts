@@ -17,7 +17,6 @@ import {MealDto} from "../models/mealDto";
 export class AdminMenuComponent {
   mealsByCategory: { [category: string]: Meal[] } = {};
   categories: CategoryDto[] = []
-  mealForm: FormGroup
   areMealsLoaded = false;
   areCategoriesLoaded = false;
 
@@ -25,11 +24,6 @@ export class AdminMenuComponent {
 
   constructor(public dialog: MatDialog,
               private dataStorageService: DataStorageService) {
-    this.mealForm = new FormGroup({
-      name: new FormControl(''),
-      description: new FormControl(''),
-      price: new FormControl(''),
-    })
     this.getMeals()
     this.getCategories()
   }
@@ -105,12 +99,12 @@ export class AdminMenuComponent {
                                      result: { name: string, file: File, id: number | undefined } | number) {
     if (result) {
       if (mode === DialogMode.ADD && typeof result === 'object') {
-        this.dataStorageService.addCategory(result.name, result.file).subscribe(() => {
+        this.dataStorageService.addCategory(result.name).subscribe(() => {
           this.getCategories();
           this.getMeals();
         });
       } else if (mode === DialogMode.EDIT && typeof result === 'object') {
-        this.dataStorageService.editCategory(result.name, result.file, result.id!).subscribe(() => {
+        this.dataStorageService.editCategory(result.name, result.id!).subscribe(() => {
           this.getCategories();
           this.getMeals();
         });

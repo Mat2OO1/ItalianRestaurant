@@ -18,8 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -158,7 +157,7 @@ public class ReservationControllerTest {
 
         val table = Utils.getTable();
         table.setId(1L);
-        given(reservationService.getReservationsForTable(anyInt(),any(LocalDate.class))).willReturn(List.of(dateTime));
+        given(reservationService.getReservationsForTable(anyLong(),any(LocalDate.class))).willReturn(List.of(dateTime));
 
         //when
         val resultActions = mockMvc.perform(get("/reservations/reserved")

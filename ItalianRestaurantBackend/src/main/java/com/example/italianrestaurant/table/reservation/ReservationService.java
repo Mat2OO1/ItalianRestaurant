@@ -28,7 +28,7 @@ public class ReservationService {
     public Reservation addReservation(UserPrincipal userPrincipal, ReservationDto reservationDto) {
         log.warn(reservationDto.getReservationDateStart());
         User user = userService.getUserByEmail(userPrincipal.getEmail());
-        log.info(this.reservationRepository.getReservationForTable(reservationDto.getTable().getId().intValue(), LocalDate.from(reservationDto.getReservationDateStart())));
+        log.info(this.reservationRepository.getReservationForTable(reservationDto.getTable().getId(), LocalDate.from(reservationDto.getReservationDateStart())));
         if (this.reservationRepository.getReservationsByUserAndDate(userPrincipal.getEmail(), reservationDto.getReservationDateStart()).size() != 0) {
             throw new UserReservationConflictException();
         } else if (this.reservationRepository.getReservedTables(
@@ -64,7 +64,7 @@ public class ReservationService {
                 .collect(Collectors.toList());
     }
 
-    public List<LocalDateTime> getReservationsForTable(int tableId, LocalDate date) {
+    public List<LocalDateTime> getReservationsForTable(Long tableId, LocalDate date) {
         return this.reservationRepository.getReservationForTable(tableId, date)
                 .stream().map(Reservation::getReservationDateStart)
                 .collect(Collectors.toList());

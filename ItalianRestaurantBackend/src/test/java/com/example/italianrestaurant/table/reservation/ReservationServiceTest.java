@@ -52,7 +52,7 @@ public class ReservationServiceTest {
         given(modelMapper.map(any(), eq(Reservation.class))).willReturn(reservation);
         given(userService.getUserByEmail(any())).willReturn(user);
         //when
-        val savedReservation = reservationService.addReservation(UserPrincipal.create(user),reservationDto);
+        val savedReservation = reservationService.addReservation(UserPrincipal.create(user), reservationDto);
         //then
         assertThat(savedReservation).isEqualTo(reservation);
     }
@@ -145,10 +145,10 @@ public class ReservationServiceTest {
         Reservation reservation = Utils.getReservation();
         List<Reservation> reservedTables = List.of(reservation);
         reservation.getTable().setId(1L);
-        given(reservationRepository.getReservationForTable(any(int.class), any())).willReturn(reservedTables);
+        given(reservationRepository.getReservationForTable(any(long.class), any())).willReturn(reservedTables);
 
         // When
-        List<LocalDateTime> reservedTableList = reservationService.getReservationsForTable(reservation.getTable().getId().intValue(), LocalDate.from(reservation.getReservationDateStart()));
+        List<LocalDateTime> reservedTableList = reservationService.getReservationsForTable(reservation.getTable().getId(), LocalDate.from(reservation.getReservationDateStart()));
 
         // Then
         assertThat(reservedTableList).isEqualTo(reservedTables

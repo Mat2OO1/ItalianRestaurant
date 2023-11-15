@@ -18,7 +18,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("SELECT r FROM Reservation r " +
             "WHERE r.table.id = :tableId " +
             "AND DATE(r.reservationDateStart) = DATE(:date)")
-    List<Reservation> getReservationForTable(int tableId, LocalDate date);
+    List<Reservation> getReservationForTable(Long tableId, LocalDate date);
 
     @Query("FROM Reservation r WHERE DATE(r.reservationDateStart) = DATE(:date) AND r.user.email = :email")
 

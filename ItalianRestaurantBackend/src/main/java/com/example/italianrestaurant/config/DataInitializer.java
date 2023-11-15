@@ -145,17 +145,14 @@ public class DataInitializer {
         return List.of(
                 MealCategory.builder()
                         .name("pizza")
-                        .image(pizzaImage)
                         .build(),
 
                 MealCategory.builder()
                         .name("pasta")
-                        .image(pastaImage)
                         .build(),
 
                 MealCategory.builder()
                         .name("seafood")
-                        .image(seafoodImage)
                         .build()
         );
     }

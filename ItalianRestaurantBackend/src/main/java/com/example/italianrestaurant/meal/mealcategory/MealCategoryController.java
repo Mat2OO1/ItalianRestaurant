@@ -39,11 +39,9 @@ public class MealCategoryController {
     }
 
     @PostMapping(path = "/add")
-    public ResponseEntity<MealCategory> addCategory(@RequestPart("image") MultipartFile image,
-                                                    @RequestPart("meal_category") String mealCategoryJson) throws JsonProcessingException {
-        MealCategoryDto mealCategoryDto = objectMapper.readValue(mealCategoryJson, MealCategoryDto.class);
+    public ResponseEntity<MealCategory> addCategory(@RequestBody MealCategoryDto mealCategoryDto) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(mealCategoryService.addCategory(mealCategoryDto, image));
+            return ResponseEntity.status(HttpStatus.CREATED).body(mealCategoryService.addCategory(mealCategoryDto));
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "There is already a category with name " + mealCategoryDto.getName(), e);
@@ -55,11 +53,9 @@ public class MealCategoryController {
 
     @PutMapping(path = "/edit/{id}")
     public ResponseEntity<MealCategory> editCategory(@PathVariable Long id,
-                                                     @RequestPart(name = "image", required = false) MultipartFile image,
-                                                     @RequestPart("meal_category") String mealCategoryJson) throws JsonProcessingException {
-        MealCategoryDto mealCategoryDto = objectMapper.readValue(mealCategoryJson, MealCategoryDto.class);
+                                                     @RequestBody MealCategoryDto mealCategoryDto) {
         try {
-            return ResponseEntity.ok(mealCategoryService.editCategory(mealCategoryDto, id, image));
+            return ResponseEntity.ok(mealCategoryService.editCategory(mealCategoryDto, id));
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "There is no category with id " + id, e);
