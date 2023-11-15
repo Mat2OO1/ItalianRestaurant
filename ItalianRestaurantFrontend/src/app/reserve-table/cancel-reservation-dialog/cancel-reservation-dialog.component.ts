@@ -10,6 +10,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {TranslateModule} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-cancel-reservation-dialog',
@@ -24,7 +25,8 @@ import {DatePipe, NgForOf, NgIf} from "@angular/common";
     MatSelectModule,
     NgForOf,
     NgIf,
-    DatePipe
+    DatePipe,
+    TranslateModule
   ],
   standalone: true
 })

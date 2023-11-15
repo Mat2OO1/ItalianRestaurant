@@ -1,56 +1,56 @@
 <mat-tab-group [backgroundColor]="'primary'" [color]="'primary'" dynamicHeight>
-  <mat-tab label="Reserve Table">
+  <mat-tab label="{{ 'do_reserve_table' | translate }}">
     <div class="container mt-4">
-      <h1>Choose table</h1>
+      <h1>{{ 'choose_table' | translate }}</h1>
       <div class="flex-container">
         <div class="flex-item" *ngFor="let table of tables">
           <mat-card class="card">
             <mat-card-header>
-              <mat-card-title>Table {{ table.number }}</mat-card-title>
+              <mat-card-title>{{ 'one_table' | translate }} {{ table.number }}</mat-card-title>
             </mat-card-header>
-            <img mat-card-image src="/assets/images/table.jpg" alt="table">
+            <img mat-card-image src="/assets/images/table.jpg" alt="{{ 'one_table' | translate }}">
             <mat-card-content>
               <mat-list role="list">
-                <mat-list-item role="listitem">Number of seats: {{ table.seats }}</mat-list-item>
+                <mat-list-item role="listitem">{{ 'number_of_seats' | translate }}: {{ table.seats }}</mat-list-item>
               </mat-list>
             </mat-card-content>
             <mat-card-actions>
-              <button class="proceed-btn" (click)="openTableDialog(table)">Reserve table</button>
+              <button class="proceed-btn" (click)="openTableDialog(table)">{{ 'do_reserve_table' | translate }}</button>
             </mat-card-actions>
           </mat-card>
         </div>
       </div>
     </div>
   </mat-tab>
-  <mat-tab label="My Reservations">
+  <mat-tab label="{{ 'my_reservations' | translate }}">
     <div class="container mt-4" *ngIf="userReservations.length > 0">
-      <h1 class="text-center">Upcoming reservations</h1>
+      <h1 class="text-center">{{ 'upcoming_reservations' | translate }}</h1>
       <div class="flex-container">
         <div class="flex-item" *ngFor="let reservation of userReservations">
           <mat-card class="small-card">
             <mat-card-header>
               <mat-card-title>{{ reservation.reservationDateStart | date: "dd.MM.yyyy"}}</mat-card-title>
             </mat-card-header>
-            <img mat-card-image src="/assets/images/table.jpg" alt="table">
+            <img mat-card-image src="/assets/images/table.jpg" alt="{{ 'one_table' | translate }}">
             <mat-card-content>
               <mat-list role="list">
-                <mat-list-item role="listitem">Hour: {{ reservation.reservationDateStart | date: "HH:mm" }}</mat-list-item>
-                <mat-list-item role="listitem">Table number: {{ reservation.table.number }}</mat-list-item>
-                <mat-list-item role="listitem">Number of seats: {{ reservation.table.seats }}</mat-list-item>
+                <mat-list-item role="listitem">{{ 'hour' | translate }}: {{ reservation.reservationDateStart | date: "HH:mm" }}</mat-list-item>
+                <mat-list-item role="listitem">{{ 'table_number' | translate }}: {{ reservation.table.number }}</mat-list-item>
+                <mat-list-item role="listitem">{{ 'number_of_seats' | translate }}: {{ reservation.table.seats }}</mat-list-item>
               </mat-list>
             </mat-card-content>
             <mat-card-actions>
-              <button class="cancel-btn btn-danger" (click)="openCancelationDialog(reservation)">Cancel</button>
+              <button class="cancel-btn btn-danger" (click)="openCancelationDialog(reservation)">{{ 'cancel' | translate }}</button>
             </mat-card-actions>
           </mat-card>
         </div>
       </div>
     </div>
     <div class="container mt-4 text-center" *ngIf="userReservations.length === 0">
-          <br>
-          <h3>You don't have any reservations.</h3>
-          <br>
-          <button class="btn btn-rounded" routerLink="/menu">Return to menu</button>
-        </div>
+      <br>
+      <h3>{{ 'no_reservations' | translate }}</h3>
+      <br>
+      <button class="btn btn-rounded" routerLink="/menu">{{ 'return_to_menu' | translate }}</button>
+    </div>
   </mat-tab>
 </mat-tab-group>

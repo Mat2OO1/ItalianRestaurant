@@ -1,20 +1,20 @@
 <div class="container mt-4">
-  <h1>Choose table</h1>
+  <h1>{{'choose_table'|translate}}</h1>
   <div class="flex-container">
     <div class="flex-item" *ngFor="let table of tables">
       <mat-card class="card">
         <mat-card-header>
-          <mat-card-title>Table {{ table.number }}</mat-card-title>
+          <mat-card-title>{{'one_table'|translate}} {{ table.number }}</mat-card-title>
         </mat-card-header>
         <img mat-card-image src="/assets/images/table.jpg" alt="table">
         <mat-card-content>
           <mat-list role="list">
-            <mat-list-item role="listitem">Number of seats: {{ table.seats }}</mat-list-item>
-            <mat-list-item role="listitem">Status: {{ !!table.reserved ? "RESERVED" : "FREE"  }}</mat-list-item>
+            <mat-list-item role="listitem">{{'number_of_seats'|translate}}: {{ table.seats }}</mat-list-item>
+            <mat-list-item role="listitem">{{'table_status'|translate}}: {{ !!table.reserved ? "RESERVED" : "FREE"  }}</mat-list-item>
           </mat-list>
         </mat-card-content>
         <mat-card-actions>
-          <button class="proceed-btn" [disabled]="table.reserved" (click)="proceedOrder(table.number)">Order to this table</button>
+          <button class="proceed-btn" [disabled]="table.reserved" (click)="proceedOrder(table.number)">{{'order_to_table'|translate}}</button>
         </mat-card-actions>
       </mat-card>
     </div>

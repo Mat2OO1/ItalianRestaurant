@@ -1,30 +1,31 @@
-<h2 mat-dialog-title>{{data.mode}} Meal</h2>
+<!-- Meal Dialog -->
+<h2 mat-dialog-title>{{'edit'|translate}} {{'meal' | translate}}</h2>
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="mealForm" *ngIf="data.mode !== 'DELETE'">
-    <label class="form-label" for="name">Name</label>
+    <label class="form-label" for="name">{{'name_menu' | translate}}</label>
     <input class="form-control" id="name" type="text" formControlName="name">
-    <label class="form-label" for="description">Description</label>
+    <label class="form-label" for="description">{{'menu_description' | translate}}</label>
     <input class="form-control" id="description" type="text" formControlName="description">
-    <label class="form-label" for="price">Price</label>
+    <label class="form-label" for="price">{{'price' | translate}}</label>
     <input class="form-control" id="price" type="text" formControlName="price">
-    <label class="form-label" for="fileInput">Image Path</label>
-    <input class="form-control" type="file" id="fileInput" (change)="onFileUploaded($event)"/>
+    <label class="form-label" for="fileInput">{{'path' | translate}}</label>
+    <input class="form-control" type="file" id="fileInput" (change)="onFileUploaded($event)" />
   </form>
   <div class="d-flex justify-content-center align-items-center" *ngIf="data.mode === 'DELETE'">
-    <h5>Are you sure you want to delete a meal with name: {{data.meal?.name}}</h5>
+    <h5>{{'are_you_sure_delete' | translate}} {{'meal' | translate}} {{'with_name' | translate}}: {{data.meal?.name}}</h5>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end" *ngIf="data.mode === 'EDIT'">
-  <button class="btn btn-primary" (click)="closeDialog()">Cancel</button>
-  <button class="btn btn-info" (click)="closeDialogAndUpdate()">Edit</button>
+  <button class="btn btn-primary" (click)="closeDialog()">{{'cancel' | translate}}</button>
+  <button class="btn btn-info" (click)="closeDialogAndUpdate()">{{'edit' | translate}}</button>
 </mat-dialog-actions>
 
 <mat-dialog-actions align="end" *ngIf="data.mode === 'DELETE'">
-  <button class="btn btn-primary" (click)="closeDialog()">Cancel</button>
-  <button class="btn btn-danger" (click)="closeDialogAndDelete()">Delete</button>
+  <button class="btn btn-primary" (click)="closeDialog()">{{'cancel' | translate}}</button>
+  <button class="btn btn-danger" (click)="closeDialogAndDelete()">{{'delete' | translate}}</button>
 </mat-dialog-actions>
 
 <mat-dialog-actions align="end" *ngIf="data.mode === 'ADD'">
-  <button class="btn btn-primary" (click)="closeDialog()">Cancel</button>
-  <button class="btn btn-success" (click)="closeDialogAndUpdate()">ADD</button>
+  <button class="btn btn-primary" (click)="closeDialog()">{{'cancel' | translate}}</button>
+  <button class="btn btn-success" (click)="closeDialogAndUpdate()">{{'add' | translate}}</button>
 </mat-dialog-actions>

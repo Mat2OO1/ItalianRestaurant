@@ -1,19 +1,19 @@
 <div class="container" style="margin-top: 20px; min-width:400px" [hidden]="!isContentLoaded">
   <div class="text-content">
     <h2 class="title">
-      Confirmation
+      {{'confirmation'|translate}}
     </h2>
-    <h5>Your order has been confirmed.</h5>
-    <h6>Order number: {{orderNumber}}</h6>
+    <h5>{{'order_confirmed'|translate}}</h5>
+    <h6>{{'order_number'|translate}} {{orderNumber}}</h6>
     <br>
-    <h4>Details:</h4>
+    <h4>{{'details'|translate}}:</h4>
     <table class="table">
       <thead>
       <tr>
-        <th scope="col"> Meal</th>
-        <th scope="col">Meal Name</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Price</th>
+        <th scope="col">{{'meal'|translate}}</th>
+        <th scope="col">{{'meal_name'|translate}}</th>
+        <th scope="col">{{'quantity'|translate}}</th>
+        <th scope="col">{{'price'|translate}}</th>
       </tr>
       </thead>
       <tbody>
@@ -23,17 +23,17 @@
         </th>
         <td class="align-middle">{{item.meal.name}}</td>
         <td class="align-middle">{{item.quantity}}</td>
-        <td class="align-middle" style="font-size: 12px">{{item.meal.price * item.quantity}}$</td>
+        <td class="align-middle" style="font-size: 12px">{{item.meal.price * item.quantity}}{{'currency'|translate}}</td>
       </tr>
       <tr>
         <th></th>
         <td></td>
-        <td>Sum:</td>
-        <td style="font-size: 12px"><strong>{{calculateOrder()}}$</strong></td>
+        <td>{{'sum'|translate}}</td>
+        <td style="font-size: 12px"><strong>{{calculateOrder()}}{{'currency'|translate}}</strong></td>
       </tr>
       </tbody>
     </table>
-    <h3>Delivery status:</h3>
+    <h3>{{'delivery_status'|translate}}:</h3>
     <div class="steps">
       <span class="circle active" id="circle1">1</span>
       <span class="circle" id="circle2">2</span>
@@ -44,13 +44,13 @@
     </div>
     <br>
     <div class="info pt-5">
-      <h3 class="text-center">{{orderDetails.status ? orderDetails.status : 'Processing' }}</h3>
+      <h3 class="text-center">{{orderDetails.status ? orderDetails.status : '{{processing}}' }}</h3>
     </div>
     <br>
-    <h3 *ngIf="orderDetails.table">Your order will be on table {{ orderDetails.table}} on:</h3>
-    <h3 *ngIf="!orderDetails.table">Estimated delivery time:</h3>
+    <h3 *ngIf="orderDetails.table">{{'order_on_table'|translate}} {{ orderDetails.table}}</h3>
+    <h3 *ngIf="!orderDetails.table">{{'estimated_delivery_time'|translate}}:</h3>
     <div class="info">
-      <h3 class="text-center">{{ orderDetails.date ? (orderDetails.date | date:"HH:mm") : 'Processing' }}</h3>
+      <h3 class="text-center">{{ orderDetails.date ? (orderDetails.date | date:"HH:mm") : 'processing'|translate }}</h3>
     </div>
   </div>
 </div>
@@ -60,5 +60,3 @@
   height: 100vh;">
   <app-loading-spinner></app-loading-spinner>
 </div>
-
-

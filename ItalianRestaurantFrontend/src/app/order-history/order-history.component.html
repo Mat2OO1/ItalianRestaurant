@@ -1,13 +1,13 @@
 <div class="container" *ngIf="isContentLoaded">
   <div class="text-center" *ngIf="orders.length === 0">
     <br>
-    <h3>You don't have any orders.</h3>
+    <h3>{{'no_order'|translate}}</h3>
     <br>
-    <button class="btn btn-rounded" routerLink="/menu">Return to menu</button>
+    <button class="btn btn-rounded" routerLink="/menu">{{'return_to_menu'|translate}}</button>
   </div>
 
   <div *ngIf="orders.length > 0">
-    <h2 class="text-center" *ngIf="getCurrentOrders().length > 0">Your current orders:</h2>
+    <h2 class="text-center" *ngIf="getCurrentOrders().length > 0">{{'your_current_orders'|translate}}</h2>
     <div class="card mb-3" style="max-width: 540px; margin: 0 auto" *ngFor="let order of getCurrentOrders()">
       <div class="row g-0">
         <div class="col-md-4">
@@ -16,22 +16,21 @@
         </div>
         <div class="col-md-8">
           <div class="card-body">
-            <h5 class="card-title">Order no. {{order.id }}</h5>
+            <h5 class="card-title">{{'order_no'|translate}} {{order.id }}</h5>
             <div class="row">
               <div class="col-6">
                 <p class="card-text" *ngFor="let meal of order.mealOrders">{{meal.meal.name}} x {{meal.quantity}}</p>
               </div>
               <div class="col-6">
-                <button class="btn btn-rounded" (click)="goToDetails(order.id)">See details</button>
+                <button class="btn btn-rounded" (click)="goToDetails(order.id)">{{'see_details'|translate}}</button>
               </div>
             </div>
             <div class="row">
               <div class="col-6">
-                <p class="card-text"><small class="text-muted">{{formatDeliveryStatus(order.orderStatus)}}</small></p>
+                <p class="card-text"><small class="text-muted">{{'delivery_status'|translate}}: {{formatDeliveryStatus(order.orderStatus)}}</small></p>
               </div>
               <div class="col-6">
-                <p class="card-text"><small
-                  class="text-muted">Delivery: {{customFormatDate(order?.deliveryDate)}}</small></p>
+                <p class="card-text"><small class="text-muted">{{'delivery'|translate}}: {{customFormatDate(order?.deliveryDate)}}</small></p>
               </div>
             </div>
           </div>
@@ -39,7 +38,7 @@
       </div>
     </div>
     <br>
-    <h2 class="text-center" *ngIf="getArchivalOrders().length >0">Your archival orders:</h2>
+    <h2 class="text-center" *ngIf="getArchivalOrders().length >0">{{'your_archival_orders'|translate}}</h2>
     <div *ngFor="let order of getArchivalOrders()">
       <div class="card mb-3" style="max-width: 540px; margin: 0 auto">
         <div class="row g-0">
@@ -49,15 +48,14 @@
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">Order no. {{order.id }}</h5>
+              <h5 class="card-title">{{'order_no'|translate}} {{order.id }}</h5>
               <p class="card-text" *ngFor="let meal of order.mealOrders">{{meal.meal.name}} x {{meal.quantity}}</p>
               <div class="row">
                 <div class="col-6">
-                  <p class="card-text"><small class="text-muted">{{formatDeliveryStatus(order.orderStatus)}}</small></p>
+                  <p class="card-text"><small class="text-muted">{{'delivery_status'|translate}}: {{formatDeliveryStatus(order.orderStatus)}}</small></p>
                 </div>
                 <div class="col-6">
-                  <p class="card-text"><small
-                    class="text-muted">Delivery: {{customFormatDate(order?.deliveryDate)}}</small></p>
+                  <p class="card-text"><small class="text-muted">{{'delivery'|translate}}: {{customFormatDate(order?.deliveryDate)}}</small></p>
                 </div>
               </div>
             </div>
