@@ -33,7 +33,7 @@ const routes: Routes = [
   {path: 'table', component: TableComponent, canActivate: [AuthGuard]},
   {path: 'reserve-table', component: ReserveTableComponent, canActivate: [AuthGuard]},
   {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AdminGuard]},
-  {path: 'admin-tables-panel', component: AdminTableQrComponent},
+  {path: 'admin-tables-panel', component: AdminTableQrComponent, canActivate: [AdminGuard]},
   {path: 'admin-menu', component: AdminMenuComponent, canActivate: [AdminGuard]},
   {path: 'oauth2/redirect', component: LoginComponent, },
   {path: '**', redirectTo: ''}
