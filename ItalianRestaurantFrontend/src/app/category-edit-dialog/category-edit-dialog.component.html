@@ -1,24 +1,29 @@
-<h2 mat-dialog-title>{{data.mode}} Category</h2>
+<h2 mat-dialog-title>{{data.mode}} category</h2>
 <mat-dialog-content class="mat-typography">
-  <form [formGroup]="categoryForm" *ngIf="data.mode !== 'DELETE'">
-    <label class="form-label" for="name">Name</label>
-    <input class="form-control" id="name" type="text" formControlName="name">
+  <form [formGroup]="categoryForm" *ngIf="data.mode !== DialogMode.DELETE">
+    <mat-form-field class="form-element">
+      <mat-label>Name</mat-label>
+      <input type="text" matInput formControlName="name" placeholder="Ex. Pizza">
+      <mat-error *ngIf="categoryForm.get('name')?.hasError('required')">
+        Category name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
   </form>
-  <div class="d-flex justify-content-center align-items-center" *ngIf="data.mode === 'DELETE'">
+  <div class="d-flex justify-content-center align-items-center" *ngIf="data.mode === DialogMode.DELETE">
     <h5>Are you sure you want to delete a category with name: {{data.category?.name}} and all corresponding meals?</h5>
   </div>
 </mat-dialog-content>
-<mat-dialog-actions align="end" *ngIf="data.mode === 'EDIT'">
+<mat-dialog-actions align="end" *ngIf="data.mode === DialogMode.EDIT">
   <button class="btn btn-primary" (click)="closeDialog()">Cancel</button>
-  <button class="btn btn-info" (click)="closeDialogAndUpdate()">Edit</button>
+  <button [disabled]="categoryForm.invalid" class="btn btn-info" (click)="closeDialogAndUpdate()">Edit</button>
 </mat-dialog-actions>
 
-<mat-dialog-actions align="end" *ngIf="data.mode === 'DELETE'">
+<mat-dialog-actions align="end" *ngIf="data.mode === DialogMode.DELETE">
   <button class="btn btn-primary" (click)="closeDialog()">Cancel</button>
   <button class="btn btn-danger" (click)="closeDialogAndDelete()">Delete</button>
 </mat-dialog-actions>
 
-<mat-dialog-actions align="end" *ngIf="data.mode === 'ADD'">
+<mat-dialog-actions align="end" *ngIf="data.mode === DialogMode.ADD">
   <button class="btn btn-primary" (click)="closeDialog()">Cancel</button>
-  <button class="btn btn-success" (click)="closeDialogAndUpdate()">ADD</button>
+  <button [disabled]="categoryForm.invalid" class="btn btn-success" (click)="closeDialogAndUpdate()">Add</button>
 </mat-dialog-actions>

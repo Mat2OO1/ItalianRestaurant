@@ -3,31 +3,17 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {DIALOG_DATA} from "@angular/cdk/dialog";
 import {Category} from "../models/category";
+import {DialogMode} from "../models/modal-mode";
 
 @Component({
   selector: 'app-category-edit-dialog',
   templateUrl: './category-edit-dialog.component.html',
-  styleUrls: ['./category-edit-dialog.component.css'],
-  styles: [`
-    :host {
-      display: block;
-      width: 50vw;
-      background: #fff;
-      border-radius: 8px;
-      padding: 16px;
-    }
-
-    :host * {
-      color: black;
-    }
-  `]
+  styleUrls: ['./category-edit-dialog.component.css']
 })
 export class CategoryEditDialogComponent {
 
   categoryForm: FormGroup
-  selectedFile: File | null = null;
-
-
+  protected readonly DialogMode = DialogMode;
   constructor(private dialogRef: MatDialogRef<CategoryEditDialogComponent>,
               @Inject(DIALOG_DATA) public data: { mode: string, category?: Category }
   ) {
@@ -35,7 +21,6 @@ export class CategoryEditDialogComponent {
       name: new FormControl(data.category !== undefined ? data.category.name : '', [Validators.required]),
     })
   }
-
   closeDialog(): void {
     this.dialogRef.close();
   }

@@ -1,3 +1,32 @@
 .btn-primary{
   margin-right: 10px;
 }
+
+.form-element {
+  width: 100%;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+:host {
+  display: block;
+  width: 50vw;
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.file-input {
+  display: flex;
+  align-items: center;
+}
+
+.file-input > * {
+  margin-right: 12px;
+}
+
+.image-error {
+  color: red;
+  font-size: 12px;
+  margin-left: 14px;
+}

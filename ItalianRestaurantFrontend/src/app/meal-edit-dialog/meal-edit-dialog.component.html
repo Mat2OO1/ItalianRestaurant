@@ -1,30 +1,58 @@
-<h2 mat-dialog-title>{{data.mode}} Meal</h2>
+<h2 mat-dialog-title>{{data.mode}} meal</h2>
 <mat-dialog-content class="mat-typography">
-  <form [formGroup]="mealForm" *ngIf="data.mode !== 'DELETE'">
-    <label class="form-label" for="name">Name</label>
-    <input class="form-control" id="name" type="text" formControlName="name">
-    <label class="form-label" for="description">Description</label>
-    <input class="form-control" id="description" type="text" formControlName="description">
-    <label class="form-label" for="price">Price</label>
-    <input class="form-control" id="price" type="text" formControlName="price">
-    <label class="form-label" for="fileInput">Image Path</label>
-    <input class="form-control" type="file" id="fileInput" (change)="onFileUploaded($event)"/>
+  <form [formGroup]="mealForm" *ngIf="data.mode !== DialogMode.DELETE">
+    <mat-form-field class="form-element">
+      <mat-label>Name</mat-label>
+      <input type="text" matInput formControlName="name" placeholder="Ex. Margherita">
+      <mat-error *ngIf="mealForm.get('name')?.hasError('required')">
+        Meal name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-element">
+      <mat-label>Description</mat-label>
+      <input type="text" matInput formControlName="description" placeholder="Ex. Ingredients">
+      <mat-error *ngIf="mealForm.get('description')?.hasError('required')">
+        Description is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-element">
+      <mat-label>Price</mat-label>
+      <input type="text" matInput formControlName="price" placeholder="Ex. 14.56"/>
+      <mat-error
+        *ngIf="mealForm.get('price')?.hasError('invalidPrice') && !mealForm.get('price')?.hasError('required')">
+        Please enter a valid price
+      </mat-error>
+      <mat-error *ngIf="mealForm.get('price')?.hasError('required')">
+        Price is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <div class="file-input">
+      <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+      <p style="margin: 0">{{ (!selectedFile?.name && data.mode === DialogMode.EDIT) ? "Not updated" : selectedFile?.name }}</p>
+      <input hidden (change)="onFileUploaded($event)" #fileInput type="file" id="file">
+    </div>
+    <mat-error *ngIf="!selectedFile && data.mode === DialogMode.ADD" class="image-error">
+      Image is <strong>required</strong>
+    </mat-error>
+
   </form>
-  <div class="d-flex justify-content-center align-items-center" *ngIf="data.mode === 'DELETE'">
+  <div class="d-flex justify-content-center align-items-center" *ngIf="data.mode === DialogMode.DELETE">
     <h5>Are you sure you want to delete a meal with name: {{data.meal?.name}}</h5>
   </div>
 </mat-dialog-content>
-<mat-dialog-actions align="end" *ngIf="data.mode === 'EDIT'">
+<mat-dialog-actions align="end" *ngIf="data.mode === DialogMode.EDIT">
   <button class="btn btn-primary" (click)="closeDialog()">Cancel</button>
-  <button class="btn btn-info" (click)="closeDialogAndUpdate()">Edit</button>
+  <button class="btn btn-info" [disabled]="mealForm.invalid" (click)="closeDialogAndUpdate()">Edit</button>
 </mat-dialog-actions>
 
-<mat-dialog-actions align="end" *ngIf="data.mode === 'DELETE'">
+<mat-dialog-actions align="end" *ngIf="data.mode === DialogMode.DELETE">
   <button class="btn btn-primary" (click)="closeDialog()">Cancel</button>
   <button class="btn btn-danger" (click)="closeDialogAndDelete()">Delete</button>
 </mat-dialog-actions>
 
-<mat-dialog-actions align="end" *ngIf="data.mode === 'ADD'">
+<mat-dialog-actions align="end" *ngIf="data.mode === DialogMode.ADD">
   <button class="btn btn-primary" (click)="closeDialog()">Cancel</button>
-  <button class="btn btn-success" (click)="closeDialogAndUpdate()">ADD</button>
+  <button class="btn btn-success" [disabled]="mealForm.invalid || !selectedFile" (click)="closeDialogAndUpdate()">Add</button>
 </mat-dialog-actions>
