@@ -92,7 +92,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.sentMealsRequest()
     } else {
       this.filteredCategory = category;
-      this.sentMealsRequest(category.name)
+      this.sentMealsRequest(this.filteredCategory.name)
     }
   }
 
@@ -103,7 +103,8 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   onChangePage(event: PageEvent) {
     this.pageIndex = event.pageIndex;
-    this.sentMealsRequest();
+    this.size = event.pageSize;
+    this.sentMealsRequest(this.filteredCategory?.name);
     window.scrollTo({top: 0});
   }
 
