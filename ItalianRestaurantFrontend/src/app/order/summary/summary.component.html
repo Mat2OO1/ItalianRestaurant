@@ -4,14 +4,14 @@
   </div>
   <div class="text-content">
     <h2 class="title">
-      Order Summary
+      {{'order_summary'|translate}}
     </h2>
     <div class="plan-box" *ngFor="let item of cart.meals">
       <div class="plan-box-left">
         <img class="img-preview" src="{{item.meal.image}}">
         <div>
           <h5>{{item.meal.name}}</h5>
-          <p>{{item.quantity}}x {{item.meal.price}}$</p>
+          <p>{{item.quantity}}x {{item.meal.price}} {{'currency'|translate}}</p>
         </div>
       </div>
       <div class="buttons">
@@ -20,27 +20,27 @@
         <button class="plus-minus-btn" (click)="increaseQuantity(item)">+</button>
         <button class="plus-minus-btn" (click)="removeItem(item)"><i class="bi bi-x"></i></button>
       </div>
-      <h4 class="calculated">{{(item.quantity * item.meal.price).toFixed(2)}} $</h4>
+      <h4 class="calculated">{{(item.quantity * item.meal.price).toFixed(2)}} {{'currency'|translate}}</h4>
     </div>
     <hr style="width: 70%; margin: auto">
-    <h4 class="sum">Sum: {{sum.toFixed(2)}} $</h4>
+    <h4 class="sum">{{'sum'|translate}} {{sum.toFixed(2)}} {{'currency'|translate}}</h4>
     <div class="mt-4 plan-box" *ngIf="cart.table">
       <h4>
-        You are ordering to table number {{ cart.table }}.
-        To cancel, click the following button:
+        {{'you_order_to_table'|translate}} {{ cart.table }}.
+        {{'to_cancel_click'|translate}}
       </h4>
-      <button class="btn btn-danger btn-lg py-2 px-3" (click)="removeTable()" style="white-space: nowrap; margin-left: 80px;">Cancel Table</button>
+      <button class="btn btn-danger btn-lg py-2 px-3" (click)="removeTable()" style="white-space: nowrap; margin-left: 80px;">{{'cancel_table'|translate}}</button>
     </div>
 
     <div class="mt-4" *ngIf="!cart.table">
-      <h2>Takeaway or on-site?</h2>
+      <h2>{{'takeaway_or_on-site'|translate}}</h2>
       <input class="form-check-input bg-white border" [(ngModel)]="selectedDeliveryOption" name="deliveryOption" type="radio" id="TAKEAWAY" value="TAKEAWAY">
-      <label class="form-check-label me-4" for="TAKEAWAY">Takeaway</label>
+      <label class="form-check-label me-4" for="TAKEAWAY">{{'takeaway'|translate}}</label>
       <input class="form-check-input bg-white border ms-4" [(ngModel)]="selectedDeliveryOption" name="deliveryOption" type="radio" id="ONSITE" value="ONSITE">
-      <label class="form-check-label" for="ONSITE">On-site</label>
+      <label class="form-check-label" for="ONSITE">{{'on-site'|translate}}</label>
     </div>
 
-    <button class="proceed-btn" (click)="proceed()" [ngClass]="{'disabled': cart.meals.length === 0}">Proceed</button>
-    <a href="#" class="cancel-btn" routerLink="/menu">Cancel</a>
+    <button class="proceed-btn" (click)="proceed()" [ngClass]="{'disabled': cart.meals.length === 0}">{{'proceed'|translate}}</button>
+    <a href="#" class="cancel-btn" routerLink="/menu">{{'cancel'|translate}}</a>
   </div>
 </div>

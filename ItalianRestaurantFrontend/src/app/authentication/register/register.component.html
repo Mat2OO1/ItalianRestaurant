@@ -4,53 +4,53 @@
     <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
       <!-- First name input -->
       <div class="mb-4">
-        <label class="form-label" for="name">Name<span class="text-danger">*</span></label>
+        <label class="form-label" for="name">{{'name'|translate}}<span class="text-danger">*</span></label>
         <input type="text" id="name" formControlName="firstName" class="form-control bg-white border"/>
         <div
           *ngIf="registerForm.get('firstName').invalid && (registerForm.get('firstName').dirty || registerForm.get('firstName').touched)"
           class="text-danger">
           <div *ngIf="registerForm.get('firstName').errors['required']">
-            Name is required.
+            {{'name_toast'|translate}}
           </div>
         </div>
       </div>
       <!-- Surname input -->
       <div class="mb-4">
-        <label class="form-label" for="surname">Surname<span class="text-danger">*</span></label>
+        <label class="form-label" for="surname">{{'surname'|translate}}<span class="text-danger">*</span></label>
         <input type="text" id="surname" formControlName="lastName" class="form-control bg-white border"/>
         <div
           *ngIf="registerForm.get('lastName').invalid && (registerForm.get('lastName').dirty || registerForm.get('lastName').touched)"
           class="text-danger">
           <div *ngIf="registerForm.get('lastName').errors['required']">
-            Surname is required.
+            {{'surname_toast'|translate}}
           </div>
         </div>
       </div>
       <!-- Email input -->
       <div class="mb-4">
-        <label class="form-label" for="email">Email address<span class="text-danger">*</span></label>
+        <label class="form-label" for="email">{{'email'|translate}}<span class="text-danger">*</span></label>
         <input type="email" id="email" formControlName="email" class="form-control bg-white border"/>
         <div
           *ngIf="registerForm.get('email').invalid && (registerForm.get('email').dirty || registerForm.get('email').touched)"
           class="text-danger">
           <div *ngIf="registerForm.get('email').errors['required']">
-            Email is required.
+            {{'email_toast'|translate}}
           </div>
           <div *ngIf="registerForm.get('email').errors['email']">
-            Please enter a valid email address.
+            {{'email_invalid'|translate}}
           </div>
         </div>
       </div>
 
       <!-- Password input -->
       <div class="mb-4">
-        <label class="form-label" for="password">Password<span class="text-danger">*</span></label>
+        <label class="form-label" for="password">{{'password'|translate}}<span class="text-danger">*</span></label>
         <input type="password" id="password" formControlName="password" class="form-control bg-white border"/>
         <div
           *ngIf="registerForm.get('password').invalid && (registerForm.get('password').dirty || registerForm.get('password').touched)"
           class="text-danger">
           <div *ngIf="registerForm.get('password').errors['required']">
-            Password is required.
+            {{'password_toast'|translate}}
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@
       <div class="text-center">
         <!-- Submit button -->
         <button type="submit" [disabled]="!registerForm.valid" class="btn btn-primary rounded-pill"
-                style="background-color: #005B47; text-decoration: none; color: #FFFFFF">Register
+                style="background-color: #005B47; text-decoration: none; color: #FFFFFF">{{'register'|translate}}
         </button>
       </div>
     </form>

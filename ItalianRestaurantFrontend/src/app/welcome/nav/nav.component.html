@@ -16,13 +16,13 @@ align-items: center;
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav ms-auto d-flex align-items-center">
         <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.ADMIN"
-           routerLink="/admin-tables-panel">Tables</a>
-        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.ADMIN" routerLink="/admin-menu">Edit Menu</a>
-        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.ADMIN" routerLink="/admin-panel">Orders</a>
-        <a class="nav-item nav-link" *ngIf="currentUser" routerLink="/menu">Menu</a>
-        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.USER" routerLink="/reserve-table">Reserve Table</a>
-        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.USER" routerLink="/order-history">Orders</a>
-        <a class="nav-item nav-link" *ngIf="currentUser !== null" (click)="onLogout()" href="#">Logout</a>
+           routerLink="/admin-tables-panel">{{'table'|translate}}</a>
+        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.ADMIN" routerLink="/admin-menu">{{'menu_editor'|translate}}</a>
+        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.ADMIN" routerLink="/admin-panel">{{'orders'|translate}}</a>
+        <a class="nav-item nav-link" *ngIf="currentUser" routerLink="/menu">{{'menu'|translate}}</a>
+        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.USER" routerLink="/reserve-table">{{'reserve_table'|translate}}</a>
+        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.USER" routerLink="/order-history">{{'orders'|translate}}</a>
+        <a class="nav-item nav-link" *ngIf="currentUser !== null" (click)="onLogout()" href="#">{{'logout'|translate}}</a>
         <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.USER" routerLink="/summary"><i class="bi bi-cart"
                                                                                                       style="font-size: 1.5em;"></i></a>
         <a class="nav-item nav-link active" routerLink="/menu" *ngIf="!currentUser">
@@ -41,8 +41,8 @@ align-items: center;
         </a>
         <a class="nav-item nav-link active">
           <select (change)="ChangeLang($event)" class="form-select">
-            <option [selected]="lang==='en'" value = "en">English</option>
-            <option [selected]="lang==='pl'" value = "pl">Polski</option>
+            <option [selected]="lang==='en'" value = "en">{{'en'|translate}}</option>
+            <option [selected]="lang==='pl'" value = "pl">{{'pl'|translate}}</option>
           </select>
         </a>
       </div>

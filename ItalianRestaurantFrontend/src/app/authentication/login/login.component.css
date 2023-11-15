@@ -4,3 +4,9 @@
   padding: 0.6rem 0;
   margin-right: 15px;
 }
+.forgot-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
