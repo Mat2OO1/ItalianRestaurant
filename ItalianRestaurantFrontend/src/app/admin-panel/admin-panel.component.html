@@ -4,9 +4,9 @@
     <thead>
     <tr>
       <th style="width:70px; font-size: 9px;" scope="col">ID: {{order.id}}</th>
-      <th scope="col">Meal</th>
-      <th scope="col">Quantity</th>
-      <th scope="col">Price</th>
+      <th scope="col">{{'meal'|translate}}</th>
+      <th scope="col">{{'quantity'|translate}}</th>
+      <th scope="col">{{'price'|translate}}</th>
     </tr>
     </thead>
     <tbody>
@@ -22,9 +22,9 @@
           <table class="table table-active">
             <thead>
             <tr>
-              <th scope="col">Order Status</th>
-              <th scope="col">Estimated Delivery Date</th>
-              <th scope="col">Address</th>
+              <th scope="col">{{'order_status'|translate}}</th>
+              <th scope="col">{{'estimate_delivery'|translate}}</th>
+              <th scope="col">{{'address'|translate}}</th>
               <th scope="col"></th>
               <th scope="col"></th>
             </tr>
@@ -33,9 +33,9 @@
             <tr>
               <td>
                 <select class="form-select" formControlName="orderStatus">
-                  <option value="IN_PREPARATION">In preperation</option>
-                  <option value="IN_DELIVERY">In delivery</option>
-                  <option value="DELIVERED">Delivered</option>
+                  <option value="IN_PREPARATION">{{'in_preparation'|translate}}</option>
+                  <option value="IN_DELIVERY">{{'in_delivery'|translate}}</option>
+                  <option value="DELIVERED">{{'delivered'|translate}}</option>
                 </select>
               </td>
               <td>
@@ -43,10 +43,10 @@
               </td>
               <td>{{order.delivery.address}} {{order.delivery.city}} {{order.delivery.deliveryOptions}} {{order.delivery.postalCode}} {{order.delivery.info}}</td>
               <td>
-                <button class="btn btn-primary" type="submit">Change</button>
+                <button class="btn btn-primary" type="submit">{{'change'|translate}}</button>
               </td>
               <td>
-                <button class="btn btn-danger" type="submit" (click)="deleteOrder(order.id)">Delete</button>
+                <button class="btn btn-danger" type="submit" (click)="deleteOrder(order.id)">{{'delete'|translate}}</button>
               </td>
 
             </tr>
@@ -59,12 +59,12 @@
       <td></td>
       <td></td>
       <td></td>
-      <td><strong>Sum: {{calculateSum(order).toFixed(2)}} $</strong></td>
+      <td><strong>{{'sum'|translate}}{{calculateSum(order).toFixed(2)}} {{'currency'|translate}}</strong></td>
 
     </tr>
     </tbody>
   </table>
 </div>
 <div class="container" *ngIf="orders.length === 0">
-  <div class="alert-primary center-alert">There are no orders today.</div>
+  <div class="alert-primary center-alert">{{'no_order'|translate}}</div>
 </div>

@@ -1,38 +1,38 @@
 <p class="p-5"></p>
 <div class="container d-flex align-items-center justify-content-center">
   <div class="row" style="width:40%">
-    <h1>Login</h1>
+    <h1>{{'login' | translate}}</h1>
     <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
-      <!-- Email input -->
+
       <mat-form-field class="form-field" appearance="outline">
-        <mat-label>Email</mat-label>
+        <mat-label>{{'email'|translate}}</mat-label>
         <input type="email" matInput formControlName="email"
-               placeholder="Ex. pat@example.com">
+               placeholder="{{'email_example'|translate}}">
         <mat-error *ngIf="loginForm.get('email')?.hasError('email') && !loginForm.get('email')?.hasError('required')">
-          Please enter a valid email address
+          {{'email_invalid'|translate}}
         </mat-error>
         <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
-          Email is <strong>required</strong>
+          {{'email_toast'|translate}}
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="form-field" appearance="outline">
-        <mat-label>Enter your password</mat-label>
+        <mat-label>{{'password'|translate}}</mat-label>
         <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
         <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
         <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
-          Password cannot be empty
+          {{"password_toast"|translate}}
         </mat-error>
       </mat-form-field>
 
       <div class="form-group">
         <p class="content-divider center mt-3 text-center">
-          <span>or</span>
+          <span>{{'or'|translate}}</span>
         </p>
         <p class="social-login text-center">
-          Sign in with:
+          {{'sign_in_with'|translate}}
           <br>
           <a href="{{ googleURL }}" class="ml-2">
             <img alt="Login with Google" src="assets/images/google.png" class="btn-img">
@@ -49,9 +49,9 @@
           <!-- Checkbox -->
         </div>
 
-        <div class="col">
+        <div>
           <!-- Simple link -->
-          <a routerLink="/reset">Forgot password?</a>
+          <a routerLink="/reset" class="forgot-link">{{'forgot'|translate}}</a>
         </div>
       </div>
       <div *ngIf="error != ''" class="alert alert-danger"
@@ -61,13 +61,13 @@
       <div class="text-center">
         <!-- Submit button -->
         <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary rounded-pill"
-                style="background-color: #005B47; text-decoration: none; color: #FFFFFF">Sign in
+                style="background-color: #005B47; text-decoration: none; color: #FFFFFF">{{'sign_in'|translate}}
         </button>
         <!-- Register buttons -->
       </div>
       <hr>
       <div class="text-center">
-        <p>Not a member? <a routerLink="/register">Register</a></p>
+        <p> {{'member'|translate}} <a routerLink="/register">{{'register'|translate}}</a></p>
       </div>
     </form>
   </div>

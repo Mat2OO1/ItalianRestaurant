@@ -1,59 +1,67 @@
-<h2 mat-dialog-title>{{data.mode}} meal</h2>
+<h2 mat-dialog-title>{{data.mode.toLowerCase() | translate}} {{'meal' | translate}}</h2>
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="mealForm" *ngIf="data.mode !== DialogMode.DELETE">
     <mat-form-field class="form-element" appearance="outline">
-      <mat-label>Name</mat-label>
-      <input type="text" matInput formControlName="name" placeholder="Ex. Margherita">
+      <mat-label>{{'name_menu' | translate}}</mat-label>
+      <input type="text" matInput formControlName="name" placeholder="{{'meal_example' | translate}}">
       <mat-error *ngIf="mealForm.get('name')?.hasError('required')">
-        Meal name is <strong>required</strong>
+        {{'meal_toast' | translate}}
       </mat-error>
     </mat-form-field>
     <mat-form-field class="form-element" appearance="outline">
-      <mat-label>Description</mat-label>
-      <input type="text" matInput formControlName="description" placeholder="Ex. Ingredients">
+      <mat-label>{{'menu_description' | translate}}</mat-label>
+      <input type="text" matInput formControlName="description"
+             placeholder="{{'meal_description_example' | translate}}">
       <mat-error *ngIf="mealForm.get('description')?.hasError('required')">
-        Description is <strong>required</strong>
+        {{'meal_description_toast' | translate}}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="form-element" appearance="outline">
-      <mat-label>Price</mat-label>
-      <input type="text" matInput formControlName="price" placeholder="Ex. 14.56"/>
+      <mat-label>{{'price' | translate}}</mat-label>
+      <input type="text" matInput formControlName="price" placeholder="{{'price_example' | translate}}"/>
       <span matTextSuffix>zł</span>
       <mat-error
         *ngIf="mealForm.get('price')?.hasError('invalidPrice') && !mealForm.get('price')?.hasError('required')">
-        Please enter a valid price
+        {{'price_invalid' | translate}}
       </mat-error>
       <mat-error *ngIf="mealForm.get('price')?.hasError('required')">
-        Price is <strong>required</strong>
+        {{'price_toast' | translate}}
       </mat-error>
     </mat-form-field>
 
     <div class="file-input">
-      <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
-      <p style="margin: 0">{{ (!selectedFile?.name && data.mode === DialogMode.EDIT) ? "Not updated" : selectedFile?.name }}</p>
+      <button type="button" mat-raised-button (click)="fileInput.click()">{{'choose_file' | translate}}</button>
+      <p style="margin: 0" *ngIf="(!selectedFile?.name && data.mode === DialogMode.EDIT)">
+        {{'not_updated' | translate }}
+      </p>
+      <p style="margin: 0" *ngIf="(!selectedFile?.name && data.mode === DialogMode.ADD)">
+        {{ selectedFile?.name }}
+      </p>
       <input hidden (change)="onFileUploaded($event)" #fileInput type="file" id="file">
     </div>
     <mat-error *ngIf="!selectedFile && data.mode === DialogMode.ADD" class="image-error">
-      Image is <strong>required</strong>
+      {{'image_toast' | translate}}
     </mat-error>
 
   </form>
   <div class="d-flex justify-content-center align-items-center" *ngIf="data.mode === DialogMode.DELETE">
-    <h5>Are you sure you want to delete a meal with name: {{data.meal?.name}}</h5>
+    <h5>{{'are_you_sure_delete' | translate}}: {{data.meal?.name}}</h5>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end" *ngIf="data.mode === DialogMode.EDIT">
-  <button class="btn btn-primary" (click)="closeDialog()">Cancel</button>
-  <button class="btn btn-info" [disabled]="mealForm.invalid" (click)="closeDialogAndUpdate()">Edit</button>
+  <button class="btn btn-primary" (click)="closeDialog()">{{'cancel' | translate}}</button>
+  <button class="btn btn-info" [disabled]="mealForm.invalid"
+          (click)="closeDialogAndUpdate()">{{'edit' | translate}}</button>
 </mat-dialog-actions>
 
 <mat-dialog-actions align="end" *ngIf="data.mode === DialogMode.DELETE">
-  <button class="btn btn-primary" (click)="closeDialog()">Cancel</button>
-  <button class="btn btn-danger" (click)="closeDialogAndDelete()">Delete</button>
+  <button class="btn btn-primary" (click)="closeDialog()">{{'cancel' | translate}}</button>
+  <button class="btn btn-danger" (click)="closeDialogAndDelete()">{{'delete' | translate}}</button>
 </mat-dialog-actions>
 
 <mat-dialog-actions align="end" *ngIf="data.mode === DialogMode.ADD">
-  <button class="btn btn-primary" (click)="closeDialog()">Cancel</button>
-  <button class="btn btn-success" [disabled]="mealForm.invalid || !selectedFile" (click)="closeDialogAndUpdate()">Add</button>
+  <button class="btn btn-primary" (click)="closeDialog()">{{'cancel' | translate}}</button>
+  <button class="btn btn-success" [disabled]="mealForm.invalid || !selectedFile"
+          (click)="closeDialogAndUpdate()">{{'add' | translate}}</button>
 </mat-dialog-actions>

@@ -2,18 +2,18 @@
   <div class="row justify-content-center" style="margin:20px">
     <div class="col-auto">
       <br>
-      <h1>Tables Editor</h1>
+      <h1>{{'table_editor'|translate}}</h1>
       <br>
       <div class="tables-container table table-image table-responsive">
         <thead>
         <tr>
-          <th scope="col">Table number</th>
-          <th scope="col">Nr of seats</th>
-          <th scope="col">Status</th>
-          <th scope="col">Qr code</th>
-          <th scope="col">Download QR code</th>
-          <th scope="col">Edit</th>
-          <th scope="col">Delete</th>
+          <th scope="col">{{'table_number'|translate}}</th>
+          <th scope="col">{{'table_nr_seats'|translate}}</th>
+          <th scope="col">{{'table_status'|translate}}</th>
+          <th scope="col">{{'table_qr_code'|translate}}</th>
+          <th scope="col">{{'table_download'|translate}}</th>
+          <th scope="col">{{'edit'|translate}}</th>
+          <th scope="col">{{'delete'|translate}}</th>
         </tr>
         </thead>
         <tbody>
@@ -55,27 +55,27 @@
             <!--   -----   -->
           </td>
           <td>
-            <button class="btn btn-success" data-toggle="tooltip"
-                    data-placement="top" title="Download" (click)="downloadQrCode(qrcode)">
+            <button class="btn btn-success" data-toggle="tooltip" matTooltip="{{'download'|translate}}" matTooltipPosition="above"
+                    data-placement="top" (click)="downloadQrCode(qrcode)">
               <i class="bi bi-download"></i>
             </button>
           </td>
           <td>
-            <button class="btn btn-info" data-toggle="tooltip"
-                    data-placement="top" title="Edit" (click)="openTableDialog(DialogMode.EDIT, table)">
+            <button class="btn btn-info" data-toggle="tooltip" matTooltip="{{'edit'|translate}}" matTooltipPosition="above"
+                    data-placement="top" (click)="openTableDialog(DialogMode.EDIT, table)">
               <i class="bi bi-pen"></i>
             </button>
           </td>
           <td>
-            <button class="btn btn-danger" data-toggle="tooltip"
-                    data-placement="top" title="Delete" (click)="openTableDialog(DialogMode.DELETE, table)">
+            <button class="btn btn-danger" data-toggle="tooltip" matTooltip="{{'delete'|translate}}" matTooltipPosition="above"
+                    data-placement="top" (click)="openTableDialog(DialogMode.DELETE, table)">
               <i class="bi bi-trash"></i>
             </button>
           </td>
         </tr>
         </tbody>
         <div style="margin-top: 10px">
-          <button class="btn btn-success" (click)="openTableDialog(DialogMode.ADD)">Add Table</button>
+          <button class="btn btn-success" (click)="openTableDialog(DialogMode.ADD)">{{'table_add'|translate}}</button>
         </div>
       </div>
     </div>

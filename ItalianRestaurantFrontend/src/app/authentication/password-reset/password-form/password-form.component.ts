@@ -24,14 +24,16 @@ export class PasswordFormComponent {
   }
 
   onResetSubmit() {
-    if (this.arePasswordsDifferent) this.toastService.showErrorToast("Reset error", "Passwords are different");
+    if (this.arePasswordsDifferent) {
+      this.toastService.showErrorToast("Reset error", "Passwords are different");
+      return;
+    }
     if (this.passwordForm.invalid || this.token === null) return;
     let password = this.passwordForm.value['repeatPassword'];
     this.authService.resetPassword(password, this.token)
   }
 
   get arePasswordsDifferent() {
-    console.log(this.passwordForm.get('password')?.value !== this.passwordForm.get("repeatPassword")?.value)
     return this.passwordForm.get('password')?.value !== this.passwordForm.get("repeatPassword")?.value
   }
 }

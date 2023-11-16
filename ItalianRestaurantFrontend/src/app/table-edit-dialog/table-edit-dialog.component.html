@@ -1,31 +1,31 @@
-<h2 mat-dialog-title>{{data.mode}} Table</h2>
+<h2 mat-dialog-title>{{'edit'| translate}} {{ 'one_table' | translate }}</h2>
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="tableForm" *ngIf="data.mode !== DialogMode.DELETE">
-    <label class="form-label" for="name">Number</label>
+    <label class="form-label" for="name">{{ 'number' | translate }}</label>
     <input class="form-control" id="name" type="number" formControlName="number">
-    <label class="form-label" for="description">Number of seats</label>
+    <label class="form-label" for="description">{{ 'number_of_seats' | translate }}</label>
     <input class="form-control" id="description" type="text" formControlName="seats">
   </form>
 
   <div class="d-flex justify-content-center align-items-center" *ngIf="data.mode === DialogMode.DELETE">
-    <h5>Are you sure you want to delete a table with number: {{data.table?.number}}</h5>
+    <h5>{{ 'are_you_sure_delete' | translate }} {{ 'one_table' | translate }} {{data.table?.number}}</h5>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button class="btn btn-primary"
           (click)="closeDialog()">
-    Cancel
+    {{ 'cancel' | translate }}
   </button>
   <button class="btn btn-info"
           *ngIf="data.mode === DialogMode.EDIT"
-          (click)="closeDialogAndUpdate()">Edit
+          (click)="closeDialogAndUpdate()">{{ 'edit' | translate }}
   </button>
   <button class="btn btn-danger"
           *ngIf="data.mode === DialogMode.DELETE"
-          (click)="closeDialogAndDelete()">Delete
+          (click)="closeDialogAndDelete()">{{ 'delete' | translate }}
   </button>
   <button class="btn btn-success"
           *ngIf="data.mode === DialogMode.ADD"
-          (click)="closeDialogAndUpdate()">ADD
+          (click)="closeDialogAndUpdate()">{{ 'add' | translate }}
   </button>
 </mat-dialog-actions>

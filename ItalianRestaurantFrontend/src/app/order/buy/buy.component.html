@@ -1,53 +1,52 @@
 <div class="container" style="margin-top: 20px" *ngIf="isContentLoaded">
   <div class="text-content">
     <h2 class="title text-center">
-      Order Details
+      {{ 'order_details' | translate }}
     </h2>
     <form class="form" [formGroup]="buyForm" (ngSubmit)="onBuySubmit()">
 
-
       <mat-radio-button [style.visibility]="!(showHint && lastDelivery) ? 'hidden' : 'visible' "
                         (change)="onPopulateInput()" id="hint">
-        Fill in the form with previous delivery values
+        {{ "fill_form_with_previous_values" | translate}}
       </mat-radio-button>
 
       <mat-form-field class="form-element" appearance="outline">
-        <mat-label>Address</mat-label>
-        <input type="text" matInput formControlName="address" placeholder="Ex. Kwiatowa 23">
+        <mat-label>{{ "address" | translate}}</mat-label>
+        <input type="text" matInput formControlName="address" placeholder="{{'address_example' | translate}}">
         <mat-error *ngIf="buyForm.get('address')?.hasError('required')">
-          Address is <strong>required</strong>
+          {{ "address_required" | translate}}
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="form-element" appearance="outline">
-        <mat-label>City</mat-label>
-        <input type="text" matInput formControlName="city" placeholder="Ex. Wroclaw">
+        <mat-label>{{"city" | translate}}</mat-label>
+        <input type="text" matInput formControlName="city" placeholder="{{'city_example' | translate}}">
         <mat-error *ngIf="buyForm.get('city')?.hasError('required')">
-          City is <strong>required</strong>
+          {{"city_required" | translate}}
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="form-element" appearance="outline">
-        <mat-label>Postal code</mat-label>
-        <input type="text" matInput maxlength="6" formControlName="pcode" placeholder="Ex. 50-527">
+        <mat-label>{{"postal_code" | translate}}</mat-label>
+        <input type="text" matInput maxlength="6" formControlName="pcode" placeholder="{{'postal_code_example' | translate}}">
         <mat-error *ngIf="buyForm.get('pcode')?.hasError('pattern') && !buyForm.get('pcode')?.hasError('required')">
-          Please enter a valid postal code
+          {{"postal_code_invalid" | translate}}
         </mat-error>
         <mat-error *ngIf="buyForm.get('pcode')?.hasError('required')">
-          Postal code is <strong>required</strong>
+          {{"postal_code_required" | translate}}
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="form-element" appearance="outline">
-        <mat-label>Floor</mat-label>
-        <input type="text" matInput formControlName="floor" placeholder="Ex. 3"/>
+        <mat-label>{{"floor" | translate}}</mat-label>
+        <input type="text" matInput formControlName="floor" placeholder="{{'floor_example' | translate}}"/>
         <mat-error *ngIf="buyForm.get('floor')?.hasError('pattern')">
-          Please enter a valid floor number (only digits are allowed).
+          {{"floor_invalid" | translate}}
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="form-element" appearance="outline">
-        <mat-label>Additional info for provider</mat-label>
+        <mat-label>{{'additional_info_for_provider' | translate}}</mat-label>
         <textarea formControlName="info" rows="5" matInput></textarea>
       </mat-form-field>
 
@@ -55,18 +54,16 @@
         formControlName="deliveryOption"
         class="radio-group">
         <mat-radio-button id="KNOCK" value="KNOCK">
-          Knock On The Door
-        </mat-radio-button>
+          {{ 'knock_on_the_door' | translate }}        </mat-radio-button>
         <mat-radio-button id="LEAVE" value="LEAVE">
-          Leave At The Door
-        </mat-radio-button>
+          {{ 'leave_at_the_door' | translate }}        </mat-radio-button>
         <mat-error *ngIf="buyForm.get('deliveryOption')?.hasError('required')">
           Please select a delivery option.
         </mat-error>
 
       </mat-radio-group>
 
-      <button type="submit" class="proceed-btn" [disabled]="buyForm.invalid">Make An Order</button>
+      <button type="submit" class="proceed-btn" [disabled]="buyForm.invalid">{{ 'make_an_order' | translate }}</button>
     </form>
   </div>
 </div>

@@ -1,29 +1,29 @@
-<h2 mat-dialog-title>{{data.mode}} category</h2>
+<h2 mat-dialog-title>{{data.mode.toLowerCase() | translate}} {{'category' | translate}}</h2>
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="categoryForm" *ngIf="data.mode !== DialogMode.DELETE">
     <mat-form-field class="form-element" appearance="outline">
-      <mat-label>Name</mat-label>
-      <input type="text" matInput formControlName="name" placeholder="Ex. Pizza">
+      <mat-label>{{'name_menu' | translate}}</mat-label>
+      <input type="text" matInput formControlName="name" placeholder="{{'category_example' | translate}}">
       <mat-error *ngIf="categoryForm.get('name')?.hasError('required')">
-        Category name is <strong>required</strong>
+        {{'category_toast' | translate}}
       </mat-error>
     </mat-form-field>
   </form>
   <div class="d-flex justify-content-center align-items-center" *ngIf="data.mode === DialogMode.DELETE">
-    <h5>Are you sure you want to delete a category with name: {{data.category?.name}} and all corresponding meals?</h5>
+    <h5>{{'are_you_sure_delete' | translate}} {{'category' | translate}} {{'with_name' | translate}}: {{data.category?.name}} {{'and_all_corresponding_meals' | translate}}</h5>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end" *ngIf="data.mode === DialogMode.EDIT">
-  <button class="btn btn-primary" (click)="closeDialog()">Cancel</button>
-  <button [disabled]="categoryForm.invalid" class="btn btn-info" (click)="closeDialogAndUpdate()">Edit</button>
+  <button class="btn btn-primary" (click)="closeDialog()">{{'cancel' | translate}}</button>
+  <button [disabled]="categoryForm.invalid" class="btn btn-info" (click)="closeDialogAndUpdate()">{{'edit' | translate}}</button>
 </mat-dialog-actions>
 
 <mat-dialog-actions align="end" *ngIf="data.mode === DialogMode.DELETE">
-  <button class="btn btn-primary" (click)="closeDialog()">Cancel</button>
-  <button class="btn btn-danger" (click)="closeDialogAndDelete()">Delete</button>
+  <button class="btn btn-primary" (click)="closeDialog()">{{'cancel' | translate}}</button>
+  <button class="btn btn-danger" (click)="closeDialogAndDelete()">{{'delete' | translate}}</button>
 </mat-dialog-actions>
 
 <mat-dialog-actions align="end" *ngIf="data.mode === DialogMode.ADD">
-  <button class="btn btn-primary" (click)="closeDialog()">Cancel</button>
-  <button [disabled]="categoryForm.invalid" class="btn btn-success" (click)="closeDialogAndUpdate()">Add</button>
+  <button class="btn btn-primary" (click)="closeDialog()">{{'cancel' | translate}}</button>
+  <button [disabled]="categoryForm.invalid" class="btn btn-success" (click)="closeDialogAndUpdate()">{{'add' | translate}}</button>
 </mat-dialog-actions>

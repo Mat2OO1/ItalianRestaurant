@@ -27,3 +27,10 @@ input.example-right-align::-webkit-inner-spin-button {
 input.example-right-align {
   -moz-appearance: textfield;
 }
+
+.forgot-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}

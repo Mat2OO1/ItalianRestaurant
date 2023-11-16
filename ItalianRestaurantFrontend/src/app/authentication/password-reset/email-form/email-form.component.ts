@@ -22,4 +22,6 @@ export class EmailFormComponent {
     this.authService.requestResetPassword(email)
   }
 
+
+
 }

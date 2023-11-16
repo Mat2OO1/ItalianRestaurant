@@ -1,22 +1,24 @@
 <p class="p-5"></p>
 <div class="container d-flex align-items-center justify-content-center">
-  <div class="row" style="width:40%">
+  <div class="row text-center" style="width:40%">
+    <h1>{{'recover_password' | translate}}</h1>
+    <p>{{'recover_password_description' | translate}}</p>
     <form [formGroup]="emailForm" (ngSubmit)="onResetSubmit()">
       <mat-form-field class="form-field" appearance="outline">
-        <mat-label>Email</mat-label>
+        <mat-label>{{'email'|translate}}</mat-label>
         <input type="email" matInput formControlName="email"
-               placeholder="Ex. pat@example.com">
+               placeholder="{{'email_example'|translate}}">
         <mat-error *ngIf="emailForm.get('email')?.hasError('email') && !emailForm.get('email')?.hasError('required')">
-          Please enter a valid email address
+          {{'email_invalid'|translate}}
         </mat-error>
         <mat-error *ngIf="emailForm.get('email')?.hasError('required')">
-          Email is <strong>required</strong>
+          {{'email_toast'|translate}}
         </mat-error>
       </mat-form-field>
       <div class="text-center">
         <!-- Submit button -->
         <button type="submit" [disabled]="!emailForm.valid" class="btn btn-primary rounded-pill"
-                style="background-color: #005B47;">Reset Password
+                style="background-color: #005B47;">{{'password_reset'|translate}}
         </button>
       </div>
     </form>

@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row justify-content-around">
     <div class="col-lg-2 col-sm-3 col-6 categories">
-      <h4 class="text-center">Categories:</h4>
+      <h4 class="text-center">{{'category'|translate}}:</h4>
       <p *ngFor="let category of categories">
         <mat-checkbox [checked]="category === filteredCategory"  color="#005B47" (change)="onCategoryChange(category)">{{category.name}}</mat-checkbox>
       </p>
@@ -17,10 +17,10 @@
             <mat-card-subtitle>{{meal.mealCategory.name}}</mat-card-subtitle>
             <mat-card-content>
               <p>{{meal.description}}</p>
-              <p>{{meal.price}} $</p>
+              <p>{{meal.price}} {{'currency'|translate}}</p>
               <button type="button" class="btn btn-dark" *ngIf="isLoggedIn" (click)="addToCart(meal)">
                 <i class="bi bi-cart me-1"></i>
-                To Cart
+                {{'to_cart'|translate}}
               </button>
             </mat-card-content>
           </mat-card-title-group>
