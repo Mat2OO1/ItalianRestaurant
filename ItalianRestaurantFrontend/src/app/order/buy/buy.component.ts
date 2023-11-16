@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
 import {DataStorageService} from "../../shared/data-storage.service";
 import {CartService} from "../../shared/cart.service";
 import {Delivery} from "../../models/delivery";
@@ -17,8 +16,7 @@ export class BuyComponent {
   lastDelivery ?: Delivery
   showHint = true;
 
-  constructor(private router: Router,
-              private dataStorageService: DataStorageService,
+  constructor(private dataStorageService: DataStorageService,
               private cartService: CartService) {
     this.dataStorageService.getLastDeliveryInfo()
       .subscribe(
@@ -45,6 +43,7 @@ export class BuyComponent {
     let floor = this.buyForm.value['floor'] === '' ? null : this.buyForm.value['floor'];
     let info = this.buyForm.value['info'] === '' ? null : this.buyForm.value['info'];
     let deliveryOption = this.buyForm.value['deliveryOption'] === '' ? null : this.buyForm.value['deliveryOption'];
+    console.log(this.cartService.cart)
     this.dataStorageService.makeAnOrder(
       this.cartService.cart, new Delivery(address, city, pcode, floor, info, deliveryOption)
     )
