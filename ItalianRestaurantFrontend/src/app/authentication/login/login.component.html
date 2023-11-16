@@ -1,32 +1,31 @@
 <p class="p-5"></p>
 <div class="container d-flex align-items-center justify-content-center">
   <div class="row" style="width:40%">
+    <h1>Login</h1>
     <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
       <!-- Email input -->
-      <div class="mb-3">
-        <label class="form-label" for="form2Example1">Email address<span class="text-danger">*</span></label>
-        <input type="email" id="form2Example1" formControlName="email" class="form-control bg-white border"
-               placeholder="name@example.com"/>
-        <!-- Validation message for email input -->
-        <div *ngIf="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched)"
-             class="text-danger">
-          <div *ngIf="loginForm.get('email').errors['required']">Email is required</div>
-          <div *ngIf="loginForm.get('email').errors['email']">Email is invalid</div>
-        </div>
-      </div>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email"
+               placeholder="Ex. pat@example.com">
+        <mat-error *ngIf="loginForm.get('email')?.hasError('email') && !loginForm.get('email')?.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
 
-      <!-- Password input -->
-      <div class="mb-4">
-        <label class="form-label" for="form2Example2">Password<span class="text-danger">*</span></label>
-
-        <input type="password" id="form2Example2" formControlName="password" class="form-control  bg-white border"/>
-        <!-- Validation message for password input -->
-        <div
-          *ngIf="loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched)"
-          class="text-danger">
-          <div *ngIf="loginForm.get('password').errors['required']">Password is required</div>
-        </div>
-      </div>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Enter your password</mat-label>
+        <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
+        <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+          Password cannot be empty
+        </mat-error>
+      </mat-form-field>
 
       <div class="form-group">
         <p class="content-divider center mt-3 text-center">

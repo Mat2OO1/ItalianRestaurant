@@ -2,16 +2,17 @@
 <div class="container d-flex align-items-center justify-content-center">
   <div class="row" style="width:40%">
     <form [formGroup]="emailForm" (ngSubmit)="onResetSubmit()">
-      <!-- Email input -->
-      <div class="mb-4">
-        <label for="form2Example1" class="form-label">Email address</label>
-        <input type="email" id="form2Example1" formControlName="email" class="form-control" required>
-        <br>
-        <div class="alert alert-danger"
-             style="height: 50px; border-radius:20px; display: flex; align-items: center; justify-content: center;"
-             *ngIf="emailForm.touched && !emailForm.valid">Please provide a valid email address.
-        </div>
-      </div>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email"
+               placeholder="Ex. pat@example.com">
+        <mat-error *ngIf="emailForm.get('email')?.hasError('email') && !emailForm.get('email')?.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="emailForm.get('email')?.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
       <div class="text-center">
         <!-- Submit button -->
         <button type="submit" [disabled]="!emailForm.valid" class="btn btn-primary rounded-pill"

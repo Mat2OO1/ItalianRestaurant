@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>{{data.mode}} category</h2>
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="categoryForm" *ngIf="data.mode !== DialogMode.DELETE">
-    <mat-form-field class="form-element">
+    <mat-form-field class="form-element" appearance="outline">
       <mat-label>Name</mat-label>
       <input type="text" matInput formControlName="name" placeholder="Ex. Pizza">
       <mat-error *ngIf="categoryForm.get('name')?.hasError('required')">

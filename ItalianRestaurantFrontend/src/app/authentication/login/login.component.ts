@@ -14,6 +14,7 @@ import {CookieService} from "ngx-cookie-service";
 })
 export class LoginComponent implements OnDestroy, OnInit {
   loginForm: FormGroup;
+  hide = true;
   error: string = ''
   googleURL = AppConstants.GOOGLE_AUTH_URL
   facebookURL = AppConstants.FACEBOOK_AUTH_URL

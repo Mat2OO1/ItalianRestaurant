@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 export class RegisterComponent {
   registerForm: FormGroup
   error: string = '';
+  hide = true;
 
   constructor(private router: Router,
               private authService: AuthService) {

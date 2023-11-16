@@ -11,7 +11,7 @@
         Fill in the form with previous delivery values
       </mat-radio-button>
 
-      <mat-form-field class="form-element">
+      <mat-form-field class="form-element" appearance="outline">
         <mat-label>Address</mat-label>
         <input type="text" matInput formControlName="address" placeholder="Ex. Kwiatowa 23">
         <mat-error *ngIf="buyForm.get('address')?.hasError('required')">
@@ -19,7 +19,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="form-element">
+      <mat-form-field class="form-element" appearance="outline">
         <mat-label>City</mat-label>
         <input type="text" matInput formControlName="city" placeholder="Ex. Wroclaw">
         <mat-error *ngIf="buyForm.get('city')?.hasError('required')">
@@ -27,7 +27,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="form-element">
+      <mat-form-field class="form-element" appearance="outline">
         <mat-label>Postal code</mat-label>
         <input type="text" matInput maxlength="6" formControlName="pcode" placeholder="Ex. 50-527">
         <mat-error *ngIf="buyForm.get('pcode')?.hasError('pattern') && !buyForm.get('pcode')?.hasError('required')">
@@ -38,7 +38,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="form-element">
+      <mat-form-field class="form-element" appearance="outline">
         <mat-label>Floor</mat-label>
         <input type="text" matInput formControlName="floor" placeholder="Ex. 3"/>
         <mat-error *ngIf="buyForm.get('floor')?.hasError('pattern')">
@@ -46,7 +46,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="form-element">
+      <mat-form-field class="form-element" appearance="outline">
         <mat-label>Additional info for provider</mat-label>
         <textarea formControlName="info" rows="5" matInput></textarea>
       </mat-form-field>
