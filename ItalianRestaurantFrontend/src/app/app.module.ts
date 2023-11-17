@@ -60,6 +60,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatIconModule} from "@angular/material/icon";
+import {MatTableModule} from "@angular/material/table";
+import {MatSortModule} from "@angular/material/sort";
 
 @NgModule({
   declarations: [
@@ -89,39 +91,41 @@ import {MatIconModule} from "@angular/material/icon";
     ReserveTableComponent,
     ReserveTableDialogComponent
   ],
-    imports: [
-        BrowserModule,
-        RouterLink,
-        RouterOutlet,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        MatProgressSpinnerModule,
-        QRCodeModule,
-        MatDialogModule,
-        MatTooltipModule,
-        MatButtonModule,
-        FormsModule,
-        MatCardModule,
-        MatListModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
-        MatInputModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatSelectModule,
-        MatTabsModule,
-        MatCheckboxModule,
-        MatPaginatorModule,
-        MatRadioModule,
-        MatIconModule,
-    ],
+  imports: [
+    BrowserModule,
+    RouterLink,
+    RouterOutlet,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule,
+    QRCodeModule,
+    MatDialogModule,
+    MatTooltipModule,
+    MatButtonModule,
+    FormsModule,
+    MatCardModule,
+    MatListModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatTabsModule,
+    MatCheckboxModule,
+    MatPaginatorModule,
+    MatRadioModule,
+    MatIconModule,
+    MatTableModule,
+    MatSortModule,
+  ],
 
   providers: [
     CartService,

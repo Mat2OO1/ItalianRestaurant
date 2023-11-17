@@ -1,27 +1,7 @@
-.table-image td {
-  vertical-align: middle;
+table {
+  width: 100%;
 }
 
-.table-image th {
-  vertical-align: middle;
-}
-
-.last-row td {
-  border-bottom: none;
-}
-
-td, th {
-  text-align: center;
-}
-
-.tables-container {
-  background-color: white;
-  border-radius: 10px;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.qr-code {
-  width: 10px; /* Adjust the width as needed */
-  height: auto; /* To maintain the aspect ratio */
+th.mat-sort-header-sorted {
+  color: black;
 }
