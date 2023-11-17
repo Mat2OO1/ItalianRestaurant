@@ -36,9 +36,8 @@ export class AdminPanelComponent implements OnDestroy{
   calculateSum(order: OrderRes) {
     var sum = 0;
     for (let meals of order.mealOrders) {
-      sum += meals.price
+      sum += meals.meal.price
     }
-
     return sum;
   }
 

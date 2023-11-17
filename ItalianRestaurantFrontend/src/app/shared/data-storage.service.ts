@@ -56,20 +56,14 @@ export class DataStorageService {
       .delete(`${environment.apiUrl}/meals/delete/${id}`)
   }
 
-  addCategory(categoryName: string, img: File) {
-    const formData = new FormData();
-    formData.append('image', img);
-    formData.append('meal_category', JSON.stringify({name: categoryName}));
+  addCategory(categoryName: string) {
     return this.http
-      .post(`${environment.apiUrl}/meal-categories/add`, formData)
+      .post(`${environment.apiUrl}/meal-categories/add`, {name: categoryName})
   }
 
-  editCategory(categoryName: string, img: File, id: number) {
-    const formData = new FormData();
-    formData.append('image', img);
-    formData.append('meal_category', JSON.stringify({name: categoryName}));
+  editCategory(categoryName: string, id: number) {
     return this.http
-      .put(`${environment.apiUrl}/meal-categories/edit/${id}`, formData)
+      .put(`${environment.apiUrl}/meal-categories/edit/${id}`, {name: categoryName})
   }
 
   deleteCategory(id: number) {
@@ -92,9 +86,6 @@ export class DataStorageService {
           orderStatus: "IN_PREPARATION"
         })
   }
-
-
-
   getOrders() {
     return this.http
       .get<OrderRes[]>(`${environment.apiUrl}/order/all`)

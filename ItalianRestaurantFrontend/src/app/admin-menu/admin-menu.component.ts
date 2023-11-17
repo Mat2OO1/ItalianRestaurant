@@ -8,6 +8,7 @@ import {DataStorageService} from "../shared/data-storage.service";
 import {CategoryDto} from "../models/categoryDto";
 import {DialogMode} from "../models/modal-mode";
 import {MealDto} from "../models/mealDto";
+import {Category} from "../models/category";
 
 @Component({
   selector: 'app-admin-menu',
@@ -17,19 +18,13 @@ import {MealDto} from "../models/mealDto";
 export class AdminMenuComponent {
   mealsByCategory: { [category: string]: Meal[] } = {};
   categories: CategoryDto[] = []
-  mealForm: FormGroup
   areMealsLoaded = false;
   areCategoriesLoaded = false;
-
+  lang = localStorage.getItem('lang') || 'en';
   protected readonly DialogMode = DialogMode;
 
   constructor(public dialog: MatDialog,
               private dataStorageService: DataStorageService) {
-    this.mealForm = new FormGroup({
-      name: new FormControl(''),
-      description: new FormControl(''),
-      price: new FormControl(''),
-    })
     this.getMeals()
     this.getCategories()
   }
@@ -78,6 +73,19 @@ export class AdminMenuComponent {
         }
       )
   }
+  getCategoryName(category: Category): string {
+    this.lang = localStorage.getItem('lang') || 'en'
+    return this.lang === 'pl' ? category.name_pl || category.name : category.name || '';
+  }
+  getMealName(meal: any): string {
+    this.lang = localStorage.getItem('lang') || 'en'
+    return this.lang === 'pl' ? meal.name_pl || meal.name : meal.name || '';
+  }
+
+  getMealDescription(meal: any): string {
+    this.lang = localStorage.getItem('lang') || 'en'
+    return this.lang === 'pl' ? meal.description_pl || meal.description : meal.description || '';
+  }
 
   private handleDialogResult(mode: DialogMode,
                              result: { mealDto: MealDto, id: number | undefined, file: File | null } | number) {
@@ -105,12 +113,12 @@ export class AdminMenuComponent {
                                      result: { name: string, file: File, id: number | undefined } | number) {
     if (result) {
       if (mode === DialogMode.ADD && typeof result === 'object') {
-        this.dataStorageService.addCategory(result.name, result.file).subscribe(() => {
+        this.dataStorageService.addCategory(result.name).subscribe(() => {
           this.getCategories();
           this.getMeals();
         });
       } else if (mode === DialogMode.EDIT && typeof result === 'object') {
-        this.dataStorageService.editCategory(result.name, result.file, result.id!).subscribe(() => {
+        this.dataStorageService.editCategory(result.name, result.id!).subscribe(() => {
           this.getCategories();
           this.getMeals();
         });

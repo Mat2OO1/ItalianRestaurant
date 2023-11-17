@@ -2,41 +2,27 @@ import {Component, Inject} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {DIALOG_DATA} from "@angular/cdk/dialog";
-import {DataStorageService} from "../shared/data-storage.service";
 import {Category} from "../models/category";
+import {DialogMode} from "../models/modal-mode";
 
 @Component({
   selector: 'app-category-edit-dialog',
   templateUrl: './category-edit-dialog.component.html',
-  styleUrls: ['./category-edit-dialog.component.css'],
-  styles: [`
-    :host {
-      display: block;
-      width: 50vw;
-      background: #fff;
-      border-radius: 8px;
-      padding: 16px;
-    }
-
-    :host * {
-      color: black;
-    }
-  `]
+  styleUrls: ['./category-edit-dialog.component.css']
 })
 export class CategoryEditDialogComponent {
 
   categoryForm: FormGroup
-  selectedFile: File | null = null;
-
-
+  lang = localStorage.getItem('lang') || 'en'
+  protected readonly DialogMode = DialogMode;
   constructor(private dialogRef: MatDialogRef<CategoryEditDialogComponent>,
-              @Inject(DIALOG_DATA) public data: { mode: string, category?: Category },
-              private dataStorageService: DataStorageService) {
+              @Inject(DIALOG_DATA) public data: { mode: string, category?: Category }
+  ) {
     this.categoryForm = new FormGroup({
       name: new FormControl(data.category !== undefined ? data.category.name : '', [Validators.required]),
+      name_pl: new FormControl(data.category !== undefined ? data.category.name_pl : '', [Validators.required]),
     })
   }
-
   closeDialog(): void {
     this.dialogRef.close();
   }
@@ -45,7 +31,7 @@ export class CategoryEditDialogComponent {
     if (this.categoryForm.valid) {
       let result = {
         name: this.categoryForm.value['name'],
-        file: this.selectedFile!,
+        name_pl: this.categoryForm.value['name_pl'],
         id: this.data.category?.id
       }
       this.dialogRef.close(result);
@@ -55,9 +41,4 @@ export class CategoryEditDialogComponent {
   closeDialogAndDelete(): void {
     this.dialogRef.close(this.data.category?.id);
   }
-
-  onFileUploaded(event: any): void {
-    this.selectedFile = event.target.files[0] as File;
-  }
-
 }

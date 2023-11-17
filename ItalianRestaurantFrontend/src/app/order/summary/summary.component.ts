@@ -29,7 +29,6 @@ export class SummaryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.cartService.getCurrentCart()
     this.calculateSum()
   }
 

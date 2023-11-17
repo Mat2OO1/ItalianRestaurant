@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
-import {map, Observable} from "rxjs";
+import {Observable, of, switchMap} from "rxjs";
 import {AuthService} from "./auth.service";
 import {take} from "rxjs/operators";
 import {Role} from "./user.model";
@@ -20,13 +20,22 @@ export class AdminGuard {
     | Observable<boolean | UrlTree> {
     return this.authService.user.pipe(
       take(1),
-      map(user => {
-        if (user?.role === Role.ADMIN) {
-          return true;
+      switchMap(user => {
+        if (!!user) {
+          return of(true);
+        } else {
+          return this.authService.getUserDetails(localStorage.getItem('token')!).pipe(
+            switchMap(newUser => {
+              if (newUser.role === Role.ADMIN) {
+                return of(true)
+              } else {
+                return of(this.router.createUrlTree(['login']));
+              }
+            })
+          );
         }
-        return this.router.createUrlTree(['login'])
       })
-    )
+    );
   }
 }
 

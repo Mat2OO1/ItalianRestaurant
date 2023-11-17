@@ -3,44 +3,35 @@ import {MatDialogRef} from "@angular/material/dialog";
 import {DIALOG_DATA} from "@angular/cdk/dialog";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Meal} from "../models/meal";
-import {DataStorageService} from "../shared/data-storage.service";
 import {MealDto} from "../models/mealDto";
+import {priceValidator} from "../shared/validators";
+import {DialogMode} from "../models/modal-mode";
 
 @Component({
   selector: 'app-meal-edit-dialog',
   templateUrl: './meal-edit-dialog.component.html',
   styleUrls: ['./meal-edit-dialog.component.css'],
-  styles: [`
-    :host {
-      display: block;
-      width: 50vw;
-      background: #fff;
-      border-radius: 8px;
-      padding: 16px;
-    }
-
-    :host * {
-      color: black;
-    }
-  `]
 })
 
 export class MealEditDialogComponent implements OnInit {
   mealForm: FormGroup
   selectedFile: File | null = null;
-  lang =""
+
+  lang = ""
   ngOnInit() {
     this.lang = localStorage.getItem('lang') || 'en'
   }
+  protected readonly DialogMode = DialogMode;
+
+
   constructor(private dialogRef: MatDialogRef<MealEditDialogComponent>,
-              @Inject(DIALOG_DATA) public data: { mode: string, category: string, meal?: Meal },
-              private dataStorageService: DataStorageService) {
+              @Inject(DIALOG_DATA) public data: { mode: string, category: string, meal?: Meal }) {
     this.mealForm = new FormGroup({
       name: new FormControl(data.meal !== undefined ? data.meal.name : '', [Validators.required]),
       name_pl: new FormControl(data.meal !== undefined ? data.meal.name_pl : '', [Validators.required]),
       description: new FormControl(data.meal !== undefined ? data.meal.description : '', [Validators.required]),
       description_pl: new FormControl(data.meal !== undefined ? data.meal.description_pl : '', [Validators.required]),
-      price: new FormControl(data.meal !== undefined ? data.meal.price : '', [Validators.required]),
+      price: new FormControl(data.meal !== undefined ? data.meal.price : '', [Validators.required, priceValidator()]),
     })
   }
 

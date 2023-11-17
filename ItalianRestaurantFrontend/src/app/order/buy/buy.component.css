@@ -45,6 +45,20 @@ body {
 }
 
 .form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
   margin: auto;
-  width: 70%;
+}
+
+.form-element {
+  width: 100%;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }

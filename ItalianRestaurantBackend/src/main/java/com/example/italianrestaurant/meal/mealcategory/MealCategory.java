@@ -26,7 +26,7 @@ public class MealCategory {
     private String name;
     @Column(nullable = false)
     private String name_pl;
-    private String image;
+
     @JsonIgnore
     @ToString.Exclude
     @OneToMany(mappedBy = "mealCategory", cascade = CascadeType.ALL)
@@ -39,5 +39,4 @@ public class MealCategory {
         MealCategory mealCategory = (MealCategory) o;
         return getId() != null && Objects.equals(getId(), mealCategory.getId());
     }
-
 }

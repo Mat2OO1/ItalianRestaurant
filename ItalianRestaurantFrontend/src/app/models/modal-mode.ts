@@ -1,5 +1,5 @@
 export enum DialogMode {
-  EDIT = "EDIT",
-  ADD = "ADD",
-  DELETE = "DELETE"
+  EDIT = "Edit",
+  ADD = "Add",
+  DELETE = "Delete"
 }

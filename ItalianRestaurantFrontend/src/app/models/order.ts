@@ -14,7 +14,7 @@ export class Order {
 
 export class OrderRes {
   id: number
-  mealOrders: { meal: Meal, quantity: number, price: number }[]
+  mealOrders: { meal: Meal, quantity: number}[]
   delivery?: Delivery
   quantity: number
   orderStatus: string

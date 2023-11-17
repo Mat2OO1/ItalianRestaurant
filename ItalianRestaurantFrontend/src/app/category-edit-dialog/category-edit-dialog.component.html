@@ -1,26 +1,36 @@
-<h2 mat-dialog-title>{{'edit'|translate}} {{'category' | translate}}</h2>
+<h2 mat-dialog-title>{{data.mode.toLowerCase() | translate}} {{'category' | translate}}</h2>
 <mat-dialog-content class="mat-typography">
-  <form [formGroup]="categoryForm" *ngIf="data.mode !== 'DELETE'">
-    <label class="form-label" for="name">{{'name_menu' | translate}}</label>
-    <input class="form-control" id="name" type="text" formControlName="name">
-    <label class="form-label" for="fileInput">{{'path' | translate}} </label>
-    <input class="form-control" type="file" id="fileInput" #fileInput (change)="onFileUploaded($event)" />
+  <form [formGroup]="categoryForm" *ngIf="data.mode !== DialogMode.DELETE">
+    <mat-form-field class="form-element" appearance="outline">
+      <mat-label>{{'name_menu' | translate}} - {{'en'|translate}}</mat-label>
+      <input type="text" matInput formControlName="name" placeholder="{{'category_example' | translate}}">
+      <mat-error *ngIf="categoryForm.get('name')?.hasError('required')">
+        {{'category_toast' | translate}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-element" appearance="outline">
+      <mat-label>{{'name_menu' | translate}} - {{'pl'|translate}}</mat-label>
+      <input type="text" matInput formControlName="name_pl" placeholder="{{'category_example' | translate}}">
+      <mat-error *ngIf="categoryForm.get('name_pl')?.hasError('required')">
+        {{'category_toast' | translate}}
+      </mat-error>
+    </mat-form-field>
   </form>
-  <div class="d-flex justify-content-center align-items-center" *ngIf="data.mode === 'DELETE'">
+  <div class="d-flex justify-content-center align-items-center" *ngIf="data.mode === DialogMode.DELETE">
     <h5>{{'are_you_sure_delete' | translate}} {{'category' | translate}} {{'with_name' | translate}}: {{data.category?.name}} {{'and_all_corresponding_meals' | translate}}</h5>
   </div>
 </mat-dialog-content>
-<mat-dialog-actions align="end" *ngIf="data.mode === 'EDIT'">
+<mat-dialog-actions align="end" *ngIf="data.mode === DialogMode.EDIT">
   <button class="btn btn-primary" (click)="closeDialog()">{{'cancel' | translate}}</button>
-  <button class="btn btn-info" (click)="closeDialogAndUpdate()">{{'edit' | translate}}</button>
+  <button [disabled]="categoryForm.invalid" class="btn btn-info" (click)="closeDialogAndUpdate()">{{'edit' | translate}}</button>
 </mat-dialog-actions>
 
-<mat-dialog-actions align="end" *ngIf="data.mode === 'DELETE'">
+<mat-dialog-actions align="end" *ngIf="data.mode === DialogMode.DELETE">
   <button class="btn btn-primary" (click)="closeDialog()">{{'cancel' | translate}}</button>
   <button class="btn btn-danger" (click)="closeDialogAndDelete()">{{'delete' | translate}}</button>
 </mat-dialog-actions>
 
-<mat-dialog-actions align="end" *ngIf="data.mode === 'ADD'">
+<mat-dialog-actions align="end" *ngIf="data.mode === DialogMode.ADD">
   <button class="btn btn-primary" (click)="closeDialog()">{{'cancel' | translate}}</button>
-  <button class="btn btn-success" (click)="closeDialogAndUpdate()">{{'add' | translate}}</button>
+  <button [disabled]="categoryForm.invalid" class="btn btn-success" (click)="closeDialogAndUpdate()">{{'add' | translate}}</button>
 </mat-dialog-actions>

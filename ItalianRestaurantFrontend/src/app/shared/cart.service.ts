@@ -8,6 +8,10 @@ export class CartService {
   cartSubject = new Subject<Cart>()
   cart: Cart = new Cart()
 
+  constructor() {
+    this.getCurrentCart()
+  }
+
   getCurrentCart() {
     const cartData: Cart = JSON.parse(localStorage.getItem('cartData')!);
     if (cartData) {

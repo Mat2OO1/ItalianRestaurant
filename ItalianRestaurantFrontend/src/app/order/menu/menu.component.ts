@@ -19,13 +19,13 @@ import {MatPaginator, PageEvent} from "@angular/material/paginator";
 export class MenuComponent implements OnInit, OnDestroy {
   categories: Category[] = []
   meals: Meal[] = [];
-  currentPage = 0
   totalPages = 0
+  pageIndex = 0
   size = 5;
   mealsNumber = 0;
   isLoggedIn = false;
   filteredCategory ?: Category;
-  lang = localStorage.getItem('lang') || 'en';
+  lang = "";
 
 
   authSubscription?: Subscription | null;
@@ -45,6 +45,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    this.lang = localStorage.getItem('lang') || 'en';
     if (this.activatedRoute.snapshot.queryParams['payment'] === 'failed') {
       this.toastService.showErrorToast('Payment', 'Payment failed. Order not placed. Please try again.')
     }
@@ -63,36 +64,54 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   sentMealsRequest(category?: string) {
     if (category) {
-      this.dataStorageService.getFilteredMeals(this.currentPage, this.size, category)
+      this.dataStorageService.getFilteredMeals(this.pageIndex, this.size, category)
         .subscribe(
           (res) => {
-            this.totalPages = res.totalPages
-            this.mealsNumber = res.totalElements
-            this.currentPage = res.number
-            this.meals = res.content.map(meal => new Meal(meal.id, meal.name,meal.name_pl, meal.image, meal.description, meal.description_pl, meal.price, meal.mealCategory))
+            this.totalPages = res.totalPages;
+            this.mealsNumber = res.totalElements;
+            this.pageIndex = res.number;
+            this.meals = res.content.map(meal => new Meal(
+              meal.id,
+              this.getMealName(meal),
+              meal.name_pl,
+              meal.image,
+              meal.description,
+              meal.description_pl,
+              meal.price,
+              meal.mealCategory
+            ));
           }
-        )
-    }
-    else{
-      this.dataStorageService.getMeals(this.currentPage, this.size)
+        );
+    } else {
+      this.dataStorageService.getMeals(this.pageIndex, this.size)
         .subscribe(
           (res) => {
-            this.totalPages = res.totalPages
-            this.mealsNumber = res.totalElements
-            this.currentPage = res.number
-            this.meals = res.content.map(meal => new Meal(meal.id, meal.name,meal.name_pl, meal.image, meal.description, meal.description_pl, meal.price, meal.mealCategory))
+            this.totalPages = res.totalPages;
+            this.mealsNumber = res.totalElements;
+            this.pageIndex = res.number;
+            this.meals = res.content.map(meal => new Meal(
+              meal.id,
+              this.getMealName(meal),
+              meal.name_pl,
+              meal.image,
+              meal.description,
+              meal.description_pl,
+              meal.price,
+              meal.mealCategory
+            ));
           }
-        )
+        );
     }
   }
 
   onCategoryChange(category: Category) {
+    this.pageIndex = 0;
     if (this.filteredCategory !== undefined && this.filteredCategory.name === category.name) {
       this.filteredCategory = undefined;
       this.sentMealsRequest()
     } else {
       this.filteredCategory = category;
-      this.sentMealsRequest(category.name)
+      this.sentMealsRequest(this.filteredCategory.name)
     }
   }
 
@@ -102,13 +121,24 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(event: PageEvent) {
-    this.currentPage = event.pageIndex;
-    this.sentMealsRequest();
+    this.pageIndex = event.pageIndex;
+    this.size = event.pageSize;
+    this.sentMealsRequest(this.filteredCategory?.name);
     window.scrollTo({top: 0});
   }
 
   getCategoryName(category: Category): string {
+    this.lang = localStorage.getItem('lang') || 'en'
     return this.lang === 'pl' ? category.name_pl || category.name : category.name || '';
+  }
+  getMealName(meal: any): string {
+    this.lang = localStorage.getItem('lang') || 'en'
+    return this.lang === 'pl' ? meal.name_pl || meal.name : meal.name || '';
+  }
+
+  getMealDescription(meal: any): string {
+    this.lang = localStorage.getItem('lang') || 'en'
+    return this.lang === 'pl' ? meal.description_pl || meal.description : meal.description || '';
   }
 
   ngOnDestroy() {

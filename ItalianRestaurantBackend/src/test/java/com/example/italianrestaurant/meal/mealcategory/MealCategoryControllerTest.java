@@ -12,12 +12,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 import java.util.List;
 
@@ -123,16 +119,14 @@ public class MealCategoryControllerTest {
         //given
         val mealCategoryDto = Utils.getMealCategoryDto();
         val mealCategory = Utils.getMealCategory();
-
         val mealCategoryJson = Utils.objectToJsonString(mealCategoryDto);
-        val image = new MockMultipartFile("image", new byte[1]);
 
-        given(mealCategoryService.addCategory(mealCategoryDto, image)).willReturn(mealCategory);
+        given(mealCategoryService.addCategory(mealCategoryDto)).willReturn(mealCategory);
 
         //when
-        val resultActions = mockMvc.perform(multipart("/meal-categories/add")
-                .file("image", image.getBytes())
-                .file("meal_category", mealCategoryJson.getBytes()));
+        val resultActions = mockMvc.perform(post("/meal-categories/add")
+                .content(mealCategoryJson)
+                .contentType(MediaType.APPLICATION_JSON));
         //then
         resultActions.andExpect(status().isCreated());
     }
@@ -141,16 +135,14 @@ public class MealCategoryControllerTest {
     void shouldNotAddCategory() throws Exception {
         //given
         val mealCategoryDto = Utils.getMealCategoryDto();
-
         val mealCategoryJson = Utils.objectToJsonString(mealCategoryDto);
-        val image = new MockMultipartFile("image", new byte[1]);
 
-        given(mealCategoryService.addCategory(any(), any())).willThrow(EntityNotFoundException.class);
+        given(mealCategoryService.addCategory(any())).willThrow(EntityNotFoundException.class);
 
         //when
-        val resultActions = mockMvc.perform(multipart("/meal-categories/add")
-                .file("image", image.getBytes())
-                .file("meal_category", mealCategoryJson.getBytes()));
+        val resultActions = mockMvc.perform(post("/meal-categories/add")
+                .content(mealCategoryJson)
+                .contentType(MediaType.APPLICATION_JSON));
         //then
         resultActions.andExpect(status().isNotFound());
     }
@@ -163,15 +155,13 @@ public class MealCategoryControllerTest {
         val id = 1L;
 
         val mealCategoryJson = Utils.objectToJsonString(mealCategoryDto);
-        val image = new MockMultipartFile("image", new byte[1]);
 
-        given(mealCategoryService.editCategory(mealCategoryDto, id, image)).willReturn(mealCategory);
+        given(mealCategoryService.editCategory(mealCategoryDto, id)).willReturn(mealCategory);
 
         //when
-        val resultActions = mockMvc.perform(Utils.multipartPutRequest("/meal-categories/edit/" + id)
-                .file("image", image.getBytes())
-                .file("meal_category", mealCategoryJson.getBytes())
-                .contentType(MediaType.MULTIPART_FORM_DATA));
+        val resultActions = mockMvc.perform(put("/meal-categories/edit/" + id)
+                .content(mealCategoryJson)
+                .contentType(MediaType.APPLICATION_JSON));
         //then
         resultActions.andExpect(status().isOk());
     }
@@ -182,14 +172,13 @@ public class MealCategoryControllerTest {
         val mealCategoryDto = Utils.getMealCategoryDto();
         val mealCategoryJson = Utils.objectToJsonString(mealCategoryDto);
         val id = 1L;
-        val image = new MockMultipartFile("image", new byte[1]);
 
-        given(mealCategoryService.editCategory(any(), eq(id), any())).willThrow(EntityNotFoundException.class);
+        given(mealCategoryService.editCategory(any(), eq(id))).willThrow(EntityNotFoundException.class);
 
         //when
-        val resultActions = mockMvc.perform(Utils.multipartPutRequest("/meal-categories/edit/" + id)
-                .file("image", image.getBytes())
-                .file("meal_category", mealCategoryJson.getBytes()));
+        val resultActions = mockMvc.perform(put("/meal-categories/edit/" + id)
+                .content(mealCategoryJson)
+                .contentType(MediaType.APPLICATION_JSON));
         //then
         resultActions.andExpect(status().isNotFound());
     }

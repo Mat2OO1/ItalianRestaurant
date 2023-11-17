@@ -52,7 +52,7 @@ public class ReservationController {
     }
 
     @GetMapping("/reserved")
-    public ResponseEntity<List<LocalDateTime>> getReservationsForTable(@RequestParam("tableId") int tableId, @RequestParam("date") LocalDate date){
+    public ResponseEntity<List<LocalDateTime>> getReservationsForTable(@RequestParam("tableId") Long tableId, @RequestParam("date") LocalDate date){
         return ResponseEntity.ok(this.reservationService.getReservationsForTable(tableId, date));
     }
 }

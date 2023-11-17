@@ -55,7 +55,7 @@ export class ConfirmationComponent implements OnInit, OnDestroy {
   calculateOrder() {
     let sum: number = 0
     this.order.forEach(item => sum += item.meal.price * item.quantity)
-    return sum;
+    return sum.toFixed(2);
   }
 
   getOrderDetails() {
