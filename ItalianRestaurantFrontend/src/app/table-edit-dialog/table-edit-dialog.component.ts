@@ -18,8 +18,8 @@ export class TableEditDialogComponent {
               @Inject(DIALOG_DATA) public data: { mode: DialogMode, table?: Table }) {
 
     this.tableForm = new FormGroup({
-      number: new FormControl(this.data.table ? this.data.table.number : '', [Validators.required]),
-      seats: new FormControl(this.data.table ? this.data.table.seats : '', [Validators.required]),
+      number: new FormControl(this.data.table ? this.data.table.number : '', [Validators.pattern('^[0-9]*$')]),
+      seats: new FormControl(this.data.table ? this.data.table.seats : '', [Validators.pattern('^[0-9]*$')]),
     })
   }
 

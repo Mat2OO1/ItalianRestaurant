@@ -6,7 +6,7 @@
     <form class="form" [formGroup]="buyForm" (ngSubmit)="onBuySubmit()">
 
       <mat-radio-button [style.visibility]="!(showHint && lastDelivery) ? 'hidden' : 'visible' "
-                        (change)="onPopulateInput()" id="hint">
+                        (change)="onPopulateInput()" id="hint" color="primary">
         {{ "fill_form_with_previous_values" | translate}}
       </mat-radio-button>
 
@@ -53,9 +53,9 @@
       <mat-radio-group
         formControlName="deliveryOption"
         class="radio-group">
-        <mat-radio-button id="KNOCK" value="KNOCK">
+        <mat-radio-button id="KNOCK" value="KNOCK" color="primary">
           {{ 'knock_on_the_door' | translate }}        </mat-radio-button>
-        <mat-radio-button id="LEAVE" value="LEAVE">
+        <mat-radio-button id="LEAVE" value="LEAVE" color="primary">
           {{ 'leave_at_the_door' | translate }}        </mat-radio-button>
         <mat-error *ngIf="buyForm.get('deliveryOption')?.hasError('required')">
           Please select a delivery option.

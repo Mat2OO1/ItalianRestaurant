@@ -143,5 +143,7 @@
   "confirm": "Confirm",
   "choose_file": "Choose file",
   "not_updated": "Not updated",
-  "image_toast": "Image is required."
+  "image_toast": "Image is required.",
+  "number_invalid": "Please enter a valid number (only digits are allowed).",
+  "seats_invalid": "Please enter a valid number of seats (only digits are allowed)."
 }

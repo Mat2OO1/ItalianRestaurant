@@ -33,11 +33,13 @@
     </div>
 
     <div class="mt-4" *ngIf="!cart.table">
-      <h2>{{'takeaway_or_on-site'|translate}}</h2>
-      <input class="form-check-input bg-white border" [(ngModel)]="selectedDeliveryOption" name="deliveryOption" type="radio" id="TAKEAWAY" value="TAKEAWAY">
-      <label class="form-check-label me-4" for="TAKEAWAY">{{'takeaway'|translate}}</label>
-      <input class="form-check-input bg-white border ms-4" [(ngModel)]="selectedDeliveryOption" name="deliveryOption" type="radio" id="ONSITE" value="ONSITE">
-      <label class="form-check-label" for="ONSITE">{{'on-site'|translate}}</label>
+      <label class="delivery-label" id="radio-group-label">{{ 'takeaway_or_on-site' | translate }}</label>
+      <div class="radio-group-container">
+        <mat-radio-group [(ngModel)]="selectedDeliveryOption" aria-label="radio-group-label">
+          <mat-radio-button class="mat-radio-button" color="primary" value="TAKEAWAY">{{ 'takeaway' | translate }}</mat-radio-button>
+          <mat-radio-button class="mat-radio-button" color="primary" value="ONSITE">{{ 'on-site' | translate }}</mat-radio-button>
+        </mat-radio-group>
+      </div>
     </div>
 
     <button class="proceed-btn" (click)="proceed()" [ngClass]="{'disabled': cart.meals.length === 0}">{{'proceed'|translate}}</button>

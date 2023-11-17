@@ -1,10 +1,21 @@
 <h2 mat-dialog-title>{{'edit'| translate}} {{ 'one_table' | translate }}</h2>
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="tableForm" *ngIf="data.mode !== DialogMode.DELETE">
-    <label class="form-label" for="name">{{ 'number' | translate }}</label>
-    <input class="form-control" id="name" type="number" formControlName="number">
-    <label class="form-label" for="description">{{ 'number_of_seats' | translate }}</label>
-    <input class="form-control" id="description" type="text" formControlName="seats">
+    <mat-form-field class="form-element" appearance="outline">
+      <mat-label>{{ 'number' | translate }}</mat-label>
+      <input type="text" matInput formControlName="number" placeholder="{{'floor_example' | translate}}"/>
+      <mat-error *ngIf="tableForm.get('number')?.hasError('pattern')">
+        {{"number_invalid" | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-element" appearance="outline">
+      <mat-label>{{"number_of_seats" | translate}}</mat-label>
+      <input type="text" matInput formControlName="seats" placeholder="{{'floor_example' | translate}}"/>
+      <mat-error *ngIf="tableForm.get('seats')?.hasError('pattern')">
+        {{"seats_invalid" | translate}}
+      </mat-error>
+    </mat-form-field>
   </form>
 
   <div class="d-flex justify-content-center align-items-center" *ngIf="data.mode === DialogMode.DELETE">
@@ -18,7 +29,9 @@
   </button>
   <button class="btn btn-info"
           *ngIf="data.mode === DialogMode.EDIT"
-          (click)="closeDialogAndUpdate()">{{ 'edit' | translate }}
+          (click)="closeDialogAndUpdate()"
+          [disabled]="tableForm.invalid">{{ 'edit' | translate }}
+
   </button>
   <button class="btn btn-danger"
           *ngIf="data.mode === DialogMode.DELETE"
@@ -26,6 +39,7 @@
   </button>
   <button class="btn btn-success"
           *ngIf="data.mode === DialogMode.ADD"
-          (click)="closeDialogAndUpdate()">{{ 'add' | translate }}
+          (click)="closeDialogAndUpdate()"
+          [disabled]="tableForm.invalid">{{ 'add' | translate }}
   </button>
 </mat-dialog-actions>

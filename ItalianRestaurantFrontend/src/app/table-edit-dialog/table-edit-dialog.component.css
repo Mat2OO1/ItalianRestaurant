@@ -5,10 +5,13 @@
   border-radius: 8px;
   padding: 16px;
 }
-:host * {
-  color: black;
-}
 
 .btn-primary{
   margin-right: 10px;
+}
+
+.form-element {
+  width: 100%;
+  margin-bottom: 8px;
+  margin-top: 8px;
 }

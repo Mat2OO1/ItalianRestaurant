@@ -19,6 +19,21 @@ body {
   overflow: hidden;
 }
 
+.radio-group-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;;
+}
+
+.delivery-label {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.mat-radio-button {
+  margin-right: 24px;
+}
+
 .text-content {
   padding: 2% 7%;
   text-align: center;
