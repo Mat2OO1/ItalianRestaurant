@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {Meal} from "../models/meal";
 import {FormControl, FormGroup} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
+import {MatExpansionModule} from '@angular/material/expansion';
 import {MealEditDialogComponent} from "../meal-edit-dialog/meal-edit-dialog.component";
 import {CategoryEditDialogComponent} from "../category-edit-dialog/category-edit-dialog.component";
 import {DataStorageService} from "../shared/data-storage.service";

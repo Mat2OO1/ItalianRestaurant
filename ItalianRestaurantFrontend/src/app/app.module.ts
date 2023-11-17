@@ -60,6 +60,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatIconModule} from "@angular/material/icon";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
@@ -121,6 +122,7 @@ import {MatIconModule} from "@angular/material/icon";
         MatPaginatorModule,
         MatRadioModule,
         MatIconModule,
+        MatExpansionModule,
     ],
 
   providers: [
