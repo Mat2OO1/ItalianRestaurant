@@ -69,7 +69,7 @@ export class MenuComponent implements OnInit, OnDestroy {
             this.totalPages = res.totalPages
             this.mealsNumber = res.totalElements
             this.currentPage = res.number
-            this.meals = res.content.map(meal => new Meal(meal.id, meal.name, meal.image, meal.description, meal.price, meal.mealCategory))
+            this.meals = res.content.map(meal => new Meal(meal.id, meal.name,meal.name_pl, meal.image, meal.description, meal.description_pl, meal.price, meal.mealCategory))
           }
         )
     }
@@ -80,7 +80,7 @@ export class MenuComponent implements OnInit, OnDestroy {
             this.totalPages = res.totalPages
             this.mealsNumber = res.totalElements
             this.currentPage = res.number
-            this.meals = res.content.map(meal => new Meal(meal.id, meal.name, meal.image, meal.description, meal.price, meal.mealCategory))
+            this.meals = res.content.map(meal => new Meal(meal.id, meal.name,meal.name_pl, meal.image, meal.description, meal.description_pl, meal.price, meal.mealCategory))
           }
         )
     }
@@ -110,6 +110,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   getCategoryName(category: Category): string {
     return this.lang === 'pl' ? category.name_pl || category.name : category.name || '';
   }
+
   ngOnDestroy() {
     this.authSubscription?.unsubscribe()
   }

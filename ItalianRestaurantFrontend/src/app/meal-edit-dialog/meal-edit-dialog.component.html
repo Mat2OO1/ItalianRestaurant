@@ -4,8 +4,12 @@
   <form [formGroup]="mealForm" *ngIf="data.mode !== 'DELETE'">
     <label class="form-label" for="name">{{'name_menu' | translate}}</label>
     <input class="form-control" id="name" type="text" formControlName="name">
+    <label class="form-label" for="name_pl">{{'name_menu'| translate}} {{lang| translate}}</label>
+    <input class="form-control" id="name_pl" type="text" formControlName="name_pl">
     <label class="form-label" for="description">{{'menu_description' | translate}}</label>
     <input class="form-control" id="description" type="text" formControlName="description">
+    <label class="form-label" for="description_pl">{{'menu_description' | translate}} {{lang| translate}}</label>
+    <input class="form-control" id="description_pl" type="text" formControlName="description_pl">
     <label class="form-label" for="price">{{'price' | translate}}</label>
     <input class="form-control" id="price" type="text" formControlName="price">
     <label class="form-label" for="fileInput">{{'path' | translate}}</label>
