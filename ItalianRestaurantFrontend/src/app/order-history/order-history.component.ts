@@ -12,7 +12,7 @@ import {formatDate} from "@angular/common";
 export class OrderHistoryComponent {
   isContentLoaded = false;
   orders: OrderRes[] = []
-
+  lang = ""
   constructor(private dataStorageService: DataStorageService,
               private router: Router) {
     this.dataStorageService.getUserOrders()
@@ -58,5 +58,23 @@ export class OrderHistoryComponent {
     this.router.navigate(['/confirmation', orderId])
   }
 
+  getStatusTranslation(status: string): string {
+    this.lang = localStorage.getItem('lang') || 'en';
+    const translations: { [key: string]: { [key: string]: string } } = {
+      pl: {
+        'In Preparation': 'W przygotowaniu',
+        'In Delivery': 'W dostawie',
+        'Delivered': 'Dostarczono',
+        'processing': 'Przetwarzanie'
+      },
+      en: {
+        'In Preparation': 'In Preparation',
+        'In Delivery': 'In Delivery',
+        'Delivered': 'Delivered',
+        'processing': 'Processing'
+      }
+    };
+    return translations[this.lang][status] || status;
+  }
 
 }

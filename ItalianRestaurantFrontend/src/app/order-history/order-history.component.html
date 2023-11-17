@@ -27,7 +27,7 @@
             </div>
             <div class="row">
               <div class="col-6">
-                <p class="card-text"><small class="text-muted">{{'delivery_status'|translate}}: {{formatDeliveryStatus(order.orderStatus)}}</small></p>
+                <p class="card-text"><small class="text-muted">{{'delivery_status'|translate}}: {{getStatusTranslation(formatDeliveryStatus(order.orderStatus))}}</small></p>
               </div>
               <div class="col-6">
                 <p class="card-text"><small class="text-muted">{{'delivery'|translate}}: {{customFormatDate(order?.deliveryDate)}}</small></p>

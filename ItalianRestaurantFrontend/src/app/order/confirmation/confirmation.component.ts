@@ -11,6 +11,7 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./confirmation.component.css']
 })
 export class ConfirmationComponent implements OnInit, OnDestroy {
+  stat = ""
   order: { meal: Meal, quantity: number }[] = []
   orderNumber: number | null = null;
   orderDetails: { date: Date | null, status: string, table: number | null } = {
@@ -18,7 +19,9 @@ export class ConfirmationComponent implements OnInit, OnDestroy {
     status: '',
     table: null
   }
+
   isContentLoaded: boolean = false;
+  lang="";
 
   timeSubscription: Subscription | null = null;
 
@@ -78,7 +81,29 @@ export class ConfirmationComponent implements OnInit, OnDestroy {
       }
     );
   }
+  getStatusTranslation(status: string): string {
+    this.lang = localStorage.getItem('lang') || 'en';
+    const translations: { [key: string]: { [key: string]: string } } = {
+      pl: {
+        'In Preparation': 'W przygotowaniu',
+        'In Delivery': 'W dostawie',
+        'Delivered': 'Dostarczono',
+        'processing': 'Przetwarzanie'
+      },
+      en: {
+        'In Preparation': 'In Preparation',
+        'In Delivery': 'In Delivery',
+        'Delivered': 'Delivered',
+        'processing': 'Processing'
+      }
+    };
+    return translations[this.lang][status] || status;
+  }
 
+  getMealName(item:any): string {
+    this.lang = localStorage.getItem('lang') || 'en'
+    return this.lang === 'pl' ? item.meal.name_pl || item.meal.name : item.meal.name || '';
+  }
   ngOnDestroy() {
     this.timeSubscription?.unsubscribe();
   }

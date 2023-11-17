@@ -13,7 +13,8 @@ export class AdminPanelComponent implements OnDestroy{
   orders: OrderRes[] = []
   isContentLoaded = false;
   forms: FormGroup[] = [];
-  interval
+  interval;
+  lang = ""
 
   constructor(private dataStorageService: DataStorageService,
               private formBuilder: FormBuilder) {
@@ -50,7 +51,20 @@ export class AdminPanelComponent implements OnDestroy{
     let deliveryDateFormatted = formatDate(deliveryDate, 'YYYY-MM-ddTHH:mm:ss', 'en-GB')
     this.dataStorageService.updateOrder(orderStatus, deliveryDateFormatted, orderId)
   }
-
+  getDeliveryOptionsTranslation(deliveryOptions: string): string {
+    this.lang = localStorage.getItem('lang') || 'en';
+    const translations: { [key: string]: { [key: string]: string } } = {
+      pl: {
+        'KNOCK': 'Zapukaj',
+        'LEAVE': 'Zostaw pod drzwiami',
+      },
+      en: {
+        'KNOCK': 'Knock',
+        'LEAVE': 'Leave package',
+      }
+    };
+    return translations[this.lang][deliveryOptions] || deliveryOptions;
+  }
   customFormatDate(date: Date) {
     if (date != null) {
       return formatDate(date, 'HH:mm', 'en-GB')
@@ -67,7 +81,10 @@ export class AdminPanelComponent implements OnDestroy{
         }
       );
   };
-
+  getMealName(meal: any): string {
+    this.lang = localStorage.getItem('lang') || 'en'
+    return this.lang === 'pl' ? meal.name_pl || meal.name : meal.name || '';
+  }
   ngOnDestroy(): void {
     clearInterval(this.interval)
   }

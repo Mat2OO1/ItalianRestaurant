@@ -12,9 +12,9 @@
     <tbody>
     <tr *ngFor="let meal of order.mealOrders">
       <th></th>
-      <td>{{meal.meal.name}}</td>
+      <td>{{getMealName(meal.meal)}}</td>
       <td>{{meal.quantity}}</td>
-      <td>{{meal.meal.price}}</td>
+      <td>{{meal.meal.price}} {{'currency'|translate}}</td>
     </tr>
     <tr>
       <td colspan="4">
@@ -33,15 +33,15 @@
             <tr>
               <td>
                 <select class="form-select" formControlName="orderStatus">
-                  <option value="{{'in_preparation'|translate}}">{{'in_preparation'|translate}}</option>
-                  <option value="{{'in_delivery'|translate}}">{{'in_delivery'|translate}}</option>
-                  <option value="{{'delivered'|translate}}">{{'delivered'|translate}}</option>
+                  <option value="IN_PREPARATION">{{'in_preparation'|translate}}</option>
+                  <option value="IN_DELIVERY">{{'in_delivery'|translate}}</option>
+                  <option value="DELIVERED">{{'delivered'|translate}}</option>
                 </select>
               </td>
               <td>
                 <input type="time" class="form-control" formControlName="deliveryDate" name="deliveryDate">
               </td>
-              <td>{{order.delivery.address}} {{order.delivery.city}} {{order.delivery.deliveryOptions}} {{order.delivery.postalCode}} {{order.delivery.info}}</td>
+              <td>{{order.delivery.address}} {{order.delivery.city}} {{getDeliveryOptionsTranslation(order.delivery.deliveryOptions)}} {{order.delivery.postalCode}} {{order.delivery.info}}</td>
               <td>
                 <button class="btn btn-primary" type="submit">{{'change'|translate}}</button>
               </td>
