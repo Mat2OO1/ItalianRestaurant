@@ -1,5 +1,5 @@
 <div>
-  <mat-toolbar color="accent">
+  <mat-toolbar color="accent" style="padding-left: 0">
     <div class="navbar-logo">
       <a routerLink="">
         <img src="assets/images/pizza.png" class="logo-img">
@@ -8,7 +8,7 @@
     </div>
 
     <span class="spacer"></span>
-    <div fxShow="true" fxHide.lt-md>
+    <div fxShow="true" fxHide.lt-lg class="navbar-container">
       <button class="nav-elem" color="accent" mat-flat-button routerLink="menu">{{'menu' | translate}}</button>
 
       <ng-container *ngIf="currentUser?.role === Role.USER">
@@ -51,12 +51,12 @@
         <mat-icon>logout</mat-icon>
       </button>
     </div>
-    <button class="nav-elem" mat-icon-button fxHide.gt-sm (click)="sidenav.toggle()">
+    <button class="nav-elem" mat-icon-button fxHide.gt-md (click)="sidenav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
   </mat-toolbar>
-  <mat-sidenav-container fxFlexFill>
-    <mat-sidenav #sidenav fxLayout="column" mode="over" opened="false" fxHide.gt-sm="true">
+  <mat-sidenav-container class="mat-sidenav-container" id="sidenav-content" fxFlexFill>
+    <mat-sidenav #sidenav fxLayout="column" mode="over" opened="false" fxHide.gt-md="true">
       <mat-nav-list>
         <a mat-list-item [routerLink]="['/menu']" (click)="sidenav.toggle()">{{'menu' | translate}}</a>
 

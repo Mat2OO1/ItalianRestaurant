@@ -2,8 +2,13 @@
   margin-right: 40px;
 }
 
+.navbar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .nav-elem {
-  margin-bottom: 10px;
   font-size: 16px;
   margin-left: 10px;
   font-weight: 400;
@@ -24,13 +29,14 @@
   width: 45px;
   height: 45px;
   margin-bottom: 5px;
+  margin-right: 2px;
 }
 
 @media only screen and (max-width: 450px) {
   .navbar-logo {
-    font-size: 30px;
-    line-height: 50px;
-    margin-left: 7px;
+    font-size: 40px;
+    line-height: 58px;
+    margin-left: 5px;
   }
 
   .logo-img {
@@ -39,27 +45,22 @@
     margin-bottom: 4px;
   }
 
-  .mat-sidenav-container{
-    min-height: 93vh !important;
-  }
-
   .mat-toolbar{
-    height: 7vh !important;
+    height: 4rem !important;
   }
 
-  .nav-elem {
-    margin-bottom: 0;
+  #sidenav-content {
+    min-height: calc(100vh - 4rem) !important
   }
-
 }
 
 .logo {
   color: #4f4f4f;
-  margin-left: 5px;
+  margin-left: 0;
 }
 
 .mat-toolbar{
-  height: 9vh;
+  height: 5rem;
   background-color: #f9f6ee;
 }
 
@@ -68,6 +69,6 @@ div {
 }
 
 .mat-sidenav-container{
-  min-height: 91vh !important;
+  min-height: calc(100vh - 5rem) !important;
   background-color: #f9f6ee;
 }
