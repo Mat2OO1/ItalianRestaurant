@@ -145,5 +145,6 @@
   "not_updated": "Nie zaktualizowano",
   "image_toast": "Zdjęcie jest wymagane",
   "number_invalid": "Podaj prawidłowy numer stolika (dozwolone są tylko liczby).",
-  "seats_invalid": "Podaj prawidłową liczbę miejsc (dozwolone są tylko liczby)."
+  "seats_invalid": "Podaj prawidłową liczbę miejsc (dozwolone są tylko liczby).",
+  "cart": "Koszyk"
 }

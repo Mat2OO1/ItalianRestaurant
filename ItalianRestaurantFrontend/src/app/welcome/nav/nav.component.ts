@@ -28,10 +28,9 @@ export class NavComponent implements OnInit{
     this.authService.logout();
   }
 
-  ChangeLang(lang:any){
-    const selectedLanguage = lang.target.value;
+  changeLang(selectedLanguage: string){
+    this.lang = selectedLanguage;
     localStorage.setItem('lang', selectedLanguage);
     this.translateService.use(selectedLanguage);
   }
-
 }

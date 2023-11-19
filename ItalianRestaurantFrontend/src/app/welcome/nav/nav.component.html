@@ -1,52 +1,105 @@
-<nav class="navbar navbar-expand-lg bg-light">
-  <div class="container-fluid">
-    <a style="font-family: 'Noto Sans';
-  font-style: normal;
-font-weight: 800;
-font-size: 48px;
-line-height: 65px;
-align-items: center;
-" class="navbar-brand" routerLink="">
-      <img src="../../../assets/images/pizza.png" width="50px" height="50px">
-      La Dolce Vita</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav ms-auto d-flex align-items-center">
-        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.ADMIN"
-           routerLink="/admin-tables-panel">{{'table'|translate}}</a>
-        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.ADMIN" routerLink="/admin-menu">{{'menu_editor'|translate}}</a>
-        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.ADMIN" routerLink="/admin-panel">{{'orders'|translate}}</a>
-        <a class="nav-item nav-link" *ngIf="currentUser" routerLink="/menu">{{'menu'|translate}}</a>
-        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.USER" routerLink="/reserve-table">{{'reserve_table'|translate}}</a>
-        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.USER" routerLink="/order-history">{{'orders'|translate}}</a>
-        <a class="nav-item nav-link" *ngIf="currentUser !== null" (click)="onLogout()" href="#">{{'logout'|translate}}</a>
-        <a class="nav-item nav-link" *ngIf="currentUser?.role === Role.USER" routerLink="/summary"><i class="bi bi-cart"
-                                                                                                      style="font-size: 1.5em;"></i></a>
-        <a class="nav-item nav-link active" routerLink="/menu" *ngIf="!currentUser">
-          <button class="btn rounded-pill" style="background-color: #005B47; text-decoration: none; color: #FFFFFF">
-            {{'menu'|translate}}
-          </button>
-        </a>
-        <a class="nav-item nav-link active" routerLink="register" *ngIf="!currentUser">
-          <button class="btn rounded-pill" style="background-color: #005B47; text-decoration: none; color: #FFFFFF">
-            {{'register'|translate}}
-          </button>
-        </a>
-        <a class="nav-item nav-link active" routerLink="login" *ngIf="!currentUser">
-          <button class="btn rounded-pill" style="background-color: #005B47; text-decoration: none; color: #FFFFFF">{{'login'|translate}}
-          </button>
-        </a>
-        <a class="nav-item nav-link active">
-          <select (change)="ChangeLang($event)" class="form-select">
-            <option [selected]="lang==='en'" value = "en">{{'en'|translate}}</option>
-            <option [selected]="lang==='pl'" value = "pl">{{'pl'|translate}}</option>
-          </select>
-        </a>
-      </div>
+<div>
+  <mat-toolbar color="accent">
+    <div class="navbar-logo">
+      <a routerLink="">
+        <img src="assets/images/pizza.png" class="logo-img">
+        <span class="logo">La dolce vita</span>
+      </a>
     </div>
-  </div>
-</nav>
+
+    <span class="spacer"></span>
+    <div fxShow="true" fxHide.lt-md>
+      <button class="nav-elem" color="accent" mat-flat-button routerLink="menu">{{'menu' | translate}}</button>
+
+      <ng-container *ngIf="currentUser?.role === Role.USER">
+        <button class="nav-elem" routerLink="reserve-table" color="accent"
+                mat-flat-button>{{'reserve_table' | translate}}</button>
+        <button class="nav-elem" routerLink="order-history" color="accent"
+                mat-flat-button>{{'orders' | translate}}</button>
+      </ng-container>
+
+      <ng-container *ngIf="currentUser?.role === Role.ADMIN">
+        <button class="nav-elem" routerLink="admin-tables-panel" color="accent"
+                mat-flat-button>{{'table' | translate}}</button>
+        <button class="nav-elem" routerLink="admin-menu" color="accent"
+                mat-flat-button>{{'menu_editor' | translate}}</button>
+        <button class="nav-elem" routerLink="admin-panel" color="accent"
+                mat-flat-button>{{'orders' | translate}}</button>
+      </ng-container>
+
+      <ng-container *ngIf="currentUser === null">
+        <button class="nav-elem" routerLink="register" color="accent"
+                mat-flat-button>{{'register' | translate}}</button>
+        <button class="nav-elem" routerLink="login" color="accent" mat-flat-button>{{'login' | translate}}</button>
+      </ng-container>
+
+      <button class="nav-elem" mat-button [matMenuTriggerFor]="menu">
+        <span *ngIf="lang === 'pl'" class="fi fi-pl"></span>
+        <span *ngIf="lang === 'en'" class="fi fi-gb"></span>
+        {{ lang === 'pl' ? 'Polski' : 'English' }}
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="changeLang('pl')"><span class="fi fi-pl"></span> Polski</button>
+        <button mat-menu-item (click)="changeLang('en')"><span class="fi fi-gb"></span> English</button>
+      </mat-menu>
+
+      <button class="nav-elem" *ngIf="currentUser?.role === Role.USER" routerLink="summary" mat-icon-button aria-label="Shopping Cart">
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+
+      <button  class="nav-elem" *ngIf="currentUser?.role" (click)="onLogout()" mat-icon-button aria-label="Logout">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
+    <button class="nav-elem" mat-icon-button fxHide.gt-sm (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-toolbar>
+  <mat-sidenav-container fxFlexFill>
+    <mat-sidenav #sidenav fxLayout="column" mode="over" opened="false" fxHide.gt-sm="true">
+      <mat-nav-list>
+        <a mat-list-item [routerLink]="['/menu']" (click)="sidenav.toggle()">{{'menu' | translate}}</a>
+
+        <ng-container *ngIf="currentUser?.role === Role.USER">
+          <a routerLink="/reserve-table" (click)="sidenav.toggle()" mat-list-item>{{'reserve_table' | translate}}</a>
+          <a routerLink="/order-history" (click)="sidenav.toggle()" mat-list-item>{{'orders' | translate}}</a>
+        </ng-container>
+
+        <ng-container *ngIf="currentUser?.role === Role.ADMIN">
+          <a routerLink="/admin-tables-panel" (click)="sidenav.toggle()" mat-list-item>{{'table' | translate}}</a>
+          <a routerLink="/admin-menu" (click)="sidenav.toggle()" mat-list-item>{{'menu_editor' | translate}}</a>
+          <a routerLink="/admin-panel" (click)="sidenav.toggle()" mat-list-item>{{'orders' | translate}}</a>
+        </ng-container>
+
+        <ng-container *ngIf="currentUser === null">
+          <a routerLink="/register" (click)="sidenav.toggle()" mat-list-item>{{'register' | translate}}</a>
+          <a routerLink="/login" (click)="sidenav.toggle()" mat-list-item>{{'login' | translate}}</a>
+        </ng-container>
+
+        <a mat-list-item [matMenuTriggerFor]="menu">
+          <span *ngIf="lang === 'pl'" class="fi fi-pl"></span>
+          <span *ngIf="lang === 'en'" class="fi fi-gb"></span>
+          {{ lang === 'pl' ? 'Polski' : 'English' }}
+        </a>
+        <mat-menu #menu="matMenu">
+          <a mat-menu-item (click)="changeLang('pl')"><span class="fi fi-pl"></span> Polski</a>
+          <a mat-menu-item (click)="changeLang('en')"><span class="fi fi-gb"></span> English</a>
+        </mat-menu>
+
+        <a *ngIf="currentUser?.role === Role.USER" (click)="sidenav.toggle()" routerLink="/summary" mat-list-item>
+          {{ 'cart' | translate }}
+        </a>
+
+        <a *ngIf="currentUser?.role" (click)="onLogout(); sidenav.toggle()" mat-list-item>
+          {{ 'logout' | translate }}
+        </a>
+
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content fxFlexFill style="background-color: #f9f6ee;">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
 

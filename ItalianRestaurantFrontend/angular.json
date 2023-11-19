@@ -25,6 +25,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/flag-icons/css/flag-icons.min.css",
               "src/theme.scss",
               "src/styles.css"
             ],

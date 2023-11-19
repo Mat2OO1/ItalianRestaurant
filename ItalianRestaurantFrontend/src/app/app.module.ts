@@ -29,9 +29,9 @@ import {DatePipe} from "@angular/common";
 import {ToastComponent} from './toast-notifications/toast/toast.component';
 import {ToasterComponent} from './toast-notifications/toaster/toaster.component';
 import {OrderHistoryComponent} from "./order-history/order-history.component";
-import { AdminTableQrComponent } from './admin-table-qr/admin-table-qr.component';
+import {AdminTableQrComponent} from './admin-table-qr/admin-table-qr.component';
 import {QRCodeModule} from "angularx-qrcode";
-import { TableEditDialogComponent } from './table-edit-dialog/table-edit-dialog.component';
+import {TableEditDialogComponent} from './table-edit-dialog/table-edit-dialog.component';
 import {AdminMenuComponent} from "./admin-menu/admin-menu.component";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
@@ -43,9 +43,6 @@ import {MatCardModule} from "@angular/material/card";
 import {MatListModule} from "@angular/material/list";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-export function HttpLoaderFactory(http:HttpClient){
-  return new TranslateHttpLoader(http);
-}
 import {ReserveTableComponent} from "./reserve-table/reserve-table.component";
 import {ReserveTableDialogComponent} from "./reserve-table/reserve-table-dialog/reserve-table-dialog.component";
 import {MatInputModule} from "@angular/material/input";
@@ -53,15 +50,20 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import {MatTabsModule} from "@angular/material/tabs";
-import {
-  CancelReservationDialogComponent
-} from "./reserve-table/cancel-reservation-dialog/cancel-reservation-dialog.component";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatIconModule} from "@angular/material/icon";
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {MatMenuModule} from "@angular/material/menu";
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -125,6 +127,10 @@ import {MatSortModule} from "@angular/material/sort";
     MatIconModule,
     MatTableModule,
     MatSortModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    FlexLayoutModule,
+    MatMenuModule
   ],
 
   providers: [
