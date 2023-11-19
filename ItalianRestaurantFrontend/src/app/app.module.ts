@@ -26,8 +26,6 @@ import {LoadingSpinnerComponent} from "./shared/loading-spinner/loading-spinner.
 import {AdminPanelComponent} from "./admin-panel/admin-panel.component";
 import {PasswordFormComponent} from "./authentication/password-reset/password-form/password-form.component";
 import {DatePipe} from "@angular/common";
-import {ToastComponent} from './toast-notifications/toast/toast.component';
-import {ToasterComponent} from './toast-notifications/toaster/toaster.component';
 import {OrderHistoryComponent} from "./order-history/order-history.component";
 import {AdminTableQrComponent} from './admin-table-qr/admin-table-qr.component';
 import {QRCodeModule} from "angularx-qrcode";
@@ -60,6 +58,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatMenuModule} from "@angular/material/menu";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -80,8 +79,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoadingSpinnerComponent,
     AdminPanelComponent,
     PasswordFormComponent,
-    ToastComponent,
-    ToasterComponent,
     OrderHistoryComponent,
     AdminTableQrComponent,
     TableEditDialogComponent,
@@ -130,7 +127,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatToolbarModule,
     MatSidenavModule,
     FlexLayoutModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSnackBarModule,
   ],
 
   providers: [
@@ -146,6 +144,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     },
     MatDialog,
     HttpClient,
+    MatSnackBarModule
   ],
   bootstrap: [AppComponent]
 })

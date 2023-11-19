@@ -1,14 +1,13 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Meal} from "../../models/meal";
 import {CartService} from "../../shared/cart.service";
 import {DataStorageService} from "../../shared/data-storage.service";
-import {ToastService} from "../../shared/toast.service";
-import {CategoryDto} from "../../models/categoryDto";
 import {AuthService} from "../../authentication/auth/auth.service";
 import {Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {Category} from "../../models/category";
-import {MatPaginator, PageEvent} from "@angular/material/paginator";
+import {PageEvent} from "@angular/material/paginator";
+import {SnackbarService} from "../../shared/sncakbar.service";
 
 @Component({
   selector: 'app-menu',
@@ -32,7 +31,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   constructor(private cartService: CartService,
               private dataStorageService: DataStorageService,
-              private toastService: ToastService,
+              private snackbarService: SnackbarService,
               private authService: AuthService,
               private activatedRoute: ActivatedRoute) {
     this.authSubscription = this.authService.user.subscribe(
@@ -47,12 +46,13 @@ export class MenuComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'en';
     if (this.activatedRoute.snapshot.queryParams['payment'] === 'failed') {
-      this.toastService.showErrorToast('Payment', 'Payment failed. Order not placed. Please try again.')
+      this.snackbarService.openSnackbarError('Payment failed. Order not placed');
     }
     if (this.activatedRoute.snapshot.queryParams['table']) {
       this.cartService.addTable(this.activatedRoute.snapshot.queryParams['table'])
-      this.toastService.showSuccessToast('Table', 'You are ordering to table ' + this.activatedRoute.snapshot.queryParams['table'])
+      this.snackbarService.openSnackbarSuccess('You are ordering to table' + this.activatedRoute.snapshot.queryParams['table']);
     }
+
     this.dataStorageService.getCategories()
       .subscribe(
         res => {
@@ -117,7 +117,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   addToCart(meal: Meal) {
     this.cartService.addToCart(meal);
-    this.toastService.showSuccessToast("Cart", "Added item to cart")
+    this.snackbarService.openSnackbarSuccess('Meal added to cart');
   }
 
   onChangePage(event: PageEvent) {
@@ -131,6 +131,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.lang = localStorage.getItem('lang') || 'en'
     return this.lang === 'pl' ? category.name_pl || category.name : category.name || '';
   }
+
   getMealName(meal: any): string {
     this.lang = localStorage.getItem('lang') || 'en'
     return this.lang === 'pl' ? meal.name_pl || meal.name : meal.name || '';

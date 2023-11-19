@@ -5,7 +5,7 @@ import {Router} from "@angular/router";
 import {Role, User} from "./user.model";
 import {environment} from "../../../environments/environment";
 import jwtDecode from "jwt-decode";
-import {ToastService} from "../../shared/toast.service";
+import {SnackbarService} from "../../shared/sncakbar.service";
 
 export interface AuthResponseData {
   token: string;
@@ -18,7 +18,7 @@ export class AuthService {
   user = new BehaviorSubject<User | null>(null);
   private logoutTimer: any;
 
-  constructor(private http: HttpClient, private router: Router, private toastService: ToastService) {
+  constructor(private http: HttpClient, private router: Router, private snackbarService: SnackbarService) {
   }
 
   signup(firstName: string, lastName: string, email: string, password: string) {
@@ -37,7 +37,7 @@ export class AuthService {
         tap(
           resData => {
             this.handleAuthentication(resData.token, new Date(resData.expiration).getTime(), resData.role)
-            this.toastService.showSuccessToast("Login", "User registered successfully")
+            this.snackbarService.openSnackbarSuccess("User registered successfully")
           })
       )
   }
@@ -65,18 +65,18 @@ export class AuthService {
     if (!token) return;
     this.getUserDetails(token)
       .subscribe((res) => {
-          const loadedUser = new User(res.token, new Date(res.expiration), res.role);
-          if (loadedUser.token) {
-            this.user.next(loadedUser);
-            const expirationDuration =
-              new Date(res.expiration).getTime() -
-              new Date().getTime();
-            this.autoLogout(expirationDuration);
-          }
+        const loadedUser = new User(res.token, new Date(res.expiration), res.role);
+        if (loadedUser.token) {
+          this.user.next(loadedUser);
+          const expirationDuration =
+            new Date(res.expiration).getTime() -
+            new Date().getTime();
+          this.autoLogout(expirationDuration);
+        }
 
-        }, () => {
-          this.logout()
-        })
+      }, () => {
+        this.logout()
+      })
   }
 
   getUserDetails(token: string) {
@@ -118,7 +118,7 @@ export class AuthService {
     this.http.get(`${environment.apiUrl}/password/request?email=${email}`)
       .subscribe(
         (res) => {
-          this.toastService.showSuccessToast("Password reset", "Check your email to reset your password")
+          this.snackbarService.openSnackbarInfo("Check your email to reset your password")
           this.router.navigate([''])
         }
       )
@@ -142,7 +142,7 @@ export class AuthService {
       .subscribe(
         () => {
           this.router.navigate([''])
-          this.toastService.showSuccessToast("Password reset", "Password has been reset successfully")
+          this.snackbarService.openSnackbarSuccess("Password has been reset successfully")
         }
       );
   }
