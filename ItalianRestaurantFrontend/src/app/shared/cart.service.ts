@@ -75,4 +75,10 @@ export class CartService {
     this.cartSubject.next(this.cart)
     localStorage.setItem("cartData", JSON.stringify(this.cart))
   }
+
+  getCartItemsCount(){
+    let count = 0;
+    this.cart.meals.forEach(item => count += item.quantity)
+    return count;
+  }
 }

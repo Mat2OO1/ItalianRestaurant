@@ -27,12 +27,6 @@
                 mat-flat-button>{{'orders' | translate}}</button>
       </ng-container>
 
-      <ng-container *ngIf="currentUser === null">
-        <button class="nav-elem" routerLink="register" color="accent"
-                mat-flat-button>{{'register' | translate}}</button>
-        <button class="nav-elem" routerLink="login" color="accent" mat-flat-button>{{'login' | translate}}</button>
-      </ng-container>
-
       <button class="nav-elem" mat-button [matMenuTriggerFor]="menu">
         <span *ngIf="lang === 'pl'" class="fi fi-pl"></span>
         <span *ngIf="lang === 'en'" class="fi fi-gb"></span>
@@ -43,15 +37,26 @@
         <button mat-menu-item (click)="changeLang('en')"><span class="fi fi-gb"></span> English</button>
       </mat-menu>
 
-      <button class="nav-elem" *ngIf="currentUser?.role === Role.USER" routerLink="summary" mat-icon-button aria-label="Shopping Cart">
-        <mat-icon>shopping_cart</mat-icon>
+      <ng-container *ngIf="currentUser === null">
+        <button class="nav-elem" routerLink="register" color="accent"
+                mat-flat-button>{{'register' | translate}}</button>
+        <button matTooltip="{{'login' | translate}}" class="nav-elem" routerLink="login" mat-icon-button>
+          <mat-icon>login</mat-icon>
+        </button>
+      </ng-container>
+
+      <button matTooltip="{{'cart' | translate}}" class="nav-elem" *ngIf="currentUser?.role === Role.USER"
+              routerLink="summary" mat-icon-button aria-label="Shopping Cart">
+        <mat-icon [matBadge]="cartItemsCount" matBadgeColor="warn">shopping_cart</mat-icon>
       </button>
 
-      <button  class="nav-elem" *ngIf="currentUser?.role" (click)="onLogout()" mat-icon-button aria-label="Logout">
+      <button matTooltip="{{ 'logout' | translate }}" class="nav-elem" *ngIf="currentUser?.role" (click)="onLogout()"
+              mat-icon-button aria-label="Logout">
         <mat-icon>logout</mat-icon>
       </button>
     </div>
-    <button class="nav-elem" mat-icon-button fxHide.gt-md (click)="sidenav.toggle()">
+    <button matTooltip="{{ 'menu' | translate}}" class="nav-elem" mat-icon-button fxHide.gt-md
+            (click)="sidenav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
   </mat-toolbar>

@@ -60,6 +60,7 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {PaginatorI18n} from "./shared/PaginatorI18n";
+import {MatBadgeModule} from "@angular/material/badge";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -130,6 +131,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FlexLayoutModule,
     MatMenuModule,
     MatSnackBarModule,
+    MatBadgeModule,
   ],
 
   providers: [

@@ -8,6 +8,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Category} from "../../models/category";
 import {PageEvent} from "@angular/material/paginator";
 import {SnackbarService} from "../../shared/sncakbar.service";
+import {Role} from "../../authentication/auth/user.model";
 
 @Component({
   selector: 'app-menu',
@@ -22,7 +23,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   pageIndex = 0
   size = 5;
   mealsNumber = 0;
-  isLoggedIn = false;
+  isUser = false;
   filteredCategory ?: Category;
   lang = "";
 
@@ -36,7 +37,7 @@ export class MenuComponent implements OnInit, OnDestroy {
               private activatedRoute: ActivatedRoute) {
     this.authSubscription = this.authService.user.subscribe(
       (user) => {
-        this.isLoggedIn = !!user?.token;
+        this.isUser = user?.role === Role.USER;
       }
     );
     this.sentMealsRequest();
