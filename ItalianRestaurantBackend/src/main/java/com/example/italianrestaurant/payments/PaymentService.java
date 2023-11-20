@@ -30,12 +30,12 @@ public class PaymentService {
 
     private final PaymentRepository paymentRepository;
 
-    public OrderPaidResponse payment(List<PaymentRequest> paymentList, long orderId, String email) throws StripeException {
+    public OrderPaidResponse payment(List<PaymentRequest> paymentList, long orderId, String email, String lang) throws StripeException {
 
         Stripe.apiKey = secretKey;
         SessionCreateParams params = SessionCreateParams.builder()
                 .setCustomerEmail(email)
-                .setLocale(SessionCreateParams.Locale.EN)
+                .setLocale(getLocale(lang))
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.BLIK)
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.P24)
@@ -65,7 +65,16 @@ public class PaymentService {
         paymentRepository.save(payment);
         return new OrderPaidResponse(session.getId(), session.getUrl());
     }
-
+    // Dodana metoda do uzyskiwania Locale na podstawie wartości zmiennej lang
+    private SessionCreateParams.Locale getLocale(String lang) {
+        switch (lang.toLowerCase()) {
+            case "pl":
+                return SessionCreateParams.Locale.PL;
+            // Dodaj obsługę innych języków, jeśli potrzebujesz
+            default:
+                return SessionCreateParams.Locale.EN;
+        }
+    }
     public void updatePayment(String payload, String sigHeader) throws StripeException {
         Event event;
         event = Webhook.constructEvent(

@@ -136,7 +136,7 @@ public class OrderServiceTest {
         given(orderRepository.save(any())).willReturn(order);
         given(mealOrderService.addMealOrder(any())).willReturn(mealOrder);
         given(userService.getUserByEmail(any())).willReturn(user);
-        given(paymentService.payment(any(), eq(order.getId()), any())).willReturn(orderPaidResponse);
+        given(paymentService.payment(any(), eq(order.getId()), any(), any())).willReturn(orderPaidResponse);
         given(paymentService.getPaymentBySessionId(any())).willReturn(Utils.getPayment());
 
         //when

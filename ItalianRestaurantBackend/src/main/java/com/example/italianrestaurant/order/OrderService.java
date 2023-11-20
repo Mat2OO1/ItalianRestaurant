@@ -68,7 +68,7 @@ public class OrderService {
                 .map(mealOrderDto -> modelMapper.map(mealOrderDto, MealOrder.class))
                 .toList();
 
-        OrderPaidResponse orderPaidResponse = paymentService.payment(getPaymentRequestList(mealOrders), savedOrder.getId(), userPrincipal.getEmail());
+        OrderPaidResponse orderPaidResponse = paymentService.payment(getPaymentRequestList(mealOrders), savedOrder.getId(), userPrincipal.getEmail(), "en");
         Payment payment = paymentService.getPaymentBySessionId(orderPaidResponse.getSessionId());
         savedOrder.setPayment(payment);
         orderRepository.save(savedOrder);
