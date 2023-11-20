@@ -56,14 +56,14 @@ export class DataStorageService {
       .delete(`${environment.apiUrl}/meals/delete/${id}`)
   }
 
-  addCategory(categoryName: string) {
+  addCategory(categoryName: string, categoryNamePl: string) {
     return this.http
-      .post(`${environment.apiUrl}/meal-categories/add`, {name: categoryName})
+      .post(`${environment.apiUrl}/meal-categories/add`, {name: categoryName, name_pl: categoryNamePl})
   }
 
-  editCategory(categoryName: string, id: number) {
+  editCategory(categoryName: string, categoryNamePl: string, id: number) {
     return this.http
-      .put(`${environment.apiUrl}/meal-categories/edit/${id}`, {name: categoryName})
+      .put(`${environment.apiUrl}/meal-categories/edit/${id}`, {name: categoryName, name_pl: categoryNamePl})
   }
 
   deleteCategory(id: number) {
@@ -73,7 +73,7 @@ export class DataStorageService {
 
   getCategories() {
     return this.http
-      .get<{ name: string, image: string }[]>(`${environment.apiUrl}/meal-categories`)
+      .get<{ name: string, name_pl: string }[]>(`${environment.apiUrl}/meal-categories`)
   }
 
   makeAnOrder(cart: Cart, delivery?: Delivery) {

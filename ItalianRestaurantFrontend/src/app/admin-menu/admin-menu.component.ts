@@ -47,6 +47,7 @@ export class AdminMenuComponent {
     });
   }
 
+
   getMeals() {
     this.dataStorageService.getMealsWithoutPagination()
       .subscribe(
@@ -110,15 +111,15 @@ export class AdminMenuComponent {
   }
 
   private handleCategoryDialogResult(mode: DialogMode,
-                                     result: { name: string, file: File, id: number | undefined } | number) {
+                                     result: { name: string, name_pl: string, id: number | undefined } | number) {
     if (result) {
       if (mode === DialogMode.ADD && typeof result === 'object') {
-        this.dataStorageService.addCategory(result.name).subscribe(() => {
+        this.dataStorageService.addCategory(result.name, result.name_pl).subscribe(() => {
           this.getCategories();
           this.getMeals();
         });
       } else if (mode === DialogMode.EDIT && typeof result === 'object') {
-        this.dataStorageService.editCategory(result.name, result.id!).subscribe(() => {
+        this.dataStorageService.editCategory(result.name, result.name_pl, result.id!).subscribe(() => {
           this.getCategories();
           this.getMeals();
         });
