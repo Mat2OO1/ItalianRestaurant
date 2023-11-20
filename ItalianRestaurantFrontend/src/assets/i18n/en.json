@@ -153,5 +153,7 @@
   "FIRST_PAGE_LABEL": "First page",
   "LAST_PAGE_LABEL": "Last page",
   "RANGE_PAGE_LABEL_1": "0 from {{length}}",
-  "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} from {{length}}"
+  "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} from {{length}}",
+  "RESERVED": "RESERVED",
+  "FREE": "FREE"
 }

@@ -153,5 +153,7 @@
   "FIRST_PAGE_LABEL": "Pierwsza strona",
   "LAST_PAGE_LABEL": "Ostatnia strona",
   "RANGE_PAGE_LABEL_1": "0 z {{length}}",
-  "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} z {{length}}"
+  "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} z {{length}}",
+  "RESERVED": "ZAREZERWOWANY",
+  "FREE": "WOLNY"
 }
