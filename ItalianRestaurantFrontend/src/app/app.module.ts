@@ -39,7 +39,7 @@ import {CategoryEditDialogComponent} from "./category-edit-dialog/category-edit-
 import {TableComponent} from "./order/table/table.component";
 import {MatCardModule} from "@angular/material/card";
 import {MatListModule} from "@angular/material/list";
-import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {ReserveTableComponent} from "./reserve-table/reserve-table.component";
 import {ReserveTableDialogComponent} from "./reserve-table/reserve-table-dialog/reserve-table-dialog.component";
@@ -49,7 +49,7 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatPaginatorIntl, MatPaginatorModule} from "@angular/material/paginator";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatIconModule} from "@angular/material/icon";
 import {MatTableModule} from "@angular/material/table";
@@ -59,6 +59,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {PaginatorI18n} from "./shared/PaginatorI18n";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -144,7 +145,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     },
     MatDialog,
     HttpClient,
-    MatSnackBarModule
+    MatSnackBarModule,
+    {
+      provide: MatPaginatorIntl, deps: [TranslateService],
+      useFactory: (translateService: TranslateService) => new PaginatorI18n(translateService).getPaginatorIntl()
+    }
   ],
   bootstrap: [AppComponent]
 })

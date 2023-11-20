@@ -146,5 +146,12 @@
   "image_toast": "Image is required.",
   "number_invalid": "Please enter a valid number (only digits are allowed).",
   "seats_invalid": "Please enter a valid number of seats (only digits are allowed).",
-  "cart": "Cart"
+  "cart": "Cart",
+  "ITEMS_PER_PAGE_LABEL": "Items per page:",
+  "NEXT_PAGE_LABEL": "Next page",
+  "PREVIOUS_PAGE_LABEL": "Previous page",
+  "FIRST_PAGE_LABEL": "First page",
+  "LAST_PAGE_LABEL": "Last page",
+  "RANGE_PAGE_LABEL_1": "0 from {{length}}",
+  "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} from {{length}}"
 }

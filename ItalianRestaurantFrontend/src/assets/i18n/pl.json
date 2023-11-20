@@ -146,5 +146,12 @@
   "image_toast": "Zdjęcie jest wymagane",
   "number_invalid": "Podaj prawidłowy numer stolika (dozwolone są tylko liczby).",
   "seats_invalid": "Podaj prawidłową liczbę miejsc (dozwolone są tylko liczby).",
-  "cart": "Koszyk"
+  "cart": "Koszyk",
+  "ITEMS_PER_PAGE_LABEL": "Liczba elementów:",
+  "NEXT_PAGE_LABEL": "Następna strona",
+  "PREVIOUS_PAGE_LABEL": "Poprzednia strona",
+  "FIRST_PAGE_LABEL": "Pierwsza strona",
+  "LAST_PAGE_LABEL": "Ostatnia strona",
+  "RANGE_PAGE_LABEL_1": "0 z {{length}}",
+  "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} z {{length}}"
 }
