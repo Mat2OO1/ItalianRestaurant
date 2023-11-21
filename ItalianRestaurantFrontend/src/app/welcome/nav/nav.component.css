@@ -61,7 +61,6 @@
 
 .mat-toolbar{
   height: 5rem;
-  background-color: #f9f6ee;
 }
 
 div {
@@ -71,4 +70,10 @@ div {
 .mat-sidenav-container{
   min-height: calc(100vh - 5rem) !important;
   background-color: #f9f6ee;
+}
+
+.mat-toolbar.mat-accent{
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
 }
