@@ -1,5 +1,6 @@
 package com.example.italianrestaurant.email;
 
+import com.example.italianrestaurant.order.mealorder.MealOrder;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -46,13 +48,35 @@ public class EmailService {
     public EmailEntity buildPasswordResetEmail(String to, String url) {
         EmailEntity email = EmailEntity.builder()
                 .to(to)
-                .from("italian.restaurant@rest.com")
+                .from("ladolcevita@rest.com")
                 .subject("Password reset request")
                 .template("password-reset.html")
                 .build();
 
         email.addProperty("email", to);
         email.addProperty("url", url);
+        return email;
+    }
+
+    public EmailEntity buildOrderConfirmationEmail(String to, String name, List<MealOrder> mealOrders, String confirmationLink) {
+        EmailEntity email = EmailEntity.builder()
+                .to(to)
+                .from("ladolcevita@rest.com")
+                .subject("Order confirmation")
+                .template("invoice.html")
+                .build();
+
+        List<MealOrderEmail> mealOrderEmails = mealOrders.stream().map(mealOrder -> MealOrderEmail.builder()
+                .mealName(mealOrder.getMeal().getName())
+                .price(String.format("%.2f", mealOrder.getMeal().getPrice() * mealOrder.getQuantity()))
+                .quantity(mealOrder.getQuantity())
+                .build()).toList();
+
+        email.addProperty("orders", mealOrderEmails);
+        email.addProperty("name", name);
+        email.addProperty("confirmationLink", confirmationLink);
+        email.addProperty("totalPrice",
+                String.format("%.2f", mealOrders.stream().mapToDouble(mealOrder -> mealOrder.getMeal().getPrice() * mealOrder.getQuantity()).sum()));
         return email;
     }
 }

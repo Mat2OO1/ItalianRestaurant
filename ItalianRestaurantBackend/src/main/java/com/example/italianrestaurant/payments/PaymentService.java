@@ -1,5 +1,10 @@
 package com.example.italianrestaurant.payments;
 
+import com.example.italianrestaurant.email.EmailEntity;
+import com.example.italianrestaurant.email.EmailService;
+import com.example.italianrestaurant.order.mealorder.MealOrder;
+import com.example.italianrestaurant.user.AuthProvider;
+import com.example.italianrestaurant.user.User;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Event;
@@ -7,16 +12,18 @@ import com.stripe.model.EventDataObjectDeserializer;
 import com.stripe.model.checkout.Session;
 import com.stripe.net.Webhook;
 import com.stripe.param.checkout.SessionCreateParams;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PaymentService {
 
     @Value("${stripe.secret-key}")
@@ -29,6 +36,7 @@ public class PaymentService {
     private String frontUrl;
 
     private final PaymentRepository paymentRepository;
+    private final EmailService emailService;
 
     public OrderPaidResponse payment(List<PaymentRequest> paymentList, long orderId, String email, String lang) throws StripeException {
 
@@ -65,6 +73,7 @@ public class PaymentService {
         paymentRepository.save(payment);
         return new OrderPaidResponse(session.getId(), session.getUrl());
     }
+
     // Dodana metoda do uzyskiwania Locale na podstawie wartości zmiennej lang
     private SessionCreateParams.Locale getLocale(String lang) {
         switch (lang.toLowerCase()) {
@@ -75,6 +84,7 @@ public class PaymentService {
                 return SessionCreateParams.Locale.EN;
         }
     }
+
     public void updatePayment(String payload, String sigHeader) throws StripeException {
         Event event;
         event = Webhook.constructEvent(
@@ -96,6 +106,29 @@ public class PaymentService {
                 payment.setAmount(sessionObject.getAmountTotal());
                 payment.setCreatedAt(LocalDateTime.now());
                 paymentRepository.save(payment);
+
+                List<MealOrder> mealOrders = payment.getOrder().getMealOrders();
+                User user = payment.getOrder().getUser();
+                EmailEntity emailEntity;
+                if (user.getProvider() == AuthProvider.local) {
+                    emailEntity = emailService.buildOrderConfirmationEmail(
+                            user.getEmail(),
+                            user.getFirstName() + " " + user.getLastName(),
+                            mealOrders,
+                            frontUrl + "/confirmation/" + payment.getOrder().getId());
+                }
+                else {
+                    emailEntity = emailService.buildOrderConfirmationEmail(
+                            user.getEmail(),
+                            user.getUsername(),
+                            mealOrders,
+                            frontUrl + "/confirmation/" + payment.getOrder().getId());
+                }
+                try {
+                    emailService.sendHtmlMessage(emailEntity);
+                } catch (MessagingException e) {
+                    log.error("Error sending email: " + e.getMessage());
+                }
                 break;
             }
             default:
