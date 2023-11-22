@@ -22,6 +22,7 @@ export class AdminMenuComponent {
   areMealsLoaded = false;
   areCategoriesLoaded = false;
   lang = localStorage.getItem('lang') || 'en';
+  clickButton = false;
   protected readonly DialogMode = DialogMode;
 
   constructor(public dialog: MatDialog,
@@ -40,6 +41,7 @@ export class AdminMenuComponent {
   }
 
   openCategoryDialog(mode: DialogMode, category ?: CategoryDto) {
+    this.clickButton = true;
     const dialogRef = this.dialog.open(CategoryEditDialogComponent, {
       data: {mode: mode, category: category},
     });
