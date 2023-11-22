@@ -2,8 +2,10 @@ package com.example.italianrestaurant.payments;
 
 import com.example.italianrestaurant.order.Order;
 import com.example.italianrestaurant.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import java.time.LocalDateTime;
 
@@ -32,5 +34,7 @@ public class Payment {
     private LocalDateTime createdAt;
 
     @OneToOne(mappedBy = "payment")
+    @JsonBackReference
+    @ToString.Exclude
     private Order order;
 }

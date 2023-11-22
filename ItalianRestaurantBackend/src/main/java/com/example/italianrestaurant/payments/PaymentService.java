@@ -114,13 +114,15 @@ public class PaymentService {
                     emailEntity = emailService.buildOrderConfirmationEmail(
                             user.getEmail(),
                             user.getFirstName() + " " + user.getLastName(),
-                            mealOrders);
+                            mealOrders,
+                            frontUrl + "/confirmation/" + payment.getOrder().getId());
                 }
                 else {
                     emailEntity = emailService.buildOrderConfirmationEmail(
                             user.getEmail(),
                             user.getUsername(),
-                            mealOrders);
+                            mealOrders,
+                            frontUrl + "/confirmation/" + payment.getOrder().getId());
                 }
                 try {
                     emailService.sendHtmlMessage(emailEntity);

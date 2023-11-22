@@ -1,7 +1,6 @@
 package com.example.italianrestaurant.email;
 
 import com.example.italianrestaurant.order.mealorder.MealOrder;
-import com.example.italianrestaurant.order.mealorder.MealOrderDto;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -59,15 +58,25 @@ public class EmailService {
         return email;
     }
 
-    public EmailEntity buildOrderConfirmationEmail(String to, String name, List<MealOrder> mealOrders) {
+    public EmailEntity buildOrderConfirmationEmail(String to, String name, List<MealOrder> mealOrders, String confirmationLink) {
         EmailEntity email = EmailEntity.builder()
                 .to(to)
                 .from("ladolcevita@rest.com")
                 .subject("Order confirmation")
                 .template("invoice.html")
                 .build();
-        email.addProperty("orders", mealOrders);
+
+        List<MealOrderEmail> mealOrderEmails = mealOrders.stream().map(mealOrder -> MealOrderEmail.builder()
+                .mealName(mealOrder.getMeal().getName())
+                .price(String.format("%.2f", mealOrder.getMeal().getPrice() * mealOrder.getQuantity()))
+                .quantity(mealOrder.getQuantity())
+                .build()).toList();
+
+        email.addProperty("orders", mealOrderEmails);
         email.addProperty("name", name);
+        email.addProperty("confirmationLink", confirmationLink);
+        email.addProperty("totalPrice",
+                String.format("%.2f", mealOrders.stream().mapToDouble(mealOrder -> mealOrder.getMeal().getPrice() * mealOrder.getQuantity()).sum()));
         return email;
     }
 }

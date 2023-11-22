@@ -210,9 +210,9 @@
                                 <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
 
                                     <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:14px;line-height:22px;text-align:left;color:#525252;">
-                                        <p>Hi John,</p>
+                                        <p>Hi <span th:text="${name}"></span>,</p>
 
-                                        <p>Thank you for choosing La dolce vita! We hope you enjoyed your meal. Attached
+                                        <p>Thank you for choosing La dolce vita! We hope you will enjoy your meal. Attached
                                             to this email is the invoice for your recent online payment.</p>
                                     </div>
 
@@ -226,13 +226,18 @@
                                            style="cellspacing:0;color:#000;font-family:'Helvetica Neue',Arial,sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;">
                                         <tr style="border-bottom:1px solid #ecedee;text-align:left;">
                                             <th style="padding: 0 15px 10px 0;">Item</th>
-                                            <th style="padding: 0 15px;">Qt.</th>
-                                            <th style="padding: 0 0 0 15px;" align="right">Price</th>
+                                            <th style="padding: 0 15px 10px 0;">Qt.</th>
+                                            <th style="padding: 0 15px 10px 0;" align="right">Price</th>
                                         </tr>
-                                        <tr>
-                                            <td style="padding: 5px 15px 5px 0;">Item number 1</td>
-                                            <td style="padding: 0 15px;">1</td>
-                                            <td style="padding: 0 0 0 15px;" align="right">$100,00</td>
+                                        <tr th:each="item : ${orders}">
+                                            <td style="padding: 0 15px 10px 0;"><span th:text="${item.mealName}"></span></td>
+                                            <td style="padding: 0 15px 10px 0;"><span th:text="${item.quantity}"></span></td>
+                                            <td style="padding: 0 15px 10px 0;" align="right"><span th:text="${item.price}"></span> zł</td>
+                                        </tr>
+                                        <tr style="border-top: 1px solid #ecedee;text-align:left;">
+                                            <td  style="padding: 0 15px 10px 0;"></td>
+                                            <td  style="padding: 0 15px 10px 0;"></td>
+                                            <td  style="padding: 0 15px 10px 0;font-weight: bold;" align="right">Total: <span th:text="${totalPrice}"></span> zł</td>
                                         </tr>
                                     </table>
 
@@ -241,24 +246,10 @@
 
 
                             <tr>
-                                <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-
-                                    <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:24px;font-weight:bold;line-height:22px;text-align:center;margin-top:15px;color:#525252;">
-                                        Let us know your experience
-                                    </div>
-
-                                </td>
-                            </tr>
-
-                            <tr>
                                 <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
 
-                                    <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:14px;line-height:22px;text-align:left;color:#525252;">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat ut
-                                            est ac dignissim. Donec pulvinar ligula metus, sed imperdiet quam pretium
-                                            at. Cras finibus hendrerit magna nec euismod. Ut eget
-                                            justo vel enim ultrices pharetra. Morbi tellus libero, sollicitudin pulvinar
-                                            porta ac, auctor sed neque. </p>
+                                    <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:14px;line-height:22px;margin-top:30px;text-align:left;color:#525252;">
+                                        <p>Below you can check your order status.</p>
                                     </div>
 
                                 </td>
@@ -275,7 +266,7 @@
                                                 style="border:none;border-radius:3px;color:#101;cursor:auto;"
                                                 valign="middle">
                                                 <p style="background:#101;color:#ffffff;font-family:'Helvetica Neue',Arial,sans-serif;font-size:15px;font-weight:normal;Margin:0;text-decoration:none;text-transform:none;  line-height: 45px;">
-                                                    <a href="https://www.htmlemailtemplates.net"
+                                                    <a th:href="${confirmationLink}"
                                                        style="color:#fff; text-decoration:none; padding: 40px 40px;">
                                                         Check Order Status</a>
                                                 </p>
