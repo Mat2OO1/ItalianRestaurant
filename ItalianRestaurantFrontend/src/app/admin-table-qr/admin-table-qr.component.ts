@@ -55,7 +55,6 @@ export class AdminTableQrComponent implements OnInit, AfterViewInit {
       (tables) => {
         this.tables = tables
         this.dataSource.data = tables
-        console.log(tables)
       })
   }
 
@@ -78,15 +77,11 @@ export class AdminTableQrComponent implements OnInit, AfterViewInit {
 
   private handleDialogResult(mode: DialogMode, result: Table | number) {
     if (result) {
-      if (mode === DialogMode.ADD && typeof result === 'object') {
-        this.dataStorageService.saveTable(result).subscribe()
-      } else if (mode === DialogMode.EDIT && typeof result === 'object') {
-        this.dataStorageService.saveTable(result).subscribe()
+      if ((mode === DialogMode.ADD || mode === DialogMode.EDIT) && typeof result === 'object') {
+        this.dataStorageService.saveTable(result).subscribe(() => this.getTables())
+      } else if (mode === DialogMode.DELETE && typeof result === 'number') {
+        this.dataStorageService.deleteTable(result).subscribe(() => this.getTables())
       }
-      else if (mode === DialogMode.DELETE && typeof result === 'number') {
-        this.dataStorageService.deleteTable(result).subscribe()
-      }
-      this.getTables();
     }
   }
 }
