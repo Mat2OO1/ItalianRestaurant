@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Meal} from "../models/meal";
 import {Subject} from "rxjs";
 import {Delivery} from "../models/delivery";
@@ -11,8 +11,10 @@ import {MealDto} from "../models/mealDto";
 import {PaymentResponse} from "../models/payment-response";
 import {Cart} from "../models/cart";
 import {Reservation} from "../models/reservation";
-
-@Injectable()
+import { Observable } from 'rxjs';
+@Injectable({
+  providedIn: 'root'
+})
 export class DataStorageService {
   constructor(private http: HttpClient) {
   }
@@ -76,15 +78,20 @@ export class DataStorageService {
       .get<{ name: string, name_pl: string }[]>(`${environment.apiUrl}/meal-categories`)
   }
 
-  makeAnOrder(cart: Cart, delivery?: Delivery) {
-    return this.http
-      .post<PaymentResponse>(`${environment.apiUrl}/order`,
-        {
-          delivery: delivery,
-          tableNr: cart.table,
-          mealOrders: cart.meals,
-          orderStatus: "IN_PREPARATION"
-        })
+  makeAnOrder(cart: Cart, delivery?: Delivery): Observable<PaymentResponse> {
+    const lang = localStorage.getItem('lang') || 'en'; // Pobierz zmienną "lang" z localStorage
+    const headers = new HttpHeaders().set('lang', lang);
+
+    return this.http.post<PaymentResponse>(
+      `${environment.apiUrl}/order`,
+      {
+        delivery: delivery,
+        tableNr: cart.table,
+        mealOrders: cart.meals,
+        orderStatus: "IN_PREPARATION"
+      },
+      { headers: headers }
+    );
   }
   getOrders() {
     return this.http
