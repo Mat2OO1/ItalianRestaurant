@@ -79,8 +79,8 @@ export class DataStorageService {
   }
 
   makeAnOrder(cart: Cart, delivery?: Delivery): Observable<PaymentResponse> {
-    const lang = localStorage.getItem('lang') || 'en'; // Pobierz zmienną "lang" z localStorage
-    const headers = new HttpHeaders().set('lang', lang);
+    const lang = localStorage.getItem('lang') || 'en';
+    const headers = new HttpHeaders().set('Lang', lang);
 
     return this.http.post<PaymentResponse>(
       `${environment.apiUrl}/order`,

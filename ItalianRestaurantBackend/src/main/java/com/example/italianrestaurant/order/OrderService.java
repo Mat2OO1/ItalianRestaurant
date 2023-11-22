@@ -46,7 +46,7 @@ public class OrderService {
         return orderRepository.findAllFromTodayAndPaymentPaid(LocalDateTime.now().toLocalDate(), true);
     }
 
-    public OrderPaidResponse makeOrder(UserPrincipal userPrincipal, OrderDto orderDto, @RequestHeader(value = "lang", defaultValue = "en") String lang) throws StripeException {
+    public OrderPaidResponse makeOrder(UserPrincipal userPrincipal, OrderDto orderDto, String lang) throws StripeException {
         Delivery dbDelivery = null;
         if (orderDto.getDelivery() != null)
             dbDelivery = deliveryService.addDelivery(orderDto.getDelivery());

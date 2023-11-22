@@ -45,11 +45,11 @@ public class  OrderController {
         }
     }
 
-    @PostMapping("/order")
+    @PostMapping
     public ResponseEntity<?> makeOrder(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             @Valid @RequestBody OrderDto orderDto,
-            @RequestHeader(value = "lang", defaultValue = "en") String lang
+            @RequestHeader(value = "Lang", defaultValue = "en") String lang
     ) {
         try {
             return ResponseEntity.ok(orderService.makeOrder(userPrincipal, orderDto, lang));
