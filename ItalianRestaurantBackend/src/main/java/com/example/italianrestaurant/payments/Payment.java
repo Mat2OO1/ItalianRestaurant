@@ -30,4 +30,7 @@ public class Payment {
     private Long amount;
 
     private LocalDateTime createdAt;
+
+    @OneToOne(mappedBy = "payment")
+    private Order order;
 }
