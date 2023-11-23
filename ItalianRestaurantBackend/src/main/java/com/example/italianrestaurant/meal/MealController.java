@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +26,12 @@ public class MealController {
 
     @GetMapping
     public ResponseEntity<Page<Meal>> getAllMeals(Pageable pageable) {
-        return ResponseEntity.ok(mealService.getAllMeals(pageable));
+        return ResponseEntity.ok(mealService.getAllMealsPaginated(pageable));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Meal>> getMeals() {
+        return ResponseEntity.ok(mealService.getAllMeals());
     }
 
     @GetMapping("/filter/{category}")

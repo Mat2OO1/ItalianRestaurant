@@ -59,7 +59,7 @@ public class MealControllerTest {
         ArrayList<Meal> mealList = new ArrayList<>(List.of(meal, meal2));
         Pageable pageable = PageRequest.of(0, 10);
         PageImpl<Meal> mockPage = new PageImpl<>(mealList, pageable, mealList.size());
-        when(mealService.getAllMeals(pageable)).thenReturn(mockPage);
+        when(mealService.getAllMealsPaginated(pageable)).thenReturn(mockPage);
 
         // when then
         mockMvc.perform(get("/meals")
@@ -96,7 +96,7 @@ public class MealControllerTest {
 
     private void testPage(List<Meal> mealList, PagedListHolder pages, Pageable pageable) throws Exception {
         PageImpl mockPage = new PageImpl<>(pages.getPageList(), pageable, mealList.size());
-        when(mealService.getAllMeals(pageable)).thenReturn(mockPage);
+        when(mealService.getAllMealsPaginated(pageable)).thenReturn(mockPage);
         // when then
         mockMvc.perform(get("/meals")
                         .param("page", String.valueOf(pageable.getPageNumber()))
@@ -115,7 +115,7 @@ public class MealControllerTest {
         Pageable pageable = Pageable.unpaged();
         PageImpl<Meal> mockPage = new PageImpl<>(List.of(), pageable, 0);
 
-        given(mealService.getAllMeals(any())).willReturn(mockPage);
+        given(mealService.getAllMealsPaginated(any())).willReturn(mockPage);
 
         // when
         mockMvc.perform(get("/meals")

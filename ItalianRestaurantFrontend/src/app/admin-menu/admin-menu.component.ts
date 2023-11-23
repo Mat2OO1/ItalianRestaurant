@@ -53,12 +53,12 @@ export class AdminMenuComponent {
           this.categories = response;
           console.log(this.categories)
           this.areCategoriesLoaded = true;
-
           this.dataStorageService.getMealsWithoutPagination()
             .subscribe(
               (response) => {
+                console.log(response)
                 this.mealsByCategory = {}
-                response.content.forEach(meal => {
+                response.forEach(meal => {
                   if (this.mealsByCategory[meal.mealCategory.name]) {
                     this.mealsByCategory[meal.mealCategory.name].push(meal)
                   } else {

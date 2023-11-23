@@ -35,7 +35,7 @@ export class DataStorageService {
 
   getMealsWithoutPagination() {
     return this.http
-      .get<{ content: Meal[] }>(`${environment.apiUrl}/meals`)
+      .get<Meal[]>(`${environment.apiUrl}/meals/all`)
   }
 
   addMeal(meal: MealDto, file: File) {
