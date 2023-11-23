@@ -15,6 +15,7 @@ import com.example.italianrestaurant.user.User;
 import com.example.italianrestaurant.user.UserService;
 import com.stripe.exception.StripeException;
 import jakarta.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -43,7 +44,7 @@ public class OrderService {
     }
 
     public List<Order> getAllOrdersFromToday() {
-        return orderRepository.findAllFromTodayAndPaymentPaid(LocalDateTime.now().toLocalDate(), true);
+        return orderRepository.findAllFromTodayAndPaymentPaid(LocalDate.now(), true);
     }
 
     public OrderPaidResponse makeOrder(UserPrincipal userPrincipal, OrderDto orderDto, String lang) throws StripeException {
