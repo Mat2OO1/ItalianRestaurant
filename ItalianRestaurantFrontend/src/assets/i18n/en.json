@@ -59,7 +59,7 @@
   "category": "Category",
   "category_edit": "category",
   "category_example": "Pizza",
-  "category_toast": "Category is required.",
+  "category_toast": "Category name is required.",
   "are_you_sure_delete": "Are you sure you want to delete",
   "cancel": "Cancel",
   "with_name": "with name",
