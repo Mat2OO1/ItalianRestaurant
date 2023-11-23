@@ -17,7 +17,6 @@ import {ConfirmationComponent} from "./order/confirmation/confirmation.component
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {AuthService} from "./authentication/auth/auth.service";
 import {AuthInterceptorService} from "./authentication/auth/auth-interceptor.service";
-import {MealsService} from "./shared/meals.service";
 import {DataStorageService} from "./shared/data-storage.service";
 import {EmailFormComponent} from "./authentication/password-reset/email-form/email-form.component";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -137,7 +136,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [
     CartService,
     AuthService,
-    MealsService,
     DataStorageService,
     DatePipe,
     {

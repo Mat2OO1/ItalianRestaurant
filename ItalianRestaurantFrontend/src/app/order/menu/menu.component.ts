@@ -73,7 +73,7 @@ export class MenuComponent implements OnInit, OnDestroy {
             this.pageIndex = res.number;
             this.meals = res.content.map(meal => new Meal(
               meal.id,
-              this.getMealName(meal),
+              meal.name,
               meal.name_pl,
               meal.image,
               meal.description,
@@ -92,7 +92,7 @@ export class MenuComponent implements OnInit, OnDestroy {
             this.pageIndex = res.number;
             this.meals = res.content.map(meal => new Meal(
               meal.id,
-              this.getMealName(meal),
+              meal.name,
               meal.name_pl,
               meal.image,
               meal.description,
@@ -133,12 +133,12 @@ export class MenuComponent implements OnInit, OnDestroy {
     return this.lang === 'pl' ? category.name_pl || category.name : category.name || '';
   }
 
-  getMealName(meal: any): string {
+  getMealName(meal: Meal): string {
     this.lang = localStorage.getItem('lang') || 'en'
     return this.lang === 'pl' ? meal.name_pl || meal.name : meal.name || '';
   }
 
-  getMealDescription(meal: any): string {
+  getMealDescription(meal: Meal): string {
     this.lang = localStorage.getItem('lang') || 'en'
     return this.lang === 'pl' ? meal.description_pl || meal.description : meal.description || '';
   }

@@ -32,9 +32,11 @@ export class NavComponent implements OnInit{
   }
 
   changeLang(selectedLanguage: string){
-    this.lang = selectedLanguage;
-    localStorage.setItem('lang', selectedLanguage);
-    this.translateService.use(selectedLanguage);
+    setTimeout(() => {
+      this.lang = selectedLanguage;
+      localStorage.setItem('lang', selectedLanguage);
+      this.translateService.use(selectedLanguage);
+    },200)
   }
 
   get cartItemsCount(){
