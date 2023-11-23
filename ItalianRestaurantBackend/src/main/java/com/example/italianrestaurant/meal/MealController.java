@@ -1,12 +1,10 @@
 package com.example.italianrestaurant.meal;
 
-import com.example.italianrestaurant.meal.mealcategory.MealCategoryDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -26,12 +24,12 @@ public class MealController {
     private final ObjectMapper objectMapper;
 
     @GetMapping
-    public ResponseEntity<Page<Meal>> getAllMeals(Pageable pageable) {
-        return ResponseEntity.ok(mealService.getAllMeals(pageable));
+    public ResponseEntity<Page<Meal>> getAllMeals() {
+        return ResponseEntity.ok(mealService.getAllMeals(Pageable.unpaged()));
     }
 
     @GetMapping("/filter/{category}")
-    public ResponseEntity<Page<Meal>> getAllMeals(@PathVariable String category, Pageable pageable) {
+    public ResponseEntity<Page<Meal>> getMealsByCategory(@PathVariable String category, Pageable pageable) {
         return ResponseEntity.ok(mealService.getMealsByCategory(pageable, category));
     }
 

@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {Meal} from "../models/meal";
-import {FormControl, FormGroup} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {MealEditDialogComponent} from "../meal-edit-dialog/meal-edit-dialog.component";
 import {CategoryEditDialogComponent} from "../category-edit-dialog/category-edit-dialog.component";
@@ -25,8 +24,7 @@ export class AdminMenuComponent {
 
   constructor(public dialog: MatDialog,
               private dataStorageService: DataStorageService) {
-    this.getMeals()
-    this.getCategories()
+    this.getMealsData()
   }
 
   openDialog(mode: DialogMode, category: CategoryDto, meal ?: Meal) {
@@ -48,36 +46,35 @@ export class AdminMenuComponent {
   }
 
 
-  getMeals() {
-    this.dataStorageService.getMealsWithoutPagination()
-      .subscribe(
-        (response) => {
-          this.mealsByCategory = {}
-          response.content.forEach(meal => {
-            if (this.mealsByCategory[meal.mealCategory.name]) {
-              this.mealsByCategory[meal.mealCategory.name].push(meal)
-            } else {
-              this.mealsByCategory[meal.mealCategory.name] = [meal]
-            }
-          })
-          this.areMealsLoaded = true;
-        }
-      )
-  }
-
-  getCategories() {
+  getMealsData() {
     this.dataStorageService.getCategories()
       .subscribe(
         (response) => {
           this.categories = response;
+          console.log(this.categories)
           this.areCategoriesLoaded = true;
-        }
-      )
+
+          this.dataStorageService.getMealsWithoutPagination()
+            .subscribe(
+              (response) => {
+                this.mealsByCategory = {}
+                response.content.forEach(meal => {
+                  if (this.mealsByCategory[meal.mealCategory.name]) {
+                    this.mealsByCategory[meal.mealCategory.name].push(meal)
+                  } else {
+                    this.mealsByCategory[meal.mealCategory.name] = [meal]
+                  }
+                })
+                this.areMealsLoaded = true;
+              })
+        })
   }
+
   getCategoryName(category: Category): string {
     this.lang = localStorage.getItem('lang') || 'en'
     return this.lang === 'pl' ? category.name_pl || category.name : category.name || '';
   }
+
   getMealName(meal: any): string {
     this.lang = localStorage.getItem('lang') || 'en'
     return this.lang === 'pl' ? meal.name_pl || meal.name : meal.name || '';
@@ -93,18 +90,15 @@ export class AdminMenuComponent {
     if (result) {
       if (mode === DialogMode.ADD && typeof result === 'object') {
         this.dataStorageService.addMeal(result.mealDto, result.file!).subscribe(() => {
-          this.getCategories();
-          this.getMeals();
+          this.getMealsData();
         });
       } else if (mode === DialogMode.EDIT && typeof result === 'object') {
         this.dataStorageService.editMeal(result.mealDto, result.id!, result.file!).subscribe(() => {
-          this.getCategories();
-          this.getMeals();
+          this.getMealsData();
         });
       } else if (mode === DialogMode.DELETE && typeof result === 'number') {
         this.dataStorageService.deleteMeal(result).subscribe(() => {
-          this.getCategories();
-          this.getMeals();
+          this.getMealsData();
         });
       }
     }
@@ -115,18 +109,15 @@ export class AdminMenuComponent {
     if (result) {
       if (mode === DialogMode.ADD && typeof result === 'object') {
         this.dataStorageService.addCategory(result.name, result.name_pl).subscribe(() => {
-          this.getCategories();
-          this.getMeals();
+          this.getMealsData();
         });
       } else if (mode === DialogMode.EDIT && typeof result === 'object') {
         this.dataStorageService.editCategory(result.name, result.name_pl, result.id!).subscribe(() => {
-          this.getCategories();
-          this.getMeals();
+          this.getMealsData();
         });
       } else if (mode === DialogMode.DELETE && typeof result === 'number') {
         this.dataStorageService.deleteCategory(result).subscribe(() => {
-          this.getCategories();
-          this.getMeals();
+          this.getMealsData();
         });
       }
     }

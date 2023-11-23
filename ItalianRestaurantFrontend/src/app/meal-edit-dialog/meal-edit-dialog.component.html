@@ -53,7 +53,7 @@
       <p style="margin: 0" *ngIf="(!selectedFile?.name && data.mode === DialogMode.EDIT)">
         {{'not_updated' | translate }}
       </p>
-      <p style="margin: 0" *ngIf="(!selectedFile?.name && data.mode === DialogMode.ADD)">
+      <p style="margin: 0" *ngIf="selectedFile?.name">
         {{ selectedFile?.name }}
       </p>
       <input hidden (change)="onFileUploaded($event)" #fileInput type="file" id="file">
