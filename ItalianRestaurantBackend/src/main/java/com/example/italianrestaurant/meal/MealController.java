@@ -24,8 +24,8 @@ public class MealController {
     private final ObjectMapper objectMapper;
 
     @GetMapping
-    public ResponseEntity<Page<Meal>> getAllMeals() {
-        return ResponseEntity.ok(mealService.getAllMeals(Pageable.unpaged()));
+    public ResponseEntity<Page<Meal>> getAllMeals(Pageable pageable) {
+        return ResponseEntity.ok(mealService.getAllMeals(pageable));
     }
 
     @GetMapping("/filter/{category}")
