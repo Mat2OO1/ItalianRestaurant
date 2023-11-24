@@ -3,6 +3,7 @@ package com.example.italianrestaurant.meal;
 import com.example.italianrestaurant.meal.mealcategory.MealCategory;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.Builder.Default;
 import org.hibernate.Hibernate;
 
 import java.util.Objects;
@@ -32,8 +33,9 @@ public class Meal {
     private String description;
     private String description_pl;
     @Column(nullable = false)
+    private boolean deleted = false;
+    @Column(nullable = false)
     private double price;
-
 
     @Override
     public boolean equals(Object o) {

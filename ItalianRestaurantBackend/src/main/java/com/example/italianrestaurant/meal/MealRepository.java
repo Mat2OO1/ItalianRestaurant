@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface MealRepository extends JpaRepository<Meal, Long> {
     Page<Meal> findAll(Pageable pageable);
+    List<Meal> getAllByDeletedFalse();
     boolean existsByName(String name);
 
     Page<Meal> getMealsByMealCategoryName(Pageable pageable, String name);

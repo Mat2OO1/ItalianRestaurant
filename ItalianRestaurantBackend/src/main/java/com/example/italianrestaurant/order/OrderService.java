@@ -69,6 +69,9 @@ public class OrderService {
         List<MealOrder> mealOrders = orderDto.getMealOrders().stream()
                 .map(mealOrderDto -> modelMapper.map(mealOrderDto, MealOrder.class))
                 .toList();
+        if(mealOrders.stream().anyMatch(mealOrder -> mealOrder.getMeal().isDeleted())){
+            throw new EntityNotFoundException("One of the meals is deleted. Order wasn't created");
+        }
 
         OrderPaidResponse orderPaidResponse = paymentService.payment(getPaymentRequestList(mealOrders), savedOrder.getId(), userPrincipal.getEmail(), lang);
         Payment payment = paymentService.getPaymentBySessionId(orderPaidResponse.getSessionId());

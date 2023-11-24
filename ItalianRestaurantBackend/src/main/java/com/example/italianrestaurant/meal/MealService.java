@@ -32,7 +32,7 @@ public class MealService {
     }
 
     public List<Meal> getAllMeals() {
-        return mealRepository.findAll();
+        return mealRepository.getAllByDeletedFalse();
     }
 
     public Page<Meal> getMealsByCategory(Pageable pageable, String category){
@@ -79,8 +79,9 @@ public class MealService {
 
     public void deleteMeal(long id){
         Meal meal = mealRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        if (meal.getImage() != null) awsService.deleteFile(meal.getImage());
-        mealRepository.delete(meal);
+        log.info(meal);
+        meal.setDeleted(true);
+        mealRepository.save(meal);
     }
 
 }

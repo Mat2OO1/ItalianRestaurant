@@ -55,6 +55,8 @@ public class  OrderController {
             return ResponseEntity.ok(orderService.makeOrder(userPrincipal, orderDto, lang));
         } catch (StripeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        } catch (EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
