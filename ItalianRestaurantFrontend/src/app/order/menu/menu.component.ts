@@ -9,6 +9,7 @@ import {Category} from "../../models/category";
 import {PageEvent} from "@angular/material/paginator";
 import {SnackbarService} from "../../shared/sncakbar.service";
 import {Role} from "../../authentication/auth/user.model";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-menu',
@@ -34,7 +35,8 @@ export class MenuComponent implements OnInit, OnDestroy {
               private dataStorageService: DataStorageService,
               private snackbarService: SnackbarService,
               private authService: AuthService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private translate: TranslateService) {
     this.authSubscription = this.authService.user.subscribe(
       (user) => {
         this.isUser = user?.role === Role.USER;
@@ -47,11 +49,15 @@ export class MenuComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'en';
     if (this.activatedRoute.snapshot.queryParams['payment'] === 'failed') {
-      this.snackbarService.openSnackbarError('Payment failed. Order not placed');
+      this.translate.get('payment_error').subscribe((message) => {
+        this.snackbarService.openSnackbarSuccess(message);
+      });
     }
     if (this.activatedRoute.snapshot.queryParams['table']) {
       this.cartService.addTable(this.activatedRoute.snapshot.queryParams['table'])
-      this.snackbarService.openSnackbarSuccess('You are ordering to table' + this.activatedRoute.snapshot.queryParams['table']);
+      this.translate.get('order_to_table_error').subscribe((message) => {
+        this.snackbarService.openSnackbarSuccess(message + + this.activatedRoute.snapshot.queryParams['table']);
+      });
     }
 
     this.dataStorageService.getCategories()
@@ -118,7 +124,9 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   addToCart(meal: Meal) {
     this.cartService.addToCart(meal);
-    this.snackbarService.openSnackbarSuccess('Meal added to cart');
+    this.translate.get('meal_added_to_card_error').subscribe((message) => {
+      this.snackbarService.openSnackbarSuccess(message);
+    });
   }
 
   onChangePage(event: PageEvent) {

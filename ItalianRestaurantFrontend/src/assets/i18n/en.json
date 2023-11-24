@@ -158,5 +158,15 @@
   "FREE": "FREE",
   "error_login": "Bad credentials",
   "error_register": "User already exists",
-  "error_login_local": "Looks like you're signed up with local account. \nPlease use your account to login."
+  "error_login_local": "Looks like you're signed up with local account. \nPlease use your account to login.",
+  "user_registered_successfully": "User registered successfully",
+  "user_password_reset":"Password has been reset successfully",
+  "user_check_email": "Check your email to reset your password",
+  "unknown_error" : "An unknown error occurred!",
+  "payment_error" : "Payment failed. Order not placed",
+  "order_to_table_error": "You are ordering to table ",
+  "meal_added_to_card_error": "Meal added to cart",
+  "table_reserved_successfully": "Table reserved successfully",
+  "password_same_error": "Passwords are not the same",
+  "table_already_reserved_error": "Table is already reserved for this date"
 }

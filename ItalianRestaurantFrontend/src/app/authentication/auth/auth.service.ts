@@ -7,6 +7,7 @@ import {environment} from "../../../environments/environment";
 import jwtDecode from "jwt-decode";
 import {SnackbarService} from "../../shared/sncakbar.service";
 import {take} from "rxjs/operators";
+import { TranslateService } from '@ngx-translate/core';
 
 export interface AuthResponseData {
   token: string;
@@ -18,8 +19,9 @@ export interface AuthResponseData {
 export class AuthService {
   user = new BehaviorSubject<User | null>(null);
   private logoutTimer: any;
+  private errorMessage="";
 
-  constructor(private http: HttpClient, private router: Router, private snackbarService: SnackbarService) {
+  constructor(private http: HttpClient, private router: Router, private snackbarService: SnackbarService, private translate: TranslateService) {
   }
 
   signup(firstName: string, lastName: string, email: string, password: string) {
@@ -38,7 +40,9 @@ export class AuthService {
         tap(
           resData => {
             this.handleAuthentication(resData.token, new Date(resData.expiration).getTime(), resData.role)
-            this.snackbarService.openSnackbarSuccess("User registered successfully")
+            this.translate.get('user_registered_successfully').subscribe((message) => {
+              this.snackbarService.openSnackbarSuccess(message);
+            });
           })
       )
   }
@@ -111,7 +115,9 @@ export class AuthService {
     this.http.get(`${environment.apiUrl}/password/request?email=${email}`)
       .subscribe(
         (res) => {
-          this.snackbarService.openSnackbarInfo("Check your email to reset your password")
+          this.translate.get('user_check_email').subscribe((message) => {
+            this.snackbarService.openSnackbarSuccess(message);
+          });
           this.router.navigate([''])
         }
       )
@@ -135,19 +141,23 @@ export class AuthService {
       .subscribe(
         () => {
           this.router.navigate([''])
-          this.snackbarService.openSnackbarSuccess("Password has been reset successfully")
+          this.translate.get('user_password_reset').subscribe((message) => {
+            this.snackbarService.openSnackbarSuccess(message);
+          });
         }
       );
   }
 
   private handleError(errorRes: HttpErrorResponse) {
-    let errorMessage = 'An unknown error occurred!';
+    this.translate.get('unknown_error').subscribe((message) => {
+      this.errorMessage = message;
+    });
     if (errorRes.error.error === 'Not Found') {
-      errorMessage = `Bad credentials`;
+      this.errorMessage = `Bad credentials`;
     } else if (errorRes.error === 'User already exists') {
-      errorMessage = 'This user exists already';
+      this.errorMessage = 'This user exists already';
     }
-    return throwError(errorMessage);
+    return throwError(this.errorMessage);
   }
 
   autoLogin() {
