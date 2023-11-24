@@ -1,11 +1,11 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component} from '@angular/core';
 import {DataStorageService} from "../shared/data-storage.service";
 import {Table} from "../models/table";
 import {MatDialog} from "@angular/material/dialog";
 import {Reservation} from "../models/reservation";
 import {ReserveTableDialogComponent} from "./reserve-table-dialog/reserve-table-dialog.component";
-import {ToastService} from "../shared/toast.service";
 import {CancelReservationDialogComponent} from "./cancel-reservation-dialog/cancel-reservation-dialog.component";
+import {SnackbarService} from "../shared/sncakbar.service";
 
 @Component({
   selector: 'app-reserve-table',
@@ -18,7 +18,7 @@ export class ReserveTableComponent {
 
   constructor(private dataStorageService: DataStorageService,
               private dialog: MatDialog,
-              private toastService: ToastService) {
+              private snackbarService: SnackbarService) {
     this.dataStorageService.getTables()
       .subscribe(
         (res) => {
@@ -43,7 +43,7 @@ export class ReserveTableComponent {
       data: {reservation: reservation},
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
+      if (result) {
         this.dataStorageService.cancelReservation(reservation)
           .subscribe(
             (res) => {
@@ -58,17 +58,17 @@ export class ReserveTableComponent {
     if (result) {
       this.dataStorageService.makeReservation(result).subscribe(
         (res) => {
-          this.toastService.showSuccessToast("Reservation", "Table reserved successfully")
+          this.snackbarService.openSnackbarSuccess("Table reserved successfully")
           this.getReservations();
         },
         (err) => {
-          this.toastService.showErrorToast("Reservation", err.error)
+          this.snackbarService.openSnackbarError(err.error)
         }
       )
     }
   }
 
-  getReservations(){
+  getReservations() {
     this.dataStorageService.getUserReservations()
       .subscribe(
         (res) => {

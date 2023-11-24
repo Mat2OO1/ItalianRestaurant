@@ -15,10 +15,12 @@ import com.example.italianrestaurant.user.User;
 import com.example.italianrestaurant.user.UserService;
 import com.stripe.exception.StripeException;
 import jakarta.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -42,10 +44,10 @@ public class OrderService {
     }
 
     public List<Order> getAllOrdersFromToday() {
-        return orderRepository.findAllFromTodayAndPaymentPaid(LocalDateTime.now().toLocalDate(), true);
+        return orderRepository.findAllFromTodayAndPaymentPaid(LocalDate.now(), true);
     }
 
-    public OrderPaidResponse makeOrder(UserPrincipal userPrincipal, OrderDto orderDto) throws StripeException {
+    public OrderPaidResponse makeOrder(UserPrincipal userPrincipal, OrderDto orderDto, String lang) throws StripeException {
         Delivery dbDelivery = null;
         if (orderDto.getDelivery() != null)
             dbDelivery = deliveryService.addDelivery(orderDto.getDelivery());
@@ -68,7 +70,7 @@ public class OrderService {
                 .map(mealOrderDto -> modelMapper.map(mealOrderDto, MealOrder.class))
                 .toList();
 
-        OrderPaidResponse orderPaidResponse = paymentService.payment(getPaymentRequestList(mealOrders), savedOrder.getId(), userPrincipal.getEmail());
+        OrderPaidResponse orderPaidResponse = paymentService.payment(getPaymentRequestList(mealOrders), savedOrder.getId(), userPrincipal.getEmail(), lang);
         Payment payment = paymentService.getPaymentBySessionId(orderPaidResponse.getSessionId());
         savedOrder.setPayment(payment);
         orderRepository.save(savedOrder);

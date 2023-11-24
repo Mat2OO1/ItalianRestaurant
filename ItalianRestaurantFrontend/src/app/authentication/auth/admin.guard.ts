@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
 import {Observable, of, switchMap} from "rxjs";
 import {AuthService} from "./auth.service";
-import {take} from "rxjs/operators";
+import {catchError, take} from "rxjs/operators";
 import {Role} from "./user.model";
 
 @Injectable({providedIn: "root"})
@@ -24,15 +24,20 @@ export class AdminGuard {
         if (!!user) {
           return of(true);
         } else {
+          if (!localStorage.getItem('token')) return of(this.router.createUrlTree(['login']));
           return this.authService.getUserDetails(localStorage.getItem('token')!).pipe(
-            switchMap(newUser => {
-              if (newUser.role === Role.ADMIN) {
+            switchMap(res => {
+              if (!!res && res.role === Role.ADMIN) {
+                this.authService.logInUser(res)
                 return of(true)
               } else {
                 return of(this.router.createUrlTree(['login']));
               }
             })
-          );
+            , catchError(err => {
+              this.authService.logout();
+              return of(false);
+            }));
         }
       })
     );

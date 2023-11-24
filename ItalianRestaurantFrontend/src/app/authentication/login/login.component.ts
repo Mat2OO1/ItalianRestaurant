@@ -19,7 +19,6 @@ export class LoginComponent implements OnDestroy, OnInit {
   googleURL = AppConstants.GOOGLE_AUTH_URL
   facebookURL = AppConstants.FACEBOOK_AUTH_URL
   githubURL = AppConstants.GITHUB_AUTH_URL
-
   authSubscription ?: Subscription;
 
   constructor(private authService: AuthService,
@@ -46,8 +45,7 @@ export class LoginComponent implements OnDestroy, OnInit {
     }
     this.activatedRoute.queryParams.subscribe(params => {
       if (params['error']) {
-        this.error = `Looks like you're signed up with ${params['error']} account.
-        Please use your ${params['error']} account to login.`
+        this.error = `Error local`
       }
     });
   }
@@ -67,7 +65,7 @@ export class LoginComponent implements OnDestroy, OnInit {
         },
         errorMessage => {
           this.loginForm.reset()
-          this.error = errorMessage;
+          this.error = errorMessage
         }
       );
 

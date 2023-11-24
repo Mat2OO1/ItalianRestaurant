@@ -3,14 +3,14 @@
 
   <form [formGroup]="mealForm" *ngIf="data.mode !== DialogMode.DELETE">
     <mat-form-field class="form-element" appearance="outline">
-      <mat-label>{{'name_menu' | translate}}</mat-label>
+      <mat-label>{{'name_menu' | translate}} - {{'en'| translate}}</mat-label>
       <input type="text" matInput formControlName="name" placeholder="{{'meal_example' | translate}}">
       <mat-error *ngIf="mealForm.get('name')?.hasError('required')">
         {{'meal_toast' | translate}}
       </mat-error>
     </mat-form-field>
     <mat-form-field class="form-element" appearance="outline">
-      <mat-label>{{'name_menu' | translate}} - {{lang| translate}}</mat-label>
+      <mat-label>{{'name_menu' | translate}} - {{'pl'| translate}}</mat-label>
       <input type="text" matInput formControlName="name_pl" placeholder="{{'meal_example' | translate}}">
       <mat-error *ngIf="mealForm.get('name_pl')?.hasError('required')">
         {{'meal_toast' | translate}}
@@ -18,7 +18,7 @@
     </mat-form-field>
 
     <mat-form-field class="form-element" appearance="outline">
-      <mat-label>{{'menu_description' | translate}}</mat-label>
+      <mat-label>{{'menu_description' | translate}} - {{'en'| translate}}</mat-label>
       <input type="text" matInput formControlName="description"
              placeholder="{{'meal_description_example' | translate}}">
       <mat-error *ngIf="mealForm.get('description')?.hasError('required')">
@@ -27,7 +27,7 @@
     </mat-form-field>
 
     <mat-form-field class="form-element" appearance="outline">
-      <mat-label>{{'menu_description' | translate}} - {{lang|translate}}</mat-label>
+      <mat-label>{{'menu_description' | translate}} - {{'pl'|translate}}</mat-label>
       <input type="text" matInput formControlName="description_pl"
              placeholder="{{'meal_description_example' | translate}}">
       <mat-error *ngIf="mealForm.get('description_pl')?.hasError('required')">
@@ -53,7 +53,7 @@
       <p style="margin: 0" *ngIf="(!selectedFile?.name && data.mode === DialogMode.EDIT)">
         {{'not_updated' | translate }}
       </p>
-      <p style="margin: 0" *ngIf="(!selectedFile?.name && data.mode === DialogMode.ADD)">
+      <p style="margin: 0" *ngIf="selectedFile?.name">
         {{ selectedFile?.name }}
       </p>
       <input hidden (change)="onFileUploaded($event)" #fileInput type="file" id="file">

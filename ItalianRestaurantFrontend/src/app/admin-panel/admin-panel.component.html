@@ -23,8 +23,8 @@
             <thead>
             <tr>
               <th scope="col">{{'order_status'|translate}}</th>
-              <th scope="col">{{'estimate_delivery'|translate}}</th>
-              <th scope="col">{{'address'|translate}}</th>
+              <th scope="col" *ngIf="order.delivery">{{'estimate_delivery'|translate}}</th>
+              <th scope="col" *ngIf="order.delivery">{{'address'|translate}}</th>
               <th scope="col"></th>
               <th scope="col"></th>
             </tr>
@@ -38,10 +38,10 @@
                   <option value="DELIVERED">{{'delivered'|translate}}</option>
                 </select>
               </td>
-              <td>
+              <td *ngIf="order.delivery">
                 <input type="time" class="form-control" formControlName="deliveryDate" name="deliveryDate">
               </td>
-              <td>{{order.delivery.address}} {{order.delivery.city}} {{getDeliveryOptionsTranslation(order.delivery.deliveryOptions)}} {{order.delivery.postalCode}} {{order.delivery.info}}</td>
+              <td *ngIf="order.delivery">{{order.delivery.address}} {{order.delivery.city}} {{getDeliveryOptionsTranslation(order.delivery.deliveryOptions)}} {{order.delivery.postalCode}} {{order.delivery.info}}</td>
               <td>
                 <button class="btn btn-primary" type="submit">{{'change'|translate}}</button>
               </td>

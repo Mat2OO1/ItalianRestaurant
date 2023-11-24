@@ -53,7 +53,7 @@ public class MealServiceTest {
         meal2.setName("Meal2");
         given(mealRepository.findAll(Pageable.unpaged())).willReturn(new PageImpl<>(List.of(meal, meal2), Pageable.unpaged(), 2));
         //when
-        val returnedMeals = mealService.getAllMeals(Pageable.unpaged());
+        val returnedMeals = mealService.getAllMealsPaginated(Pageable.unpaged());
 
         //then
         assertThat(returnedMeals.getContent()).containsExactly(meal, meal2);
@@ -65,7 +65,7 @@ public class MealServiceTest {
         given(mealRepository.findAll(Pageable.unpaged())).willReturn(new PageImpl<>(List.of(), Pageable.unpaged(), 0));
 
         //when
-        val returnedMeals = mealService.getAllMeals(Pageable.unpaged());
+        val returnedMeals = mealService.getAllMealsPaginated(Pageable.unpaged());
 
         //then
         assertThat(returnedMeals.getContent()).isEmpty();

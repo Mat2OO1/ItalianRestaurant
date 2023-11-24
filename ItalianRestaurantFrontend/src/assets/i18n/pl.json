@@ -1,5 +1,5 @@
 {
-  "description": "      Przeżyj autentyczną kuchnię włoską w nowoczesnym wydaniu w naszej restauracji.\n      Rozkoszuj się domowymi makaronami, pizzą z pieca opalanego drewnem i wykwintnymi mięsnymi daniami przygotowywanymi przez naszych wykwalifikowanych szefów kuchni.\n      Zrelaksuj się i ciesz się ciepłą, przyjazną atmosferą, popijając szklankę wyśmienitego włoskiego wina.\n      Buon appetito!",
+  "description": "Przeżyj autentyczną kuchnię włoską w nowoczesnym wydaniu w naszej restauracji.\n      Rozkoszuj się domowymi makaronami, pizzą z pieca opalanego drewnem i wykwintnymi mięsnymi daniami przygotowywanymi przez naszych wykwalifikowanych szefów kuchni.\n      Zrelaksuj się i ciesz się ciepłą, przyjazną atmosferą, popijając szklankę wyśmienitego włoskiego wina.\n      Buon appetito!",
   "email": "Adres e-mail",
   "email_example": "nazwa@gmail.com",
   "email_invalid": "Nieprawidłowy adres email",
@@ -49,7 +49,7 @@
   "no_order": "Nie ma dzis żadnych zamówień.",
   "table_editor": "Edytor stolików",
   "table_number": "Numer stolika",
-  "table_nr_seats": "Liczba siedzeń",
+  "table_nr_seats": "Liczba miejsc",
   "table_status": "Status",
   "table_qr_code": "Kod QR",
   "table_download": "Pobierz kod QR",
@@ -145,5 +145,18 @@
   "not_updated": "Nie zaktualizowano",
   "image_toast": "Zdjęcie jest wymagane",
   "number_invalid": "Podaj prawidłowy numer stolika (dozwolone są tylko liczby).",
-  "seats_invalid": "Podaj prawidłową liczbę miejsc (dozwolone są tylko liczby)."
+  "seats_invalid": "Podaj prawidłową liczbę miejsc (dozwolone są tylko liczby).",
+  "cart": "Koszyk",
+  "ITEMS_PER_PAGE_LABEL": "Liczba elementów:",
+  "NEXT_PAGE_LABEL": "Następna strona",
+  "PREVIOUS_PAGE_LABEL": "Poprzednia strona",
+  "FIRST_PAGE_LABEL": "Pierwsza strona",
+  "LAST_PAGE_LABEL": "Ostatnia strona",
+  "RANGE_PAGE_LABEL_1": "0 z {{length}}",
+  "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} z {{length}}",
+  "RESERVED": "ZAREZERWOWANY",
+  "FREE": "WOLNY",
+  "error_login": "Błędne dane uwierzytelniające",
+  "error_register": "Użytkownik istnieje",
+  "error_login_local": "Wydaje się, że jesteś zarejestrowany(a) przy użyciu konta lokalnego. \nProszę użyj swojego konta, aby się zalogować."
 }

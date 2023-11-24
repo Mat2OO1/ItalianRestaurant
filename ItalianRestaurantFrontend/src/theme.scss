@@ -2,8 +2,53 @@
 
 @include mat.core();
 
+$dark-primary-text: rgba(black, 0.87);
+$dark-secondary-text: rgba(black, 0.54);
+$dark-disabled-text: rgba(black, 0.38);
+$dark-dividers: rgba(black, 0.12);
+$dark-focused: rgba(black, 0.12);
+$light-primary-text: white;
+$light-secondary-text: rgba(white, 0.7);
+$light-disabled-text: rgba(white, 0.5);
+$light-dividers: rgba(white, 0.12);
+$light-focused: rgba(white, 0.12);
+
+$brown-palette: (
+  50: #efebe9,
+  100: #d7ccc8,
+  200: #fff,
+  300: #a1887f,
+  400: #8d6e63,
+  500: #795548,
+  600: #6d4c41,
+  700: #5d4037,
+  800: #4e342e,
+  900: #3e2723,
+  A100: #d7ccc8,
+  A200: #bcaaa4,
+  A400: #8d6e63,
+  A700: #5d4037,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+
 $my-primary: mat.define-palette(mat.$green-palette, 900);
-$my-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$my-accent: mat.define-palette($brown-palette, 200);
 $my-warn: mat.define-palette(mat.$red-palette);
 
 $my-theme: mat.define-light-theme((

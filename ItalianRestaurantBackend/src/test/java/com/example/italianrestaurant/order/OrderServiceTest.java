@@ -136,11 +136,11 @@ public class OrderServiceTest {
         given(orderRepository.save(any())).willReturn(order);
         given(mealOrderService.addMealOrder(any())).willReturn(mealOrder);
         given(userService.getUserByEmail(any())).willReturn(user);
-        given(paymentService.payment(any(), eq(order.getId()), any())).willReturn(orderPaidResponse);
+        given(paymentService.payment(any(), eq(order.getId()), any(), any())).willReturn(orderPaidResponse);
         given(paymentService.getPaymentBySessionId(any())).willReturn(Utils.getPayment());
 
         //when
-        OrderPaidResponse result = orderService.makeOrder(userPrincipal, Utils.getOrderDto());
+        OrderPaidResponse result = orderService.makeOrder(userPrincipal, Utils.getOrderDto(), "en");
 
         //then
         assertThat(result).isNotNull();
@@ -156,7 +156,7 @@ public class OrderServiceTest {
         given(deliveryService.addDelivery(any())).willThrow(InvalidEntityException.class);
 
         //when
-        assertThatThrownBy(() -> orderService.makeOrder(userPrincipal, orderDto))
+        assertThatThrownBy(() -> orderService.makeOrder(userPrincipal, orderDto, "en"))
                 .isInstanceOf(InvalidEntityException.class);
 
         //then

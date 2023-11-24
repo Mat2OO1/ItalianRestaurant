@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Meal} from "../models/meal";
 import {Subject} from "rxjs";
 import {Delivery} from "../models/delivery";
@@ -11,8 +11,10 @@ import {MealDto} from "../models/mealDto";
 import {PaymentResponse} from "../models/payment-response";
 import {Cart} from "../models/cart";
 import {Reservation} from "../models/reservation";
-
-@Injectable()
+import { Observable } from 'rxjs';
+@Injectable({
+  providedIn: 'root'
+})
 export class DataStorageService {
   constructor(private http: HttpClient) {
   }
@@ -33,7 +35,7 @@ export class DataStorageService {
 
   getMealsWithoutPagination() {
     return this.http
-      .get<{ content: Meal[] }>(`${environment.apiUrl}/meals`)
+      .get<Meal[]>(`${environment.apiUrl}/meals/all`)
   }
 
   addMeal(meal: MealDto, file: File) {
@@ -56,14 +58,14 @@ export class DataStorageService {
       .delete(`${environment.apiUrl}/meals/delete/${id}`)
   }
 
-  addCategory(categoryName: string) {
+  addCategory(categoryName: string, categoryNamePl: string) {
     return this.http
-      .post(`${environment.apiUrl}/meal-categories/add`, {name: categoryName})
+      .post(`${environment.apiUrl}/meal-categories/add`, {name: categoryName, name_pl: categoryNamePl})
   }
 
-  editCategory(categoryName: string, id: number) {
+  editCategory(categoryName: string, categoryNamePl: string, id: number) {
     return this.http
-      .put(`${environment.apiUrl}/meal-categories/edit/${id}`, {name: categoryName})
+      .put(`${environment.apiUrl}/meal-categories/edit/${id}`, {name: categoryName, name_pl: categoryNamePl})
   }
 
   deleteCategory(id: number) {
@@ -73,18 +75,23 @@ export class DataStorageService {
 
   getCategories() {
     return this.http
-      .get<{ name: string, image: string }[]>(`${environment.apiUrl}/meal-categories`)
+      .get<{ name: string, name_pl: string }[]>(`${environment.apiUrl}/meal-categories`)
   }
 
-  makeAnOrder(cart: Cart, delivery?: Delivery) {
-    return this.http
-      .post<PaymentResponse>(`${environment.apiUrl}/order`,
-        {
-          delivery: delivery,
-          tableNr: cart.table,
-          mealOrders: cart.meals,
-          orderStatus: "IN_PREPARATION"
-        })
+  makeAnOrder(cart: Cart, delivery?: Delivery): Observable<PaymentResponse> {
+    const lang = localStorage.getItem('lang') || 'en';
+    const headers = new HttpHeaders().set('Lang', lang);
+
+    return this.http.post<PaymentResponse>(
+      `${environment.apiUrl}/order`,
+      {
+        delivery: delivery,
+        tableNr: cart.table,
+        mealOrders: cart.meals,
+        orderStatus: "IN_PREPARATION"
+      },
+      { headers: headers }
+    );
   }
   getOrders() {
     return this.http

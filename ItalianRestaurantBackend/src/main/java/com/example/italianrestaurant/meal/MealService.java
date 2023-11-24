@@ -5,6 +5,7 @@ import com.example.italianrestaurant.meal.mealcategory.MealCategory;
 import com.example.italianrestaurant.meal.mealcategory.MealCategoryService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -26,8 +27,12 @@ public class MealService {
     private final MealCategoryService mealCategoryService;
     private final AwsService awsService;
 
-    public Page<Meal> getAllMeals(Pageable pageable) {
+    public Page<Meal> getAllMealsPaginated(Pageable pageable) {
         return mealRepository.findAll(pageable);
+    }
+
+    public List<Meal> getAllMeals() {
+        return mealRepository.findAll();
     }
 
     public Page<Meal> getMealsByCategory(Pageable pageable, String category){

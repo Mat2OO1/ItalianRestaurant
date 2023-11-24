@@ -46,13 +46,16 @@ public class  OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<?> makeOrder(@AuthenticationPrincipal UserPrincipal userPrincipal, @Valid @RequestBody OrderDto orderDto) {
+    public ResponseEntity<?> makeOrder(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            @Valid @RequestBody OrderDto orderDto,
+            @RequestHeader(value = "Lang", defaultValue = "en") String lang
+    ) {
         try {
-            return ResponseEntity.ok(orderService.makeOrder(userPrincipal, orderDto));
+            return ResponseEntity.ok(orderService.makeOrder(userPrincipal, orderDto, lang));
         } catch (StripeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
-
     }
 
     @Secured("ROLE_ADMIN")

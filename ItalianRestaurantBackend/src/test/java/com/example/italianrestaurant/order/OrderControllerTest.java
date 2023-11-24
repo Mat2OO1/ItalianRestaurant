@@ -81,7 +81,7 @@ public class OrderControllerTest {
         val orderPaidRequest = Utils.getOrderPaidResponse();
         val orderDto = Utils.getOrderDto();
 
-        given(orderService.makeOrder(any(), any())).willReturn(orderPaidRequest);
+        given(orderService.makeOrder(any(), any(),any())).willReturn(orderPaidRequest);
 
         // when
         val resultActions = mockMvc.perform(post("/order")
