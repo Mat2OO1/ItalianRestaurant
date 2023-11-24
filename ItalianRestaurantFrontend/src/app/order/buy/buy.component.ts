@@ -43,7 +43,6 @@ export class BuyComponent {
     let floor = this.buyForm.value['floor'] === '' ? null : this.buyForm.value['floor'];
     let info = this.buyForm.value['info'] === '' ? null : this.buyForm.value['info'];
     let deliveryOption = this.buyForm.value['deliveryOption'] === '' ? null : this.buyForm.value['deliveryOption'];
-    console.log(this.cartService.cart)
     this.dataStorageService.makeAnOrder(
       this.cartService.cart, new Delivery(address, city, pcode, floor, info, deliveryOption)
     )

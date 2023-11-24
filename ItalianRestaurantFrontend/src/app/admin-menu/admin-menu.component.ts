@@ -51,7 +51,6 @@ export class AdminMenuComponent {
       .subscribe(
         (response) => {
           this.categories = response;
-          console.log(this.categories)
           this.areCategoriesLoaded = true;
           this.dataStorageService.getMealsWithoutPagination()
             .subscribe(
