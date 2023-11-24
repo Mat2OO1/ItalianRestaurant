@@ -1,5 +1,4 @@
 .meal-card {
-  max-width: 70vw;
   margin-bottom: 8px;
   border-radius: 10px;
   display: flex;
@@ -27,8 +26,8 @@ mat-card-title-group {
 
 .meals {
   overflow: auto;
-  max-height: 70vh;
-  margin: 0 auto;
+  max-height: 68vh;
+  margin: 0 20px;
 }
 
 mat-paginator {
@@ -40,6 +39,20 @@ mat-paginator {
   padding:20px;
   margin-top: 20px;
   border-radius: 10px;
-  background-color: #e0e0e0;
+  background-color: #f9f6ee;
   max-height: 400px
 }
+
+.mat-drawer-side {
+  border-right: none !important;
+}
+
+.mdc-list-item {
+  padding-right: 60px !important;
+}
+
+.option-button {
+  display: flex;
+  align-items: center;
+}
+

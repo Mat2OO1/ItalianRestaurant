@@ -1,43 +1,49 @@
 <div class="container">
-  <div class="row justify-content-around">
-<!--    <div class="col-lg-2 col-sm-3 col-6 categories">-->
-<!--      <h4 class="text-center">{{'category'|translate}}:</h4>-->
-<!--      <p *ngFor="let category of categories">-->
-<!--        <mat-checkbox [checked]="category === filteredCategory"  color="#005B47" (change)="onCategoryChange(category)">-->
-<!--          {{getCategoryName(category)}}-->
-<!--        </mat-checkbox>-->
-<!--      </p>-->
-<!--    </div>-->
+  <div class="row justify-content-around mt-3">
+    <div class="col-12">
+      <mat-drawer-container autosize>
 
-    <div class="col-lg-7 col-sm-8 col-11">
-      <mat-chip-listbox class="mt-3" aria-label="Category selection">
-        <mat-chip-option class="me-2" (selectionChange)="onCategoryChange(category)" *ngFor="let category of categories">{{category.name}}</mat-chip-option>
-      </mat-chip-listbox>
-
-
-      <div class="meals">
-        <mat-card class="meal-card" *ngFor="let meal of meals">
-          <mat-card-header>
-            <img mat-card-lg-image [src]="meal.image">
-          </mat-card-header>
-          <mat-card-title-group>
-            <mat-card-title>{{getMealName(meal)}}</mat-card-title>
-            <mat-card-subtitle>{{getCategoryName(meal.mealCategory)}}</mat-card-subtitle>
-            <mat-card-content>
-              <p>{{getMealDescription(meal)}}</p>
-              <p>{{meal.price}} {{'currency'|translate}}</p>
-              <button type="button" class="btn btn-dark" *ngIf="isUser" (click)="addToCart(meal)">
-                <i class="bi bi-cart me-1"></i>
-                {{'to_cart'|translate}}
-              </button>
-            </mat-card-content>
-          </mat-card-title-group>
-        </mat-card>
-      </div>
-      <mat-paginator [length]="mealsNumber" [pageSizeOptions]="[5, 10, 20]" aria-label="Select page"
-                     (page)="onChangePage($event)" [pageIndex]="pageIndex"></mat-paginator>
+        <mat-drawer #drawer [mode]="isLargeScreen() ? 'side' : 'over'" [opened]="isLargeScreen()">
+          <mat-nav-list>
+            <mat-list-item>
+              <h4 class="text-center">{{'category'|translate}}:</h4>
+            </mat-list-item>
+            <mat-list-item *ngFor="let category of categories">
+              <mat-checkbox [checked]="category === filteredCategory" color="primary"
+                            (change)="onCategoryChange(category)">
+                {{getCategoryName(category)}}
+              </mat-checkbox>
+            </mat-list-item>
+          </mat-nav-list>
+        </mat-drawer>
+        <div class="option-button" *ngIf="!isLargeScreen()">
+          <button matTooltip="Category" mat-icon-button (click)="drawer.toggle()">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <h6 class="mt-4 mb-3">{{ 'choose_category' | translate }}</h6>
+        </div>
+        <div class="meals">
+          <mat-card class="meal-card" *ngFor="let meal of meals">
+            <mat-card-header>
+              <img mat-card-lg-image [src]="meal.image">
+            </mat-card-header>
+            <mat-card-title-group>
+              <mat-card-title>{{getMealName(meal)}}</mat-card-title>
+              <mat-card-subtitle>{{getCategoryName(meal.mealCategory)}}</mat-card-subtitle>
+              <mat-card-content>
+                <p>{{getMealDescription(meal)}}</p>
+                <p>{{meal.price}} {{'currency'|translate}}</p>
+                <button type="button" class="btn btn-dark" *ngIf="isUser" (click)="addToCart(meal)">
+                  <i class="bi bi-cart me-1"></i>
+                  {{'to_cart'|translate}}
+                </button>
+              </mat-card-content>
+            </mat-card-title-group>
+          </mat-card>
+        </div>
+        <mat-paginator [length]="mealsNumber" [pageSizeOptions]="[5, 10, 20]" aria-label="Select page"
+                       (page)="onChangePage($event)" [pageIndex]="pageIndex"></mat-paginator>
+      </mat-drawer-container>
     </div>
   </div>
 </div>
-
-

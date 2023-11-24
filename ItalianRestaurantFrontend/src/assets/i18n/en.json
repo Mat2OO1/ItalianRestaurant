@@ -155,5 +155,6 @@
   "RANGE_PAGE_LABEL_1": "0 from {{length}}",
   "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} from {{length}}",
   "RESERVED": "RESERVED",
-  "FREE": "FREE"
+  "FREE": "FREE",
+  "choose_category": "Choose category"
 }
