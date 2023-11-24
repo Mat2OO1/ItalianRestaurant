@@ -154,6 +154,11 @@ export class MenuComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.authSubscription?.unsubscribe()
   }
+
+  isLargeScreen() {
+    const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    return width > 720;
+  }
 }
 
 

@@ -168,5 +168,6 @@
   "meal_added_to_card_error": "Meal added to cart",
   "table_reserved_successfully": "Table reserved successfully",
   "password_same_error": "Passwords are not the same",
-  "table_already_reserved_error": "Table is already reserved for this date"
+  "table_already_reserved_error": "Table is already reserved for this date",
+  "choose_category": "Choose category"
 }
