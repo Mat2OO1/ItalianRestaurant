@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Meal} from "../models/meal";
 import {MatDialog} from "@angular/material/dialog";
+import {MatExpansionModule} from '@angular/material/expansion';
 import {MealEditDialogComponent} from "../meal-edit-dialog/meal-edit-dialog.component";
 import {CategoryEditDialogComponent} from "../category-edit-dialog/category-edit-dialog.component";
 import {DataStorageService} from "../shared/data-storage.service";
@@ -20,6 +21,7 @@ export class AdminMenuComponent {
   areMealsLoaded = false;
   areCategoriesLoaded = false;
   lang = localStorage.getItem('lang') || 'en';
+  clickButton = false;
   protected readonly DialogMode = DialogMode;
 
   constructor(public dialog: MatDialog,
@@ -37,6 +39,7 @@ export class AdminMenuComponent {
   }
 
   openCategoryDialog(mode: DialogMode, category ?: CategoryDto) {
+    this.clickButton = true;
     const dialogRef = this.dialog.open(CategoryEditDialogComponent, {
       data: {mode: mode, category: category},
     });

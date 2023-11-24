@@ -4,78 +4,85 @@
       <br>
       <h1>{{'menu_editor'|translate}}</h1>
       <br>
-      <div class="category-with-meal" *ngFor="let category of categories">
-        <div style="margin: 0" class="d-inline-flex align-items-center">
-          <h3 style="font-weight: bold; margin:0 10px">{{getCategoryName(category)}}</h3>
-          <button matTooltip="{{'edit'|translate}}" matTooltipPosition="above" class="btn btn-info"
-                  style="margin:0 10px" (click)="openCategoryDialog(DialogMode.EDIT,category)">
-            <i class="bi bi-pen"></i>
-          </button>
-          <button matTooltip="{{'delete'|translate}}" matTooltipPosition="above" class="btn btn-danger"
-                  data-toggle="tooltip"
-                  data-placement="top" (click)="openCategoryDialog(DialogMode.DELETE, category)">
-            <i class="bi bi-trash"></i>
-          </button>
-        </div>
-        <div class="table table-image table-responsive"
-             *ngIf="mealsByCategory[category.name] && mealsByCategory[category.name].length > 0">
-          <thead>
-          <tr>
-            <th scope="col">{{'image'|translate}}</th>
-            <th scope="col">{{'name_menu'|translate}}</th>
-            <th scope="col">{{'menu_description'|translate}}</th>
-            <th scope="col">{{'price'|translate}}</th>
-            <th scope="col">{{'edit'|translate}}</th>
-            <th scope="col">{{'delete'|translate}}</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let meal of mealsByCategory[category.name]">
-            <td class="w-25">
-              <img class="img-fluid img-thumbnail" style="max-width:80px" src="{{meal.image}}">
-            </td>
-            <td>{{getMealName(meal)}}</td>
-            <td>{{getMealDescription(meal)}}</td>
-            <td>{{meal.price}}{{'currency'|translate}}</td>
-            <td>
+      <mat-accordion multi>
+        <mat-expansion-panel *ngFor="let category of categories" [disabled]="clickButton" (click)="clickButton=false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{getCategoryName(category)}}
+            </mat-panel-title>
+            <mat-panel-description>
               <button matTooltip="{{'edit'|translate}}" matTooltipPosition="above" class="btn btn-info"
-                      data-toggle="tooltip"
-                      data-placement="top" (click)="openDialog(DialogMode.EDIT, category, meal)">
+                      style="margin:0 10px" (click)="openCategoryDialog(DialogMode.EDIT,category)">
                 <i class="bi bi-pen"></i>
               </button>
-            </td>
-            <td>
               <button matTooltip="{{'delete'|translate}}" matTooltipPosition="above" class="btn btn-danger"
                       data-toggle="tooltip"
-                      data-placement="top" (click)="openDialog(DialogMode.DELETE, category,meal)">
+                      data-placement="top" (click)="openCategoryDialog(DialogMode.DELETE, category)">
                 <i class="bi bi-trash"></i>
               </button>
-            </td>
-          </tr>
-          <tr class="last-row">
-            <td class="w-25"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="text-right">
-              <button matTooltip="{{'add'|translate}}" matTooltipPosition="above" class="btn btn-success"
-                      data-toggle="tooltip"
-                      data-placement="top" (click)="openDialog(DialogMode.ADD, category)">
-                <i class="bi bi-plus-square"></i>
-              </button>
-            </td>
-          </tr>
-          </tbody>
-        </div>
-        <div style="text-align:right; padding: 16px 22.4px;" *ngIf="mealsByCategory[category.name] == undefined">
-          <button matTooltip="{{'add'|translate}}" matTooltipPosition="above" class="btn btn-success"
-                  data-toggle="tooltip"
-                  data-placement="top" title="Add" (click)="openDialog(DialogMode.ADD, category)">
-            <i class="bi bi-plus-square"></i>
-          </button>
-        </div>
-      </div>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="table table-image table-responsive"
+               *ngIf="mealsByCategory[category.name] && mealsByCategory[category.name].length > 0">
+            <thead>
+            <tr>
+              <th scope="col">{{'image'|translate}}</th>
+              <th scope="col">{{'name_menu'|translate}}</th>
+              <th scope="col">{{'menu_description'|translate}}</th>
+              <th scope="col">{{'price'|translate}}</th>
+              <th scope="col">{{'edit'|translate}}</th>
+              <th scope="col">{{'delete'|translate}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let meal of mealsByCategory[category.name]">
+              <td class="w-25">
+                <img class="img-fluid img-thumbnail" style="max-width:80px" src="{{meal.image}}">
+              </td>
+              <td>{{getMealName(meal)}}</td>
+              <td>{{getMealDescription(meal)}}</td>
+              <td>{{meal.price}}{{'currency'|translate}}</td>
+              <td>
+                <button matTooltip="{{'edit'|translate}}" matTooltipPosition="above" class="btn btn-info"
+                        data-toggle="tooltip"
+                        data-placement="top" (click)="openDialog(DialogMode.EDIT, category, meal)">
+                  <i class="bi bi-pen"></i>
+                </button>
+              </td>
+              <td>
+                <button matTooltip="{{'delete'|translate}}" matTooltipPosition="above" class="btn btn-danger"
+                        data-toggle="tooltip"
+                        data-placement="top" (click)="openDialog(DialogMode.DELETE, category,meal)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+            <tr class="last-row">
+              <td class="w-25"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="text-right">
+                <button matTooltip="{{'add'|translate}}" matTooltipPosition="above" class="btn btn-success"
+                        data-toggle="tooltip"
+                        data-placement="top" (click)="openDialog(DialogMode.ADD, category)">
+                  <i class="bi bi-plus-square"></i>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </div>
+          <div style="text-align:right; padding: 16px 22.4px;" *ngIf="mealsByCategory[category.name] == undefined">
+            <button matTooltip="{{'add'|translate}}" matTooltipPosition="above" class="btn btn-success"
+                    data-toggle="tooltip"
+                    data-placement="top" title="Add" (click)="openDialog(DialogMode.ADD, category)">
+              <i class="bi bi-plus-square"></i>
+            </button>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
       <div style="margin-top: 10px">
         <button class="btn btn-success"
                 (click)="openCategoryDialog(DialogMode.ADD)">{{'add_category'|translate}}</button>

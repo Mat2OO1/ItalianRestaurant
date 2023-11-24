@@ -51,6 +51,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatPaginatorIntl, MatPaginatorModule} from "@angular/material/paginator";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatIconModule} from "@angular/material/icon";
+import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -91,6 +92,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReserveTableComponent,
     ReserveTableDialogComponent
   ],
+
   imports: [
     BrowserModule,
     RouterLink,
