@@ -156,7 +156,7 @@
   "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} z {{length}}",
   "RESERVED": "ZAREZERWOWANY",
   "FREE": "WOLNY",
-  "choose_category": "Wybierz kategorię"
+  "choose_category": "Wybierz kategorię",
   "error_login": "Błędne dane uwierzytelniające",
   "error_register": "Użytkownik istnieje",
   "error_login_local": "Wydaje się, że jesteś zarejestrowany(a) przy użyciu konta lokalnego. \nProszę użyj swojego konta, aby się zalogować.",
