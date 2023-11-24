@@ -133,6 +133,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatMenuModule,
     MatSnackBarModule,
     MatBadgeModule,
+    MatExpansionModule,
   ],
 
   providers: [
