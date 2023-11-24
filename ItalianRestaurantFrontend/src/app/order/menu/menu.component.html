@@ -1,14 +1,20 @@
 <div class="container">
   <div class="row justify-content-around">
-    <div class="col-lg-2 col-sm-3 col-6 categories">
-      <h4 class="text-center">{{'category'|translate}}:</h4>
-      <p *ngFor="let category of categories">
-        <mat-checkbox [checked]="category === filteredCategory"  color="#005B47" (change)="onCategoryChange(category)">
-          {{getCategoryName(category)}}
-        </mat-checkbox>
-      </p>
-    </div>
+<!--    <div class="col-lg-2 col-sm-3 col-6 categories">-->
+<!--      <h4 class="text-center">{{'category'|translate}}:</h4>-->
+<!--      <p *ngFor="let category of categories">-->
+<!--        <mat-checkbox [checked]="category === filteredCategory"  color="#005B47" (change)="onCategoryChange(category)">-->
+<!--          {{getCategoryName(category)}}-->
+<!--        </mat-checkbox>-->
+<!--      </p>-->
+<!--    </div>-->
+
     <div class="col-lg-7 col-sm-8 col-11">
+      <mat-chip-listbox class="mt-3" aria-label="Category selection">
+        <mat-chip-option class="me-2" (selectionChange)="onCategoryChange(category)" *ngFor="let category of categories">{{category.name}}</mat-chip-option>
+      </mat-chip-listbox>
+
+
       <div class="meals">
         <mat-card class="meal-card" *ngFor="let meal of meals">
           <mat-card-header>
