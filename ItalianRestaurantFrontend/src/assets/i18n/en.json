@@ -155,5 +155,8 @@
   "RANGE_PAGE_LABEL_1": "0 from {{length}}",
   "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} from {{length}}",
   "RESERVED": "RESERVED",
-  "FREE": "FREE"
+  "FREE": "FREE",
+  "error_login": "Bad credentials",
+  "error_register": "User already exists",
+  "error_login_local": "Looks like you're signed up with local account. \nPlease use your account to login."
 }
