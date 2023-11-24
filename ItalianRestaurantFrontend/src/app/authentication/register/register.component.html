@@ -42,6 +42,10 @@
         </mat-error>
       </mat-form-field>
       <br>
+      <div *ngIf="error != ''" class="alert alert-danger"
+           style="border-radius:20px; text-align: center;">{{'error_register'|translate}}</div>
+
+      <br>
       <div class="text-center">
         <!-- Submit button -->
         <button type="submit" [disabled]="!registerForm.valid" class="btn btn-primary rounded-pill"

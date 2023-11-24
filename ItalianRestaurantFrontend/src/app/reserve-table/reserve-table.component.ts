@@ -6,6 +6,7 @@ import {Reservation} from "../models/reservation";
 import {ReserveTableDialogComponent} from "./reserve-table-dialog/reserve-table-dialog.component";
 import {CancelReservationDialogComponent} from "./cancel-reservation-dialog/cancel-reservation-dialog.component";
 import {SnackbarService} from "../shared/sncakbar.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-reserve-table',
@@ -18,7 +19,8 @@ export class ReserveTableComponent {
 
   constructor(private dataStorageService: DataStorageService,
               private dialog: MatDialog,
-              private snackbarService: SnackbarService) {
+              private snackbarService: SnackbarService,
+              private translate: TranslateService) {
     this.dataStorageService.getTables()
       .subscribe(
         (res) => {
@@ -58,11 +60,15 @@ export class ReserveTableComponent {
     if (result) {
       this.dataStorageService.makeReservation(result).subscribe(
         (res) => {
-          this.snackbarService.openSnackbarSuccess("Table reserved successfully")
+          this.translate.get('table_reserved_successfully').subscribe((message) => {
+            this.snackbarService.openSnackbarSuccess(message);
+          });
           this.getReservations();
         },
         (err) => {
-          this.snackbarService.openSnackbarError(err.error)
+          this.translate.get('table_reserved_successfully').subscribe((message) => {
+            this.snackbarService.openSnackbarError(message);
+          });
         }
       )
     }
