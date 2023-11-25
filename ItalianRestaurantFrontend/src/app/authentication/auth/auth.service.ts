@@ -111,16 +111,18 @@ export class AuthService {
     }
   }
 
-  requestResetPassword(email: string) {
-    this.http.get(`${environment.apiUrl}/password/request?email=${email}`)
-      .subscribe(
-        (res) => {
-          this.translate.get('user_check_email').subscribe((message) => {
-            this.snackbarService.openSnackbarSuccess(message);
-          });
-          this.router.navigate([''])
-        }
-      )
+  requestResetPassword(email: string, lang: string) {
+    lang = localStorage.getItem('lang')||'en';
+    const url = `${environment.apiUrl}/password/request?email=${email}&lang=${lang}`;
+
+    this.http.get(url).subscribe(
+      (res) => {
+        this.translate.get('user_check_email').subscribe((message) => {
+          this.snackbarService.openSnackbarSuccess(message);
+        });
+        this.router.navigate(['']);
+      }
+    );
   }
 
   public saveToken(token: string): void {

@@ -96,9 +96,9 @@ public class EmailServiceTest {
         //given
         val to = "email@email.com";
         val url = "http://localhost:8080/reset-password?token=1234567890";
-
+        val lang = "pl";
         //when
-        EmailEntity serviceEmail = emailService.buildPasswordResetEmail(to, url);
+        EmailEntity serviceEmail = emailService.buildPasswordResetEmail(to, url, lang);
 
         //then
         assertThat(serviceEmail).isEqualTo(email);

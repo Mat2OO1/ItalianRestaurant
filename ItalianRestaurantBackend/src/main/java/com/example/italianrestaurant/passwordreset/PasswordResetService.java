@@ -23,16 +23,14 @@ public class PasswordResetService {
     @Value("${app.front-url}")
     private String frontUrl;
 
-    public PasswordToken sendResetPasswordRequest(String email) throws MessagingException {
+    public PasswordToken sendResetPasswordRequest(String email, String lang) throws MessagingException {
 
         User user = userService.getUserByEmail(email);
 
         String token = tokenService.generateToken();
-
         String resetUrl = frontUrl + "/password?token=" + token;
-        EmailEntity emailObject = emailService.buildPasswordResetEmail(email, resetUrl);
+        EmailEntity emailObject = emailService.buildPasswordResetEmail(email, resetUrl, lang);
         emailService.sendHtmlMessage(emailObject);
-
         return tokenService.saveToken(token, user);
     }
 

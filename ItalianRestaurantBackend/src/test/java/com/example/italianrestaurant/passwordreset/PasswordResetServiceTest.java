@@ -39,16 +39,17 @@ public class PasswordResetServiceTest {
         //given
         val email = "email";
         val token = "token";
+        val lang = "en";
         val emailObject = Utils.getEmail();
 
         given(userService.getUserByEmail(email)).willReturn(Utils.getUser());
         given(passwordTokenService.generateToken()).willReturn(token);
         given(passwordTokenService.saveToken(any(), any(User.class))).willReturn(Utils.getPasswordToken());
-        given(emailService.buildPasswordResetEmail(eq(email), any())).willReturn(emailObject);
+        given(emailService.buildPasswordResetEmail(eq(email), any(), any())).willReturn(emailObject);
         doNothing().when(emailService).sendHtmlMessage(emailObject);
 
         //when
-        PasswordToken passwordToken = passwordResetService.sendResetPasswordRequest(email);
+        PasswordToken passwordToken = passwordResetService.sendResetPasswordRequest(email, lang);
 
         //then
         assertThat(passwordToken.getToken()).isNotNull();
@@ -60,10 +61,11 @@ public class PasswordResetServiceTest {
     void shouldNotSendResetRequestWhenUserNotFound() throws MessagingException {
         //given
         val email = "email";
+        val lang = "en";
         given(userService.getUserByEmail(email)).willThrow(new RuntimeException("User not found"));
 
         //when
-        assertThatThrownBy(() -> passwordResetService.sendResetPasswordRequest(email))
+        assertThatThrownBy(() -> passwordResetService.sendResetPasswordRequest(email, lang))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessage("User not found");
 
@@ -76,18 +78,19 @@ public class PasswordResetServiceTest {
         //given
         val email = "email";
         val token = "token";
+        val lang = "en";
         val passwordToken = Utils.getPasswordToken();
         val user = Utils.getUser();
         val emailObject = Utils.getEmail();
 
         given(userService.getUserByEmail(email)).willReturn(user);
         given(passwordTokenService.generateToken()).willReturn(token);
-        given(emailService.buildPasswordResetEmail(eq(email), any())).willReturn(emailObject);
+        given(emailService.buildPasswordResetEmail(eq(email), any(), any())).willReturn(emailObject);
         doThrow(new MessagingException()).when(emailService).sendHtmlMessage(emailObject);
 
         //when
         //then
-        assertThatThrownBy(() -> passwordResetService.sendResetPasswordRequest(email))
+        assertThatThrownBy(() -> passwordResetService.sendResetPasswordRequest(email, lang))
                 .isInstanceOf(MessagingException.class);
 
     }

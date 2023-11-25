@@ -18,9 +18,9 @@ public class PasswordResetController {
     private final PasswordResetService passwordResetService;
 
     @GetMapping("/request")
-    public ResponseEntity<?> resetPasswordRequest(@RequestParam String email) {
+    public ResponseEntity<?> resetPasswordRequest(@RequestParam String email, @RequestParam String lang) {
         try {
-            return ResponseEntity.ok(passwordResetService.sendResetPasswordRequest(email));
+            return ResponseEntity.ok(passwordResetService.sendResetPasswordRequest(email, lang));
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "There is no user with email:" + email, e);

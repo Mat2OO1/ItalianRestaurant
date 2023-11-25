@@ -21,7 +21,7 @@ export class ConfirmationComponent implements OnInit, OnDestroy {
   }
 
   isContentLoaded: boolean = false;
-  lang="";
+  lang = localStorage.getItem('lang') || 'en';
 
   timeSubscription: Subscription | null = null;
 

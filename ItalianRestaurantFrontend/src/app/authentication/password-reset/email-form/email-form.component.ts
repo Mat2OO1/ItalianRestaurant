@@ -9,7 +9,7 @@ import {AuthService} from "../../auth/auth.service";
 })
 export class EmailFormComponent {
   emailForm: FormGroup;
-
+  lang = ""
   constructor(private authService: AuthService) {
     this.emailForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -18,8 +18,9 @@ export class EmailFormComponent {
   }
 
   onResetSubmit() {
+    this.lang = localStorage.getItem('lang')||'en'
     let email = this.emailForm.value['email'];
-    this.authService.requestResetPassword(email)
+    this.authService.requestResetPassword(email, this.lang);
   }
 
 

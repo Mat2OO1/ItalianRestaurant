@@ -4,6 +4,7 @@ import com.example.italianrestaurant.order.mealorder.MealOrder;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -20,7 +21,6 @@ public class EmailService {
 
     private final JavaMailSender emailSender;
     private final SpringTemplateEngine templateEngine;
-
     public void sendMessage(EmailEntity email) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(email.getFrom());
@@ -45,12 +45,15 @@ public class EmailService {
         emailSender.send(message);
     }
 
-    public EmailEntity buildPasswordResetEmail(String to, String url) {
+    public EmailEntity buildPasswordResetEmail(String to, String url, String lang) {
+
+        String template =  lang.equals("pl") ? "password-reset-pl.html" : "password-reset.html";
+
         EmailEntity email = EmailEntity.builder()
                 .to(to)
                 .from("ladolcevita@rest.com")
                 .subject("Password reset request")
-                .template("password-reset.html")
+                .template(template)
                 .build();
 
         email.addProperty("email", to);
@@ -58,12 +61,13 @@ public class EmailService {
         return email;
     }
 
-    public EmailEntity buildOrderConfirmationEmail(String to, String name, List<MealOrder> mealOrders, String confirmationLink) {
+    public EmailEntity buildOrderConfirmationEmail(String to, String name, List<MealOrder> mealOrders, String confirmationLink, String lang) {
+        String template =  lang.equals("pl") ? "invoicepl.html" : "invoice.html";
         EmailEntity email = EmailEntity.builder()
                 .to(to)
                 .from("ladolcevita@rest.com")
                 .subject("Order confirmation")
-                .template("invoice.html")
+                .template(template)
                 .build();
 
         List<MealOrderEmail> mealOrderEmails = mealOrders.stream().map(mealOrder -> MealOrderEmail.builder()

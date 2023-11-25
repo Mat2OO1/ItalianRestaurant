@@ -74,12 +74,12 @@ public class PaymentService {
         return new OrderPaidResponse(session.getId(), session.getUrl());
     }
 
-    // Dodana metoda do uzyskiwania Locale na podstawie wartości zmiennej lang
+
     private SessionCreateParams.Locale getLocale(String lang) {
         switch (lang.toLowerCase()) {
             case "pl":
                 return SessionCreateParams.Locale.PL;
-            // Dodaj obsługę innych języków, jeśli potrzebujesz
+
             default:
                 return SessionCreateParams.Locale.EN;
         }
@@ -110,19 +110,23 @@ public class PaymentService {
                 List<MealOrder> mealOrders = payment.getOrder().getMealOrders();
                 User user = payment.getOrder().getUser();
                 EmailEntity emailEntity;
+
+                String lang = "";
                 if (user.getProvider() == AuthProvider.local) {
                     emailEntity = emailService.buildOrderConfirmationEmail(
                             user.getEmail(),
                             user.getFirstName() + " " + user.getLastName(),
                             mealOrders,
-                            frontUrl + "/confirmation/" + payment.getOrder().getId());
+                            frontUrl + "/confirmation/" + payment.getOrder().getId(),
+                            sessionObject.getLocale());
                 }
                 else {
                     emailEntity = emailService.buildOrderConfirmationEmail(
                             user.getEmail(),
                             user.getUsername(),
                             mealOrders,
-                            frontUrl + "/confirmation/" + payment.getOrder().getId());
+                            frontUrl + "/confirmation/" + payment.getOrder().getId(),
+                            sessionObject.getLocale());
                 }
                 try {
                     emailService.sendHtmlMessage(emailEntity);

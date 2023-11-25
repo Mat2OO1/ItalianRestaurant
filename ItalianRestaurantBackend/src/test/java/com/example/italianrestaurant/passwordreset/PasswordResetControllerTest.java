@@ -45,7 +45,7 @@ public class PasswordResetControllerTest {
         val passwordToken = Utils.getPasswordToken();
         val user = Utils.getUser();
         passwordToken.setUser(user);
-        given(passwordResetService.sendResetPasswordRequest(any())).willReturn(passwordToken);
+        given(passwordResetService.sendResetPasswordRequest(any(), any())).willReturn(passwordToken);
 
         //when
         val resultActions = mockMvc.perform(get("/password/request")
@@ -64,7 +64,8 @@ public class PasswordResetControllerTest {
     void shouldNotSendResetRequest() throws Exception {
         //given
         val email = "email";
-        given(passwordResetService.sendResetPasswordRequest(email)).willThrow(new MessagingException());
+        val lang = "en";
+        given(passwordResetService.sendResetPasswordRequest(email, lang)).willThrow(new MessagingException());
 
         // when
         val resultActions = mockMvc.perform(get("/password/request")
@@ -78,7 +79,8 @@ public class PasswordResetControllerTest {
     void shouldNotFindUserAndNotSendPasswordRequest() throws Exception {
         //given
         val email = "email";
-        given(passwordResetService.sendResetPasswordRequest(email)).willThrow(new EntityNotFoundException());
+        val lang = "en";
+        given(passwordResetService.sendResetPasswordRequest(email, lang)).willThrow(new EntityNotFoundException());
 
         // when
         val resultActions = mockMvc.perform(get("/password/request")
