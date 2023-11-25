@@ -30,17 +30,30 @@ export class ReserveTableDialogComponent {
     this.dateAdapter.setLocale('pl-PL');
   }
 
+  disablePastDates = (date: Date): boolean => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return date > today;
+  };
+
   onChangeDate(event: MatDatepickerInputEvent<Date>) {
     if (event.value) {
-      this.selectedDate = this.datePipe.transform(event.value, "yyyy-MM-dd")!
-      this.dataStorageService.getReservationsForTable(this.data.table!.id, this.selectedDate)
+      this.selectedDate = this.datePipe.transform(
+        event.value,
+        "yyyy-MM-dd"
+      )!;
+      this.dataStorageService
+        .getReservationsForTable(
+          this.data.table!.id,
+          this.selectedDate
+        )
         .subscribe(
-          res => {
-            const dates = res.map(date => new Date(Date.parse(date)));
-            this.availableHours = this.generateReservationHours(dates)
+          (res) => {
+            const dates = res.map((date) => new Date(Date.parse(date)));
+            this.availableHours = this.generateReservationHours(dates);
             this.dateFetched = true;
           }
-        )
+        );
     }
   }
 

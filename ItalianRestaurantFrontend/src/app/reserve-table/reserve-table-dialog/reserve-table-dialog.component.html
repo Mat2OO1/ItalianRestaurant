@@ -5,7 +5,12 @@
 <mat-dialog-content class="mat-typography">
   <mat-form-field>
     <mat-label>{{ 'choose_a_date' | translate }}</mat-label>
-    <input matInput [matDatepicker]="picker" (dateChange)="onChangeDate($event)">
+    <input
+      matInput
+      [matDatepicker]="picker"
+      (dateChange)="onChangeDate($event)"
+      [matDatepickerFilter]="disablePastDates"
+    />
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
