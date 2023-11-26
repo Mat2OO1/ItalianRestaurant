@@ -19,6 +19,9 @@ export class OrderHistoryComponent {
       .subscribe(
         (res) => {
           this.orders = res
+          this.orders.sort((a, b) => {
+            return b.id - a.id
+          })
           this.isContentLoaded = true;
         }
       )

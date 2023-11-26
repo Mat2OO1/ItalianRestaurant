@@ -115,11 +115,11 @@
   "on-site": "On-site",
   "proceed": "Proceed",
   "return_to_menu": "Return to Menu",
-  "your_current_orders": "Your current orders:",
-  "order_no": "Order number",
+  "your_current_orders": "Your current orders",
+  "order_no": "Order No.",
   "see_details": "See details",
   "delivery": "Delivery",
-  "your_archival_orders": "Your archival orders:",
+  "your_archival_orders": "Your archival orders",
   "cancel_reservation": "Cancel Reservation",
   "are_you_sure_cancel_reservation": "Are you sure you want to cancel the reservation?",
   "date": "Date",
@@ -169,5 +169,8 @@
   "table_reserved_successfully": "Table reserved successfully",
   "password_same_error": "Passwords are not the same",
   "table_already_reserved_error": "Table is already reserved for this date",
-  "choose_category": "Choose category"
+  "choose_category": "Choose category",
+  "table_nr": "Table",
+  "no_archival_orders": "You don't have any archival orders.",
+  "number_tab": "Number"
 }
