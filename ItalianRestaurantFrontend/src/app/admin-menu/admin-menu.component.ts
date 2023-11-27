@@ -9,6 +9,7 @@ import {CategoryDto} from "../models/categoryDto";
 import {DialogMode} from "../models/modal-mode";
 import {MealDto} from "../models/mealDto";
 import {Category} from "../models/category";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'app-admin-menu',
@@ -23,6 +24,9 @@ export class AdminMenuComponent {
   lang = localStorage.getItem('lang') || 'en';
   clickButton = false;
   protected readonly DialogMode = DialogMode;
+
+  displayedColumns: string[] = ['image', 'name_menu', 'menu_description', 'price', 'edit', 'delete'];
+  dataSources: {[category: string]: MatTableDataSource<Meal>} = {};
 
   constructor(public dialog: MatDialog,
               private dataStorageService: DataStorageService) {
@@ -58,16 +62,16 @@ export class AdminMenuComponent {
           this.dataStorageService.getMealsWithoutPagination()
             .subscribe(
               (response) => {
-                console.log(response)
-                this.mealsByCategory = {}
                 response.forEach(meal => {
-                  if (this.mealsByCategory[meal.mealCategory.name]) {
-                    this.mealsByCategory[meal.mealCategory.name].push(meal)
+                  if (this.dataSources[meal.mealCategory.name]) {
+                    this.dataSources[meal.mealCategory.name].data.push(meal);
                   } else {
-                    this.mealsByCategory[meal.mealCategory.name] = [meal]
+                    this.dataSources[meal.mealCategory.name] = new MatTableDataSource();
+                    this.dataSources[meal.mealCategory.name].data = [meal];
                   }
                 })
                 this.areMealsLoaded = true;
+                console.log(this.dataSources)
               })
         })
   }
