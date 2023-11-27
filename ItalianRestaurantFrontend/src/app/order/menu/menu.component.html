@@ -33,7 +33,7 @@
               <mat-card-content>
                 <p>{{getMealDescription(meal)}}</p>
                 <p>{{meal.price}} {{'currency'|translate}}</p>
-                <button mat-fab extended type="button" class="btn btn-dark" *ngIf="isUser" (click)="addToCart(meal)">
+                <button type="button" class="btn btn-dark" *ngIf="isUser" (click)="addToCart(meal)">
                   <i class="bi bi-cart me-1"></i>
                   {{'to_cart'|translate}}
                 </button>
