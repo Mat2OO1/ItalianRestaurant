@@ -1,22 +1,51 @@
-.table-image td {
-  vertical-align: middle;
+.header {
+  margin: 20px;
 }
 
-.table-image th {
-  vertical-align: middle;
+.table {
+  overflow-x: scroll;
 }
 
-.last-row td {
-  border-bottom: none;
+img {
+  max-width: 80px;
+}
+
+.last-row {
+  padding: 0 1.8rem;
+}
+
+.add-category {
+  margin-top: 10px;
 }
 
 td,th {
   text-align: center;
 }
 
-.category-with-meal{
-  background-color: white;
-  border-radius: 10px;
-  padding:10px;
-  margin-bottom:10px;
+tr:last-of-type {
+  border-bottom: none;
+}
+
+.mat-column-image {
+  width: 10%;
+}
+
+.mat-column-name_menu {
+  width: 20%;
+}
+
+.mat-column-menu_description {
+  width: 40%;
+}
+
+.mat-column-price {
+  width: 10%;
+}
+
+.mat-column-edit {
+  width: 5%;
+}
+
+.mat-column-delete {
+  width: 5%;
 }
