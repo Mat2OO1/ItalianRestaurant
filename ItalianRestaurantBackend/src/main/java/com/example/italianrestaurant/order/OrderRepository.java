@@ -15,5 +15,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT t FROM Order t WHERE DATE(t.orderDate) = :date AND t.payment.isPaid = :payment_paid")
     List<Order> findAllFromTodayAndPaymentPaid(LocalDate date, boolean payment_paid);
 
-    Optional<Order> findFirstByUserEmailOrderByOrderDateDesc(String email);
+    Optional<Order> findFirstByUserEmailAndDeliveryIsNotNullOrderByOrderDateDesc(String email);
 }
