@@ -115,11 +115,11 @@
   "on-site": "Na miejscu",
   "proceed": "Prześlij zamówienie",
   "return_to_menu": "Powrót do menu",
-  "your_current_orders": "Twoje bieżące zamówienia:",
-  "order_no": "Numer zamówienia",
+  "your_current_orders": "Twoje bieżące zamówienia",
+  "order_no": "Zamówienie nr",
   "see_details": "Zobacz szczegóły",
   "delivery": "Dostawa",
-  "your_archival_orders": "Twoje archiwalne zamówienia:",
+  "your_archival_orders": "Twoje archiwalne zamówienia",
   "cancel_reservation": "Anuluj rezerwację",
   "are_you_sure_cancel_reservation": "Czy na pewno chcesz anulować rezerwację?",
   "date": "Data",
@@ -168,5 +168,8 @@
   "meal_added_to_card_error": "Zamówienie dodane do koszyka",
   "table_reserved_successfully": "Stolik zarezerowany poprawnie",
   "password_same_error": "Hasła nie są takie same",
-  "table_already_reserved_error": "Stolik jest już zarezerwowany na tą datę"
+  "table_already_reserved_error": "Stolik jest już zarezerwowany na tą datę",
+  "table_nr": "Stolik",
+  "no_archival_orders": "Nie masz żadnych archiwalnych zamówień.",
+  "number_tab": "Liczba"
 }

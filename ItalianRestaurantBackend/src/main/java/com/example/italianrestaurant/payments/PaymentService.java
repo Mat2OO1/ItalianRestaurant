@@ -106,7 +106,6 @@ public class PaymentService {
                 payment.setAmount(sessionObject.getAmountTotal());
                 payment.setCreatedAt(LocalDateTime.now());
                 paymentRepository.save(payment);
-
                 List<MealOrder> mealOrders = payment.getOrder().getMealOrders();
                 User user = payment.getOrder().getUser();
                 EmailEntity emailEntity;

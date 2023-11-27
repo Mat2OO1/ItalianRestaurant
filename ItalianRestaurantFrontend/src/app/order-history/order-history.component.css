@@ -1,5 +1,51 @@
 .btn {
   background-color: #005B47;
   text-decoration: none;
-  color: #FFFFFF
+  color: #FFFFFF;
+  width: 12rem;
+}
+
+.order-card {
+  margin-bottom: 8px;
+  border-radius: 10px;
+  margin-top: 20px
+}
+
+.destination-info {
+  font-weight: 600;
+}
+
+.delivery-info {
+  font-weight: normal;
+  white-space: nowrap;
+}
+
+@media only screen and (max-width: 766px) {
+  .delivery-info {
+    font-weight: normal;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .mat-mdc-card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.container {
+  margin: auto;
+  min-width: 300px;
+  max-width: 1000px;
+  overflow: hidden;
+  text-align: center;
+  align-items: center;
+  width: 90%;
+  padding: 1rem 0;
+}
+
+.scrollable {
+  overflow: auto;
+  max-height: 70vh;
 }
