@@ -1,1 +1,0 @@
-alter table meals add column deleted boolean;

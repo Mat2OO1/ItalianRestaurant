@@ -26,6 +26,8 @@ public class MealCategory {
     private String name;
     @Column(nullable = false)
     private String name_pl;
+    @Column(nullable = false)
+    private boolean deleted = false;
 
     @JsonIgnore
     @ToString.Exclude

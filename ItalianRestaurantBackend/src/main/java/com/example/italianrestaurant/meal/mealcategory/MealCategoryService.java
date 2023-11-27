@@ -22,21 +22,21 @@ public class MealCategoryService {
     private final AwsService awsService;
 
     public List<MealCategory> getAllMealCategories() {
-        return mealCategoryRepository.findAll();
+        return mealCategoryRepository.getMealCategoriesByDeletedIsFalse();
     }
 
     public MealCategory getMealCategoryById(Long id) {
-        Optional<MealCategory> meal = mealCategoryRepository.findById(id);
+        Optional<MealCategory> meal = mealCategoryRepository.findByIdAndDeletedIsFalse(id);
         return meal.orElseThrow(EntityNotFoundException::new);
     }
 
     public MealCategory getMealCategoryByName(String name) throws EntityNotFoundException {
-        Optional<MealCategory> mealCategory = mealCategoryRepository.findByName(name);
+        Optional<MealCategory> mealCategory = mealCategoryRepository.findByNameAndDeletedIsFalse(name);
         return mealCategory.orElseThrow(EntityNotFoundException::new);
     }
 
     public MealCategory addCategory(MealCategoryDto mealCategoryDto) throws IOException {
-        if (mealCategoryRepository.findByName(mealCategoryDto.getName()).isEmpty()) {
+        if (mealCategoryRepository.findByNameAndDeletedIsFalse(mealCategoryDto.getName()).isEmpty()) {
             MealCategory mealCategory = modelMapper.map(mealCategoryDto, MealCategory.class);
             return mealCategoryRepository.save(mealCategory);
         }
@@ -54,8 +54,10 @@ public class MealCategoryService {
     public void deleteCategory(Long id){
         MealCategory mealCategory = mealCategoryRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         List<Meal> meals = mealCategory.getMeals();
-        mealCategoryRepository.delete(mealCategory);
+        meals.forEach(meal -> meal.setDeleted(true));
+        mealCategory.setDeleted(true);
         meals.forEach(meal -> awsService.deleteFile(meal.getImage()));
+        mealCategoryRepository.save(mealCategory);
     }
 
 }
