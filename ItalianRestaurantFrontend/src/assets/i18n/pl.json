@@ -171,5 +171,6 @@
   "table_already_reserved_error": "Stolik jest już zarezerwowany na tą datę",
   "table_nr": "Stolik",
   "no_archival_orders": "Nie masz żadnych archiwalnych zamówień.",
-  "number_tab": "Liczba"
+  "number_tab": "Liczba",
+  "unknown": "Nieznana"
 }

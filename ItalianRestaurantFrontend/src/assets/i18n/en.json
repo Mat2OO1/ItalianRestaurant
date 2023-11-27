@@ -172,5 +172,6 @@
   "choose_category": "Choose category",
   "table_nr": "Table",
   "no_archival_orders": "You don't have any archival orders.",
-  "number_tab": "Number"
+  "number_tab": "Number",
+  "unknown": "Unknown"
 }

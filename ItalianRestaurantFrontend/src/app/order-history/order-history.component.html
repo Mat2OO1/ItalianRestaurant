@@ -43,7 +43,7 @@
                 <p class="mb-1">{{'delivery_status'|translate}}:</p>
                 <h4>{{getStatusTranslation(formatDeliveryStatus(order.orderStatus))}}</h4>
                 <p class="mb-1 mt-3">{{'delivery'|translate}}:</p>
-                <h4>{{ order.deliveryDate === null ? 'Unknown' : customFormatDate(order.deliveryDate)}}</h4>
+                <h4>{{ order.deliveryDate === null ? ('unknown' | translate) : customFormatDate(order.deliveryDate)}}</h4>
               </div>
             </div>
           </mat-card-content>
@@ -102,7 +102,7 @@
                 <p class="mb-1">{{'delivery_status'|translate}}:</p>
                 <h4>{{getStatusTranslation(formatDeliveryStatus(order.orderStatus))}}</h4>
                 <p class="mb-1 mt-3">{{'delivery'|translate}}:</p>
-                <h4>{{ order.deliveryDate === null ? 'Unknown' : customFormatDate(order.deliveryDate)}}</h4>
+                <h4>{{ order.deliveryDate === null ? ('unknown' | translate) : customFormatDate(order.deliveryDate)}}</h4>
               </div>
             </div>
           </mat-card-content>
