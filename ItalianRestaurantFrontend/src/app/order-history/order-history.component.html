@@ -1,111 +1,120 @@
 <mat-tab-group [backgroundColor]="'primary'" [color]="'primary'" dynamicHeight>
 
   <mat-tab label="{{'your_current_orders'|translate}}">
-    <div class="containera" *ngIf="isContentLoaded">
-      <div class="text-center" *ngIf="orders.length === 0">
+    <div class="container" *ngIf="isContentLoaded">
+      <div class="text-center" *ngIf="getCurrentOrdersLength === 0">
         <br>
         <h3>{{'no_order'|translate}}</h3>
         <br>
         <button class="btn btn-rounded" routerLink="/menu">{{'return_to_menu'|translate}}</button>
       </div>
+      <div class="scrollable">
+        <mat-card class="order-card" *ngFor="let order of currentOrders">
+          <mat-card-header>
+            <mat-card-title *ngIf="order.delivery">
+              {{'order_no'|translate}} {{order.id }}  - <span
+              class="delivery-info">{{order.delivery.city}} {{order.delivery.address }}</span>
+            </mat-card-title>
 
-      <mat-card class="order-card" *ngFor="let order of getCurrentOrders()">
-        <mat-card-header>
-          <mat-card-title *ngIf="order.delivery">
-            {{'order_no'|translate}} {{order.id }}  - <span
-            style="font-weight: normal">{{order.delivery.city}} {{order.delivery.address }}</span>
-          </mat-card-title>
+            <mat-card-title *ngIf="!order.delivery">
+              {{'order_no'|translate}} {{order.id }}  - <span
+              class="delivery-info">{{ 'table_nr' | translate }} {{ order.table.number }}</span>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-md-6">
+                <table mat-table [dataSource]="order.mealOrders" class="mat-elevation-z0 mt-3 mb-2">
 
-          <mat-card-title *ngIf="!order.delivery">
-            {{'order_no'|translate}} {{order.id }}  - <span
-            style="font-weight: normal">{{ 'table_nr' | translate }} {{ order.table.number }}</span>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="row">
-            <div class="col-md-6">
-              <table mat-table [dataSource]="order.mealOrders" class="mat-elevation-z0 mt-2">
+                  <ng-container matColumnDef="meal">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'meal_name' | translate}}</th>
+                    <td mat-cell *matCellDef="let element"> {{element.meal.name}} </td>
+                  </ng-container>
 
-                <ng-container matColumnDef="meal">
-                  <th mat-header-cell *matHeaderCellDef>{{ 'meal_name' | translate}}</th>
-                  <td mat-cell *matCellDef="let element"> {{element.meal.name}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="quantity">
-                  <th mat-header-cell *matHeaderCellDef>{{'number_tab' | translate}}</th>
-                  <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="['meal', 'quantity'];"></tr>
-                <tr mat-row *matRowDef="let row; columns: ['meal', 'quantity'];"></tr>
-              </table>
+                  <ng-container matColumnDef="quantity">
+                    <th mat-header-cell *matHeaderCellDef>{{'number_tab' | translate}}</th>
+                    <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="['meal', 'quantity'];"></tr>
+                  <tr mat-row *matRowDef="let row; columns: ['meal', 'quantity'];"></tr>
+                </table>
+              </div>
+              <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
+                <p class="mb-1">{{'delivery_status'|translate}}:</p>
+                <h4>{{getStatusTranslation(formatDeliveryStatus(order.orderStatus))}}</h4>
+                <p class="mb-1 mt-3">{{'delivery'|translate}}:</p>
+                <h4>{{ order.deliveryDate === null ? 'Unknown' : customFormatDate(order.deliveryDate)}}</h4>
+              </div>
             </div>
-            <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
-              <p class="mb-1">{{'delivery_status'|translate}}:</p>
-              <h4>{{getStatusTranslation(formatDeliveryStatus(order.orderStatus))}}</h4>
-              <p class="mb-1 mt-3">{{'delivery'|translate}}:</p>
-              <h4>{{ order.deliveryDate === null ? 'Unknown' : customFormatDate(order.deliveryDate)}}</h4>
-            </div>
+          </mat-card-content>
+          <div class="d-flex justify-content-center mb-3 mt-1">
+            <button class="btn btn-rounded" (click)="goToDetails(order.id)">{{'see_details'|translate}}</button>
           </div>
-        </mat-card-content>
-        <div class="d-flex justify-content-center mb-3 mt-1">
-          <button class="btn btn-rounded" (click)="goToDetails(order.id)">{{'see_details'|translate}}</button>
-        </div>
-      </mat-card>
+        </mat-card>
+      </div>
 
-
+      <mat-paginator #currentOrdersPag *ngIf="getCurrentOrdersLength > 5" [length]="getCurrentOrdersLength"
+                     [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
+                     aria-label="Select page"
+                     (page)="onChangePageCurrentOrders($event)"></mat-paginator>
     </div>
   </mat-tab>
   <mat-tab label="{{'your_archival_orders'|translate}}">
-    <div class="containera" *ngIf="isContentLoaded">
-      <div class="text-center" *ngIf="orders.length === 0">
+    <div class="container" *ngIf="isContentLoaded">
+      <div class="text-center" *ngIf="getArchivalOrdersLength === 0">
         <br>
         <h3>{{'no_archival_orders'|translate}}</h3>
         <br>
         <button class="btn btn-rounded" routerLink="/menu">{{'return_to_menu'|translate}}</button>
       </div>
+      <div class="scrollable">
+        <mat-card class="order-card" *ngFor="let order of archivalOrders">
+          <mat-card-header>
+            <mat-card-title *ngIf="order.delivery">
+              {{'order_no'|translate}} {{order.id }}  - <span
+              class="delivery-info">{{order.delivery.city}} {{order.delivery.address }}</span>
+            </mat-card-title>
 
-      <mat-card class="order-card" *ngFor="let order of getArchivalOrders()">
-        <mat-card-header>
-          <mat-card-title *ngIf="order.delivery">
-            {{'order_no'|translate}} {{order.id }}  - <span
-            style="font-weight: normal">{{order.delivery.city}} {{order.delivery.address }}</span>
-          </mat-card-title>
+            <mat-card-title *ngIf="!order.delivery">
+              {{'order_no'|translate}} {{order.id }}  - <span class="delivery-info"
+            >{{ 'table_nr' | translate }} {{ order.table.number }}</span>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-md-6">
+                <table mat-table [dataSource]="order.mealOrders" class="mat-elevation-z0 mt-2 mb-2">
 
-          <mat-card-title *ngIf="!order.delivery">
-            {{'order_no'|translate}} {{order.id }}  - <span
-            style="font-weight: normal">{{ 'table_nr' | translate }} {{ order.table.number }}</span>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="row">
-            <div class="col-md-6">
-              <table mat-table [dataSource]="order.mealOrders" class="mat-elevation-z0 mt-2">
+                  <ng-container matColumnDef="meal">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'meal_name' | translate}}</th>
+                    <td mat-cell *matCellDef="let element"> {{element.meal.name}} </td>
+                  </ng-container>
 
-                <ng-container matColumnDef="meal">
-                  <th mat-header-cell *matHeaderCellDef>{{ 'meal_name' | translate}}</th>
-                  <td mat-cell *matCellDef="let element"> {{element.meal.name}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="quantity">
-                  <th mat-header-cell *matHeaderCellDef> {{'number_tab' | translate}}</th>
-                  <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="['meal', 'quantity'];"></tr>
-                <tr mat-row *matRowDef="let row; columns: ['meal', 'quantity'];"></tr>
-              </table>
+                  <ng-container matColumnDef="quantity">
+                    <th mat-header-cell *matHeaderCellDef> {{'number_tab' | translate}}</th>
+                    <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="['meal', 'quantity'];"></tr>
+                  <tr mat-row *matRowDef="let row; columns: ['meal', 'quantity'];"></tr>
+                </table>
+              </div>
+              <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
+                <p class="mb-1">{{'delivery_status'|translate}}:</p>
+                <h4>{{getStatusTranslation(formatDeliveryStatus(order.orderStatus))}}</h4>
+                <p class="mb-1 mt-3">{{'delivery'|translate}}:</p>
+                <h4>{{ order.deliveryDate === null ? 'Unknown' : customFormatDate(order.deliveryDate)}}</h4>
+              </div>
             </div>
-            <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
-              <p class="mb-1">{{'delivery_status'|translate}}:</p>
-              <h4>{{getStatusTranslation(formatDeliveryStatus(order.orderStatus))}}</h4>
-              <p class="mb-1 mt-3">{{'delivery'|translate}}:</p>
-              <h4>{{ order.deliveryDate === null ? 'Unknown' : customFormatDate(order.deliveryDate)}}</h4>
-            </div>
+          </mat-card-content>
+          <div class="d-flex justify-content-center mb-3 mt-1">
+            <button class="btn btn-rounded" (click)="goToDetails(order.id)">{{'see_details'|translate}}</button>
           </div>
-        </mat-card-content>
-        <div class="d-flex justify-content-center mb-3 mt-1">
-          <button class="btn btn-rounded" (click)="goToDetails(order.id)">{{'see_details'|translate}}</button>
-        </div>
-      </mat-card>
+        </mat-card>
+      </div>
+      <mat-paginator #archivalOrdersPag *ngIf="getArchivalOrdersLength > 5" [length]="getArchivalOrdersLength"
+                     [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
+                     aria-label="Select page"
+                     (page)="onChangePageArchivalOrders($event)"></mat-paginator>
     </div>
   </mat-tab>
 
