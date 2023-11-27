@@ -95,14 +95,17 @@ body {
   border-radius: 50%;
 }
 
+.sum-container {
+  margin-top: 2rem;
+  padding: 0 2.5rem;
+  border-radius: 20px;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+}
+
 .sum {
   font-weight: 900;
-  border-radius: 20px;
-  padding: 10px 0;
-  font-size: 18px;
-  width: 30%;
-  margin: 20px 0 0 60%;
-  background-color: hsl(225, 100%, 98%);
 }
 
 .title-img {
