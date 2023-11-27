@@ -5,8 +5,7 @@
 }
 
 body {
-  font-family: 'Red Hat Display',
-  sans-serif;
+  font-family: 'Red Hat Display', sans-serif;
   background-color: hsl(225, 100%, 94%);
   font-size: 16px;
 }
@@ -22,7 +21,7 @@ body {
 .radio-group-container {
   display: flex;
   flex-direction: column;
-  margin-top: 8px;;
+  margin-top: 0.5rem;
 }
 
 .delivery-label {
@@ -56,17 +55,21 @@ body {
   border-radius: 12px;
   font-size: 1em;
   display: flex;
-  padding: 25px 10px;
+  flex-wrap: wrap;
+  row-gap: 10px;
+  padding: 1rem 1.5rem;
   align-items: center;
   justify-content: space-between;
   margin: 20px;
 }
 
 .plan-box-left {
-  width: 50%;
   display: flex;
+  flex-wrap: wrap;
+  flex: 50%;
   align-items: center;
   text-align: left;
+  flex-wrap: wrap;
 }
 
 .plan-box-left div {
@@ -145,9 +148,11 @@ cancel-btn {
   color: hsl(223, 47%, 23%);
 }
 
-.buttons {
+.plan-box-right {
+  flex: 50%;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
 }
 
 .disabled {
@@ -170,7 +175,6 @@ cancel-btn {
 .number {
   font-size: 10px;
   width: 5%;
-  margin: auto;
   text-align: center;
 }
 
@@ -179,6 +183,6 @@ cancel-btn {
   font-weight: 600;
   font-size: 20px;
   white-space: nowrap; /* prevent the text from wrapping to the next line */
-  overflow: hidden; /* hide any overflow text */
+  /*overflow: hidden; !* hide any overflow text *!*/
   text-align: center;
 }
