@@ -172,5 +172,7 @@
   "table_nr": "Stolik",
   "no_archival_orders": "Nie masz żadnych archiwalnych zamówień.",
   "number_tab": "Liczba",
-  "unknown": "Nieznana"
+  "unknown": "Nieznana",
+  "admin_panel_change_snack": "Zmieniono status zamówienia poprawnie",
+  "admin_panel_delete_snack": "Zamówienie usunięte poprawnie"
 }

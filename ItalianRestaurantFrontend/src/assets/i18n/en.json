@@ -173,5 +173,7 @@
   "table_nr": "Table",
   "no_archival_orders": "You don't have any archival orders.",
   "number_tab": "Number",
-  "unknown": "Unknown"
+  "unknown": "Unknown",
+  "admin_panel_change_snack": "Status changed successfully",
+  "admin_panel_delete_snack": "Order deleted successfully"
 }
