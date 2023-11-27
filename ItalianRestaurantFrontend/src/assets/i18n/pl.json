@@ -174,5 +174,9 @@
   "number_tab": "Liczba",
   "unknown": "Nieznana",
   "admin_panel_change_snack": "Zmieniono status zamówienia poprawnie",
-  "admin_panel_delete_snack": "Zamówienie usunięte poprawnie"
+  "admin_panel_delete_snack": "Zamówienie usunięte poprawnie",
+  "404_error": "Upps, nie ma tu nic smacznego...",
+  "404_error_description": "Wygląda na to, że strona, którą próbowałeś znaleźć, nie jest już dostępna.",
+  "go_to_home": "Przejdź do strony głównej",
+  "go_to_menu": "Przejdź do menu"
 }

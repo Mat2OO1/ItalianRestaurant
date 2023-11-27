@@ -175,5 +175,9 @@
   "number_tab": "Number",
   "unknown": "Unknown",
   "admin_panel_change_snack": "Status changed successfully",
-  "admin_panel_delete_snack": "Order deleted successfully"
+  "admin_panel_delete_snack": "Order deleted successfully",
+  "404_error": "Whoops, nothing delicious to find here...",
+  "404_error_description": "Seems like the page you were trying to find is no longer available.",
+  "go_to_home": "Go to homepage",
+  "go_to_menu": "Go to menu"
 }

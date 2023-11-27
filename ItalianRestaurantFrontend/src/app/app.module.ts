@@ -62,6 +62,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {PaginatorI18n} from "./shared/PaginatorI18n";
 import {MatBadgeModule} from "@angular/material/badge";
 import {MatChipsModule} from "@angular/material/chips";
+import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -91,7 +92,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     CategoryEditDialogComponent,
     TableComponent,
     ReserveTableComponent,
-    ReserveTableDialogComponent
+    ReserveTableDialogComponent,
+    PageNotFoundComponent
   ],
 
   imports: [

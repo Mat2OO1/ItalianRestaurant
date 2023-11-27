@@ -18,6 +18,7 @@ import {AdminTableQrComponent} from "./admin-table-qr/admin-table-qr.component";
 import {AdminMenuComponent} from "./admin-menu/admin-menu.component";
 import {TableComponent} from "./order/table/table.component";
 import {ReserveTableComponent} from "./reserve-table/reserve-table.component";
+import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 
 const routes: Routes = [
   {path: '', component: InfoComponent},
@@ -36,7 +37,7 @@ const routes: Routes = [
   {path: 'admin-tables-panel', component: AdminTableQrComponent, canActivate: [AdminGuard]},
   {path: 'admin-menu', component: AdminMenuComponent, canActivate: [AdminGuard]},
   {path: 'oauth2/redirect', component: LoginComponent, },
-  {path: '**', redirectTo: ''}
+  {path: '**', component: PageNotFoundComponent}
 ]
 
 @NgModule({

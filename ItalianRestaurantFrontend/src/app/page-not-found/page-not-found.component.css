@@ -1,0 +1,10 @@
+a {
+
+  margin: 0 1rem;
+}
+
+@media only screen and (max-width: 766px) {
+  a {
+    margin-bottom: 1rem;
+  }
+}
