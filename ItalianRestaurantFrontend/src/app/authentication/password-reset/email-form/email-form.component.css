@@ -3,3 +3,8 @@
   margin-bottom: 8px;
   margin-top: 8px;
 }
+
+.row-style {
+  width: 90%;
+  max-width: 600px;
+}

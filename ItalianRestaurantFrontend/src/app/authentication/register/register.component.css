@@ -1,7 +1,7 @@
 .form-field {
   width: 100%;
-  margin-bottom: 8px;
-  margin-top: 8px;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 .example-container mat-form-field + mat-form-field {
@@ -19,4 +19,9 @@ input.example-right-align::-webkit-inner-spin-button {
 
 input.example-right-align {
   -moz-appearance: textfield;
+}
+
+.row-style {
+  width: 90%;
+  max-width: 600px;
 }

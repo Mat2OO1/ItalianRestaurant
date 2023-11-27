@@ -34,3 +34,8 @@ input.example-right-align {
   justify-content: center;
   text-align: center;
 }
+
+.row-style {
+  width: 90%;
+  max-width: 600px;
+}
