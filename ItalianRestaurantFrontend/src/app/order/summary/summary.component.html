@@ -14,16 +14,19 @@
           <p>{{item.quantity}}x {{item.meal.price}} {{'currency'|translate}}</p>
         </div>
       </div>
-      <div class="buttons">
+      <div class="plan-box-right">
         <button class="plus-minus-btn" (click)="decreaseQuantity(item)">-</button>
         <p class="number">{{item.quantity}}</p>
         <button class="plus-minus-btn" (click)="increaseQuantity(item)">+</button>
-        <button class="plus-minus-btn" (click)="removeItem(item)"><i class="bi bi-x"></i></button>
+        <button class="plus-minus-btn btn-remove" (click)="removeItem(item)"><i class="bi bi-x"></i></button>
+        <h4 class="calculated">{{(item.quantity * item.meal.price).toFixed(2)}} {{'currency'|translate}}</h4>
       </div>
-      <h4 class="calculated">{{(item.quantity * item.meal.price).toFixed(2)}} {{'currency'|translate}}</h4>
     </div>
-    <hr style="width: 70%; margin: auto">
-    <h4 class="sum">{{'sum'|translate}} {{sum.toFixed(2)}} {{'currency'|translate}}</h4>
+    <hr>
+    <div class="sum-container">
+      <div>{{'sum'|translate}}</div>
+      <h4 class="sum">{{sum.toFixed(2)}} {{'currency'|translate}}</h4>
+    </div>
     <div class="mt-4 plan-box" *ngIf="cart.table">
       <h4>
         {{'you_order_to_table'|translate}} {{ cart.table }}.
