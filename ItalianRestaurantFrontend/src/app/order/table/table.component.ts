@@ -24,6 +24,7 @@ export class TableComponent {
     this.dataStorageService.getReservedTables()
       .subscribe(
         res => {
+          console.log(res)
           this.reservations = res
           this.assignStatusToTable()
         }

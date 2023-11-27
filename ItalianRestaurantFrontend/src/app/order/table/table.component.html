@@ -10,8 +10,8 @@
         <mat-card-content>
           <mat-list role="list">
             <mat-list-item role="listitem">{{'number_of_seats'|translate}}: {{ table.seats }}</mat-list-item>
-            <mat-list-item role="listitem">{{ 'table_status' | translate }}:
-              {{ table.reserved ? ('RESERVED' | translate) : ('FREE' | translate) }}
+            <mat-list-item class="text-center" role="listitem">
+              {{ table.reserved ? ('RESERVED' | translate) : ' '}}
             </mat-list-item>
           </mat-list>
         </mat-card-content>
