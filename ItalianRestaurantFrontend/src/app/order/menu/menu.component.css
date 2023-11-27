@@ -3,7 +3,7 @@
   border-radius: 10px;
   display: flex;
   flex-direction: row;
-  margin-top: 20px
+  margin-top: 20px;
 }
 
 mat-card-content {
@@ -17,7 +17,9 @@ mat-card-header {
 img {
   object-fit: cover;
   overflow: hidden;
+  height: 100%;
   border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px !important;
 }
 
 mat-card-title-group {
