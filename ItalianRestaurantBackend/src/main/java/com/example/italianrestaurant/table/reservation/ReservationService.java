@@ -56,7 +56,7 @@ public class ReservationService {
     }
 
     public List<Table> getReservedTables() {
-        LocalDateTime timeFrom = LocalDateTime.now();
+        LocalDateTime timeFrom = LocalDateTime.now().minusHours(1);
         LocalDateTime timeTo = LocalDateTime.now().plusHours(1);
         //table is reserved one hour before reservation starts, and the reservation lasts one hour
         return this.reservationRepository.getReservedTables(timeFrom, timeTo)

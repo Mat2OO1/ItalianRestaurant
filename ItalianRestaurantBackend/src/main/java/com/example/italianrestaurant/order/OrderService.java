@@ -20,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -96,7 +95,7 @@ public class OrderService {
     }
 
     public Delivery getLastDelivery(UserPrincipal userPrincipal){
-        Order order = orderRepository.findFirstByUserEmailOrderByOrderDateDesc(userPrincipal.getEmail()).orElseThrow(EntityNotFoundException::new);
+        Order order = orderRepository.findFirstByUserEmailAndDeliveryIsNotNullOrderByOrderDateDesc(userPrincipal.getEmail()).orElseThrow(EntityNotFoundException::new);
         return order.getDelivery();
     }
 
