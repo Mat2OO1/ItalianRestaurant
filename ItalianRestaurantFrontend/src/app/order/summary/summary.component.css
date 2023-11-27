@@ -87,6 +87,11 @@ body {
   color: #8a8a8a;
 }
 
+hr {
+  width: 90%;
+  margin: auto;
+}
+
 .img-preview {
   width: 5rem;
   height: 5rem;
