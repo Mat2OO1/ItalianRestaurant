@@ -136,6 +136,10 @@ body {
   background-color: hsl(111, 23%, 55%);
 }
 
+.btn-remove {
+  background-color: rgba(255, 0, 0, 0.65) !important;
+}
+
 cancel-btn {
   display: block;
   text-decoration: none;
@@ -173,9 +177,8 @@ cancel-btn {
 }
 
 .number {
-  font-size: 10px;
+  font-size: 0.9rem;
   width: 5%;
-  text-align: center;
 }
 
 .calculated {
