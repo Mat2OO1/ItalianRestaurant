@@ -1,10 +1,10 @@
 <h2 mat-dialog-title>{{ 'cancel_reservation' | translate }}</h2>
 <mat-dialog-content class="mat-typography">
-  <h4>{{ 'are_you_sure_cancel_reservation'|translate }}</h4>
+  <h5>{{ 'are_you_sure_cancel_reservation'|translate }}</h5>
   <h6>{{ 'table' | translate }}: {{ data.reservation.table.id }}</h6>
   <h6>{{ 'date' | translate }}: {{ data.reservation.reservationDateStart | date: "dd.MM.yyyy HH:mm" }}</h6>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button class="btn btn-danger" (click)="onCloseDialog(false)">{{ 'back' | translate }}</button>
-  <button class="btn btn-success" (click)="onCloseDialog(true)">{{ 'cancel' | translate }}</button>
+  <button class="btn btn-secondary" (click)="onCloseDialog(false)">{{ 'back' | translate }}</button>
+  <button class="btn btn-danger" (click)="onCloseDialog(true)">{{ 'cancel' | translate }}</button>
 </mat-dialog-actions>
