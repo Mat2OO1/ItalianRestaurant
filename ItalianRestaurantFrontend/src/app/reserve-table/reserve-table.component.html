@@ -1,7 +1,7 @@
 <mat-tab-group [backgroundColor]="'primary'" [color]="'primary'" dynamicHeight>
   <mat-tab label="{{ 'do_reserve_table' | translate }}">
     <div class="container mt-4">
-      <h1>{{ 'choose_table' | translate }}</h1>
+      <h1 class="text-center mb-3">{{ 'choose_table' | translate }}</h1>
       <div class="flex-container">
         <div class="flex-item" *ngFor="let table of tables">
           <mat-card class="card">
@@ -24,10 +24,10 @@
   </mat-tab>
   <mat-tab label="{{ 'my_reservations' | translate }}">
     <div class="container mt-4" *ngIf="userReservations.length > 0">
-      <h1 class="text-center">{{ 'upcoming_reservations' | translate }}</h1>
+      <h1 class="text-center mb-3">{{ 'upcoming_reservations' | translate }}</h1>
       <div class="flex-container">
         <div class="flex-item" *ngFor="let reservation of userReservations">
-          <mat-card class="small-card">
+          <mat-card class="card">
             <mat-card-header>
               <mat-card-title>{{ reservation.reservationDateStart | date: "dd.MM.yyyy"}}</mat-card-title>
             </mat-card-header>

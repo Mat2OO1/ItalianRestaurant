@@ -15,11 +15,11 @@
         </div>
       </div>
       <div class="plan-box-right">
-        <button class="plus-minus-btn" (click)="decreaseQuantity(item)">-</button>
-        <p class="number">{{item.quantity}}</p>
-        <button class="plus-minus-btn" (click)="increaseQuantity(item)">+</button>
-        <button class="plus-minus-btn btn-remove" (click)="removeItem(item)"><i class="bi bi-x"></i></button>
-        <h4 class="calculated">{{(item.quantity * item.meal.price).toFixed(2)}} {{'currency'|translate}}</h4>
+        <div><button class="plus-minus-btn" (click)="decreaseQuantity(item)">-</button></div>
+        <div> <p class="number">{{item.quantity}}</p></div>
+        <div><button class="plus-minus-btn" (click)="increaseQuantity(item)">+</button></div>
+        <div><button class="plus-minus-btn btn-remove" (click)="removeItem(item)"><i class="bi bi-x"></i></button></div>
+        <div><h4 class="calculated">{{(item.quantity * item.meal.price).toFixed(2)}} {{'currency'|translate}}</h4></div>
       </div>
     </div>
     <hr>
