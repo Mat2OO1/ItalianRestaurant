@@ -1,12 +1,12 @@
 .flex-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
+  column-gap: 1rem;
 }
 
 .flex-item {
-  flex: 1;
-  max-width: calc(33.33% - 16px);
+  max-width: calc(40% + 25px);
   margin-bottom: 16px;
 }
 
