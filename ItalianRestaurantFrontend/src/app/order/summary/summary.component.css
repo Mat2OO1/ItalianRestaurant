@@ -69,7 +69,18 @@ body {
   flex: 50%;
   align-items: center;
   text-align: left;
-  flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 600px) {
+  .plan-box-left {
+    flex: 70%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .plan-box-right {
+    justify-content: flex-end !important;
+  }
 }
 
 .plan-box-left div {
@@ -162,6 +173,8 @@ cancel-btn {
 
 .plan-box-right {
   flex: 50%;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
