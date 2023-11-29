@@ -7,7 +7,8 @@ import {environment} from "../../../environments/environment";
 import jwtDecode from "jwt-decode";
 import {SnackbarService} from "../../shared/sncakbar.service";
 import {take} from "rxjs/operators";
-import { TranslateService } from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
+import {UserDto} from "../../models/user-dto";
 
 export interface AuthResponseData {
   token: string;
@@ -19,12 +20,12 @@ export interface AuthResponseData {
 export class AuthService {
   user = new BehaviorSubject<User | null>(null);
   private logoutTimer: any;
-  private errorMessage="";
+  private errorMessage = "";
 
   constructor(private http: HttpClient, private router: Router, private snackbarService: SnackbarService, private translate: TranslateService) {
   }
 
-  signup(firstName: string, lastName: string, email: string, password: string) {
+  signup(firstName: string, lastName: string, email: string, phoneNumber: string, password: string) {
     return this.http
       .post<AuthResponseData>(
         `${environment.apiUrl}/auth/register`,
@@ -32,6 +33,7 @@ export class AuthService {
           firstname: firstName,
           lastname: lastName,
           email: email,
+          phoneNumber: phoneNumber,
           password: password
         }
       )
@@ -112,7 +114,7 @@ export class AuthService {
   }
 
   requestResetPassword(email: string, lang: string) {
-    lang = localStorage.getItem('lang')||'en';
+    lang = localStorage.getItem('lang') || 'en';
     const url = `${environment.apiUrl}/password/request?email=${email}&lang=${lang}`;
 
     return this.http.get(url)
@@ -171,4 +173,29 @@ export class AuthService {
     ).subscribe();
   }
 
+  updateUser(user: UserDto) {
+    return this.http
+      .post(
+        `${environment.apiUrl}/user`, user
+      )
+  }
+
+  getLoggedInUser() {
+    return this.user.pipe(
+      take(1),
+      switchMap(user => {
+        if (!user || !user.token) {
+          return EMPTY;
+        }
+        return this.http.get<{
+          firstName: string;
+          lastName: string;
+          email: string;
+          phoneNumber: string;
+        }>(
+          `${environment.apiUrl}/user`
+        );
+      })
+    );
+  }
 }

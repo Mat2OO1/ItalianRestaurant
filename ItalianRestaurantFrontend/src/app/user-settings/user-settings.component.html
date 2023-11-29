@@ -1,0 +1,65 @@
+<mat-progress-bar [style.visibility]="!processing ? 'hidden': 'visible'" color="primary"
+                  mode="indeterminate"></mat-progress-bar>
+<p class="p-3"></p>
+<div class="container">
+  <div class="row  me-1 ms-1">
+    <div class="col-md-6 d-flex align-items-center justify-content-center mb-4" *ngIf="isLargeScreen()">
+      <img src="assets/images/settings.png" alt="settings" class="img-fluid" style="width: 120%">
+    </div>
+    <div class="col-md-6 settings-form">
+      <h1 class="mb-4">{{'settings' | translate}}</h1>
+      <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>{{'name'|translate}}</mat-label>
+          <input type="text" matInput formControlName="firstname" placeholder="{{'name_example' | translate}}">
+          <mat-error *ngIf="accountForm.get('firstname')?.hasError('required')">
+            {{'name_toast'|translate}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>{{'surname'|translate}}</mat-label>
+          <input type="text" matInput formControlName="lastname" placeholder="{{'surname_example' | translate}}">
+          <mat-error *ngIf="accountForm.get('lastname')?.hasError('required')">
+            {{'surname_toast'|translate}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>{{'email'|translate}}</mat-label>
+          <input type="email" matInput formControlName="email"
+                 placeholder="{{'email_example' | translate}}">
+          <mat-error
+            *ngIf="accountForm.get('email')?.hasError('email') && !accountForm.get('email')?.hasError('required')">
+            {{'email'|translate}}
+          </mat-error>
+          <mat-error *ngIf="accountForm.get('email')?.hasError('required')">
+            {{'email_toast'|translate}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>{{'phone_number'|translate}}</mat-label>
+          <input type="text" matInput formControlName="phoneNumber"
+                 placeholder="{{'phone_number_example' | translate}}">
+          <mat-error
+            *ngIf="accountForm.get('phoneNumber')?.hasError('pattern') && !accountForm.get('phoneNumber')?.hasError('required')">
+            {{'phone_number_error'| translate}}
+          </mat-error>
+          <mat-error *ngIf="accountForm.get('phoneNumber')?.hasError('required')">
+            {{'phone_number_required'| translate}}
+          </mat-error>
+        </mat-form-field>
+
+        <a [routerLink]="['/change-password']" class="text-decoration-underline">
+          <p>{{'change_password'|translate}}</p>
+        </a>
+        <br class="d-md-none">
+
+        <div class="text-center mt-5">
+          <button type="submit" [disabled]="!accountForm.valid" class="btn btn-primary rounded-pill"
+                  style="background-color: #005B47; text-decoration: none; color: #FFFFFF">{{'confirm'|translate}}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

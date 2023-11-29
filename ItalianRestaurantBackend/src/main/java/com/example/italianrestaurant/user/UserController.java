@@ -1,14 +1,14 @@
 package com.example.italianrestaurant.user;
 
-import com.example.italianrestaurant.auth.UserDto;
+import com.example.italianrestaurant.security.UserPrincipal;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
@@ -16,20 +16,29 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> updateUser(UserDto userDto) {
+    public ResponseEntity<User> updateUser(@Valid @RequestBody UserDto userDto) {
         try {
             return ResponseEntity.ok(userService.updateUser(userDto));
-        } catch (Exception e) {
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().build();
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(Long id) {
         try {
             userService.deleteUser(id);
             return ResponseEntity.ok().build();
-        } catch (Exception e) {
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<User> getUser(@AuthenticationPrincipal UserPrincipal user) {
+        try {
+            return ResponseEntity.ok(userService.getUserByEmail(user.getUsername()));
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().build();
         }
     }

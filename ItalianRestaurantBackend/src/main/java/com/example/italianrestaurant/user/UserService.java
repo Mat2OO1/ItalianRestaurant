@@ -1,6 +1,6 @@
 package com.example.italianrestaurant.user;
 
-import com.example.italianrestaurant.auth.UserDto;
+import com.example.italianrestaurant.auth.RegisterRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -30,9 +30,9 @@ public class UserService {
 
     }
 
-    public User updateUser(UserDto userDto) {
-        User user = getUserByEmail(userDto.getEmail());
-        modelMapper.map(userDto, user);
+    public User updateUser(UserDto registerRequest) {
+        User user = getUserByEmail(registerRequest.getEmail());
+        modelMapper.map(registerRequest, user);
         userRepository.save(user);
         return userRepository.save(user);
     }

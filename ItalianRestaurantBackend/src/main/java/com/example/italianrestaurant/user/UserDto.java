@@ -1,4 +1,4 @@
-package com.example.italianrestaurant.auth;
+package com.example.italianrestaurant.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
-
     @NotBlank(message = "Firstname is mandatory")
     private String firstname;
     @NotBlank(message = "Lastname is mandatory")
@@ -22,7 +21,4 @@ public class UserDto {
     private String email;
     @NotBlank(message = "Phone number is mandatory")
     private String phoneNumber;
-    @NotBlank(message = "Password is mandatory")
-    private String password;
 }
-

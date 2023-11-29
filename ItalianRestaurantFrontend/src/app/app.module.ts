@@ -64,6 +64,7 @@ import {MatBadgeModule} from "@angular/material/badge";
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {UserSettingsComponent} from "./user-settings/user-settings.component";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -94,7 +95,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TableComponent,
     ReserveTableComponent,
     ReserveTableDialogComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    UserSettingsComponent
   ],
 
   imports: [

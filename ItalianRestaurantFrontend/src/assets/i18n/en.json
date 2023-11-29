@@ -179,5 +179,11 @@
   "404_error": "Whoops, nothing delicious to find here...",
   "404_error_description": "Seems like the page you were trying to find is no longer available.",
   "go_to_home": "Go to homepage",
-  "go_to_menu": "Go to menu"
+  "go_to_menu": "Go to menu",
+  "profile": "Profile",
+  "phone_number": "Phone number",
+  "phone_number_example": "500600700",
+  "phone_number_error": "Phone number is invalid",
+  "phone_number_required": "Phone number is required",
+  "settings": "Settings"
 }

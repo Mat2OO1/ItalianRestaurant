@@ -95,7 +95,7 @@ public class AuthenticationServiceTest {
     @Test
     void shouldRegister() {
         //given
-        val registerRequest = UserDto.builder()
+        val registerRequest = RegisterRequest.builder()
                 .email("email")
                 .password("password")
                 .firstname("firstName")
@@ -129,7 +129,7 @@ public class AuthenticationServiceTest {
     @Test
     void shouldNotRegister() {
         //given
-        val registerRequest = UserDto.builder()
+        val registerRequest = RegisterRequest.builder()
                 .email("email")
                 .password("password")
                 .firstname("firstName")

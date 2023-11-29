@@ -31,7 +31,17 @@
           {{'email_toast'|translate}}
         </mat-error>
       </mat-form-field>
-
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>{{'phone_number'|translate}}</mat-label>
+        <input type="text" matInput formControlName="phoneNumber" placeholder="{{'phone_number_example' | translate}}">
+        <mat-error
+          *ngIf="registerForm.get('phoneNumber')?.hasError('pattern') && !registerForm.get('phoneNumber')?.hasError('required')">
+          {{'phone_number_error'| translate}}
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('phoneNumber')?.hasError('required')">
+          {{'phone_number_required'| translate}}
+        </mat-error>
+      </mat-form-field>
       <mat-form-field class="form-field" appearance="outline">
         <mat-label>{{'password'|translate}}</mat-label>
         <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
