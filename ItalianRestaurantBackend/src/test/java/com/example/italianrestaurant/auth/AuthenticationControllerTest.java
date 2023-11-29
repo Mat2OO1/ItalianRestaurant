@@ -84,7 +84,7 @@ public class AuthenticationControllerTest {
     void shouldRegister() throws Exception {
 
         // given
-        val registerRequest = RegisterRequest.builder()
+        val registerRequest = UserDto.builder()
                 .email("example@email.com")
                 .password("password")
                 .firstname("firstname")
@@ -110,7 +110,7 @@ public class AuthenticationControllerTest {
     void shouldNotRegister() throws Exception {
 
         // given
-        val registerRequest = RegisterRequest.builder()
+        val registerRequest = UserDto.builder()
                 .email("email")
                 .password("password")
                 .firstname("firstname")

@@ -2,10 +2,7 @@ package com.example.italianrestaurant.auth;
 
 import com.example.italianrestaurant.security.JwtService;
 import com.example.italianrestaurant.security.UserPrincipal;
-import com.example.italianrestaurant.user.AuthProvider;
-import com.example.italianrestaurant.user.Role;
-import com.example.italianrestaurant.user.User;
-import com.example.italianrestaurant.user.UserRepository;
+import com.example.italianrestaurant.user.*;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +20,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(UserDto request) {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new EntityExistsException("User already exists");
         }
@@ -34,6 +31,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
+                .phoneNumber(request.getPhoneNumber())
                 .provider(AuthProvider.local)
                 .emailVerified(false)
                 .build();

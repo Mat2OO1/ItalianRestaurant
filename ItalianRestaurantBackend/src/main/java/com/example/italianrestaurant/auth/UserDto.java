@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class UserDto {
 
     @NotBlank(message = "Firstname is mandatory")
     private String firstname;
@@ -20,6 +20,8 @@ public class RegisterRequest {
     @NotBlank(message = "Email is mandatory")
     @Email
     private String email;
+    @NotBlank(message = "Phone number is mandatory")
+    private String phoneNumber;
     @NotBlank(message = "Password is mandatory")
     private String password;
 }
