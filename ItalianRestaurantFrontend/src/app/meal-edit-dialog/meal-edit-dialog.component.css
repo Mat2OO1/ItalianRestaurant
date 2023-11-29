@@ -16,6 +16,12 @@
   padding: 16px;
 }
 
+@media only screen and (max-width: 360px) {
+  :host {
+    width: auto !important;
+  }
+}
+
 .file-input {
   display: flex;
   align-items: center;
