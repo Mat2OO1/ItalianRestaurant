@@ -10,7 +10,7 @@
             <mat-card-header>
               <mat-card-title>{{ 'one_table' | translate }} {{ table.number }}</mat-card-title>
             </mat-card-header>
-            <img mat-card-image src="/assets/images/table.jpg" alt="{{ 'one_table' | translate }}">
+            <img mat-card-image src="/assets/images/table.webp" alt="{{ 'one_table' | translate }}">
             <mat-card-content>
               <mat-list role="list">
                 <mat-list-item role="listitem">{{ 'number_of_seats' | translate }}: {{ table.seats }}</mat-list-item>
@@ -55,7 +55,7 @@
             <mat-card-header>
               <mat-card-title>{{ reservation.reservationDateStart | date: "dd.MM.yyyy"}}</mat-card-title>
             </mat-card-header>
-            <img mat-card-image src="/assets/images/table.jpg" alt="{{ 'one_table' | translate }}">
+            <img mat-card-image src="/assets/images/table.webp" alt="{{ 'one_table' | translate }}">
             <mat-card-content>
               <mat-list role="list">
                 <mat-list-item role="listitem">{{ 'hour' | translate }}: {{ reservation.reservationDateStart | date: "HH:mm" }}</mat-list-item>
