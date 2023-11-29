@@ -18,8 +18,8 @@ import {TranslateService} from "@ngx-translate/core";
 })
 
 export class MenuComponent implements OnInit, OnDestroy {
-  categories: Category[] = []
-  meals: Meal[] = [];
+  categories: Category[] | undefined;
+  meals: Meal[] | undefined;
   totalPages = 0
   pageIndex = 0
   size = 5;

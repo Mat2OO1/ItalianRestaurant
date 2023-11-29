@@ -12,7 +12,7 @@ import {MatPaginator, PageEvent} from "@angular/material/paginator";
 })
 export class OrderHistoryComponent {
   isContentLoaded = false;
-  orders: OrderRes[] = []
+  orders: OrderRes[] = [];
   currentOrders: OrderRes[] = []
   archivalOrders: OrderRes[] = []
   lang = ""

@@ -15,6 +15,7 @@ export class BuyComponent {
   buyForm: FormGroup;
   lastDelivery ?: Delivery
   showHint = true;
+  processing = false;
 
   constructor(private dataStorageService: DataStorageService,
               private cartService: CartService) {
@@ -37,6 +38,7 @@ export class BuyComponent {
 
   onBuySubmit() {
     if (this.buyForm.invalid) return;
+    this.processing = true;
     let address = this.buyForm.value['address']
     let city = this.buyForm.value['city'];
     let pcode = this.buyForm.value['pcode'];

@@ -34,7 +34,7 @@ body {
   background-color: #005B47;
   padding: 20px 0;
   border-radius: 12px;
-  margin: 30px auto;
+  margin: 30px 15px;
   transition: background-color .3s ease;
   width: 80%;
   border: 0;
@@ -61,4 +61,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

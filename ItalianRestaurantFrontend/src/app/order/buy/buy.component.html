@@ -28,7 +28,8 @@
 
       <mat-form-field class="form-element" appearance="outline">
         <mat-label>{{"postal_code" | translate}}</mat-label>
-        <input type="text" matInput maxlength="6" formControlName="pcode" placeholder="{{'postal_code_example' | translate}}">
+        <input type="text" matInput maxlength="6" formControlName="pcode"
+               placeholder="{{'postal_code_example' | translate}}">
         <mat-error *ngIf="buyForm.get('pcode')?.hasError('pattern') && !buyForm.get('pcode')?.hasError('required')">
           {{"postal_code_invalid" | translate}}
         </mat-error>
@@ -63,7 +64,13 @@
 
       </mat-radio-group>
 
-      <button type="submit" class="proceed-btn" [disabled]="buyForm.invalid">{{ 'make_an_order' | translate }}</button>
+      <div class="button-container">
+        <div style="width: 60px; height: 60px; visibility: hidden"></div>
+        <button type="submit" class="proceed-btn"
+                [disabled]="buyForm.invalid || processing">{{ 'make_an_order' | translate }}</button>
+        <mat-spinner class="spinner" [style.visibility]="!processing? 'hidden': 'visible'"
+                     [diameter]="60"></mat-spinner>
+      </div>
     </form>
   </div>
 </div>

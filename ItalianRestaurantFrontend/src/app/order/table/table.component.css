@@ -33,7 +33,7 @@
   background-color: #005B47;
   padding: 20px 0;
   border-radius: 12px;
-  margin: 30px auto;
+  margin: 30px 20px;
   transition: background-color .3s ease;
   width: 80%;
   border: 0;
@@ -41,4 +41,39 @@
 
 .proceed-btn:disabled {
   background-color: #003D37;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+.skeleton-card {
+  width: 400px;
+  height: 30rem;
+}
+
+@media (max-width: 990px) {
+  .skeleton-card {
+    width: 300px;
+    height: 23rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .skeleton-card {
+    width: 250px;
+    height: 20rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .skeleton-card {
+    width: 95%;
+    height: 30rem;
+  }
 }

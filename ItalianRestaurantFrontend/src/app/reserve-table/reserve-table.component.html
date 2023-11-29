@@ -1,6 +1,6 @@
 <mat-tab-group [backgroundColor]="'primary'" [color]="'primary'" dynamicHeight>
   <mat-tab label="{{ 'do_reserve_table' | translate }}">
-    <div class="container mt-4">
+    <div class="container mt-4" *ngIf="tables">
       <h1 class="text-center mb-3">{{ 'choose_table' | translate }}</h1>
       <div class="flex-container">
         <div class="flex-item" *ngFor="let table of tables">
@@ -21,7 +21,29 @@
         </div>
       </div>
     </div>
+
+
+    <!--  Skeleton loading-->
+    <div class="container mt-4" *ngIf="!tables">
+      <h1 class="text-center mb-3">{{ 'choose_table' | translate }}</h1>
+      <div class="flex-container">
+        <div class="skeleton-card flex-item" *ngFor="let index of [0,1,2,3,4,5]">
+
+            <ngx-skeleton-loader [theme]="
+              {
+                'height': '100%',
+                'width': '100%',
+                'margin-bottom': '0'
+
+              }"></ngx-skeleton-loader>
+
+        </div>
+      </div>
+    </div>
+
   </mat-tab>
+
+
   <mat-tab label="{{ 'my_reservations' | translate }}">
     <div class="container mt-4" *ngIf="userReservations.length > 0">
       <h1 class="text-center mb-3">{{ 'upcoming_reservations' | translate }}</h1>

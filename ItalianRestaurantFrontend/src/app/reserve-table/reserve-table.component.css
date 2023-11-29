@@ -71,3 +71,30 @@
   color: #FFFFFF
 }
 
+
+
+.skeleton-card {
+  width: 400px;
+  height: 30rem;
+}
+
+@media (max-width: 990px) {
+  .skeleton-card {
+    width: 300px;
+    height: 23rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .skeleton-card {
+    width: 250px;
+    height: 20rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .skeleton-card {
+    width: 95%;
+    height: 30rem;
+  }
+}

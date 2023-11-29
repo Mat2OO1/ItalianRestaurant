@@ -13,6 +13,7 @@ export class TableComponent {
 
   tables?: Table[];
   reservations?: Table[]
+  processing = 0;
 
   constructor(private dataStorageService: DataStorageService, private cartService: CartService) {
     this.dataStorageService.getTables()
@@ -33,6 +34,7 @@ export class TableComponent {
 
   proceedOrder(table: number) {
     this.cartService.addTable(table)
+    this.processing = table;
     this.dataStorageService.makeAnOrder(this.cartService.cart)
       .subscribe(
         (res: PaymentResponse) => {

@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container mt-4" *ngIf="tables">
   <h1 class="text-center mb-3">{{'choose_table'|translate}}</h1>
   <div class="flex-container">
     <div class="flex-item" *ngFor="let table of tables">
@@ -15,10 +15,39 @@
             </mat-list-item>
           </mat-list>
         </mat-card-content>
-        <mat-card-actions>
-          <button class="proceed-btn" [disabled]="table.reserved" (click)="proceedOrder(table.number)">{{'order_to_table'|translate}}</button>
-        </mat-card-actions>
+
+
+          <div class="button-container">
+            <div style="width: 60px; height: 60px; visibility: hidden; margin-right: 15px"></div>
+            <button class="proceed-btn" [disabled]="table.reserved || processing !== 0" (click)="proceedOrder(table.number)">{{'order_to_table'|translate}}</button>
+
+            <mat-spinner style="margin-right: 15px" [style.visibility]="processing !== table.number? 'hidden': 'visible'"
+                         [diameter]="60"></mat-spinner>
+          </div>
+
+
       </mat-card>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--  Skeleton loading-->
+<div class="container mt-4" *ngIf="!tables">
+  <h1 class="text-center mb-3">{{ 'choose_table' | translate }}</h1>
+  <div class="flex-container">
+    <div class="skeleton-card flex-item" *ngFor="let index of [0,1,2,3,4,5]">
+
+      <ngx-skeleton-loader [theme]="
+              {
+                'height': '100%',
+                'width': '100%',
+                'margin-bottom': '0'
+
+              }"></ngx-skeleton-loader>
+
     </div>
   </div>
 </div>
