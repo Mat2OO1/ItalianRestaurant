@@ -61,6 +61,7 @@ export class AdminMenuComponent {
               (response) => {
                 this.dataSources = {};
                 response.forEach(meal => {
+                  if (!this.dataSources) return;
                   if (this.dataSources[meal.mealCategory.name]) {
                     this.dataSources[meal.mealCategory.name].data.push(meal);
                   } else {

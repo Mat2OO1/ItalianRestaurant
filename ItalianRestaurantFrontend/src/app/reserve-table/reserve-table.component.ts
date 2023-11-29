@@ -16,6 +16,7 @@ import {TranslateService} from "@ngx-translate/core";
 export class ReserveTableComponent {
   tables ?: Table[]
   userReservations: Reservation[] = []
+  processing = false;
 
   constructor(private dataStorageService: DataStorageService,
               private dialog: MatDialog,
@@ -57,17 +58,20 @@ export class ReserveTableComponent {
   }
 
   private handleDialogResult(result: Reservation) {
+    this.processing = true;
     if (result) {
       this.dataStorageService.makeReservation(result).subscribe(
         (res) => {
           this.translate.get('table_reserved_successfully').subscribe((message) => {
             this.snackbarService.openSnackbarSuccess(message);
+            this.processing = false;
           });
           this.getReservations();
         },
         (err) => {
-          this.translate.get('table_reserved_successfully').subscribe((message) => {
+          this.translate.get('table_already_reserved_error').subscribe((message) => {
             this.snackbarService.openSnackbarError(message);
+            this.processing = false;
           });
         }
       )

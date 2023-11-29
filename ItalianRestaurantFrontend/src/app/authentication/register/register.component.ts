@@ -12,6 +12,7 @@ export class RegisterComponent {
   registerForm: FormGroup
   error: string = '';
   hide = true;
+  processing = false;
 
   constructor(private router: Router,
               private authService: AuthService) {
@@ -24,6 +25,7 @@ export class RegisterComponent {
   }
 
   onRegisterSubmit() {
+    this.processing = true;
     let firstName = this.registerForm.value['firstName'];
     let lastName = this.registerForm.value['lastName'];
     let email = this.registerForm.value['email'];
@@ -36,6 +38,7 @@ export class RegisterComponent {
         errorMessage => {
           this.registerForm.reset()
           this.error = errorMessage;
+          this.processing = false;
         }
       )
   }

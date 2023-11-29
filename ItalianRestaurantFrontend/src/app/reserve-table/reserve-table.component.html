@@ -1,3 +1,5 @@
+<mat-progress-bar [style.visibility]="!processing ? 'hidden': 'visible'" color="primary" mode="indeterminate"></mat-progress-bar>
+
 <mat-tab-group [backgroundColor]="'primary'" [color]="'primary'" dynamicHeight>
   <mat-tab label="{{ 'do_reserve_table' | translate }}">
     <div class="container mt-4" *ngIf="tables">

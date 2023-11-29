@@ -20,6 +20,7 @@ export class LoginComponent implements OnDestroy, OnInit {
   facebookURL = AppConstants.FACEBOOK_AUTH_URL
   githubURL = AppConstants.GITHUB_AUTH_URL
   authSubscription ?: Subscription;
+  processing = false;
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -51,6 +52,7 @@ export class LoginComponent implements OnDestroy, OnInit {
   }
 
   onLoginSubmit() {
+    this.processing = true;
     let email = this.loginForm.value['email'];
     let password = this.loginForm.value['password'];
     this.authSubscription = this.authService.login(email, password)
@@ -66,6 +68,7 @@ export class LoginComponent implements OnDestroy, OnInit {
         errorMessage => {
           this.loginForm.reset()
           this.error = errorMessage
+          this.processing = false;
         }
       );
 

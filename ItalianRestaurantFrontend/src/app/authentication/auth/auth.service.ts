@@ -115,14 +115,7 @@ export class AuthService {
     lang = localStorage.getItem('lang')||'en';
     const url = `${environment.apiUrl}/password/request?email=${email}&lang=${lang}`;
 
-    this.http.get(url).subscribe(
-      (res) => {
-        this.translate.get('user_check_email').subscribe((message) => {
-          this.snackbarService.openSnackbarSuccess(message);
-        });
-        this.router.navigate(['']);
-      }
-    );
+    return this.http.get(url)
   }
 
   public saveToken(token: string): void {
@@ -134,20 +127,13 @@ export class AuthService {
   }
 
   resetPassword(password: string, token: string) {
-    this.http
+    return this.http
       .post(`${environment.apiUrl}/password/reset`,
         {
           token: token,
           password: password,
         }, {responseType: 'text'})
-      .subscribe(
-        () => {
-          this.router.navigate([''])
-          this.translate.get('user_password_reset').subscribe((message) => {
-            this.snackbarService.openSnackbarSuccess(message);
-          });
-        }
-      );
+
   }
 
   private handleError(errorRes: HttpErrorResponse) {

@@ -1,4 +1,4 @@
-<mat-progress-bar *ngIf="!isContentLoaded" style="position: absolute" color="primary" mode="indeterminate"></mat-progress-bar>
+<mat-progress-bar [style.visibility]="isContentLoaded ? 'hidden': 'visible'" color="primary" mode="indeterminate"></mat-progress-bar>
 <mat-tab-group [backgroundColor]="'primary'" [color]="'primary'" dynamicHeight>
   <mat-tab label="{{'your_current_orders'|translate}}">
 
