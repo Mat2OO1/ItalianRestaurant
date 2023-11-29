@@ -1,4 +1,6 @@
-<div class="container" *ngIf="areCategoriesLoaded && areMealsLoaded">
+<mat-progress-bar style="position: absolute" *ngIf="processing" mode="indeterminate"></mat-progress-bar>
+
+<div class="container" *ngIf="dataSources && categories">
   <div class="header row justify-content-center">
     <div class="col-auto">
       <br>
@@ -91,6 +93,61 @@
       <div class="add-category">
         <button class="btn btn-success"
                 (click)="openCategoryDialog(DialogMode.ADD)">{{'add_category'|translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container" *ngIf="!(dataSources && categories)">
+  <div class="header row justify-content-center">
+    <div class="col-auto">
+      <br>
+      <h1>{{'menu_editor'|translate}}</h1>
+      <br>
+      <mat-accordion multi>
+        <mat-expansion-panel *ngFor="let elem of [0,1,2,3,4,5]"  (click)="clickButton=false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <ngx-skeleton-loader [theme]="
+              {
+                'height': '30px',
+                'width': '70px',
+                'margin-top': '20px',
+                'margin-bottom': '20px'
+
+              }"></ngx-skeleton-loader>
+            </mat-panel-title>
+            <mat-panel-description>
+              <button matTooltip="{{'edit'|translate}}" matTooltipPosition="above" class="btn btn-info"
+                      style="margin:0 10px" disabled>
+                <i class="bi bi-pen"></i>
+              </button>
+              <button matTooltip="{{'delete'|translate}}" matTooltipPosition="above" class="btn btn-danger"
+                      data-toggle="tooltip"
+                      data-placement="top" disabled>
+                <i class="bi bi-trash"></i>
+              </button>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+
+          <div style="width: 80rem"></div>
+
+
+          <div class="last-row">
+            <button matTooltip="{{'add'|translate}}" matTooltipPosition="above" class="btn btn-success"
+                    data-toggle="tooltip"
+                    data-placement="top" title="Add" disabled>
+              <i class="bi bi-plus-square"></i>
+            </button>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <div class="add-category">
+        <button class="btn btn-success" disabled>{{'add_category'|translate}}</button>
       </div>
     </div>
   </div>

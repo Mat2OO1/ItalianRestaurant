@@ -26,6 +26,7 @@ export class AdminTableQrComponent implements OnInit, AfterViewInit {
 
 
   @ViewChild(MatSort) sort: MatSort | null = null;
+  processing = false;
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
@@ -55,6 +56,7 @@ export class AdminTableQrComponent implements OnInit, AfterViewInit {
       (tables) => {
         this.tables = tables
         this.dataSource.data = tables
+        this.processing = false;
       })
   }
 
@@ -76,11 +78,16 @@ export class AdminTableQrComponent implements OnInit, AfterViewInit {
   }
 
   private handleDialogResult(mode: DialogMode, result: Table | number) {
+    this.processing = true;
     if (result) {
       if ((mode === DialogMode.ADD || mode === DialogMode.EDIT) && typeof result === 'object') {
-        this.dataStorageService.saveTable(result).subscribe(() => this.getTables())
+        this.dataStorageService.saveTable(result).subscribe(() => {
+          this.getTables();
+        })
       } else if (mode === DialogMode.DELETE && typeof result === 'number') {
-        this.dataStorageService.deleteTable(result).subscribe(() => this.getTables())
+        this.dataStorageService.deleteTable(result).subscribe(() => {
+          this.getTables();
+        })
       }
     }
   }

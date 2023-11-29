@@ -17,16 +17,14 @@ import {MatTableDataSource} from "@angular/material/table";
   styleUrls: ['./admin-menu.component.css'],
 })
 export class AdminMenuComponent {
-  mealsByCategory: { [category: string]: Meal[] } = {};
-  categories: CategoryDto[] = []
-  areMealsLoaded = false;
-  areCategoriesLoaded = false;
+  categories?: CategoryDto[];
   lang = localStorage.getItem('lang') || 'en';
   clickButton = false;
   protected readonly DialogMode = DialogMode;
 
   displayedColumns: string[] = ['image', 'name_menu', 'menu_description', 'price', 'edit', 'delete'];
-  dataSources: {[category: string]: MatTableDataSource<Meal>} = {};
+  dataSources?: {[category: string]: MatTableDataSource<Meal>};
+  processing = false;
 
   constructor(public dialog: MatDialog,
               private dataStorageService: DataStorageService) {
@@ -58,10 +56,10 @@ export class AdminMenuComponent {
       .subscribe(
         (response) => {
           this.categories = response;
-          this.areCategoriesLoaded = true;
           this.dataStorageService.getMealsWithoutPagination()
             .subscribe(
               (response) => {
+                this.dataSources = {};
                 response.forEach(meal => {
                   if (this.dataSources[meal.mealCategory.name]) {
                     this.dataSources[meal.mealCategory.name].data.push(meal);
@@ -70,8 +68,7 @@ export class AdminMenuComponent {
                     this.dataSources[meal.mealCategory.name].data = [meal];
                   }
                 })
-                this.areMealsLoaded = true;
-                console.log(this.dataSources)
+                this.processing = false;
               })
         })
   }
@@ -93,6 +90,7 @@ export class AdminMenuComponent {
 
   private handleDialogResult(mode: DialogMode,
                              result: { mealDto: MealDto, id: number | undefined, file: File | null } | number) {
+    this.processing = true;
     if (result) {
       if (mode === DialogMode.ADD && typeof result === 'object') {
         this.dataStorageService.addMeal(result.mealDto, result.file!).subscribe(() => {
@@ -112,6 +110,7 @@ export class AdminMenuComponent {
 
   private handleCategoryDialogResult(mode: DialogMode,
                                      result: { name: string, name_pl: string, id: number | undefined } | number) {
+    this.processing = true;
     if (result) {
       if (mode === DialogMode.ADD && typeof result === 'object') {
         this.dataStorageService.addCategory(result.name, result.name_pl).subscribe(() => {
