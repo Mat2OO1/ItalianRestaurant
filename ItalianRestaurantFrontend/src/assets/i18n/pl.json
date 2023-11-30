@@ -3,7 +3,7 @@
   "email": "Adres e-mail",
   "email_example": "nazwa@gmail.com",
   "email_invalid": "Nieprawidłowy adres email",
-  "email_toast": "Wymagany jest adres email",
+  "email_toast": "Adres email jest wymagany",
   "email_reminder": "Wprowadź poprawny adres email.",
   "find": "Gdzie nas znaleźć",
   "forgot": "Zapomniałeś hasła?",
@@ -185,4 +185,6 @@
   "phone_number_error": "Nieprawidłowy numer telefonu",
   "phone_number_required": "Numer telefonu jest wymagany",
   "settings": "Ustawienia",
+  "password_length": "Hasło musi zawierać przynajmniej 8 znaków",
+  "password_special": "Hasło musi zawierać znak specjalny"
 }

@@ -52,6 +52,12 @@
         <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
           <mat-label>{{'password_toast'|translate}}</mat-label>
         </mat-error>
+        <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+          <mat-label>{{"password_length"|translate}}</mat-label>
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('password')?.hasError('specialCharacterRequired')">
+          <mat-label>{{"password_special"|translate}}</mat-label>
+        </mat-error>
       </mat-form-field>
       <br>
       <div *ngIf="error != ''" class="alert alert-danger"

@@ -25,7 +25,7 @@
         <div class="meals">
           <mat-card class="meal-card" *ngFor="let meal of meals">
             <mat-card-header>
-              <img mat-card-lg-image [src]="meal.image">
+              <img mat-card-lg-image [src]="meal.image" alt="Meal Image">
             </mat-card-header>
             <mat-card-title-group>
               <mat-card-title>{{getMealName(meal)}}</mat-card-title>
