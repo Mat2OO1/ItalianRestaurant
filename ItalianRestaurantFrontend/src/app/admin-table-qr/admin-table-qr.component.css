@@ -2,6 +2,22 @@ table {
   width: 100%;
 }
 
+.mat-column-number {
+  padding-left: 1.5rem;
+}
+
+.mat-column-seats, .mat-column-qrCode, .mat-column-edit {
+  padding: 0 3rem;
+}
+
+.mat-column-download {
+  padding: 0 2rem;
+}
+
+.mat-column-delete {
+  padding-right: 1.5rem;
+}
+
 th.mat-sort-header-sorted {
   color: black;
 }
