@@ -81,11 +81,11 @@
           <a routerLink="/login" (click)="sidenav.toggle()" mat-list-item aria-label="Login">{{'login' | translate}}</a>
         </ng-container>
 
-        <a mat-list-item [matMenuTriggerFor]="menu" aria-label="Language Selector">
+        <button mat-list-item [matMenuTriggerFor]="menu" aria-label="Language Selector">
           <span *ngIf="lang === 'pl'" class="fi fi-pl"></span>
           <span *ngIf="lang === 'en'" class="fi fi-gb"></span>
           {{ lang === 'pl' ? 'Polski' : 'English' }}
-        </a>
+        </button>
 
         <mat-menu #menu="matMenu">
           <a mat-menu-item (click)="changeLang('pl')"><span class="fi fi-pl"></span> Polski</a>
@@ -96,9 +96,9 @@
           {{ 'cart' | translate }}
         </a>
 
-        <a *ngIf="currentUser?.role" (click)="onLogout(); sidenav.toggle()" mat-list-item aria-label="Logout">
+        <button *ngIf="currentUser?.role" (click)="onLogout(); sidenav.toggle()" mat-list-item aria-label="Logout">
           {{ 'logout' | translate }}
-        </a>
+        </button>
 
       </mat-nav-list>
     </mat-sidenav>
