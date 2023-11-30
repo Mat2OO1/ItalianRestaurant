@@ -42,4 +42,14 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @PostMapping("/password")
+    public ResponseEntity<?> changePassword(@Valid @RequestBody PasswordChangeRequest request) {
+        try {
+            userService.changePassword(request);
+            return ResponseEntity.ok().build();
+        } catch (EntityNotFoundException | WrongPasswordException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

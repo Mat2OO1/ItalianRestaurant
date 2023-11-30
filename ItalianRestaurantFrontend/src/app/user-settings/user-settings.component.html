@@ -11,15 +11,15 @@
       <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
         <mat-form-field class="form-field" appearance="outline">
           <mat-label>{{'name'|translate}}</mat-label>
-          <input type="text" matInput formControlName="firstname" placeholder="{{'name_example' | translate}}">
-          <mat-error *ngIf="accountForm.get('firstname')?.hasError('required')">
+          <input type="text" matInput formControlName="firstName" placeholder="{{'name_example' | translate}}">
+          <mat-error *ngIf="accountForm.get('firstName')?.hasError('required')">
             {{'name_toast'|translate}}
           </mat-error>
         </mat-form-field>
         <mat-form-field class="form-field" appearance="outline">
           <mat-label>{{'surname'|translate}}</mat-label>
-          <input type="text" matInput formControlName="lastname" placeholder="{{'surname_example' | translate}}">
-          <mat-error *ngIf="accountForm.get('lastname')?.hasError('required')">
+          <input type="text" matInput formControlName="lastName" placeholder="{{'surname_example' | translate}}">
+          <mat-error *ngIf="accountForm.get('lastName')?.hasError('required')">
             {{'surname_toast'|translate}}
           </mat-error>
         </mat-form-field>
@@ -48,11 +48,10 @@
           </mat-error>
         </mat-form-field>
 
-        <a [routerLink]="['/change-password']" class="text-decoration-underline">
-          <p>{{'change_password'|translate}}</p>
-        </a>
+        <button type="button" (click)="openPasswordDialog()" class="link-button">
+          {{'change_password'|translate}}
+        </button>
         <br class="d-md-none">
-
         <div class="text-center mt-5">
           <button type="submit" [disabled]="!accountForm.valid" class="btn btn-primary rounded-pill"
                   style="background-color: #005B47; text-decoration: none; color: #FFFFFF">{{'confirm'|translate}}

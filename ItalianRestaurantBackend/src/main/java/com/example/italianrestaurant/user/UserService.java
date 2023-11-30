@@ -19,7 +19,7 @@ public class UserService {
 
     public User getUserByEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
-        return user.orElseThrow(EntityNotFoundException::new);
+        return user.orElseThrow(() -> new EntityNotFoundException("User with email " + email + " not found"));
     }
 
     public void updatePassword(User user, String password) {
@@ -40,5 +40,14 @@ public class UserService {
     public void deleteUser(Long id) {
         userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         userRepository.deleteById(id);
+    }
+
+    public void changePassword(PasswordChangeRequest request) throws WrongPasswordException {
+        User user = getUserByEmail(request.getEmail());
+        if (passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
+            updatePassword(user, request.getNewPassword());
+        } else {
+            throw new WrongPasswordException("Password is wrong");
+        }
     }
 }

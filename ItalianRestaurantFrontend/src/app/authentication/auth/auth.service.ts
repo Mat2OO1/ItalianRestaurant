@@ -9,6 +9,7 @@ import {SnackbarService} from "../../shared/sncakbar.service";
 import {take} from "rxjs/operators";
 import {TranslateService} from '@ngx-translate/core';
 import {UserDto} from "../../models/user-dto";
+import {PasswordDto} from "../../models/passwordDto";
 
 export interface AuthResponseData {
   token: string;
@@ -180,6 +181,13 @@ export class AuthService {
       )
   }
 
+  updateUserPassword(passwordDto: PasswordDto) {
+    return this.http
+      .post<void>(
+        `${environment.apiUrl}/user/password`, passwordDto
+      )
+  }
+
   getLoggedInUser() {
     return this.user.pipe(
       take(1),
@@ -187,12 +195,7 @@ export class AuthService {
         if (!user || !user.token) {
           return EMPTY;
         }
-        return this.http.get<{
-          firstName: string;
-          lastName: string;
-          email: string;
-          phoneNumber: string;
-        }>(
+        return this.http.get<UserDto>(
           `${environment.apiUrl}/user`
         );
       })

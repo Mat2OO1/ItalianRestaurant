@@ -1,12 +1,12 @@
 export class UserDto {
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   email: string;
   phoneNumber: string;
 
-  constructor(firstname: string, lastname: string, email: string, phoneNumber: string) {
-    this.firstname = firstname;
-    this.lastname = lastname;
+  constructor(firstName: string, lastName: string, email: string, phoneNumber: string) {
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.email = email;
     this.phoneNumber = phoneNumber;
   }

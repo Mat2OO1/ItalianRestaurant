@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
 import {AuthService} from "../authentication/auth/auth.service";
 import {UserDto} from "../models/user-dto";
+import {MatDialog} from "@angular/material/dialog";
+import {PasswordDialogComponent} from "./password-dialog/password-dialog.component";
 
 @Component({
   selector: 'app-user-settings',
@@ -13,23 +14,26 @@ export class UserSettingsComponent {
 
   accountForm: FormGroup
   processing = true;
+  user?: UserDto;
 
-  constructor(private router: Router,
-              private authService: AuthService) {
+  constructor(private authService: AuthService,
+              private dialog: MatDialog
+  ) {
     this.accountForm = new FormGroup({
-      firstname: new FormControl('', [Validators.required]),
-      lastname: new FormControl('', [Validators.required]),
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       phoneNumber: new FormControl('', [Validators.pattern('[0-9]{9}'), Validators.required]),
     })
 
     this.authService.getLoggedInUser().subscribe(user => {
       this.accountForm.setValue({
-        firstname: user.firstName,
-        lastname: user.lastName,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
         phoneNumber: user.phoneNumber
       })
+      this.user = user;
       this.processing = false;
     })
   }
@@ -37,12 +41,11 @@ export class UserSettingsComponent {
   onSubmit() {
     this.processing = true;
     let user: UserDto = {
-      firstname: this.accountForm.value['firstname'],
-      lastname: this.accountForm.value['lastname'],
+      firstName: this.accountForm.value['firstName'],
+      lastName: this.accountForm.value['lastName'],
       email: this.accountForm.value['email'],
       phoneNumber: this.accountForm.value['phoneNumber']
     }
-    console.log(user)
     this.authService.updateUser(user)
       .subscribe(
         () => {
@@ -58,6 +61,13 @@ export class UserSettingsComponent {
   isLargeScreen() {
     const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     return width > 770;
+  }
+
+  openPasswordDialog() {
+    this.dialog.open(PasswordDialogComponent, {
+        data: {email: this.user?.email}
+      }
+    );
   }
 
 }

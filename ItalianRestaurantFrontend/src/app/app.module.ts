@@ -65,6 +65,7 @@ import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {UserSettingsComponent} from "./user-settings/user-settings.component";
+import { PasswordDialogComponent } from './user-settings/password-dialog/password-dialog.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -96,7 +97,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReserveTableComponent,
     ReserveTableDialogComponent,
     PageNotFoundComponent,
-    UserSettingsComponent
+    UserSettingsComponent,
+    PasswordDialogComponent
   ],
 
   imports: [

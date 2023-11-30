@@ -11,14 +11,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
-    @NotBlank(message = "Firstname is mandatory")
-    private String firstName;
-    @NotBlank(message = "Lastname is mandatory")
-    private String lastName;
-    @NotBlank(message = "Email is mandatory")
+public class PasswordChangeRequest {
+
     @Email
     private String email;
-    @NotBlank(message = "Phone number is mandatory")
-    private String phoneNumber;
+    @NotBlank(message = "Current password is mandatory")
+    private String currentPassword;
+    @NotBlank(message = "New password is mandatory")
+    private String newPassword;
 }
