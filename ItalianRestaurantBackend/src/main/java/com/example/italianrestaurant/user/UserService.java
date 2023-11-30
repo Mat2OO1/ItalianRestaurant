@@ -1,9 +1,10 @@
 package com.example.italianrestaurant.user;
 
-import com.example.italianrestaurant.auth.RegisterRequest;
+import com.example.italianrestaurant.auth.AuthenticationResponse;
+import com.example.italianrestaurant.security.JwtService;
+import com.example.italianrestaurant.security.UserPrincipal;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final ModelMapper modelMapper;
+    private final JwtService jwtService;
 
     public User getUserByEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
@@ -30,7 +31,7 @@ public class UserService {
 
     }
 
-    public User updateUser(UserDto userDto, String userEmail) {
+    public AuthenticationResponse updateUser(UserDto userDto, String userEmail) {
         User user = getUserByEmail(userEmail);
         if (user.getProvider() == AuthProvider.local) {
             user.setFirstName(userDto.getFirstName());
@@ -38,7 +39,15 @@ public class UserService {
             user.setEmail(userDto.getEmail());
         }
         user.setPhoneNumber(userDto.getPhoneNumber());
-        return userRepository.save(user);
+        User saved = userRepository.save(user);
+        UserPrincipal userPrincipal = UserPrincipal.create(saved);
+        var jwtToken = jwtService.generateToken(userPrincipal);
+        var expiration = jwtService.getTokenExpiration(jwtToken);
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .expiration(expiration)
+                .role(Role.USER)
+                .build();
     }
 
     public void deleteUser(Long id) {
@@ -51,7 +60,7 @@ public class UserService {
         if (passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
             updatePassword(user, request.getNewPassword());
         } else {
-            throw new WrongPasswordException("Password is wrong");
+            throw new WrongPasswordException("Current password is invalid");
         }
     }
 }

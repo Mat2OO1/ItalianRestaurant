@@ -1,5 +1,6 @@
 package com.example.italianrestaurant.user;
 
+import com.example.italianrestaurant.auth.AuthenticationResponse;
 import com.example.italianrestaurant.security.UserPrincipal;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -16,8 +17,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> updateUser(@AuthenticationPrincipal UserPrincipal user,
-                                           @RequestBody UserDto userDto) {
+    public ResponseEntity<AuthenticationResponse> updateUser(@AuthenticationPrincipal UserPrincipal user,
+                                                             @RequestBody UserDto userDto) {
         try {
             return ResponseEntity.ok(userService.updateUser(userDto, user.getUsername()));
         } catch (EntityNotFoundException e) {

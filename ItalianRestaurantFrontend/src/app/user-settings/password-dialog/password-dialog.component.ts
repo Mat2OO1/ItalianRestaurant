@@ -42,6 +42,7 @@ export class PasswordDialogComponent {
       this.dialogRef.close();
     }, error => {
       this.processing = false;
+      this.passwordForm.reset();
       this.snackbarService.openSnackbarError(error.error);
     })
   }

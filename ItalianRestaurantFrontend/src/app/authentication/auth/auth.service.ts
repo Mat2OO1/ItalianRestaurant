@@ -177,7 +177,7 @@ export class AuthService {
 
   updateUser(user: UserDto) {
     return this.http
-      .post(
+      .post<AuthResponseData>(
         `${environment.apiUrl}/user`, user
       )
   }

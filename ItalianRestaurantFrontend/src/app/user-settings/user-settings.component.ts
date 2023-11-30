@@ -23,16 +23,19 @@ export class UserSettingsComponent {
               private dialog: MatDialog,
               private snackbarService: SnackbarService,
   ) {
+
+
     this.accountForm = new FormGroup({
-      firstName: new FormControl({value: '', disabled: !this.isLocalAccount}, [Validators.required]),
-      lastName: new FormControl({value: '', disabled: !this.isLocalAccount}, [Validators.required]),
-      email: new FormControl({value: '', disabled: !this.isLocalAccount}, [Validators.required, Validators.email]),
-      phoneNumber: new FormControl('', [Validators.pattern('[0-9]{9}'), Validators.required]),
+      firstName: new FormControl({value: '', disabled: true}, [Validators.required]),
+      lastName: new FormControl({value: '', disabled: true}, [Validators.required]),
+      email: new FormControl({value: '', disabled: true}, [Validators.required, Validators.email]),
+      phoneNumber: new FormControl({value: '', disabled: true}, [Validators.pattern('[0-9]{9}'), Validators.required]),
     })
 
     this.authService.getLoggedInUser().subscribe(user => {
       this.user = user;
       this.isLocalAccount = this.user.provider === 'local';
+      this.enableFormInputs();
       this.accountForm.setValue({
         firstName: this.isLocalAccount ? user.firstName : user.username.split(' ')[0],
         lastName: this.isLocalAccount ? user.lastName : user.username.split(' ')[1],
@@ -53,8 +56,9 @@ export class UserSettingsComponent {
     }
     this.authService.updateUser(user)
       .subscribe(
-        () => {
+        (resData) => {
           this.processing = false;
+          this.authService.handleAuthentication(resData.token, new Date(resData.expiration).getTime(), resData.role);
           this.snackbarService.openSnackbarSuccess('user_updated_successfully');
         },
         errorMessage => {
@@ -74,5 +78,14 @@ export class UserSettingsComponent {
         data: {email: this.user?.email}
       }
     );
+  }
+
+  private enableFormInputs() {
+    if (this.isLocalAccount) {
+      this.accountForm.get('firstName')?.enable();
+      this.accountForm.get('lastName')?.enable();
+      this.accountForm.get('email')?.enable();
+    }
+    this.accountForm.get('phoneNumber')?.enable();
   }
 }
