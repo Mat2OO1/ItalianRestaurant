@@ -20,7 +20,11 @@ export class RegisterComponent {
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        this.passwordValidator()
+      ]),
     })
   }
 
@@ -42,5 +46,10 @@ export class RegisterComponent {
         }
       )
   }
-
+  passwordValidator() {
+      return (control: FormControl): { [key: string]: any } | null => {
+          const valid = /[^a-zA-Z0-9]/.test(control.value);
+          return valid ? null : { 'specialCharacterRequired': true };
+      };
+  }
 }

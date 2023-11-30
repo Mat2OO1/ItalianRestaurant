@@ -179,5 +179,7 @@
   "404_error": "Whoops, nothing delicious to find here...",
   "404_error_description": "Seems like the page you were trying to find is no longer available.",
   "go_to_home": "Go to homepage",
-  "go_to_menu": "Go to menu"
+  "go_to_menu": "Go to menu",
+  "password_length": "The password must be at least 8 characters long",
+  "password_special": "The password must contains special character"
 }

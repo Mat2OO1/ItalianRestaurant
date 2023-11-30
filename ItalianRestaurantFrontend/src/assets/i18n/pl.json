@@ -3,7 +3,7 @@
   "email": "Adres e-mail",
   "email_example": "nazwa@gmail.com",
   "email_invalid": "Nieprawidłowy adres email",
-  "email_toast": "Wymagany jest adres email",
+  "email_toast": "Adres email jest wymagany",
   "email_reminder": "Wprowadź poprawny adres email.",
   "find": "Gdzie nas znaleźć",
   "forgot": "Zapomniałeś hasła?",
@@ -178,5 +178,7 @@
   "404_error": "Upps, nie ma tu nic smacznego...",
   "404_error_description": "Wygląda na to, że strona, którą próbowałeś znaleźć, nie jest już dostępna.",
   "go_to_home": "Przejdź do strony głównej",
-  "go_to_menu": "Przejdź do menu"
+  "go_to_menu": "Przejdź do menu",
+  "password_length": "Hasło musi zawierać przynajmniej 8 znaków",
+  "password_special": "Hasło musi zawierać znak specjalny"
 }
