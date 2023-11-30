@@ -35,7 +35,6 @@ export class PasswordDialogComponent {
     let passwordDto: PasswordDto = {
       currentPassword: this.passwordForm.value['currentPassword'],
       newPassword: this.passwordForm.value['newPassword'],
-      email: this.email
     }
     this.authService.updateUserPassword(passwordDto).subscribe(() => {
       this.processing = false;

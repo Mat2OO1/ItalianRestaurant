@@ -16,9 +16,10 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> updateUser(@Valid @RequestBody UserDto userDto) {
+    public ResponseEntity<User> updateUser(@AuthenticationPrincipal UserPrincipal user,
+                                           @RequestBody UserDto userDto) {
         try {
-            return ResponseEntity.ok(userService.updateUser(userDto));
+            return ResponseEntity.ok(userService.updateUser(userDto, user.getUsername()));
         } catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().build();
         }
@@ -44,9 +45,10 @@ public class UserController {
     }
 
     @PostMapping("/password")
-    public ResponseEntity<?> changePassword(@Valid @RequestBody PasswordChangeRequest request) {
+    public ResponseEntity<?> changePassword(@AuthenticationPrincipal UserPrincipal user,
+                                            @Valid @RequestBody PasswordChangeRequest request) {
         try {
-            userService.changePassword(request);
+            userService.changePassword(request, user.getUsername());
             return ResponseEntity.ok().build();
         } catch (EntityNotFoundException | WrongPasswordException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

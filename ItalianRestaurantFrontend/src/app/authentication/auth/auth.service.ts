@@ -10,6 +10,7 @@ import {take} from "rxjs/operators";
 import {TranslateService} from '@ngx-translate/core';
 import {UserDto} from "../../models/user-dto";
 import {PasswordDto} from "../../models/passwordDto";
+import {Profile} from "../../models/profile";
 
 export interface AuthResponseData {
   token: string;
@@ -195,7 +196,7 @@ export class AuthService {
         if (!user || !user.token) {
           return EMPTY;
         }
-        return this.http.get<UserDto>(
+        return this.http.get<Profile>(
           `${environment.apiUrl}/user`
         );
       })

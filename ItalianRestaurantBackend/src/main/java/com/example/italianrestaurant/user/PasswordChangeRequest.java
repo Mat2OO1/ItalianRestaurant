@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PasswordChangeRequest {
 
-    @Email
-    private String email;
     @NotBlank(message = "Current password is mandatory")
     private String currentPassword;
     @NotBlank(message = "New password is mandatory")

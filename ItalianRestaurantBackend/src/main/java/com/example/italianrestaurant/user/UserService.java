@@ -30,10 +30,14 @@ public class UserService {
 
     }
 
-    public User updateUser(UserDto registerRequest) {
-        User user = getUserByEmail(registerRequest.getEmail());
-        modelMapper.map(registerRequest, user);
-        userRepository.save(user);
+    public User updateUser(UserDto userDto, String userEmail) {
+        User user = getUserByEmail(userEmail);
+        if (user.getProvider() == AuthProvider.local) {
+            user.setFirstName(userDto.getFirstName());
+            user.setLastName(userDto.getLastName());
+            user.setEmail(userDto.getEmail());
+        }
+        user.setPhoneNumber(userDto.getPhoneNumber());
         return userRepository.save(user);
     }
 
@@ -42,8 +46,8 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public void changePassword(PasswordChangeRequest request) throws WrongPasswordException {
-        User user = getUserByEmail(request.getEmail());
+    public void changePassword(PasswordChangeRequest request, String email) throws WrongPasswordException {
+        User user = getUserByEmail(email);
         if (passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
             updatePassword(user, request.getNewPassword());
         } else {
