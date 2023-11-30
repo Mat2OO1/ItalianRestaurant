@@ -75,7 +75,8 @@ export class UserSettingsComponent {
 
   openPasswordDialog() {
     this.dialog.open(PasswordDialogComponent, {
-        data: {email: this.user?.email}
+        data: {email: this.user?.email},
+        autoFocus: false
       }
     );
   }
