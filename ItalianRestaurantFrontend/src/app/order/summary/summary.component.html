@@ -8,17 +8,17 @@
     </h2>
     <div class="plan-box" *ngFor="let item of cart.meals">
       <div class="plan-box-left">
-        <img class="img-preview" src="{{item.meal.image}}">
+        <img class="img-preview" src="{{item.meal.image}}" alt="Image Preview">
         <div>
           <h5>{{item.meal.name}}</h5>
           <p>{{item.quantity}}x {{item.meal.price}} {{'currency'|translate}}</p>
         </div>
       </div>
       <div class="plan-box-right">
-        <div><button class="plus-minus-btn" (click)="decreaseQuantity(item)">-</button></div>
+        <div><button class="plus-minus-btn" (click)="decreaseQuantity(item)" aria-label="Decrease Quantity">-</button></div>
         <div> <p class="number">{{item.quantity}}</p></div>
-        <div><button class="plus-minus-btn" (click)="increaseQuantity(item)">+</button></div>
-        <div><button class="plus-minus-btn btn-remove" (click)="removeItem(item)"><i class="bi bi-x"></i></button></div>
+        <div><button class="plus-minus-btn" (click)="increaseQuantity(item)" aria-label="Increase Quantity">+</button></div>
+        <div><button class="plus-minus-btn btn-remove" (click)="removeItem(item)" aria-label="Remove Item"><i class="bi bi-x"></i></button></div>
         <div><h4 class="calculated">{{(item.quantity * item.meal.price).toFixed(2)}} {{'currency'|translate}}</h4></div>
       </div>
     </div>

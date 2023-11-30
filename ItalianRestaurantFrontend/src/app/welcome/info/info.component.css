@@ -8,3 +8,8 @@
 .shadow {
   box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }
+
+h2 {
+  font-family: 'COCOGOOSE', sans-serif;
+  font-size: 2.2rem;
+}
