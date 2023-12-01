@@ -7,6 +7,7 @@ import {PasswordDialogComponent} from "./password-dialog/password-dialog.compone
 import {Profile} from "../models/profile";
 import {SnackbarService} from "../shared/sncakbar.service";
 import {TranslateService} from "@ngx-translate/core";
+import {DeleteConfirmationDialogComponent} from "./delete-confirmation-dialog/delete-confirmation-dialog.component";
 
 @Component({
   selector: 'app-user-settings',
@@ -92,5 +93,23 @@ export class UserSettingsComponent {
     }
     this.accountForm.get('phoneNumber')?.enable();
     this.accountForm.get('newsletter')?.enable();
+  }
+
+  openDeleteAccountDialog() {
+    let dialogRef = this.dialog.open(DeleteConfirmationDialogComponent,
+      {
+        autoFocus: false
+      });
+    dialogRef.afterClosed().subscribe(result => {
+      this.handleDialogResult(result);
+    });
+  }
+
+  handleDialogResult(result: { delete: boolean, password?: string}) {
+    if (result.delete && result.password) {
+      this.authService.deleteUser(result.password).subscribe(() => {
+        this.authService.logout();
+      })
+    }
   }
 }

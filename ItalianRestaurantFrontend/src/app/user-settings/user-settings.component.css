@@ -47,3 +47,32 @@ input.example-right-align {
   color: #1759cb;
   text-decoration: underline;
 }
+
+.delete-button {
+  background: none;
+  border: none;
+  padding: 0;
+  font-weight: bold;
+  cursor: pointer;
+  color: #ea3232;
+  text-decoration: underline;
+}
+.delete-button:hover {
+  color: #a91010;
+  text-decoration: underline;
+}
+
+.proceed-btn {
+  text-decoration: none;
+  color: white;
+  background-color: #005B47;
+  padding: 20px 0;
+  border-radius: 12px;
+  transition: background-color .3s ease;
+  width: 80%;
+  border: 0;
+}
+
+.proceed-btn:disabled {
+  background-color: #003D37;
+}
