@@ -4,4 +4,4 @@ disallow: /downloads/
 user-agent: magicsearchbot
 disallow: /uploads/
 
-sitemap: https://ladolcevitarestaurant.live/sitemap-file.xml
+sitemap: https://ladolcevitarestaurant.live/sitemap.xml
