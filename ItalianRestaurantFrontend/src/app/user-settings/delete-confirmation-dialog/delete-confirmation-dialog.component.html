@@ -1,0 +1,29 @@
+<div class="container d-flex align-items-center justify-content-center">
+  <div class="row-style">
+    <h2 class="mb-4 mt-4">{{'delete_account' | translate}}</h2>
+    <p>{{ 'delete_account_description' | translate}}</p>
+    <p>{{ 'delete_account_confirmation' | translate}}</p>
+    <form [formGroup]="passwordForm">
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>{{'current_password'|translate}}</mat-label>
+        <input type="password" matInput formControlName="currentPassword">
+        <mat-error *ngIf="passwordForm.get('currentPassword')?.hasError('required')">
+          <mat-label>{{'password_toast'|translate}}</mat-label>
+        </mat-error>
+      </mat-form-field>
+    </form>
+    <mat-dialog-actions class="mb-3" style="padding: 0" align="end">
+      <button  class="btn btn-primary me-1"
+               (click)="closeDialog()">
+        {{ 'cancel' | translate }}
+      </button>
+      <button class="btn btn-danger ms-1"
+              [disabled]="passwordForm.invalid"
+              (click)="closeDialogAndDelete()">{{ 'delete' | translate }}
+      </button>
+    </mat-dialog-actions>
+  </div>
+</div>
+
+
+

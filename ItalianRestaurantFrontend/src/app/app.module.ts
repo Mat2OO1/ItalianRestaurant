@@ -67,6 +67,7 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {UserSettingsComponent} from "./user-settings/user-settings.component";
 import { PasswordDialogComponent } from './user-settings/password-dialog/password-dialog.component';
 import {AdminReservationsComponent} from "./admin-reservations/admin-reservations.component";
+import { DeleteConfirmationDialogComponent } from './user-settings/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -100,7 +101,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PageNotFoundComponent,
     UserSettingsComponent,
     PasswordDialogComponent,
-    AdminReservationsComponent
+    AdminReservationsComponent,
+    DeleteConfirmationDialogComponent
   ],
 
   imports: [

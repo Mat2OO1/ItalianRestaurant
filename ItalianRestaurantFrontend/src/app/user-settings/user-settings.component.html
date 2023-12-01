@@ -60,9 +60,13 @@
           </mat-checkbox>
         </p>
         <div class="text-center mt-5">
-          <button type="submit" [disabled]="!accountForm.valid" class="btn btn-primary rounded-pill"
-                  style="background-color: #005B47; text-decoration: none; color: #FFFFFF">{{'confirm'|translate}}
+          <button type="submit" [disabled]="!accountForm.valid" class="proceed-btn">{{'confirm'|translate}}
           </button>
+        </div>
+        <div class="text-center mt-4">
+        <button type="button" (click)="openDeleteAccountDialog()" class="delete-button mb-4">
+          {{'delete_account'|translate}}
+        </button>
         </div>
       </form>
     </div>
