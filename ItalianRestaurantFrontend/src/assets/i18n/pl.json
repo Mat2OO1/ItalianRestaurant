@@ -163,6 +163,7 @@
   "user_registered_successfully": "Użytkownik zalogowany poprawnie",
   "user_password_reset": "Hasło zostało zresetowane pomyślnie",
   "user_check_email": "Sprawdź swoją skrzynkę e-mail, aby zresetować hasło",
+  "unknown_error" : "Nieznany błąd!",
   "payment_error" : "Płatność nie przeszła. Zamówienie usunięte",
   "order_to_table_error": "Zamawiasz do stolika ",
   "meal_added_to_card_error": "Zamówienie dodane do koszyka",
@@ -187,5 +188,13 @@
   "settings": "Ustawienia",
   "password_length": "Hasło musi zawierać przynajmniej 8 znaków",
   "password_special": "Hasło musi zawierać znak specjalny",
-  "authorization_error": "Nie masz uprawnień do wykonania tej operacji"
+  "authorization_error": "Nie masz uprawnień do wykonania tej operacji",
+  "this_account": "Konto jest powiązane z ",
+  "inputs_disabled": ". Niektóre pola tekstowe są niedostępne.",
+  "confirmation_login": "Wyrażam zgodę na kontakt ze mną, w tym na przesyłanie informacji sprzedażowych i marketingowych dotyczących La Dolce Vita, od LDV Polska S.A. z siedzibą w Warszawie, za pomocą środków komunikacji elektronicznej (e-mail, SMS), a także wyrażenie zgody na przetwarzanie przez LDV Polska S.A. z siedzibą w Warszawie mojego dane osobowe (adres e-mail, numer telefonu) w tym celu. Podstawa prawna przetwarzania danych jest art. 6 ust. (a) RODO. Zastrzegam sobie prawo do cofnięcia wyrażonej zgody w dowolnym momencie bez skutku o zgodności z prawem przetwarzania, którego dokonano na podstawie mojej zgody przed jego dokonaniem wycofane.",
+  "hereby_accept": "Niniejszym akceptuję",
+  "terms": "Regulamin Warunki Handlowe",
+  "terms_and_conditions": "i zgadzam się na warunki i postanowienia tego serwisu. *",
+  "change_password": "Zmień hasło",
+  "current_password": "Podaj aktualne hasło"
 }

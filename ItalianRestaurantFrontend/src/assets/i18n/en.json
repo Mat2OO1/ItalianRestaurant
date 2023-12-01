@@ -156,6 +156,7 @@
   "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} from {{length}}",
   "RESERVED": "RESERVED",
   "FREE": "FREE",
+  "choose_category": "Choose category",
   "error_login": "Bad credentials",
   "error_register": "User already exists",
   "error_login_local": "Looks like you're signed up with local account. \nPlease use your account to login.",
@@ -169,7 +170,6 @@
   "table_reserved_successfully": "Table reserved successfully",
   "password_same_error": "Passwords are not the same",
   "table_already_reserved_error": "Table is already reserved for this date",
-  "choose_category": "Choose category",
   "table_nr": "Table",
   "no_archival_orders": "You don't have any archival orders.",
   "number_tab": "Number",
@@ -188,5 +188,13 @@
   "settings": "Settings",
   "password_length": "The password must be at least 8 characters long",
   "password_special": "The password must contains special character",
-  "authorization_error": "You are not authorized to access this page"
+  "authorization_error": "You are not authorized to access this page",
+  "this_account": "This account is connected with ",
+  "inputs_disabled": ". Some inputs are disabled.",
+  "confirmation_login": "I hereby consent to contact me, including sending sales and marketing information about La Dolce Vita, from LDV Polska S.A. with its registered office in Warsaw, by means of electronic communication (email, SMS), as well as agreeing to LDV Polska S.A. with its registered office in Warsaw processing my personal data (email address, phone number) for this purpose. The legal grounds for processing the data is article 6 paragraph (a) GDPR. I reserve the right to withdraw my consent at any time with no on legal compliance of the processing, which was carried out on the basis of my consent prior to it being withdrawn.",
+  "hereby_accept": "I hereby accept La Dolce Vita’s",
+  "terms": "Regulation Terms of Business",
+  "terms_and_conditions": "and agree to the terms and conditions of this service. *",
+  "change_password": "Change password",
+  "current_password": "Current password"
 }

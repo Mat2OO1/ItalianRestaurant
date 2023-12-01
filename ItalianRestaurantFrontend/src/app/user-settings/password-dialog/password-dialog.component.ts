@@ -24,11 +24,16 @@ export class PasswordDialogComponent {
               @Inject(DIALOG_DATA) public data: { email: string }) {
     this.email = data.email;
     this.passwordForm = new FormGroup({
-      currentPassword: new FormControl('', [Validators.required]),
-      newPassword: new FormControl('', [Validators.required]),
+      currentPassword: new FormControl('', [Validators.required, Validators.minLength(8),this.passwordValidator()]),
+      newPassword: new FormControl('', [Validators.required, Validators.minLength(8), this.passwordValidator()]),
     })
   }
-
+  passwordValidator() {
+    return (control: FormControl): { [key: string]: any } | null => {
+      const valid = /[^a-zA-Z0-9]/.test(control.value);
+      return valid ? null : { 'specialCharacterRequired': true };
+    };
+  }
   onSubmit() {
     this.processing = true;
     if (this.passwordForm.invalid || !this.email) return;

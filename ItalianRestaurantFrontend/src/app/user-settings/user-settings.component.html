@@ -6,9 +6,9 @@
       <img src="assets/images/settings.png" alt="settings" class="img-fluid" style="width: 120%">
     </div>
     <div class="col-md-6 settings-form">
-      <h1 class="mb-2">{{'settings' | translate}}</h1>
+      <h1 class="mb-2">{{'new_password' | translate}}</h1>
       <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
-        <p class="mb-3" [style.visibility]="isLocalAccount ? 'hidden': 'visible'">This account is connected with {{user?.provider}}. Some inputs are disabled.</p>
+        <p class="mb-3" [style.visibility]="isLocalAccount ? 'hidden': 'visible'">{{"this_account"|translate}} {{user?.provider}}{{"inputs_disabled"|translate}}</p>
         <mat-form-field class="form-field" appearance="outline">
           <mat-label>{{'name'|translate}}</mat-label>
           <input type="text" matInput formControlName="firstName" placeholder="{{'name_example' | translate}}">
@@ -54,15 +54,7 @@
         <br class="d-md-none">
         <p>
           <mat-checkbox formControlName="newsletter" color="primary">
-
-            I hereby consent to contact me, including sending sales and marketing information about La Dolce Vita,
-            from LDV Polska S.A. with its registered office in Warsaw, by means of electronic communication
-            (email, SMS), as well as agreeing to LDV Polska S.A. with its registered office in Warsaw processing my
-            personal data (email address, phone number) for this purpose. The legal grounds for processing the data
-            is article 6 paragraph (a) GDPR. I reserve the right to withdraw my consent at any time with no effect
-            on legal compliance of the processing, which was carried out on the basis of my consent prior to it being
-            withdrawn.
-
+            {{"confirmation_login"|translate}}
           </mat-checkbox>
         </p>
         <div class="text-center mt-5">

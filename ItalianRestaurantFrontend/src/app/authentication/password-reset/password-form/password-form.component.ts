@@ -22,9 +22,15 @@ export class PasswordFormComponent {
               private router: Router) {
     this.token = this.route.snapshot.queryParamMap.get('token');
     this.passwordForm = new FormGroup({
-      password: new FormControl('', [Validators.required]),
-      repeatPassword: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8), this.passwordValidator()]),
+      repeatPassword: new FormControl('', [Validators.required, Validators.minLength(8), this.passwordValidator()]),
     })
+  }
+  passwordValidator() {
+    return (control: FormControl): { [key: string]: any } | null => {
+      const valid = /[^a-zA-Z0-9]/.test(control.value);
+      return valid ? null : { 'specialCharacterRequired': true };
+    };
   }
 
   onResetSubmit() {
