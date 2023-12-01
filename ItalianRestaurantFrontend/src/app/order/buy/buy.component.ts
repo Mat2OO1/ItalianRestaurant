@@ -4,6 +4,7 @@ import {DataStorageService} from "../../shared/data-storage.service";
 import {CartService} from "../../shared/cart.service";
 import {Delivery} from "../../models/delivery";
 import {PaymentResponse} from "../../models/payment-response";
+import {SnackbarService} from "../../shared/sncakbar.service";
 
 @Component({
   selector: 'app-buy',
@@ -18,7 +19,8 @@ export class BuyComponent {
   processing = false;
 
   constructor(private dataStorageService: DataStorageService,
-              private cartService: CartService) {
+              private cartService: CartService,
+              private snackbarService: SnackbarService) {
     this.dataStorageService.getLastDeliveryInfo()
       .subscribe(
         (res) => {
@@ -37,6 +39,10 @@ export class BuyComponent {
   }
 
   onBuySubmit() {
+    if (this.cartService.cart.meals.length === 0) {
+      this.snackbarService.openSnackbarError('Cart is empty!');
+      return;
+    }
     if (this.buyForm.invalid) return;
     this.processing = true;
     let address = this.buyForm.value['address']

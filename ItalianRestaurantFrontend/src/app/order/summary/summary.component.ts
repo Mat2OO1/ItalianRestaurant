@@ -5,6 +5,7 @@ import {Subscription} from "rxjs";
 import {Cart} from "../../models/cart";
 import {Router} from "@angular/router";
 import {DataStorageService} from "../../shared/data-storage.service";
+import {SnackbarService} from "../../shared/sncakbar.service";
 
 @Component({
   selector: 'app-summary',
@@ -19,7 +20,8 @@ export class SummaryComponent implements OnInit, OnDestroy {
   selectedDeliveryOption?: string;
   constructor(private cartService: CartService,
               private router: Router,
-              private dataStorageService: DataStorageService) {
+              private dataStorageService: DataStorageService,
+              private snackbarService: SnackbarService) {
     this.cart = this.cartService.cart
     this.cartSubscription = this.cartService.cartSubject
       .subscribe(
@@ -62,6 +64,10 @@ export class SummaryComponent implements OnInit, OnDestroy {
   }
 
   proceed() {
+    if (this.cartService.cart.meals.length === 0) {
+      this.snackbarService.openSnackbarError('Cart is empty!');
+      return;
+    }
     if (this.cart.table) {
       this.dataStorageService.makeAnOrder(this.cart)
         .subscribe(

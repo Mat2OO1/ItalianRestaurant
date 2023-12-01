@@ -3,6 +3,7 @@ import {Table} from "../../models/table";
 import {DataStorageService} from "../../shared/data-storage.service";
 import {CartService} from "../../shared/cart.service";
 import {PaymentResponse} from "../../models/payment-response";
+import {SnackbarService} from "../../shared/sncakbar.service";
 
 @Component({
   selector: 'app-table',
@@ -15,7 +16,9 @@ export class TableComponent {
   reservations?: Table[]
   processing = 0;
 
-  constructor(private dataStorageService: DataStorageService, private cartService: CartService) {
+  constructor(private dataStorageService: DataStorageService,
+              private cartService: CartService,
+              private snackbarService: SnackbarService) {
     this.dataStorageService.getTables()
       .subscribe(
         res => {
@@ -33,6 +36,10 @@ export class TableComponent {
   }
 
   proceedOrder(table: number) {
+    if (this.cartService.cart.meals.length === 0) {
+      this.snackbarService.openSnackbarError('Cart is empty!');
+      return;
+    }
     this.cartService.addTable(table)
     this.processing = table;
     this.dataStorageService.makeAnOrder(this.cartService.cart)
