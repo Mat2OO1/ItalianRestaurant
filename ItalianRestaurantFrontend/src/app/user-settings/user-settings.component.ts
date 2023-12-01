@@ -30,6 +30,7 @@ export class UserSettingsComponent {
       lastName: new FormControl({value: '', disabled: true}, [Validators.required]),
       email: new FormControl({value: '', disabled: true}, [Validators.required, Validators.email]),
       phoneNumber: new FormControl({value: '', disabled: true}, [Validators.pattern('[0-9]{9}'), Validators.required]),
+      newsletter: new FormControl({value: false, disabled: true}),
     })
 
     this.authService.getLoggedInUser().subscribe(user => {
@@ -41,6 +42,7 @@ export class UserSettingsComponent {
         lastName: this.isLocalAccount ? user.lastName : user.username.split(' ')[1],
         email: user.email,
         phoneNumber: user.phoneNumber,
+        newsletter: user.newsletter
       })
       this.processing = false;
     })
@@ -52,7 +54,8 @@ export class UserSettingsComponent {
       firstName: this.accountForm.value['firstName'],
       lastName: this.accountForm.value['lastName'],
       email: this.accountForm.value['email'],
-      phoneNumber: this.accountForm.value['phoneNumber']
+      phoneNumber: this.accountForm.value['phoneNumber'],
+      newsletter: this.accountForm.value['newsletter'],
     }
     this.authService.updateUser(user)
       .subscribe(
@@ -88,5 +91,6 @@ export class UserSettingsComponent {
       this.accountForm.get('email')?.enable();
     }
     this.accountForm.get('phoneNumber')?.enable();
+    this.accountForm.get('newsletter')?.enable();
   }
 }

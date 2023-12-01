@@ -32,6 +32,7 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .phoneNumber(request.getPhoneNumber())
+                .newsletter(request.isNewsletter())
                 .provider(AuthProvider.local)
                 .emailVerified(false)
                 .build();

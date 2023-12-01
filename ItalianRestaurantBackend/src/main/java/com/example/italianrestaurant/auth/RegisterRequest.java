@@ -30,5 +30,7 @@ public class RegisterRequest {
     @Size(min = 8, message = "Password must be at least 8 characters long")
     @Pattern(regexp = ".*[^a-zA-Z0-9].*", message = "Password must contain at least one special character")
     private String password;
+
+    private boolean newsletter;
 }
 

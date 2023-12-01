@@ -69,6 +69,8 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
                 .username(oAuth2UserInfo.getName())
                 .email(oAuth2UserInfo.getEmail())
                 .imageUrl(oAuth2UserInfo.getImageUrl())
+                .emailVerified(true)
+                .newsletter(false)
                 .role(Role.USER)
                 .build();
 

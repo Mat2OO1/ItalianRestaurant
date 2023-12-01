@@ -45,3 +45,7 @@ body {
   }
 }
 
+.mdc-checkbox {
+  margin: 2px 8px auto 0 !important;
+}
+

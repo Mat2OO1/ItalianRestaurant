@@ -27,7 +27,7 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router, private snackbarService: SnackbarService, private translate: TranslateService) {
   }
 
-  signup(firstName: string, lastName: string, email: string, phoneNumber: string, password: string) {
+  signup(firstName: string, lastName: string, email: string, phoneNumber: string, password: string, newsletter: boolean) {
     return this.http
       .post<AuthResponseData>(
         `${environment.apiUrl}/auth/register`,
@@ -36,7 +36,8 @@ export class AuthService {
           lastname: lastName,
           email: email,
           phoneNumber: phoneNumber,
-          password: password
+          password: password,
+          newsletter: newsletter
         }
       )
       .pipe(

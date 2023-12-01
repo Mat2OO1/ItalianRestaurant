@@ -1,6 +1,7 @@
-<mat-progress-bar [style.visibility]="!processing ? 'hidden': 'visible'" color="primary" mode="indeterminate"></mat-progress-bar>
+<mat-progress-bar [style.visibility]="!processing ? 'hidden': 'visible'" color="primary"
+                  mode="indeterminate"></mat-progress-bar>
 
-<p class="p-5"></p>
+<p class="p-3"></p>
 <div class="container d-flex align-items-center justify-content-center">
   <div class="row row-style">
     <h1>{{'register' | translate}}</h1>
@@ -59,14 +60,36 @@
           <mat-label>{{"password_special"|translate}}</mat-label>
         </mat-error>
       </mat-form-field>
-      <br>
+      <p class="mt-3">
+        <mat-checkbox formControlName="terms" color="primary">
+          I hereby accept La Dolce Vita’s
+          <a href="https://www.freeprivacypolicy.com/live/dbd2432c-928e-4c7c-b533-0ca9814165e0" target="_blank">Regulation Terms of Business</a>
+          and agree to the terms and conditions of this service. *
+        </mat-checkbox>
+      </p>
+
+      <p>
+        <mat-checkbox formControlName="newsletter" color="primary">
+
+          I hereby consent to contact me, including sending sales and marketing information about La Dolce Vita,
+          from LDV Polska S.A. with its registered office in Warsaw, by means of electronic communication
+          (email, SMS), as well as agreeing to LDV Polska S.A. with its registered office in Warsaw processing my
+          personal data (email address, phone number) for this purpose. The legal grounds for processing the data
+          is article 6 paragraph (a) GDPR. I reserve the right to withdraw my consent at any time with no effect
+          on legal compliance of the processing, which was carried out on the basis of my consent prior to it being
+          withdrawn.
+
+        </mat-checkbox>
+      </p>
+
       <div *ngIf="error != ''" class="alert alert-danger"
            style="border-radius:20px; text-align: center;">{{'error_register'|translate}}</div>
+
 
       <br>
       <div class="text-center">
         <!-- Submit button -->
-        <button type="submit" [disabled]="!registerForm.valid" class="btn btn-primary rounded-pill"
+        <button type="submit" [disabled]="!registerForm.valid" class="btn btn-primary rounded-pill mb-3"
                 style="background-color: #005B47; text-decoration: none; color: #FFFFFF">{{'register'|translate}}
         </button>
       </div>

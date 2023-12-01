@@ -1,7 +1,6 @@
 <mat-progress-bar [style.visibility]="!processing ? 'hidden': 'visible'" color="primary"
                   mode="indeterminate"></mat-progress-bar>
-<p class="p-3"></p>
-<div class="container">
+<div class="container mt-2">
   <div class="row  me-1 ms-1">
     <div class="col-md-6 d-flex align-items-center justify-content-center mb-4" *ngIf="isLargeScreen()">
       <img src="assets/images/settings.png" alt="settings" class="img-fluid" style="width: 120%">
@@ -49,10 +48,23 @@
           </mat-error>
         </mat-form-field>
 
-        <button *ngIf="isLocalAccount" type="button" (click)="openPasswordDialog()" class="link-button">
+        <button *ngIf="isLocalAccount" type="button" (click)="openPasswordDialog()" class="link-button mb-4">
           {{'change_password'|translate}}
         </button>
         <br class="d-md-none">
+        <p>
+          <mat-checkbox formControlName="newsletter" color="primary">
+
+            I hereby consent to contact me, including sending sales and marketing information about La Dolce Vita,
+            from LDV Polska S.A. with its registered office in Warsaw, by means of electronic communication
+            (email, SMS), as well as agreeing to LDV Polska S.A. with its registered office in Warsaw processing my
+            personal data (email address, phone number) for this purpose. The legal grounds for processing the data
+            is article 6 paragraph (a) GDPR. I reserve the right to withdraw my consent at any time with no effect
+            on legal compliance of the processing, which was carried out on the basis of my consent prior to it being
+            withdrawn.
+
+          </mat-checkbox>
+        </p>
         <div class="text-center mt-5">
           <button type="submit" [disabled]="!accountForm.valid" class="btn btn-primary rounded-pill"
                   style="background-color: #005B47; text-decoration: none; color: #FFFFFF">{{'confirm'|translate}}

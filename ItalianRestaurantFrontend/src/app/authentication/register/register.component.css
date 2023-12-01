@@ -1,7 +1,7 @@
 .form-field {
   width: 100%;
-  margin-bottom: 5px;
-  margin-top: 5px;
+  margin-bottom: 3px;
+  margin-top: 3px;
 }
 
 .example-container mat-form-field + mat-form-field {

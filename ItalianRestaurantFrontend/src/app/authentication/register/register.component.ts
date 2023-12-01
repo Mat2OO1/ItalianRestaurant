@@ -26,6 +26,8 @@ export class RegisterComponent {
         Validators.minLength(8),
         this.passwordValidator()
       ]),
+      terms: new FormControl(false, [Validators.requiredTrue]),
+      newsletter: new FormControl(false)
     })
   }
 
@@ -36,7 +38,8 @@ export class RegisterComponent {
     let email = this.registerForm.value['email'];
     let phoneNumber = this.registerForm.value['phoneNumber'];
     let password = this.registerForm.value['password'];
-    this.authService.signup(firstName, lastName, email, phoneNumber, password)
+    let newsletter = this.registerForm.value['newsletter'];
+    this.authService.signup(firstName, lastName, email, phoneNumber, password, newsletter)
       .subscribe(
         resData => {
           this.router.navigate(['./menu'])

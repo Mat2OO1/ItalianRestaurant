@@ -38,6 +38,8 @@ public class User {
 
     private Boolean emailVerified = false;
 
+    private Boolean newsletter = false;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 

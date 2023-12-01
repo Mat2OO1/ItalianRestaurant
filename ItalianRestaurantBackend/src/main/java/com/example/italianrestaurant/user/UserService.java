@@ -39,6 +39,7 @@ public class UserService {
             user.setEmail(userDto.getEmail());
         }
         user.setPhoneNumber(userDto.getPhoneNumber());
+        user.setNewsletter(userDto.isNewsletter());
         User saved = userRepository.save(user);
         UserPrincipal userPrincipal = UserPrincipal.create(saved);
         var jwtToken = jwtService.generateToken(userPrincipal);
