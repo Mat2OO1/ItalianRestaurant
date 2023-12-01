@@ -6,9 +6,11 @@
       <img src="assets/images/settings.png" alt="settings" class="img-fluid" style="width: 120%">
     </div>
     <div class="col-md-6 settings-form">
-      <h1 class="mb-2">{{'new_password' | translate}}</h1>
+      <h1 class="mb-2">{{'settings' | translate}}</h1>
       <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
-        <p class="mb-3" [style.visibility]="isLocalAccount ? 'hidden': 'visible'">{{"this_account"|translate}} {{user?.provider}}{{"inputs_disabled"|translate}}</p>
+        <p class="mb-3" [style.visibility]="isLocalAccount ? 'hidden': 'visible'">
+          {{"this_account"|translate}} {{user?.provider[0].toUpperCase() + user?.provider.slice(1)}}{{"inputs_disabled"|translate}}
+        </p>
         <mat-form-field class="form-field" appearance="outline">
           <mat-label>{{'name'|translate}}</mat-label>
           <input type="text" matInput formControlName="firstName" placeholder="{{'name_example' | translate}}">
@@ -48,7 +50,7 @@
           </mat-error>
         </mat-form-field>
 
-        <button *ngIf="isLocalAccount" type="button" (click)="openPasswordDialog()" class="link-button mb-4">
+        <button type="button" (click)="openPasswordDialog()" class="link-button mb-4">
           {{'change_password'|translate}}
         </button>
         <br class="d-md-none">

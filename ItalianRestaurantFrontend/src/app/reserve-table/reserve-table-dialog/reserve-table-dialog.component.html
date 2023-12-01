@@ -1,6 +1,6 @@
-<h2 mat-dialog-title>{{ 'reserve_table' | translate }}</h2>
-<h4>{{ 'table_number' | translate }}: {{data.table.number}}</h4>
-<h4>{{ 'table_nr_seats' | translate }}: {{data.table.seats}}</h4>
+<h2 class="mb-2"> {{ 'reserve_table' | translate }}</h2>
+<p class="mb-0">{{ 'table_number' | translate }}: {{data.table.number}}</p>
+<p class="mt-0 mb-0">{{ 'table_nr_seats' | translate }}: {{data.table.seats}}</p>
 
 <mat-dialog-content class="mat-typography">
   <mat-form-field>
@@ -15,14 +15,14 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
   <br>
-  <mat-form-field *ngIf="dateFetched">
+  <mat-form-field>
     <mat-label>{{ 'choose_an_option' | translate }}</mat-label>
-    <mat-select (selectionChange)="onSelectTime($event)">
+    <mat-select [disabled]="!dateFetched" (selectionChange)="onSelectTime($event)">
       <mat-option *ngFor="let hour of this.availableHours" value="{{hour}}">{{hour}}</mat-option>
     </mat-select>
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button class="btn btn-danger" (click)="onCloseDialog()">{{ 'cancel' | translate }}</button>
-  <button class="btn btn-success" (click)="onCloseDialog()">{{ 'reserve' | translate }}</button>
+  <button class="btn btn-danger" (click)="closeDialog()">{{ 'cancel' | translate }}</button>
+  <button class="btn btn-success" [disabled]="!this.selectedDate || !this.selectedTime" (click)="onSubmit()">{{ 'reserve' | translate }}</button>
 </mat-dialog-actions>

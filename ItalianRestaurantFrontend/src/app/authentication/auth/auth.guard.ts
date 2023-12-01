@@ -4,12 +4,14 @@ import {Observable, of, switchMap} from "rxjs";
 import {AuthService} from "./auth.service";
 import {catchError, take} from "rxjs/operators";
 import {SnackbarService} from "../../shared/sncakbar.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable({providedIn: "root"})
 export class AuthGuard {
   constructor(private authService: AuthService,
               private router: Router,
-              private snackbarService: SnackbarService) {
+              private snackbarService: SnackbarService,
+              private translate: TranslateService) {
   }
 
   canActivate(
@@ -27,8 +29,9 @@ export class AuthGuard {
           return of(true);
         } else {
           if (!localStorage.getItem('token')) {
-            this.snackbarService.openSnackbarError('You are not authorized to access this page');
-            return of(this.router.createUrlTree(['/login'],
+            this.translate.get('authorization_error').subscribe((message) => {
+              this.snackbarService.openSnackbarError(message);
+            });            return of(this.router.createUrlTree(['/login'],
               { queryParams: { returnUrl: state.url }}));
           }
           return this.authService.getUserDetails(localStorage.getItem('token')!).pipe(
@@ -37,8 +40,9 @@ export class AuthGuard {
                 this.authService.logInUser(res)
                 return of(true)
               } else {
-                this.snackbarService.openSnackbarError('You are not authorized to access this page');
-                return of(this.router.createUrlTree(['/login'],
+                this.translate.get('authorization_error').subscribe((message) => {
+                  this.snackbarService.openSnackbarError(message);
+                });                return of(this.router.createUrlTree(['/login'],
                   { queryParams: { returnUrl: state.url }}));
               }
             })

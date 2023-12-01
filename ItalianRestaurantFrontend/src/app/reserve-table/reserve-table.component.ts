@@ -58,8 +58,9 @@ export class ReserveTableComponent {
   }
 
   private handleDialogResult(result: Reservation) {
-    this.processing = true;
     if (result) {
+      console.log(result)
+      this.processing = true;
       this.dataStorageService.makeReservation(result).subscribe(
         (res) => {
           this.translate.get('table_reserved_successfully').subscribe((message) => {

@@ -4,6 +4,7 @@ import {DataStorageService} from "../../shared/data-storage.service";
 import {CartService} from "../../shared/cart.service";
 import {PaymentResponse} from "../../models/payment-response";
 import {SnackbarService} from "../../shared/sncakbar.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-table',
@@ -18,7 +19,8 @@ export class TableComponent {
 
   constructor(private dataStorageService: DataStorageService,
               private cartService: CartService,
-              private snackbarService: SnackbarService) {
+              private snackbarService: SnackbarService,
+              private translate: TranslateService) {
     this.dataStorageService.getTables()
       .subscribe(
         res => {
@@ -37,7 +39,9 @@ export class TableComponent {
 
   proceedOrder(table: number) {
     if (this.cartService.cart.meals.length === 0) {
-      this.snackbarService.openSnackbarError('Cart is empty!');
+      this.translate.get('empty_cart').subscribe((message) => {
+        this.snackbarService.openSnackbarError(message);
+      });
       return;
     }
     this.cartService.addTable(table)

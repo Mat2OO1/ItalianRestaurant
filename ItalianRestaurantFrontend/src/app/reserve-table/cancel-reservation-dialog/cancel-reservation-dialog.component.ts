@@ -1,6 +1,5 @@
 import {Component, Inject} from '@angular/core';
 import {DIALOG_DATA} from "@angular/cdk/dialog";
-import {Table} from "../../models/table";
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {ReserveTableComponent} from "../reserve-table.component";
 import {Reservation} from "../../models/reservation";

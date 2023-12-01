@@ -6,6 +6,7 @@ import {Cart} from "../../models/cart";
 import {Router} from "@angular/router";
 import {DataStorageService} from "../../shared/data-storage.service";
 import {SnackbarService} from "../../shared/sncakbar.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-summary',
@@ -21,7 +22,8 @@ export class SummaryComponent implements OnInit, OnDestroy {
   constructor(private cartService: CartService,
               private router: Router,
               private dataStorageService: DataStorageService,
-              private snackbarService: SnackbarService) {
+              private snackbarService: SnackbarService,
+              private translate: TranslateService) {
     this.cart = this.cartService.cart
     this.cartSubscription = this.cartService.cartSubject
       .subscribe(
@@ -65,7 +67,9 @@ export class SummaryComponent implements OnInit, OnDestroy {
 
   proceed() {
     if (this.cartService.cart.meals.length === 0) {
-      this.snackbarService.openSnackbarError('Cart is empty!');
+      this.translate.get('empty_cart').subscribe((message) => {
+        this.snackbarService.openSnackbarError(message);
+      });
       return;
     }
     if (this.cart.table) {

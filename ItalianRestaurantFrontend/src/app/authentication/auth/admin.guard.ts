@@ -5,12 +5,14 @@ import {AuthService} from "./auth.service";
 import {catchError, take} from "rxjs/operators";
 import {Role} from "./user.model";
 import {SnackbarService} from "../../shared/sncakbar.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable({providedIn: "root"})
 export class AdminGuard {
   constructor(private authService: AuthService,
               private router: Router,
-              private snackbarService: SnackbarService) {
+              private snackbarService: SnackbarService,
+              private translate: TranslateService) {
   }
 
   canActivate(
@@ -28,9 +30,11 @@ export class AdminGuard {
           return of(true);
         } else {
           if (!localStorage.getItem('token')) {
-            this.snackbarService.openSnackbarError('You are not authorized to access this page');
+            this.translate.get('authorization_error').subscribe((message) => {
+              this.snackbarService.openSnackbarError(message);
+            });
             return of(this.router.createUrlTree(['/login'],
-              { queryParams: { returnUrl: state.url }}));
+              {queryParams: {returnUrl: state.url}}));
           }
           return this.authService.getUserDetails(localStorage.getItem('token')!).pipe(
             switchMap(res => {
@@ -38,9 +42,10 @@ export class AdminGuard {
                 this.authService.logInUser(res)
                 return of(true)
               } else {
-                this.snackbarService.openSnackbarError('You are not authorized to access this page');
-                return of(this.router.createUrlTree(['/login'],
-                  { queryParams: { returnUrl: state.url }}));
+                this.translate.get('authorization_error').subscribe((message) => {
+                  this.snackbarService.openSnackbarError(message);
+                });                return of(this.router.createUrlTree(['/login'],
+                  {queryParams: {returnUrl: state.url}}));
               }
             })
             , catchError(err => {

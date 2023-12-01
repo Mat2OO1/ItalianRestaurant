@@ -24,7 +24,7 @@ export class PasswordDialogComponent {
               @Inject(DIALOG_DATA) public data: { email: string }) {
     this.email = data.email;
     this.passwordForm = new FormGroup({
-      currentPassword: new FormControl('', [Validators.required, Validators.minLength(8),this.passwordValidator()]),
+      currentPassword: new FormControl('', [Validators.required]),
       newPassword: new FormControl('', [Validators.required, Validators.minLength(8), this.passwordValidator()]),
     })
   }
@@ -43,12 +43,16 @@ export class PasswordDialogComponent {
     }
     this.authService.updateUserPassword(passwordDto).subscribe(() => {
       this.processing = false;
-      this.snackbarService.openSnackbarSuccess("Password updated successfully");
+      this.translate.get('password_updated').subscribe((message) => {
+        this.snackbarService.openSnackbarSuccess(message);
+      });
       this.dialogRef.close();
     }, error => {
       this.processing = false;
       this.passwordForm.reset();
-      this.snackbarService.openSnackbarError(error.error);
+      this.translate.get('invalid_password').subscribe((message) => {
+        this.snackbarService.openSnackbarError(message);
+      });
     })
   }
 

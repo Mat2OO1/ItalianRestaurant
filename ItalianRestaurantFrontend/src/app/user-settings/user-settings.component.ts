@@ -6,6 +6,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {PasswordDialogComponent} from "./password-dialog/password-dialog.component";
 import {Profile} from "../models/profile";
 import {SnackbarService} from "../shared/sncakbar.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-user-settings',
@@ -22,6 +23,7 @@ export class UserSettingsComponent {
   constructor(private authService: AuthService,
               private dialog: MatDialog,
               private snackbarService: SnackbarService,
+              private translate: TranslateService
   ) {
 
 
@@ -62,11 +64,9 @@ export class UserSettingsComponent {
         (resData) => {
           this.processing = false;
           this.authService.handleAuthentication(resData.token, new Date(resData.expiration).getTime(), resData.role);
-          this.snackbarService.openSnackbarSuccess('user_updated_successfully');
-        },
-        errorMessage => {
-          this.snackbarService.openSnackbarError(errorMessage);
-          this.processing = false;
+          this.translate.get('user_updated_successfully').subscribe((message) => {
+            this.snackbarService.openSnackbarSuccess(message);
+          });
         }
       )
   }

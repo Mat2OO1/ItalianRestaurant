@@ -134,7 +134,7 @@
   "one_table": "Stolik",
   "number": "Numer",
   "choose_a_date": "Wybierz datę",
-  "choose_an_option": "Wybierz opcję",
+  "choose_an_option": "Wybierz godzinę",
   "reserve": "Zarezerwuj",
   "order_to_table": "Zamów do tego stolika",
   "recover_password": "Odzyskiwania hasła",
@@ -198,5 +198,9 @@
   "change_password": "Zmień hasło",
   "current_password": "Podaj aktualne hasło",
   "reservations": "Rezerwacje",
-  "reservation_date": "Data rezerwacji"
+  "reservation_date": "Data rezerwacji",
+  "user_updated_successfully": "Zaktualizowano użytkownika",
+  "invalid_password": "Nieprawidłowe hasło",
+  "password_updated": "Hasło zostało zaktualizowane",
+  "empty_cart": "Twój koszyk jest pusty"
 }
