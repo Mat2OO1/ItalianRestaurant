@@ -3,16 +3,18 @@ import {ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree} from "@ang
 import {Observable, of, switchMap} from "rxjs";
 import {AuthService} from "./auth.service";
 import {catchError, take} from "rxjs/operators";
+import {SnackbarService} from "../../shared/sncakbar.service";
 
 @Injectable({providedIn: "root"})
 export class AuthGuard {
   constructor(private authService: AuthService,
-              private router: Router) {
+              private router: Router,
+              private snackbarService: SnackbarService) {
   }
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    router: RouterStateSnapshot
+    state: RouterStateSnapshot
   ):
     | boolean
     | UrlTree
@@ -24,14 +26,20 @@ export class AuthGuard {
         if (!!user) {
           return of(true);
         } else {
-          if (!localStorage.getItem('token')) return of(this.router.createUrlTree(['login']));
+          if (!localStorage.getItem('token')) {
+            this.snackbarService.openSnackbarError('You are not authorized to access this page');
+            return of(this.router.createUrlTree(['/login'],
+              { queryParams: { returnUrl: state.url }}));
+          }
           return this.authService.getUserDetails(localStorage.getItem('token')!).pipe(
             switchMap(res => {
               if (!!res) {
                 this.authService.logInUser(res)
                 return of(true)
               } else {
-                return of(this.router.createUrlTree(['login']));
+                this.snackbarService.openSnackbarError('You are not authorized to access this page');
+                return of(this.router.createUrlTree(['/login'],
+                  { queryParams: { returnUrl: state.url }}));
               }
             })
             , catchError(err => {

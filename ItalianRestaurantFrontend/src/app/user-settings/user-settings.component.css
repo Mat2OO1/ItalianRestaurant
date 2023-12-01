@@ -1,0 +1,49 @@
+.form-field {
+  width: 100%;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.example-container mat-form-field + mat-form-field {
+  margin-left: 8px;
+}
+
+.example-right-align {
+  text-align: right;
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.example-right-align {
+  -moz-appearance: textfield;
+}
+
+.row-style {
+  width: 90%;
+  max-width: 600px;
+}
+
+.settings-form {
+  background-color: white;
+  padding: 30px 20px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  color: #3b71ca;
+  text-decoration: underline;
+}
+.link-button:hover {
+  color: #1759cb;
+  text-decoration: underline;
+}

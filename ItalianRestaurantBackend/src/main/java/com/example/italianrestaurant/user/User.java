@@ -34,7 +34,11 @@ public class User {
 
     private String imageUrl;
 
+    private String phoneNumber;
+
     private Boolean emailVerified = false;
+
+    private Boolean newsletter = false;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -43,5 +47,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private AuthProvider provider;
 
+    @JsonIgnore
     private String providerId;
 }

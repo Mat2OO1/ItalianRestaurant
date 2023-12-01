@@ -3,7 +3,6 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../auth/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AppConstants} from "../../shared/constants";
-import {CartService} from "../../shared/cart.service";
 import {Subscription} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
 
@@ -24,7 +23,6 @@ export class LoginComponent implements OnDestroy, OnInit {
 
   constructor(private authService: AuthService,
               private router: Router,
-              private cartService: CartService,
               private cookieService: CookieService,
               private activatedRoute: ActivatedRoute) {
     this.loginForm = new FormGroup({
@@ -58,7 +56,11 @@ export class LoginComponent implements OnDestroy, OnInit {
     this.authSubscription = this.authService.login(email, password)
       .subscribe(
         resData => {
-          if (resData.role === "ADMIN") {
+          const returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'];
+
+          if (returnUrl) {
+            window.location.href = returnUrl;
+          } else if (resData.role === "ADMIN") {
             this.router.navigate(['./admin-panel'])
           } else {
             this.router.navigate(['./menu'])
@@ -71,8 +73,6 @@ export class LoginComponent implements OnDestroy, OnInit {
           this.processing = false;
         }
       );
-
-    this.cartService.clearCart()
   }
 
   ngOnDestroy() {

@@ -2,10 +2,7 @@ package com.example.italianrestaurant.auth;
 
 import com.example.italianrestaurant.security.JwtService;
 import com.example.italianrestaurant.security.UserPrincipal;
-import com.example.italianrestaurant.user.AuthProvider;
-import com.example.italianrestaurant.user.Role;
-import com.example.italianrestaurant.user.User;
-import com.example.italianrestaurant.user.UserRepository;
+import com.example.italianrestaurant.user.*;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +31,8 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
+                .phoneNumber(request.getPhoneNumber())
+                .newsletter(request.isNewsletter())
                 .provider(AuthProvider.local)
                 .emailVerified(false)
                 .build();

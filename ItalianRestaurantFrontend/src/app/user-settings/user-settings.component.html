@@ -1,0 +1,77 @@
+<mat-progress-bar [style.visibility]="!processing ? 'hidden': 'visible'" color="primary"
+                  mode="indeterminate"></mat-progress-bar>
+<div class="container mt-2">
+  <div class="row  me-1 ms-1">
+    <div class="col-md-6 d-flex align-items-center justify-content-center mb-4" *ngIf="isLargeScreen()">
+      <img src="assets/images/settings.png" alt="settings" class="img-fluid" style="width: 120%">
+    </div>
+    <div class="col-md-6 settings-form">
+      <h1 class="mb-2">{{'settings' | translate}}</h1>
+      <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+        <p class="mb-3" [style.visibility]="isLocalAccount ? 'hidden': 'visible'">This account is connected with {{user?.provider}}. Some inputs are disabled.</p>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>{{'name'|translate}}</mat-label>
+          <input type="text" matInput formControlName="firstName" placeholder="{{'name_example' | translate}}">
+          <mat-error *ngIf="accountForm.get('firstName')?.hasError('required')">
+            {{'name_toast'|translate}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>{{'surname'|translate}}</mat-label>
+          <input type="text" matInput formControlName="lastName" placeholder="{{'surname_example' | translate}}">
+          <mat-error *ngIf="accountForm.get('lastName')?.hasError('required')">
+            {{'surname_toast'|translate}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>{{'email'|translate}}</mat-label>
+          <input type="email" matInput formControlName="email"
+                 placeholder="{{'email_example' | translate}}">
+          <mat-error
+            *ngIf="accountForm.get('email')?.hasError('email') && !accountForm.get('email')?.hasError('required')">
+            {{'email'|translate}}
+          </mat-error>
+          <mat-error *ngIf="accountForm.get('email')?.hasError('required')">
+            {{'email_toast'|translate}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>{{'phone_number'|translate}}</mat-label>
+          <input type="text" matInput formControlName="phoneNumber"
+                 placeholder="{{'phone_number_example' | translate}}">
+          <mat-error
+            *ngIf="accountForm.get('phoneNumber')?.hasError('pattern') && !accountForm.get('phoneNumber')?.hasError('required')">
+            {{'phone_number_error'| translate}}
+          </mat-error>
+          <mat-error *ngIf="accountForm.get('phoneNumber')?.hasError('required')">
+            {{'phone_number_required'| translate}}
+          </mat-error>
+        </mat-form-field>
+
+        <button *ngIf="isLocalAccount" type="button" (click)="openPasswordDialog()" class="link-button mb-4">
+          {{'change_password'|translate}}
+        </button>
+        <br class="d-md-none">
+        <p>
+          <mat-checkbox formControlName="newsletter" color="primary">
+
+            I hereby consent to contact me, including sending sales and marketing information about La Dolce Vita,
+            from LDV Polska S.A. with its registered office in Warsaw, by means of electronic communication
+            (email, SMS), as well as agreeing to LDV Polska S.A. with its registered office in Warsaw processing my
+            personal data (email address, phone number) for this purpose. The legal grounds for processing the data
+            is article 6 paragraph (a) GDPR. I reserve the right to withdraw my consent at any time with no effect
+            on legal compliance of the processing, which was carried out on the basis of my consent prior to it being
+            withdrawn.
+
+          </mat-checkbox>
+        </p>
+        <div class="text-center mt-5">
+          <button type="submit" [disabled]="!accountForm.valid" class="btn btn-primary rounded-pill"
+                  style="background-color: #005B47; text-decoration: none; color: #FFFFFF">{{'confirm'|translate}}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

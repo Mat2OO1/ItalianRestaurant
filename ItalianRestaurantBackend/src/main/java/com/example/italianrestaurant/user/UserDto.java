@@ -1,9 +1,7 @@
-package com.example.italianrestaurant.auth;
+package com.example.italianrestaurant.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,24 +11,15 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
-
+public class UserDto {
     @NotBlank(message = "Firstname is mandatory")
-    private String firstname;
+    private String firstName;
     @NotBlank(message = "Lastname is mandatory")
-    private String lastname;
+    private String lastName;
     @NotBlank(message = "Email is mandatory")
     @Email
     private String email;
-
     @NotBlank(message = "Phone number is mandatory")
     private String phoneNumber;
-
-    @NotBlank(message = "Password is mandatory")
-    @Size(min = 8, message = "Password must be at least 8 characters long")
-    @Pattern(regexp = ".*[^a-zA-Z0-9].*", message = "Password must contain at least one special character")
-    private String password;
-
     private boolean newsletter;
 }
-

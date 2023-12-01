@@ -179,6 +179,13 @@
   "404_error_description": "Wygląda na to, że strona, którą próbowałeś znaleźć, nie jest już dostępna.",
   "go_to_home": "Przejdź do strony głównej",
   "go_to_menu": "Przejdź do menu",
+  "profile": "Profil",
+  "phone_number": "Numer telefonu",
+  "phone_number_example": "500600700",
+  "phone_number_error": "Nieprawidłowy numer telefonu",
+  "phone_number_required": "Numer telefonu jest wymagany",
+  "settings": "Ustawienia",
   "password_length": "Hasło musi zawierać przynajmniej 8 znaków",
-  "password_special": "Hasło musi zawierać znak specjalny"
+  "password_special": "Hasło musi zawierać znak specjalny",
+  "authorization_error": "Nie masz uprawnień do wykonania tej operacji"
 }
