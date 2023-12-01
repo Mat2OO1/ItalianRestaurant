@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row d-flex justify-content-center">
+    <div>
+      <br>
+      <h1>{{ 'reservations' | translate }}</h1>
+      <br>
+    </div>
+    <div class="col-auto">
+      <mat-form-field>
+        <mat-label>{{ 'choose_a_date' | translate }}</mat-label>
+        <input matInput [matDatepicker]="picker" (dateChange)="onChangeDate($event)" />
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div *ngIf="showTables">
+      <div class="mat-elevation-z6">
+        <mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="tableNumber">
+            <mat-header-cell *matHeaderCellDef>{{'table_number' | translate}} </mat-header-cell>
+            <mat-cell *matCellDef="let reservation"> {{ reservation.table.number }} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="seats">
+            <mat-header-cell *matHeaderCellDef> {{'table_nr_seats' | translate}} </mat-header-cell>
+            <mat-cell *matCellDef="let reservation"> {{ reservation.table.seats }} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="reservationDate">
+            <mat-header-cell *matHeaderCellDef> {{'reservation_date' | translate}} </mat-header-cell>
+            <mat-cell *matCellDef="let reservation"> {{ reservation.reservationDateStart | date: 'dd.MM.yyyy HH:mm' }} </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="['tableNumber', 'seats', 'reservationDate']"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: ['tableNumber', 'seats', 'reservationDate'];"></mat-row>
+        </mat-table>
+      </div>
+      <br>
+    </div>
+</div>
+</div>

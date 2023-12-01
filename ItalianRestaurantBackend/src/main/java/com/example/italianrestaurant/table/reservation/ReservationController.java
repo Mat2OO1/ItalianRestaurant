@@ -6,6 +6,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,6 +50,11 @@ public class ReservationController {
     @GetMapping("/reserved/all")
     public ResponseEntity<List<Table>> getReservedTables(){
         return ResponseEntity.ok(this.reservationService.getReservedTables());
+    }
+
+    @GetMapping("/reserved/{date}")
+    public ResponseEntity<List<Reservation>> getReservedTables(@PathVariable LocalDate date){
+        return ResponseEntity.ok(this.reservationService.getReservationsForDate(date));
     }
 
     @GetMapping("/reserved")

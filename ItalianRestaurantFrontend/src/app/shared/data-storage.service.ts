@@ -137,6 +137,10 @@ export class DataStorageService {
     return this.http
       .get<Table[]>(`${environment.apiUrl}/reservations/reserved/all`)
   }
+  getReservationsForDay(date: string){
+    return this.http
+      .get<Reservation[]>(`${environment.apiUrl}/reservations/reserved/${date}`)
+  }
 
   makeReservation(reservation: Reservation){
     return this.http

@@ -196,5 +196,7 @@
   "terms": "Regulamin Warunki Handlowe",
   "terms_and_conditions": "i zgadzam się na warunki i postanowienia tego serwisu. *",
   "change_password": "Zmień hasło",
-  "current_password": "Podaj aktualne hasło"
+  "current_password": "Podaj aktualne hasło",
+  "reservations": "Rezerwacje",
+  "reservation_date": "Data rezerwacji"
 }

@@ -47,6 +47,10 @@ public class ReservationService {
         return this.reservationRepository.getAllByUserEmailAndDateAfter(userPrincipal.getEmail(), LocalDateTime.now());
     }
 
+    public List<Reservation> getReservationsForDate(LocalDate date) {
+        return this.reservationRepository.getReservationByDate(date);
+    }
+
     public void deleteReservation(Long id) {
         if (this.reservationRepository.existsById(id)) {
             this.reservationRepository.deleteById(id);

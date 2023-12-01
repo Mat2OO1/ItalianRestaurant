@@ -20,6 +20,7 @@ import {TableComponent} from "./order/table/table.component";
 import {ReserveTableComponent} from "./reserve-table/reserve-table.component";
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 import {UserSettingsComponent} from "./user-settings/user-settings.component";
+import {AdminReservationsComponent} from "./admin-reservations/admin-reservations.component";
 
 const routes: Routes = [
   {path: '', component: InfoComponent},
@@ -36,6 +37,7 @@ const routes: Routes = [
   {path: 'reserve-table', component: ReserveTableComponent, canActivate: [AuthGuard]},
   {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AdminGuard]},
   {path: 'admin-tables-panel', component: AdminTableQrComponent, canActivate: [AdminGuard]},
+  {path: 'admin-reservations', component: AdminReservationsComponent, canActivate: [AdminGuard]},
   {path: 'admin-menu', component: AdminMenuComponent, canActivate: [AdminGuard]},
   {path: 'account', component: UserSettingsComponent, canActivate: [AuthGuard]},
   {path: 'oauth2/redirect', component: LoginComponent},

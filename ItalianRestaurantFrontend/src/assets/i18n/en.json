@@ -196,5 +196,7 @@
   "terms": "Regulation Terms of Business",
   "terms_and_conditions": "and agree to the terms and conditions of this service. *",
   "change_password": "Change password",
-  "current_password": "Current password"
+  "current_password": "Current password",
+  "reservations": "Reservations",
+  "reservation_date": "Reservation Date"
 }
