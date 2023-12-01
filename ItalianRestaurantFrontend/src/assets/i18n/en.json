@@ -187,5 +187,6 @@
   "phone_number_required": "Phone number is required",
   "settings": "Settings",
   "password_length": "The password must be at least 8 characters long",
-  "password_special": "The password must contains special character"
+  "password_special": "The password must contains special character",
+  "authorization_error": "You are not authorized to access this page"
 }

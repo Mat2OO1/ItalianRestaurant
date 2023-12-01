@@ -11,6 +11,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {UserDto} from "../../models/user-dto";
 import {PasswordDto} from "../../models/passwordDto";
 import {Profile} from "../../models/profile";
+import {CartService} from "../../shared/cart.service";
 
 export interface AuthResponseData {
   token: string;
@@ -24,7 +25,12 @@ export class AuthService {
   private logoutTimer: any;
   private errorMessage = "";
 
-  constructor(private http: HttpClient, private router: Router, private snackbarService: SnackbarService, private translate: TranslateService) {
+  constructor(private http: HttpClient,
+              private router: Router,
+              private snackbarService: SnackbarService,
+              private translate: TranslateService,
+              private cartService: CartService
+  ) {
   }
 
   signup(firstName: string, lastName: string, email: string, phoneNumber: string, password: string, newsletter: boolean) {
@@ -90,6 +96,7 @@ export class AuthService {
     this.user.next(null);
     this.router.navigate(['/']);
     localStorage.removeItem('token');
+    this.cartService.clearCart()
     if (this.logoutTimer) {
       clearTimeout(this.logoutTimer);
     }

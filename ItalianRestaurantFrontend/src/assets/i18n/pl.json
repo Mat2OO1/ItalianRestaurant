@@ -186,5 +186,6 @@
   "phone_number_required": "Numer telefonu jest wymagany",
   "settings": "Ustawienia",
   "password_length": "Hasło musi zawierać przynajmniej 8 znaków",
-  "password_special": "Hasło musi zawierać znak specjalny"
+  "password_special": "Hasło musi zawierać znak specjalny",
+  "authorization_error": "Nie masz uprawnień do wykonania tej operacji"
 }
