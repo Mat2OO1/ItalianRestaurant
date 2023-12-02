@@ -9,7 +9,7 @@
       <h1 class="mb-2">{{'settings' | translate}}</h1>
       <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
         <p class="mb-3" [style.visibility]="isLocalAccount ? 'hidden': 'visible'">
-          {{"this_account"|translate}} {{user?.provider[0].toUpperCase() + user?.provider.slice(1)}}{{"inputs_disabled"|translate}}
+          {{"this_account"|translate}} {{userData?.provider[0].toUpperCase() + userData?.provider.slice(1)}}{{"inputs_disabled"|translate}}
         </p>
         <mat-form-field class="form-field" appearance="outline">
           <mat-label>{{'name'|translate}}</mat-label>
@@ -54,7 +54,7 @@
           {{'change_password'|translate}}
         </button>
         <br class="d-md-none">
-        <p>
+        <p *ngIf="userRole !== Role.ADMIN">
           <mat-checkbox formControlName="newsletter" color="primary">
             {{"confirmation_login"|translate}}
           </mat-checkbox>
@@ -63,7 +63,7 @@
           <button type="submit" [disabled]="!accountForm.valid" class="proceed-btn">{{'confirm'|translate}}
           </button>
         </div>
-        <div class="text-center mt-4">
+        <div class="text-center mt-4" *ngIf="userRole !== Role.ADMIN">
         <button type="button" (click)="openDeleteAccountDialog()" class="delete-button mb-4">
           {{'delete_account'|translate}}
         </button>

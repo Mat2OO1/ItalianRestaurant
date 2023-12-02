@@ -6,6 +6,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {MatDialogRef} from "@angular/material/dialog";
 import {DIALOG_DATA} from "@angular/cdk/dialog";
 import {PasswordDto} from "../../models/passwordDto";
+import {Role} from "../../authentication/auth/user.model";
 
 @Component({
   selector: 'app-password-modal',
@@ -15,18 +16,17 @@ import {PasswordDto} from "../../models/passwordDto";
 export class PasswordDialogComponent {
   passwordForm: FormGroup;
   processing = false;
-  email?: string;
-
+  provider: string;
   constructor(private authService: AuthService,
               private snackbarService: SnackbarService,
               private translate: TranslateService,
               private dialogRef: MatDialogRef<PasswordDialogComponent>,
-              @Inject(DIALOG_DATA) public data: { email: string }) {
-    this.email = data.email;
+              @Inject(DIALOG_DATA) public data: { provider: string }) {
     this.passwordForm = new FormGroup({
       currentPassword: new FormControl('', [Validators.required]),
       newPassword: new FormControl('', [Validators.required, Validators.minLength(8), this.passwordValidator()]),
     })
+    this.provider = data.provider;
   }
   passwordValidator() {
     return (control: FormControl): { [key: string]: any } | null => {
@@ -36,7 +36,7 @@ export class PasswordDialogComponent {
   }
   onSubmit() {
     this.processing = true;
-    if (this.passwordForm.invalid || !this.email) return;
+    if (this.passwordForm.invalid) return;
     let passwordDto: PasswordDto = {
       currentPassword: this.passwordForm.value['currentPassword'],
       newPassword: this.passwordForm.value['newPassword'],
