@@ -84,9 +84,19 @@ export class AdminTableQrComponent implements OnInit, AfterViewInit {
   private handleDialogResult(mode: DialogMode, result: Table | number) {
     if (result) {
       this.processing = true;
-      if ((mode === DialogMode.ADD || mode === DialogMode.EDIT) && typeof result === 'object') {
+      if (mode === DialogMode.ADD && typeof result === 'object') {
         this.dataStorageService.saveTable(result).subscribe(() => {
           this.getTables();
+        }, error => {
+          this.translate.get('table_already_exists').subscribe((message: string) => {
+            this.snackBarService.openSnackbarError(message);
+          })
+          this.processing = false;
+        })
+      } else if (mode === DialogMode.EDIT && typeof result === 'object') {
+        this.dataStorageService.updateTable(result).subscribe(() => {
+          this.getTables();
+          this.processing = false;
         }, error => {
           this.translate.get('table_already_exists').subscribe((message: string) => {
             this.snackBarService.openSnackbarError(message);

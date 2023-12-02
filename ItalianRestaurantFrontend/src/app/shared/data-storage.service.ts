@@ -167,4 +167,12 @@ export class DataStorageService {
     return this.http
       .get<Delivery>(`${environment.apiUrl}/order/last`)
   }
+
+  updateTable(result: Table) {
+    return this.http
+      .put<Table>(`${environment.apiUrl}/tables/${result.id}`, {
+        number: result.number,
+        seats: result.seats,
+      })
+  }
 }

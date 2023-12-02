@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TableDto {
-    private long id;
     @Min(value = 1, message = "Table number is mandatory")
     private long number;
     @Min(value = 1, message = "Table seats number is mandatory")

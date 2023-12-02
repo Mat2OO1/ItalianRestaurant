@@ -43,6 +43,16 @@ public class TableController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Table> updateTable(@Valid @RequestBody TableDto table, @PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(tableService.updateTable(table, id));
+        } catch (EntityNotFoundException | IllegalArgumentException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTable(@PathVariable Long id) {
         try {
