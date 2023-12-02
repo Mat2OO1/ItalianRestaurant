@@ -1,9 +1,13 @@
 package com.example.italianrestaurant.user;
 
+import com.example.italianrestaurant.passwordreset.passwordtoken.PasswordToken;
+import com.example.italianrestaurant.table.reservation.Reservation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -49,4 +53,14 @@ public class User {
 
     @JsonIgnore
     private String providerId;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<PasswordToken> passwordTokens;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Reservation reservations;
+
+
 }

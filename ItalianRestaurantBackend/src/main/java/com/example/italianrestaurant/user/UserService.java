@@ -51,17 +51,21 @@ public class UserService {
                 .build();
     }
 
-    public void deleteUser(Long id) {
-        userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        userRepository.deleteById(id);
-    }
-
     public void changePassword(PasswordChangeRequest request, String email) throws WrongPasswordException {
         User user = getUserByEmail(email);
         if (passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
             updatePassword(user, request.getNewPassword());
         } else {
             throw new WrongPasswordException("Current password is invalid");
+        }
+    }
+
+    public void deleteAccount(String password, String username) {
+        User user = getUserByEmail(username);
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            userRepository.delete(user);
+        } else {
+            throw new EntityNotFoundException();
         }
     }
 }

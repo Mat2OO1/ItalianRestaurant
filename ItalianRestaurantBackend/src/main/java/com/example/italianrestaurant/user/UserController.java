@@ -26,16 +26,6 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(Long id) {
-        try {
-            userService.deleteUser(id);
-            return ResponseEntity.ok().build();
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
     @GetMapping
     public ResponseEntity<User> getUser(@AuthenticationPrincipal UserPrincipal user) {
         try {
@@ -53,6 +43,17 @@ public class UserController {
             return ResponseEntity.ok().build();
         } catch (EntityNotFoundException | WrongPasswordException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteAccount(@AuthenticationPrincipal UserPrincipal user,
+                                           @Valid @RequestBody DeleteUserDto request) {
+        try {
+            userService.deleteAccount(request.getPassword(), user.getUsername());
+            return ResponseEntity.ok().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 }

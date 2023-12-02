@@ -108,6 +108,9 @@ export class UserSettingsComponent {
   handleDialogResult(result: { delete: boolean, password?: string}) {
     if (result.delete && result.password) {
       this.authService.deleteUser(result.password).subscribe(() => {
+        this.translate.get('user_deleted_successfully').subscribe((message) => {
+          this.snackbarService.openSnackbarSuccess(message);
+        });
         this.authService.logout();
       })
     }
