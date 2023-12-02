@@ -1,13 +1,13 @@
 <mat-progress-bar style="position: absolute" *ngIf="processing" mode="indeterminate"></mat-progress-bar>
 
-<div class="container" *ngIf="dataSources && categories">
+<div class="container" *ngIf="isDataLoaded">
   <div class="header row justify-content-center">
     <div class="col-auto">
       <br>
       <h1>{{'menu_editor'|translate}}</h1>
       <br>
       <mat-accordion multi>
-        <mat-expansion-panel *ngFor="let category of categories" [disabled]="clickButton" (click)="clickButton=false">
+        <mat-expansion-panel *ngFor="let category of categories">
           <mat-expansion-panel-header>
             <mat-panel-title>
               {{getCategoryName(category)}}
@@ -99,15 +99,15 @@
 </div>
 
 
-
-<div class="container" *ngIf="!(dataSources && categories)">
+<!--Skeleton loading-->
+<div class="container" *ngIf="!isDataLoaded">
   <div class="header row justify-content-center">
     <div class="col-auto">
       <br>
       <h1>{{'menu_editor'|translate}}</h1>
       <br>
       <mat-accordion multi>
-        <mat-expansion-panel *ngFor="let elem of [0,1,2,3,4,5]"  (click)="clickButton=false">
+        <mat-expansion-panel *ngFor="let elem of [0,1,2,3,4,5]">
           <mat-expansion-panel-header>
             <mat-panel-title>
               <ngx-skeleton-loader [theme]="

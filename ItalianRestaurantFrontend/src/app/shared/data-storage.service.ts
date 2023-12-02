@@ -12,6 +12,7 @@ import {PaymentResponse} from "../models/payment-response";
 import {Cart} from "../models/cart";
 import {Reservation} from "../models/reservation";
 import { Observable } from 'rxjs';
+import {Category} from "../models/category";
 @Injectable({
   providedIn: 'root'
 })
@@ -43,14 +44,14 @@ export class DataStorageService {
     formData.append('image', file);
     formData.append('meal', JSON.stringify(meal));
     return this.http
-      .post(`${environment.apiUrl}/meals/add`, formData)
+      .post<Meal>(`${environment.apiUrl}/meals/add`, formData)
   }
 
   editMeal(meal: MealDto, id: number, file: File) {
     const formData = new FormData();
     formData.append('image', file);
     formData.append('meal', JSON.stringify(meal));
-    return this.http.put(`${environment.apiUrl}/meals/edit/${id}`, formData)
+    return this.http.put<Meal>(`${environment.apiUrl}/meals/edit/${id}`, formData)
   }
 
   deleteMeal(id: number) {
@@ -60,12 +61,12 @@ export class DataStorageService {
 
   addCategory(categoryName: string, categoryNamePl: string) {
     return this.http
-      .post(`${environment.apiUrl}/meal-categories/add`, {name: categoryName, name_pl: categoryNamePl})
+      .post<Category>(`${environment.apiUrl}/meal-categories/add`, {name: categoryName, name_pl: categoryNamePl})
   }
 
   editCategory(categoryName: string, categoryNamePl: string, id: number) {
     return this.http
-      .put(`${environment.apiUrl}/meal-categories/edit/${id}`, {name: categoryName, name_pl: categoryNamePl})
+      .put<Category>(`${environment.apiUrl}/meal-categories/edit/${id}`, {name: categoryName, name_pl: categoryNamePl})
   }
 
   deleteCategory(id: number) {

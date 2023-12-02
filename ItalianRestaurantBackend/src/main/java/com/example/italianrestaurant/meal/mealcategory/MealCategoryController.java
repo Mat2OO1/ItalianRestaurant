@@ -21,7 +21,6 @@ import java.util.List;
 public class MealCategoryController {
 
     private final MealCategoryService mealCategoryService;
-    private final ObjectMapper objectMapper;
 
     @GetMapping
     public ResponseEntity<List<MealCategory>> getAllMealCategories() {
@@ -42,12 +41,15 @@ public class MealCategoryController {
     public ResponseEntity<MealCategory> addCategory(@RequestBody MealCategoryDto mealCategoryDto) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(mealCategoryService.addCategory(mealCategoryDto));
-        } catch (EntityNotFoundException e) {
+        }
+        catch (IOException e) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "There is already a category with name " + mealCategoryDto.getName(), e);
-        } catch (IOException e) {
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Image service not working", e
+            );
+        }
+        catch (EntityExistsException e) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "Invalid image", e);
+                    HttpStatus.BAD_REQUEST, "There already exists a category with name " + mealCategoryDto.getName(), e);
         }
     }
 

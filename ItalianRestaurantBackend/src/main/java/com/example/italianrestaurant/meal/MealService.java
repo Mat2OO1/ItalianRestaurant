@@ -50,7 +50,7 @@ public class MealService {
     }
 
     public Meal addMeal(MealDto meal, MultipartFile image) throws IOException {
-        if (mealRepository.existsByName(meal.getName())) {
+        if (mealRepository.findByNameAndDeletedIsFalse(meal.getName()).isPresent()) {
             throw new EntityExistsException("Meal with name: " + meal.getName() + " already exists");
         }
         MealCategory category = mealCategoryService.getMealCategoryByName(meal.getCategory());
