@@ -205,5 +205,6 @@
   "empty_cart": "Your cart is empty",
   "delete_account": "DELETE ACCOUNT",
   "delete_account_description": "Deleting your account will remove all of your information from our database. This cannot be undone.",
-  "delete_account_confirmation": "To confirm this, type your password."
+  "delete_account_confirmation": "To confirm this, type your password.",
+  "user_deleted_successfully": "Account deleted successfully"
 }

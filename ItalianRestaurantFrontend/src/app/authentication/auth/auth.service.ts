@@ -212,6 +212,9 @@ export class AuthService {
   }
 
   deleteUser(password: string) {
-    return this.http.post(`${environment.apiUrl}/auth/user`, {password: password});
+    return this.http.delete(`${environment.apiUrl}/user`, {
+      body: {
+        password: password
+      }});
   }
 }
