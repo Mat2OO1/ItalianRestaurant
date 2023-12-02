@@ -209,5 +209,9 @@
   "user_deleted_successfully": "Account deleted successfully",
   "current_password_error_description": "If you don't have password assigned, please reset it using email.",
   "category_already_exists": "Category already exists",
-  "meal_already_exists": "Meal already exists"
+  "meal_already_exists": "Meal already exists",
+  "table_already_exists": "Table already exists",
+  "no_reservations_day": "There are no reservations on selected date",
+  "person": "Person",
+  "choose_reservation_date": "Choose reservation date."
 }

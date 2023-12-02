@@ -7,10 +7,10 @@
       <h1>{{'menu_editor'|translate}}</h1>
       <br>
       <mat-accordion multi>
-        <mat-expansion-panel *ngFor="let category of categories">
+        <mat-expansion-panel *ngFor="let category of categories" [disabled]="clickButton" (click)="clickButton=false">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              {{getCategoryName(category)}}
+              {{getCategoryName(category).toUpperCase()}}
             </mat-panel-title>
             <mat-panel-description>
               <button matTooltip="{{'edit'|translate}}" matTooltipPosition="above" class="btn btn-info"

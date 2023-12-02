@@ -2,3 +2,10 @@ mat-form-field{
   margin-top: 10px;
 }
 
+.center-alert {
+  margin: 50px auto;
+  padding:20px;
+  width: 60%;
+  text-align: center;
+  border-radius: 20px;
+}

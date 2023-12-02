@@ -17,7 +17,7 @@
     </mat-form-field>
   </form>
   <div class="d-flex justify-content-center align-items-center" *ngIf="data.mode === DialogMode.DELETE">
-    <h5>{{'are_you_sure_delete' | translate}} {{'category' | translate}} {{'with_name' | translate}}: {{data.category?.name}} {{'and_all_corresponding_meals' | translate}}</h5>
+    <p>{{'are_you_sure_delete' | translate}} {{'category' | translate}} {{'with_name' | translate}}: {{data.category?.name}} {{'and_all_corresponding_meals' | translate}}</p>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end" *ngIf="data.mode === DialogMode.EDIT">

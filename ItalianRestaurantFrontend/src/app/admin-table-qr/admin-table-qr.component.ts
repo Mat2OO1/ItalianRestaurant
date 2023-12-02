@@ -10,6 +10,8 @@ import {DialogMode} from "../models/modal-mode";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {MatSort, Sort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
+import {TranslateService} from "@ngx-translate/core";
+import {SnackbarService} from "../shared/sncakbar.service";
 
 @Component({
   selector: 'app-admin-table-qr',
@@ -44,7 +46,9 @@ export class AdminTableQrComponent implements OnInit, AfterViewInit {
     private dataStorageService: DataStorageService,
     private qrCodeService: QrCodeService,
     private dialog: MatDialog,
-    private _liveAnnouncer: LiveAnnouncer) {
+    private _liveAnnouncer: LiveAnnouncer,
+    private translate: TranslateService,
+    private snackBarService: SnackbarService) {
   }
 
   ngOnInit(): void {
@@ -78,11 +82,16 @@ export class AdminTableQrComponent implements OnInit, AfterViewInit {
   }
 
   private handleDialogResult(mode: DialogMode, result: Table | number) {
-    this.processing = true;
     if (result) {
+      this.processing = true;
       if ((mode === DialogMode.ADD || mode === DialogMode.EDIT) && typeof result === 'object') {
         this.dataStorageService.saveTable(result).subscribe(() => {
           this.getTables();
+        }, error => {
+          this.translate.get('table_already_exists').subscribe((message: string) => {
+            this.snackBarService.openSnackbarError(message);
+          })
+          this.processing = false;
         })
       } else if (mode === DialogMode.DELETE && typeof result === 'number') {
         this.dataStorageService.deleteTable(result).subscribe(() => {

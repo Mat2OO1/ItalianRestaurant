@@ -19,7 +19,7 @@
   </form>
 
   <div class="d-flex justify-content-center align-items-center" *ngIf="data.mode === DialogMode.DELETE">
-    <h5>{{ 'are_you_sure_delete' | translate }} {{ 'one_table' | translate }} {{data.table?.number}}</h5>
+    <p>{{ 'are_you_sure_delete' | translate }} {{ 'one_table' | translate }} {{data.table?.number}}</p>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

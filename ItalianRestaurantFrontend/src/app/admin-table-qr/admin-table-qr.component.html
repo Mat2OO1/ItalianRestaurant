@@ -109,33 +109,34 @@
 
 <div class="container" *ngIf="!tables">
   <div class="row justify-content-center" style="margin:20px">
-    <h1>{{'table_editor'|translate}}</h1>
+    <div class="col-auto">
+      <h1 class="mb-3">{{'table_editor'|translate}}</h1>
 
-    <table mat-table [dataSource]="[0,1,2,3,4,5]" matSort (matSortChange)="announceSortChange($event)"
-           class="mat-elevation-z2">
+      <table mat-table [dataSource]="[0,1,2,3,4,5]" matSort (matSortChange)="announceSortChange($event)"
+             class="mat-elevation-z2">
 
-      <ng-container matColumnDef="number">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
-          {{'table_number'|translate}}
-        </th>
-        <td mat-cell *matCellDef="let element">
-          <ngx-skeleton-loader [theme]="
+        <ng-container matColumnDef="number">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+            {{'table_number'|translate}}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <ngx-skeleton-loader [theme]="
               {
                 'height': '25px',
                 'width': '75%',
                 'margin-top': '10px'
 
               }"></ngx-skeleton-loader>
-        </td>
-      </ng-container>
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="seats">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by seats">
-          {{'table_nr_seats'|translate}}
-        </th>
-        <td mat-cell *matCellDef="let element">
+        <ng-container matColumnDef="seats">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by seats">
+            {{'table_nr_seats'|translate}}
+          </th>
+          <td mat-cell *matCellDef="let element">
 
-          <ngx-skeleton-loader [theme]="
+            <ngx-skeleton-loader [theme]="
               {
                 'height': '25px',
                 'width': '75%',
@@ -143,66 +144,68 @@
 
               }"></ngx-skeleton-loader>
 
-        </td>
-      </ng-container>
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="qrCode">
-        <th mat-header-cell *matHeaderCellDef>
-          {{'table_qr_code'|translate}}        </th>
-        <td mat-cell *matCellDef="let element">
-          <ngx-skeleton-loader [theme]="
+        <ng-container matColumnDef="qrCode">
+          <th mat-header-cell *matHeaderCellDef>
+            {{'table_qr_code'|translate}}        </th>
+          <td mat-cell *matCellDef="let element">
+            <ngx-skeleton-loader [theme]="
               {
                 'height': '70px',
                 'width': '70px',
                 'margin': '0'
 
               }"></ngx-skeleton-loader>
-        </td>
-      </ng-container>
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="download">
-        <th mat-header-cell *matHeaderCellDef>
-          {{'table_download'|translate}}        </th>
-        <td mat-cell *matCellDef="let element">
-          <button disabled class="btn btn-success" data-toggle="tooltip" matTooltip="{{'download'|translate}}"
-                  matTooltipPosition="above"
-                  data-placement="top">
-            <i class="bi bi-download"></i>
-          </button>
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="download">
+          <th mat-header-cell *matHeaderCellDef>
+            {{'table_download'|translate}}        </th>
+          <td mat-cell *matCellDef="let element">
+            <button disabled class="btn btn-success" data-toggle="tooltip" matTooltip="{{'download'|translate}}"
+                    matTooltipPosition="above"
+                    data-placement="top">
+              <i class="bi bi-download"></i>
+            </button>
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="edit">
-        <th mat-header-cell *matHeaderCellDef>
-          {{'edit'|translate}}
-        </th>
-        <td mat-cell *matCellDef="let element">
-          <button disabled class="btn btn-info" data-toggle="tooltip" matTooltip="{{'edit'|translate}}"
-                  matTooltipPosition="above"
-                  data-placement="top">
-            <i class="bi bi-pen"></i>
-          </button>
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef>
+            {{'edit'|translate}}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <button disabled class="btn btn-info" data-toggle="tooltip" matTooltip="{{'edit'|translate}}"
+                    matTooltipPosition="above"
+                    data-placement="top">
+              <i class="bi bi-pen"></i>
+            </button>
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="delete">
-        <th mat-header-cell *matHeaderCellDef>
-          {{'delete'|translate}}
-        </th>
-        <td mat-cell *matCellDef="let element">
-          <button disabled class="btn btn-danger" data-toggle="tooltip" matTooltip="{{'delete'|translate}}"
-                  matTooltipPosition="above"
-                  data-placement="top">
-            <i class="bi bi-trash"></i>
-          </button>
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef>
+            {{'delete'|translate}}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <button disabled class="btn btn-danger" data-toggle="tooltip" matTooltip="{{'delete'|translate}}"
+                    matTooltipPosition="above"
+                    data-placement="top">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-    <div style="margin-top: 20px">
-      <button class="btn btn-success" disabled (click)="openTableDialog(DialogMode.ADD)">{{'table_add'|translate}}</button>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <div style="margin-top: 20px">
+        <button class="btn btn-success" disabled
+                (click)="openTableDialog(DialogMode.ADD)">{{'table_add'|translate}}</button>
+      </div>
     </div>
   </div>
 </div>

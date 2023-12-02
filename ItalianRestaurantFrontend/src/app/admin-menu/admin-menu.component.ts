@@ -20,7 +20,7 @@ export class AdminMenuComponent {
   categories?: Category[];
   lang = localStorage.getItem('lang') || 'en';
   protected readonly DialogMode = DialogMode;
-
+  clickButton = false;
   displayedColumns: string[] = ['image', 'name_menu', 'menu_description', 'price', 'edit', 'delete'];
   dataSources: { [category: string]: MatTableDataSource<Meal> } = {};
   processing = false;
@@ -44,6 +44,7 @@ export class AdminMenuComponent {
   }
 
   openCategoryDialog(mode: DialogMode, category ?: Category) {
+    this.clickButton = true;
     const dialogRef = this.dialog.open(CategoryEditDialogComponent, {
       data: {mode: mode, category: category},
     });

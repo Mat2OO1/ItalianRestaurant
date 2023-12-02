@@ -35,7 +35,12 @@ public class TableController {
 
     @PostMapping
     public ResponseEntity<Table> saveTable(@Valid @RequestBody TableDto table) {
-        return ResponseEntity.ok(tableService.saveTable(table));
+        try {
+            return ResponseEntity.ok(tableService.saveTable(table));
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        }
     }
 
     @DeleteMapping("/{id}")
@@ -43,8 +48,7 @@ public class TableController {
         try {
             tableService.deleteTable(id);
             return ResponseEntity.ok().build();
-        }
-        catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "There is no order with id: " + id, e);
         }

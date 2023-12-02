@@ -25,6 +25,9 @@ public class TableService {
     }
 
     public Table saveTable(TableDto table) {
+        tableRepository.findByNumber(table.getNumber()).ifPresent(t -> {
+            throw new IllegalArgumentException("There already exists a table with number " + table.getNumber());
+        });
         Table mappedTable = modelMapper.map(table, Table.class);
         return tableRepository.save(mappedTable);
     }

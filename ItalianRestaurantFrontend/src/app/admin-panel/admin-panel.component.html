@@ -23,8 +23,9 @@
             <thead>
             <tr>
               <th scope="col">{{'order_status'|translate}}</th>
-              <th scope="col" *ngIf="order.delivery">{{'estimate_delivery'|translate}}</th>
+              <th scope="col">{{'estimate_delivery'|translate}}</th>
               <th scope="col" *ngIf="order.delivery">{{'address'|translate}}</th>
+              <th scope="col" *ngIf="order.table">{{'table_nr'|translate}}</th>
               <th scope="col"></th>
               <th scope="col"></th>
             </tr>
@@ -38,15 +39,21 @@
                   <option value="DELIVERED">{{'delivered'|translate}}</option>
                 </select>
               </td>
-              <td *ngIf="order.delivery">
-                <input type="time" class="form-control" formControlName="deliveryDate" name="deliveryDate">
+              <td>
+                <input [ngxTimepicker]="picker" [format]="24" class="form-control"
+                       formControlName="deliveryDate"
+                       name="deliveryDate"/>
+                <ngx-material-timepicker #picker></ngx-material-timepicker>
               </td>
-              <td *ngIf="order.delivery">{{order.delivery.address}} {{order.delivery.city}} {{getDeliveryOptionsTranslation(order.delivery.deliveryOptions)}} {{order.delivery.postalCode}} {{order.delivery.info}}</td>
+              <td
+                *ngIf="order.delivery">{{order.delivery.address}} {{order.delivery.city}} {{getDeliveryOptionsTranslation(order.delivery.deliveryOptions)}} {{order.delivery.postalCode}} {{order.delivery.info}}</td>
+              <td *ngIf="order.table">{{order.table.number}}</td>
               <td>
                 <button class="btn btn-primary" type="submit">{{'change'|translate}}</button>
               </td>
               <td>
-                <button class="btn btn-danger" type="submit" (click)="deleteOrder(order.id)">{{'delete'|translate}}</button>
+                <button class="btn btn-danger" type="submit"
+                        (click)="deleteOrder(order.id)">{{'delete'|translate}}</button>
               </td>
 
             </tr>
@@ -65,6 +72,6 @@
     </tbody>
   </table>
 </div>
-<div class="container" *ngIf="orders.length === 0">
+<div class="container" *ngIf="orders.length === 0 && isContentLoaded">
   <div class="alert-primary center-alert">{{'no_order'|translate}}</div>
 </div>

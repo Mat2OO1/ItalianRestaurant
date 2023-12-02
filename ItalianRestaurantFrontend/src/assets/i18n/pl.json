@@ -209,5 +209,9 @@
   "user_deleted_successfully": "Użytkownik usunięty pomyślnie",
   "current_password_error_description": "Jeśli nie masz przypisanego hasła, zresetuj je za pomocą poczty elektronicznej.",
   "category_already_exists": "Kategoria już istnieje",
-  "meal_already_exists": "Danie już istnieje"
+  "meal_already_exists": "Danie już istnieje",
+  "table_already_exists": "Stolik już istnieje",
+  "no_reservations_day": "W tym dniu nie ma żadnych rezerwacji.",
+  "person": "Osoba",
+  "choose_reservation_date": "Wybierz datę dla której chcesz sprawdzić rezerwacje stolików."
 }

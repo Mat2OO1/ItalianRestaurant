@@ -68,6 +68,7 @@ import {UserSettingsComponent} from "./user-settings/user-settings.component";
 import { PasswordDialogComponent } from './user-settings/password-dialog/password-dialog.component';
 import {AdminReservationsComponent} from "./admin-reservations/admin-reservations.component";
 import { DeleteConfirmationDialogComponent } from './user-settings/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -105,50 +106,51 @@ export function HttpLoaderFactory(http: HttpClient) {
     DeleteConfirmationDialogComponent
   ],
 
-  imports: [
-    BrowserModule,
-    RouterLink,
-    RouterOutlet,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatProgressSpinnerModule,
-    QRCodeModule,
-    MatDialogModule,
-    MatTooltipModule,
-    MatButtonModule,
-    FormsModule,
-    MatCardModule,
-    MatListModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatSelectModule,
-    MatTabsModule,
-    MatCheckboxModule,
-    MatPaginatorModule,
-    MatRadioModule,
-    MatIconModule,
-    MatTableModule,
-    MatSortModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    FlexLayoutModule,
-    MatMenuModule,
-    MatSnackBarModule,
-    MatBadgeModule,
-    MatExpansionModule,
-    NgxSkeletonLoaderModule.forRoot(),
-    MatProgressBarModule,
-  ],
+    imports: [
+        BrowserModule,
+        RouterLink,
+        RouterOutlet,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatProgressSpinnerModule,
+        QRCodeModule,
+        MatDialogModule,
+        MatTooltipModule,
+        MatButtonModule,
+        FormsModule,
+        MatCardModule,
+        MatListModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatSelectModule,
+        MatTabsModule,
+        MatCheckboxModule,
+        MatPaginatorModule,
+        MatRadioModule,
+        MatIconModule,
+        MatTableModule,
+        MatSortModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        FlexLayoutModule,
+        MatMenuModule,
+        MatSnackBarModule,
+        MatBadgeModule,
+        MatExpansionModule,
+        NgxSkeletonLoaderModule.forRoot(),
+        MatProgressBarModule,
+        NgxMaterialTimepickerModule,
+    ],
 
   providers: [
     CartService,

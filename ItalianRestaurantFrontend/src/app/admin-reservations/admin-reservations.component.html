@@ -3,12 +3,12 @@
     <div>
       <br>
       <h1>{{ 'reservations' | translate }}</h1>
-      <br>
+      <p class="mt-0">{{'choose_reservation_date' | translate}}</p>
     </div>
     <div class="col-auto">
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>{{ 'choose_a_date' | translate }}</mat-label>
-        <input matInput [matDatepicker]="picker" (dateChange)="onChangeDate($event)" />
+        <input matInput [matDatepicker]="picker" (dateChange)="onChangeDate($event)" [ngModel]=defaultDate/>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
@@ -26,13 +26,22 @@
           </ng-container>
           <ng-container matColumnDef="reservationDate">
             <mat-header-cell *matHeaderCellDef> {{'reservation_date' | translate}} </mat-header-cell>
-            <mat-cell *matCellDef="let reservation"> {{ reservation.reservationDateStart | date: 'dd.MM.yyyy HH:mm' }} </mat-cell>
+            <mat-cell
+              *matCellDef="let reservation"> {{ reservation.reservationDateStart | date: 'dd.MM.yyyy HH:mm' }} </mat-cell>
           </ng-container>
-          <mat-header-row *matHeaderRowDef="['tableNumber', 'seats', 'reservationDate']"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: ['tableNumber', 'seats', 'reservationDate'];"></mat-row>
+          <ng-container matColumnDef="person">
+            <mat-header-cell *matHeaderCellDef> {{'person' | translate}} </mat-header-cell>
+            <mat-cell
+              *matCellDef="let reservation"> {{ getUsername(reservation) }} </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="['tableNumber', 'seats', 'reservationDate', 'person']"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: ['tableNumber', 'seats', 'reservationDate', 'person'];"></mat-row>
         </mat-table>
       </div>
       <br>
     </div>
-</div>
+    <div *ngIf="!showTables">
+      <div class="alert-primary center-alert">{{'no_reservations_day'|translate}}</div>
+    </div>
+  </div>
 </div>
