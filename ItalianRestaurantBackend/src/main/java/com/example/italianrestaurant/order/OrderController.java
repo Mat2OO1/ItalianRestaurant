@@ -77,7 +77,7 @@ public class  OrderController {
         try {
             orderService.deleteOrderById(id);
             return ResponseEntity.ok().build();
-        } catch (EmptyResultDataAccessException e) {
+        } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "There is no order with id: " + id, e);
         }

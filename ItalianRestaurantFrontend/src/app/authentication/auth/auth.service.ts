@@ -52,7 +52,7 @@ export class AuthService {
           resData => {
             this.handleAuthentication(resData.token, new Date(resData.expiration).getTime(), resData.role)
             this.translate.get('user_registered_successfully').subscribe((message) => {
-              this.snackbarService.openSnackbarSuccess(message);
+              this.snackbarService.openSnackbarError(message);
             });
           })
       )

@@ -59,7 +59,6 @@ export class ReserveTableComponent {
 
   private handleDialogResult(result: Reservation) {
     if (result) {
-      console.log(result)
       this.processing = true;
       this.dataStorageService.makeReservation(result).subscribe(
         (res) => {

@@ -6,7 +6,6 @@ import com.example.italianrestaurant.payments.Payment;
 import com.example.italianrestaurant.table.Table;
 import com.example.italianrestaurant.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;

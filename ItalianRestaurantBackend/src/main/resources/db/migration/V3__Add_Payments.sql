@@ -8,4 +8,4 @@ create table if not exists payments (
     created_at timestamp not null default now()
 );
 
-alter table orders add column payment_id integer references payments(id);
+alter table orders add column payment_id integer references payments(id) on delete cascade;

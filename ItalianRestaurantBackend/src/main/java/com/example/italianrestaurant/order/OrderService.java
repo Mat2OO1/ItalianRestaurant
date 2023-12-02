@@ -100,7 +100,8 @@ public class OrderService {
     }
 
     public void deleteOrderById(Long id) {
-        orderRepository.deleteById(id);
+        Order order = orderRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        orderRepository.delete(order);
     }
 
     private List<PaymentRequest> getPaymentRequestList(List<MealOrder> mealOrders) {

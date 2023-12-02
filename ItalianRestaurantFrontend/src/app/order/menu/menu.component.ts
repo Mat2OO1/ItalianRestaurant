@@ -50,7 +50,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.lang = localStorage.getItem('lang') || 'en';
     if (this.activatedRoute.snapshot.queryParams['payment'] === 'failed') {
       this.translate.get('payment_error').subscribe((message) => {
-        this.snackbarService.openSnackbarSuccess(message);
+        this.snackbarService.openSnackbarError(message);
       });
     }
     if (this.activatedRoute.snapshot.queryParams['table']) {
