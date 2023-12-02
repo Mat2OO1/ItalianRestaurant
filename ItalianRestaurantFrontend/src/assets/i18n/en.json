@@ -206,5 +206,6 @@
   "delete_account": "DELETE ACCOUNT",
   "delete_account_description": "Deleting your account will remove all of your information from our database. This cannot be undone.",
   "delete_account_confirmation": "To confirm this, type your password.",
-  "user_deleted_successfully": "Account deleted successfully"
+  "user_deleted_successfully": "Account deleted successfully",
+  "current_password_error_description": "If you don't have password assigned, please reset it using email."
 }

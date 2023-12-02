@@ -52,7 +52,7 @@
         <mat-icon [matBadge]="cartItemsCount" matBadgeColor="warn">shopping_cart</mat-icon>
       </button>
 
-      <button matTooltip="{{ 'profile' | translate }}" class="nav-elem" *ngIf="currentUser?.role === Role.USER"
+      <button matTooltip="{{ 'profile' | translate }}" class="nav-elem" *ngIf="currentUser"
               routerLink="account" mat-icon-button aria-label="Logout">
         <mat-icon>account_circle</mat-icon>
       </button>

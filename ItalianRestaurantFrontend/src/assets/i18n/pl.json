@@ -206,5 +206,6 @@
   "delete_account": "USUŃ KONTO",
   "delete_account_description": "Usunięcie konta spowoduje usunięcie wszystkich Twoich danych z naszej bazy danych. Ta operacja jest nieodwracalna.",
   "delete_account_confirmation": "Aby to potwierdzić, wpisz swoje hasło.",
-  "user_deleted_successfully": "Użytkownik usunięty pomyślnie"
+  "user_deleted_successfully": "Użytkownik usunięty pomyślnie",
+  "current_password_error_description": "Jeśli nie masz przypisanego hasła, zresetuj je za pomocą poczty elektronicznej."
 }

@@ -9,11 +9,13 @@ alter table orders
             on delete set null;
 
 alter table reservations
-    add constraint fk32qljf84jfuuh44ph9659tiih foreign key (user_id)
+    drop constraint if exists adfsadsf1321,
+    add constraint adfsadsf1321 foreign key (user_id)
             references users (id)
             on delete cascade;
 
 alter table tokens
-    add constraint fk32qljf8sdf34544ph9659tiih foreign key (user_id)
+    drop constraint if exists fk2dylsfo39lgjyqml2tbe0b0ss,
+    add constraint fk2dylsfo39lgjyqml2tbe0b0ss foreign key (user_id)
             references users (id)
             on delete cascade;

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../authentication/auth/auth.service";
 import {UserDto} from "../models/user-dto";
@@ -8,25 +8,26 @@ import {Profile} from "../models/profile";
 import {SnackbarService} from "../shared/sncakbar.service";
 import {TranslateService} from "@ngx-translate/core";
 import {DeleteConfirmationDialogComponent} from "./delete-confirmation-dialog/delete-confirmation-dialog.component";
+import {Role} from "../authentication/auth/user.model";
 
 @Component({
   selector: 'app-user-settings',
   templateUrl: './user-settings.component.html',
   styleUrls: ['./user-settings.component.css']
 })
-export class UserSettingsComponent {
+export class UserSettingsComponent implements OnInit {
 
   accountForm: FormGroup
   processing = true;
-  user?: Profile;
+  userData?: Profile;
   isLocalAccount = true;
+  userRole?: Role;
 
   constructor(private authService: AuthService,
               private dialog: MatDialog,
               private snackbarService: SnackbarService,
               private translate: TranslateService
   ) {
-
 
     this.accountForm = new FormGroup({
       firstName: new FormControl({value: '', disabled: true}, [Validators.required]),
@@ -36,9 +37,12 @@ export class UserSettingsComponent {
       newsletter: new FormControl({value: false, disabled: true}),
     })
 
+  }
+
+  ngOnInit() {
     this.authService.getLoggedInUser().subscribe(user => {
-      this.user = user;
-      this.isLocalAccount = this.user.provider === 'local';
+      this.userData = user;
+      this.isLocalAccount = this.userData.provider === 'local';
       this.enableFormInputs();
       this.accountForm.setValue({
         firstName: this.isLocalAccount ? user.firstName : user.username.split(' ')[0],
@@ -48,6 +52,10 @@ export class UserSettingsComponent {
         newsletter: user.newsletter
       })
       this.processing = false;
+    })
+
+    this.authService.user.subscribe(user => {
+        this.userRole = user?.role;
     })
   }
 
@@ -79,7 +87,7 @@ export class UserSettingsComponent {
 
   openPasswordDialog() {
     this.dialog.open(PasswordDialogComponent, {
-        data: {email: this.user?.email},
+        data: {provider: this.userData?.provider},
         autoFocus: false
       }
     );
@@ -105,7 +113,7 @@ export class UserSettingsComponent {
     });
   }
 
-  handleDialogResult(result: { delete: boolean, password?: string}) {
+  handleDialogResult(result: { delete: boolean, password?: string }) {
     if (result.delete && result.password) {
       this.authService.deleteUser(result.password).subscribe(() => {
         this.translate.get('user_deleted_successfully').subscribe((message) => {
@@ -115,4 +123,6 @@ export class UserSettingsComponent {
       })
     }
   }
+
+  protected readonly Role = Role;
 }
