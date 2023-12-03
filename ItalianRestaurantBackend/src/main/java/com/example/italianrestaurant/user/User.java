@@ -59,8 +59,8 @@ public class User {
     private List<PasswordToken> passwordTokens;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Reservation reservations;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Reservation> reservation;
 
 
 }

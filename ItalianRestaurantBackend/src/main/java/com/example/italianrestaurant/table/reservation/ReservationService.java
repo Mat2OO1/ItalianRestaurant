@@ -26,9 +26,7 @@ public class ReservationService {
     private final ModelMapper modelMapper;
 
     public Reservation addReservation(UserPrincipal userPrincipal, ReservationDto reservationDto) {
-        log.warn(reservationDto.getReservationDateStart());
         User user = userService.getUserByEmail(userPrincipal.getEmail());
-        log.info(this.reservationRepository.getReservationForTable(reservationDto.getTable().getId(), LocalDate.from(reservationDto.getReservationDateStart())));
         if (this.reservationRepository.getReservationsByUserAndDate(userPrincipal.getEmail(), reservationDto.getReservationDateStart()).size() != 0) {
             throw new UserReservationConflictException();
         } else if (this.reservationRepository.getReservedTables(
@@ -44,7 +42,7 @@ public class ReservationService {
     }
 
     public List<Reservation> getReservations(UserPrincipal userPrincipal) {
-        return this.reservationRepository.getAllByUserEmailAndDateAfter(userPrincipal.getEmail(), LocalDateTime.now());
+        return this.reservationRepository.getAllByUserEmailAndDateAfter(userPrincipal.getEmail(), LocalDate.now());
     }
 
     public List<Reservation> getReservationsForDate(LocalDate date) {
