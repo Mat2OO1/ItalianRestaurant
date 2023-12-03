@@ -81,6 +81,7 @@
           <a routerLink="/admin-tables-panel" (click)="sidenav.toggle()" mat-list-item aria-label="Admin Tables Panel">{{'table' | translate}}</a>
           <a routerLink="/admin-menu" (click)="sidenav.toggle()" mat-list-item aria-label="Admin Menu Editor">{{'menu_editor' | translate}}</a>
           <a routerLink="/admin-panel" (click)="sidenav.toggle()" mat-list-item aria-label="Admin Panel">{{'orders' | translate}}</a>
+          <a routerLink="/admin-reservations" (click)="sidenav.toggle()" mat-list-item aria-label="Admin Reservations">{{'reservations' | translate}}</a>
         </ng-container>
 
         <ng-container *ngIf="currentUser === null">
@@ -103,6 +104,9 @@
           {{ 'cart' | translate }}
         </a>
 
+        <a *ngIf="currentUser" (click)="sidenav.toggle()" routerLink="/account" mat-list-item aria-label="Profile">
+          {{ 'profile' | translate }}
+        </a>
         <button *ngIf="currentUser?.role" (click)="onLogout(); sidenav.toggle()" mat-list-item aria-label="Logout">
           {{ 'logout' | translate }}
         </button>

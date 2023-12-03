@@ -18,7 +18,7 @@ import {SnackbarService} from "../shared/sncakbar.service";
   templateUrl: './admin-table-qr.component.html',
   styleUrls: ['./admin-table-qr.component.css']
 })
-export class AdminTableQrComponent implements OnInit, AfterViewInit {
+export class AdminTableQrComponent implements OnInit {
 
   tables?: Table[]
   protected readonly DialogMode = DialogMode;
@@ -30,23 +30,10 @@ export class AdminTableQrComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort | null = null;
   processing = false;
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-  }
-
-  announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
-  }
-
   constructor(
     private dataStorageService: DataStorageService,
     private qrCodeService: QrCodeService,
     private dialog: MatDialog,
-    private _liveAnnouncer: LiveAnnouncer,
     private translate: TranslateService,
     private snackBarService: SnackbarService) {
   }
