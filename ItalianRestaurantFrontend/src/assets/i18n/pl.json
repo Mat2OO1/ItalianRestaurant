@@ -164,7 +164,7 @@
   "user_password_reset": "Hasło zostało zresetowane pomyślnie",
   "user_check_email": "Sprawdź swoją skrzynkę e-mail, aby zresetować hasło",
   "unknown_error" : "Nieznany błąd!",
-  "payment_error" : "Płatność nie przeszła. Zamówienie usunięte",
+  "payment_error" : "Płatność nie powiodła się. Zamówienie usunięte",
   "order_to_table_error": "Zamawiasz do stolika ",
   "meal_added_to_card_error": "Zamówienie dodane do koszyka",
   "table_reserved_successfully": "Stolik zarezerowany poprawnie",
