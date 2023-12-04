@@ -216,5 +216,7 @@
   "choose_reservation_date": "Wybierz datę dla której chcesz sprawdzić rezerwacje stolików.",
   "at_restaurant": "W restauracji",
   "table_has_orders": "Do tego stolika są przypisane zamówienia. Najpierw je wykonaj lub usuń.",
-  "order_table_error": "Nie ma takiego stolika"
+  "order_table_error": "Nie ma takiego stolika",
+  "user_email_not_found": "Podany email nie istnieje"
+
 }

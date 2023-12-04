@@ -27,14 +27,19 @@ export class EmailFormComponent {
     let email = this.emailForm.value['email'];
     this.authService.requestResetPassword(email, this.lang).subscribe(
       (res) => {
-        this.translate.get('user_check_email')
-          .subscribe((message) => {
+        this.translate.get('user_check_email').subscribe((message) => {
           this.snackbarService.openSnackbarSuccess(message);
           this.processing = false;
         });
         this.router.navigate(['']);
+      },
+      (err) => {
+        this.translate.get('user_email_not_found').subscribe((message) => {
+          this.snackbarService.openSnackbarError(message); // Corrected method
+          this.processing = false;
+        });
       }
-    );;
+    );
   }
 
 
