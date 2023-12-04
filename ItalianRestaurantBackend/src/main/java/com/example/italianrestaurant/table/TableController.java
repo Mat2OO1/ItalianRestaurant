@@ -19,17 +19,17 @@ public class TableController {
     private final TableService tableService;
 
     @GetMapping
-    public ResponseEntity<List<Table>> getAllTables() {
-        return ResponseEntity.ok(tableService.getAllTables());
+    public ResponseEntity<List<Table>> getNotDeletedTables() {
+        return ResponseEntity.ok(tableService.getAllNotDeletedTables());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Table> getTableById(@PathVariable Long id) {
+    @GetMapping("/{nr}")
+    public ResponseEntity<Table> getTableByNumber(@PathVariable Long nr) {
         try {
-            return ResponseEntity.ok(tableService.getTableById(id));
+            return ResponseEntity.ok(tableService.getTableByNumber(nr));
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "There is no order with id: " + id, e);
+                    HttpStatus.NOT_FOUND, "There is no order with id: " + nr, e);
         }
     }
 

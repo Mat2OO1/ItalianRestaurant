@@ -20,12 +20,13 @@ public class Table {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private int number;
 
     @Column(name = "seats_nr", nullable = false)
     private int seats;
 
+    private boolean deleted;
 
     @Override
     public final boolean equals(Object o) {

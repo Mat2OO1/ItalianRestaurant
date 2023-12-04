@@ -213,5 +213,8 @@
   "table_already_exists": "Table already exists",
   "no_reservations_day": "There are no reservations on selected date",
   "person": "Person",
-  "choose_reservation_date": "Choose reservation date."
+  "choose_reservation_date": "Choose reservation date.",
+  "at_restaurant": "At the restaurant",
+  "table_has_orders": "There are orders assigned to this table. Please finish or delete them first.",
+  "order_table_error": "There is no such table"
 }

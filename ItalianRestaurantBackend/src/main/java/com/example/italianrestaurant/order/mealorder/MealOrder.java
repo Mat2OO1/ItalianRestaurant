@@ -30,6 +30,9 @@ public class MealOrder {
     @Column(nullable = false)
     private long quantity;
 
+    @Column(nullable = false)
+    private double price;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
     @ToString.Exclude

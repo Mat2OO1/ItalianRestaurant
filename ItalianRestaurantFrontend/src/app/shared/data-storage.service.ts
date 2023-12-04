@@ -175,4 +175,9 @@ export class DataStorageService {
         seats: result.seats,
       })
   }
+
+  getTableByNumber(tableNr: number) {
+    return this.http
+      .get<Table>(`${environment.apiUrl}/tables/${tableNr}`)
+  }
 }

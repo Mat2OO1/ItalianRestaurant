@@ -43,7 +43,7 @@ public class TableControllerTest {
     void shouldGetAllTables() throws Exception {
         //given
         val table = Utils.getTable();
-        given(tableService.getAllTables()).willReturn(List.of(table));
+        given(tableService.getAllNotDeletedTables()).willReturn(List.of(table));
 
         // when
         val resultActions = mockMvc.perform(get("/tables")

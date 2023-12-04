@@ -1,0 +1,1 @@
+alter table tables add column deleted boolean;

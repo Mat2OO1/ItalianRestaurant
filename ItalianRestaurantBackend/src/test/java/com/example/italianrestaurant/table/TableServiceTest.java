@@ -36,7 +36,7 @@ public class TableServiceTest {
         val tables = List.of(Utils.getTable());
         given(tableRepository.findAll()).willReturn(tables);
         //when
-        val allTables = tableService.getAllTables();
+        val allTables = tableService.getAllNotDeletedTables();
         //then
         assertThat(allTables).isEqualTo(tables);
     }
@@ -46,7 +46,7 @@ public class TableServiceTest {
         //given
         val tables = List.of();
         //when
-        val allTables = tableService.getAllTables();
+        val allTables = tableService.getAllNotDeletedTables();
         //then
         assertThat(allTables).isEqualTo(tables);
     }

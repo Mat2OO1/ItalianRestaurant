@@ -53,7 +53,7 @@ public class OrderService {
         User user = userService.getUserByEmail(userPrincipal.getEmail());
         Table table = null;
         if (orderDto.getTableNr() != 0)
-            table = tableService.getTableById(orderDto.getTableNr());
+            table = tableService.getTableByNumber(orderDto.getTableNr());
 
         Order order = Order.builder()
                 .delivery(dbDelivery)

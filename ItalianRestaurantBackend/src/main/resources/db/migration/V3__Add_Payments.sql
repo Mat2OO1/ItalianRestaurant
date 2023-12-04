@@ -1,5 +1,3 @@
-alter table meal_orders drop column price;
-
 create table if not exists payments (
     id bigserial primary key,
     session_id varchar(255) not null,

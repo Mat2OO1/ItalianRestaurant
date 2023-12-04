@@ -54,10 +54,18 @@ export class MenuComponent implements OnInit, OnDestroy {
       });
     }
     if (this.activatedRoute.snapshot.queryParams['table']) {
-      this.cartService.addTable(this.activatedRoute.snapshot.queryParams['table'])
-      this.translate.get('order_to_table_error').subscribe((message) => {
-        this.snackbarService.openSnackbarSuccess(message + + this.activatedRoute.snapshot.queryParams['table']);
-      });
+      this.dataStorageService.getTableByNumber(this.activatedRoute.snapshot.queryParams['table'])
+        .subscribe(() => {
+          this.translate.get('order_to_table_error').subscribe((message) => {
+            this.snackbarService.openSnackbarSuccess(message + ' ' + this.activatedRoute.snapshot.queryParams['table']);
+            this.cartService.addTable(this.activatedRoute.snapshot.queryParams['table'])
+          });
+        }, error => {
+          this.translate.get('order_table_error').subscribe((message) => {
+            this.snackbarService.openSnackbarError(message + ' ' + this.activatedRoute.snapshot.queryParams['table']);
+          });
+        })
+
     }
 
     this.dataStorageService.getCategories()

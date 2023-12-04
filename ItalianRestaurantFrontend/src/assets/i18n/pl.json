@@ -213,5 +213,8 @@
   "table_already_exists": "Stolik już istnieje",
   "no_reservations_day": "W tym dniu nie ma żadnych rezerwacji.",
   "person": "Osoba",
-  "choose_reservation_date": "Wybierz datę dla której chcesz sprawdzić rezerwacje stolików."
+  "choose_reservation_date": "Wybierz datę dla której chcesz sprawdzić rezerwacje stolików.",
+  "at_restaurant": "W restauracji",
+  "table_has_orders": "Do tego stolika są przypisane zamówienia. Najpierw je wykonaj lub usuń.",
+  "order_table_error": "Nie ma takiego stolika"
 }

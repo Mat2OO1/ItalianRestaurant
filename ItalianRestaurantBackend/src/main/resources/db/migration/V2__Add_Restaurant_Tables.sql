@@ -1,7 +1,7 @@
 create table if not exists tables
 (
     id       bigserial primary key,
-    number   int          not null unique,
+    number   int          not null,
     seats_nr int          not null,
     status   varchar(255) not null
 );
