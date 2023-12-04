@@ -39,7 +39,7 @@ public class MealCategoryServiceTest {
         mealCategory2.setId(2L);
         mealCategory2.setName("Meal2");
 
-        given(mealCategoryRepository.findAll()).willReturn(List.of(mealCategory, mealCategory2));
+        given(mealCategoryRepository.getMealCategoriesByDeletedIsFalse()).willReturn(List.of(mealCategory, mealCategory2));
 
         //when
         val returnedMealCategories = mealCategoryService.getAllMealCategories();
@@ -51,7 +51,7 @@ public class MealCategoryServiceTest {
     @Test
     void shouldNotGetAllMealCategories() {
         //given
-        given(mealCategoryRepository.findAll()).willReturn(List.of());
+        given(mealCategoryRepository.getMealCategoriesByDeletedIsFalse()).willReturn(List.of());
 
         //when
         val returnedMealCategories = mealCategoryService.getAllMealCategories();
@@ -65,7 +65,7 @@ public class MealCategoryServiceTest {
         //given
         val mealCategory = Utils.getMealCategory();
         mealCategory.setId(1L);
-        given(mealCategoryRepository.findById(1L)).willReturn(Optional.of(mealCategory));
+        given(mealCategoryRepository.findByIdAndDeletedIsFalse(1L)).willReturn(Optional.of(mealCategory));
         //when
         val returnedMealCategory = mealCategoryService.getMealCategoryById(1L);
 
@@ -76,7 +76,7 @@ public class MealCategoryServiceTest {
     @Test
     void shouldNotGetMealCategoryById() {
         //given
-        given(mealCategoryRepository.findById(1L)).willReturn(Optional.empty());
+        given(mealCategoryRepository.findByIdAndDeletedIsFalse(1L)).willReturn(Optional.empty());
 
         //when
         assertThatThrownBy(() -> mealCategoryService.getMealCategoryById(1L))
@@ -90,7 +90,7 @@ public class MealCategoryServiceTest {
     void shouldGetMealCategoryByName(){
         //given
         MealCategory mealCategory = Utils.getMealCategory();
-        given(mealCategoryRepository.findByName(mealCategory.getName())).willReturn(Optional.of(mealCategory));
+        given(mealCategoryRepository.findByNameAndDeletedIsFalse(any(String.class))).willReturn(Optional.of(mealCategory));
         //when
         val returnedMealCategory = mealCategoryService.getMealCategoryByName(mealCategory.getName());
 
@@ -101,13 +101,13 @@ public class MealCategoryServiceTest {
     @Test
     void shouldNotGetMealCategoryByName(){
         //given
-        given(mealCategoryRepository.findByName(any())).willReturn(Optional.empty());
+        given(mealCategoryRepository.findByNameAndDeletedIsFalse(any())).willReturn(Optional.empty());
 
         //when
         assertThatThrownBy(() -> mealCategoryService.getMealCategoryByName(any())).isInstanceOf(EntityNotFoundException.class);
 
         //then
-        verify(mealCategoryRepository, times(1)).findByName(any());
+        verify(mealCategoryRepository, times(1)).findByNameAndDeletedIsFalse(any());
     }
 
 

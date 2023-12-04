@@ -21,112 +21,113 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = AuthenticationController.class,
-        excludeFilters =
-        @ComponentScan.Filter(
-                type = FilterType.ASSIGNABLE_TYPE,
-                classes = JwtAuthenticationFilter.class))
+    excludeFilters =
+    @ComponentScan.Filter(
+        type = FilterType.ASSIGNABLE_TYPE,
+        classes = JwtAuthenticationFilter.class))
 @AutoConfigureMockMvc(addFilters = false)
 public class AuthenticationControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired
+  private MockMvc mockMvc;
 
-    @MockBean
-    private AuthenticationService authenticationService;
+  @MockBean
+  private AuthenticationService authenticationService;
 
-    @Test
-    void shouldAuthenticate() throws Exception {
+  @Test
+  void shouldAuthenticate() throws Exception {
 
-        // given
-        val authenticationRequest = AuthenticationRequest.builder()
-                .email("email@email.com")
-                .password("password")
-                .build();
+    // given
+    val authenticationRequest = AuthenticationRequest.builder()
+        .email("email@email.com")
+        .password("password")
+        .build();
 
-        val authenticationResponse = AuthenticationResponse.builder()
-                .token("token")
-                .build();
+    val authenticationResponse = AuthenticationResponse.builder()
+        .token("token")
+        .build();
 
-        given(authenticationService.authenticate(authenticationRequest)).willReturn(authenticationResponse);
+    given(authenticationService.authenticate(authenticationRequest)).willReturn(
+        authenticationResponse);
 
-        // when
-        val resultActions = mockMvc.perform(post("/auth/authenticate")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(Utils.objectToJsonString(authenticationRequest)));
+    // when
+    val resultActions = mockMvc.perform(post("/auth/authenticate")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(Utils.objectToJsonString(authenticationRequest)));
 
-        // then
-        resultActions.andExpect(status().isOk());
-    }
+    // then
+    resultActions.andExpect(status().isOk());
+  }
 
-    @Test
-    void shouldNotAuthenticate() throws Exception {
+  @Test
+  void shouldNotAuthenticate() throws Exception {
 
-        // given
-        val authenticationRequest = AuthenticationRequest.builder()
-                .email("email@email.com")
-                .password("password")
-                .build();
+    // given
+    val authenticationRequest = AuthenticationRequest.builder()
+        .email("email@email.com")
+        .password("password")
+        .build();
 
+    given(authenticationService.authenticate(authenticationRequest))
+        .willThrow(BadCredentialsException.class);
 
-        given(authenticationService.authenticate(authenticationRequest))
-                .willThrow(BadCredentialsException.class);
+    // when
+    val resultActions = mockMvc.perform(post("/auth/authenticate")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(Utils.objectToJsonString(authenticationRequest)));
 
-        // when
-        val resultActions = mockMvc.perform(post("/auth/authenticate")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(Utils.objectToJsonString(authenticationRequest)));
+    // then
+    resultActions.andExpect(status().isNotFound());
+  }
 
-        // then
-        resultActions.andExpect(status().isNotFound());
-    }
+  @Test
+  void shouldRegister() throws Exception {
 
-    @Test
-    void shouldRegister() throws Exception {
+    // given
+    val registerRequest = RegisterRequest.builder()
+        .email("example@email.com")
+        .password("P@ssword")
+        .firstname("firstname")
+        .lastname("lastname")
+        .phoneNumber("123456789")
+        .build();
 
-        // given
-        val registerRequest = RegisterRequest.builder()
-                .email("example@email.com")
-                .password("password")
-                .firstname("firstname")
-                .lastname("lastname")
-                .build();
+    val authenticationResponse = AuthenticationResponse.builder()
+        .token("token")
+        .build();
 
-        val authenticationResponse = AuthenticationResponse.builder()
-                .token("token")
-                .build();
+    given(authenticationService.register(registerRequest)).willReturn(authenticationResponse);
 
-        given(authenticationService.register(registerRequest)).willReturn(authenticationResponse);
+    // when
+    val resultActions = mockMvc.perform(post("/auth/register")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(Utils.objectToJsonString(registerRequest)));
 
-        // when
-        val resultActions = mockMvc.perform(post("/auth/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(Utils.objectToJsonString(registerRequest)));
+    // then
+    resultActions.andExpect(status().isOk());
+  }
 
-        // then
-        resultActions.andExpect(status().isOk());
-    }
+  @Test
+  void shouldNotRegister() throws Exception {
 
-    @Test
-    void shouldNotRegister() throws Exception {
+    // given
+    val registerRequest = RegisterRequest.builder()
+        .email("email")
+        .password("password")
+        .firstname("firstname")
+        .lastname("lastname")
+        .build();
 
-        // given
-        val registerRequest = RegisterRequest.builder()
-                .email("email")
-                .password("password")
-                .firstname("firstname")
-                .lastname("lastname")
-                .build();
+    doThrow(EntityExistsException.class).when(authenticationService).register(registerRequest);
 
-        doThrow(EntityExistsException.class).when(authenticationService).register(registerRequest);
+    // when
+    val resultActions = mockMvc.perform(post("/auth/register")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(Utils.objectToJsonString(registerRequest)));
 
-        // when
-        val resultActions = mockMvc.perform(post("/auth/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(Utils.objectToJsonString(registerRequest)));
-
-        // then
-        resultActions.andExpect(status().isBadRequest());
-    }
+    // then
+    resultActions.andExpect(status().isBadRequest());
+  }
 
 
 }

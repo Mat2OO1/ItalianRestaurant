@@ -132,22 +132,6 @@ public class MealCategoryControllerTest {
     }
 
     @Test
-    void shouldNotAddCategory() throws Exception {
-        //given
-        val mealCategoryDto = Utils.getMealCategoryDto();
-        val mealCategoryJson = Utils.objectToJsonString(mealCategoryDto);
-
-        given(mealCategoryService.addCategory(any())).willThrow(EntityNotFoundException.class);
-
-        //when
-        val resultActions = mockMvc.perform(post("/meal-categories/add")
-                .content(mealCategoryJson)
-                .contentType(MediaType.APPLICATION_JSON));
-        //then
-        resultActions.andExpect(status().isNotFound());
-    }
-
-    @Test
     void shouldEditCategory() throws Exception {
         //given
         val mealCategoryDto = Utils.getMealCategoryDto();

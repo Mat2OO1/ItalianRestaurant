@@ -199,25 +199,26 @@ public class OrderServiceTest {
     void shouldDeleteOrderById() {
         //given
         val id = 1L;
-        doNothing().when(orderRepository).deleteById(id);
+        val order =Utils.getOrder();
+        when(orderRepository.findById(any(Long.class))).thenReturn(Optional.ofNullable(order));
 
         //when
         orderService.deleteOrderById(id);
 
         //then
-        verify(orderRepository).deleteById(id);
+        verify(orderRepository).findById(id);
     }
 
     @Test
     void shouldNotDeleteOrderById() {
         //given
         val id = 1L;
-        doThrow(new EmptyResultDataAccessException(0)).when(orderRepository).deleteById(id);
+        doThrow(new EntityNotFoundException()).when(orderRepository).findById(id);
 
         //when
         //then
-        assertThatThrownBy(() -> orderService.deleteOrderById(id))
-                .isInstanceOf(EmptyResultDataAccessException.class);
+         assertThatThrownBy(() -> orderService.deleteOrderById(id))
+                .isInstanceOf(EntityNotFoundException.class);
     }
 
 }

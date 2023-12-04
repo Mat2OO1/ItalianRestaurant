@@ -39,9 +39,9 @@ public class EmailServiceTest {
     public void setUp() {
         email = EmailEntity.builder()
                 .to("email@email.com")
-                .from("italian.restaurant@rest.com")
+                .from("ladolcevita@rest.com")
                 .subject("Password reset request")
-                .template("password-reset.html")
+                .template("password-reset-pl.html")
                 .build();
 
         email.addProperty("email", "email@email.com");

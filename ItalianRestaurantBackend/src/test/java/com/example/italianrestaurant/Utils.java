@@ -212,7 +212,7 @@ public class Utils {
 
     public static PasswordResetRequest getPasswordResetRequest() {
         return PasswordResetRequest.builder()
-                .password("password")
+                .password("P@ssword")
                 .token("token")
                 .build();
     }

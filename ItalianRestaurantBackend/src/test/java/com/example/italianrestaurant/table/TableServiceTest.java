@@ -2,6 +2,7 @@ package com.example.italianrestaurant.table;
 
 import com.example.italianrestaurant.Utils;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.Optional;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +35,7 @@ public class TableServiceTest {
     void shouldGetAllTables() {
         //given
         val tables = List.of(Utils.getTable());
-        given(tableRepository.findAll()).willReturn(tables);
+        given(tableRepository.findAllByDeletedIsFalse()).willReturn(tables);
         //when
         val allTables = tableService.getAllNotDeletedTables();
         //then
@@ -91,21 +92,12 @@ public class TableServiceTest {
     void shouldDeleteTable() {
         //given
         val id = 1L;
-        doNothing().when(tableRepository).deleteById(id);
+        val table = Utils.getTable();
+        when(tableRepository.findById(any(Long.class))).thenReturn(Optional.of(table));
         //when
         tableService.deleteTable(id);
         //then
-        verify(tableRepository, times(1)).deleteById(id);
+        verify(tableRepository, times(1)).save(any(Table.class));
     }
 
-    @Test
-    void shouldNotDeleteTable() {
-        //given
-        val id = 1L;
-        doThrow(new EntityNotFoundException()).when(tableRepository).deleteById(id);
-        //when
-        //then
-        assertThatThrownBy(() -> tableService.deleteTable(id))
-                .isInstanceOf(EntityNotFoundException.class);
-    }
 }

@@ -144,18 +144,4 @@ public class OrderControllerTest {
         resultActions.andExpect(status().isOk());
     }
 
-    @Test
-    void shouldNotDeleteOrderById() throws Exception {
-        //given
-        val id = 1L;
-
-        doThrow(new EmptyResultDataAccessException(0)).when(orderService).deleteOrderById(id);
-
-        // when
-        val resultActions = mockMvc.perform(delete("/order/" + id)
-                .contentType(MediaType.APPLICATION_JSON));
-
-        // then
-        resultActions.andExpect(status().isNotFound());
-    }
 }

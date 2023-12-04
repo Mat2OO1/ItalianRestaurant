@@ -125,23 +125,10 @@ public class MealServiceTest {
     }
 
     @Test
-    void shouldNotAddMealWhenNameAlreadyExists() {
-        //given
-        MealDto mealDto = Utils.getMealDto();
-        given(mealRepository.existsByName(any())).willReturn(true);
-
-        //when
-        assertThatThrownBy(() -> mealService.addMeal(mealDto, any())).isInstanceOf(EntityExistsException.class);
-
-        //then
-        verify(mealRepository, times(0)).save(any());
-    }
-
-    @Test
     void shouldNotAddMealWhenCategoryDoesntExist() {
         //given
         MealDto mealDto = Utils.getMealDto();
-        given(mealRepository.existsByName(any())).willReturn(false);
+        given(mealRepository.findByNameAndDeletedIsFalse(any())).willReturn(Optional.empty());
         given(mealCategoryService.getMealCategoryByName(any())).willThrow(EntityNotFoundException.class);
 
         //when
@@ -193,7 +180,7 @@ public class MealServiceTest {
         //when
         mealService.deleteMeal(1L);
         //then
-        verify(mealRepository, times(1)).delete(any());
+        verify(mealRepository, times(1)).save(any());
 
     }
 

@@ -56,31 +56,31 @@ public class TableControllerTest {
     }
 
     @Test
-    void shouldGetTableById() throws Exception {
+    void shouldGetTableByNumber() throws Exception {
         //given
-        val id = 1L;
+        val number = 1L;
         val table = Utils.getTable();
-        table.setId(id);
-        given(tableService.getTableById(1L)).willReturn(table);
+        table.setNumber(1);
+        given(tableService.getTableByNumber(1L)).willReturn(table);
 
         // when
-        val resultActions = mockMvc.perform(get("/tables/" + id)
+        val resultActions = mockMvc.perform(get("/tables/" + number)
                 .contentType(MediaType.APPLICATION_JSON));
 
         // then
         resultActions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.id").value(number))
                 .andExpect(jsonPath("$.number").value(table.getNumber()));
     }
 
     @Test
-    void shouldNotGetTableById() throws Exception {
+    void shouldNotGetTableByNumber() throws Exception {
         //given
-        val id = 1L;
-        given(tableService.getTableById(1L)).willThrow(new EntityNotFoundException());
+        val number = 1L;
+        given(tableService.getTableByNumber(1L)).willThrow(new EntityNotFoundException());
 
         // when
-        val resultActions = mockMvc.perform(get("/tables/" + id)
+        val resultActions = mockMvc.perform(get("/tables/" + number)
                 .contentType(MediaType.APPLICATION_JSON));
 
         // then

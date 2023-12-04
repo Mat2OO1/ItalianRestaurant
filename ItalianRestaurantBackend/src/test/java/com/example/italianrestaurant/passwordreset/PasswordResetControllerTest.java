@@ -25,83 +25,89 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = PasswordResetController.class,
-        excludeFilters =
-        @ComponentScan.Filter(
-                type = FilterType.ASSIGNABLE_TYPE,
-                classes = JwtAuthenticationFilter.class))
+    excludeFilters =
+    @ComponentScan.Filter(
+        type = FilterType.ASSIGNABLE_TYPE,
+        classes = JwtAuthenticationFilter.class))
 @AutoConfigureMockMvc(addFilters = false)
 public class PasswordResetControllerTest {
 
-    @Autowired
-    MockMvc mockMvc;
+  @Autowired
+  MockMvc mockMvc;
 
-    @MockBean
-    PasswordResetService passwordResetService;
+  @MockBean
+  PasswordResetService passwordResetService;
 
-    @Test
-    void shouldSendResetRequest() throws Exception {
-        //given
-        val email = "email";
-        val passwordToken = Utils.getPasswordToken();
-        val user = Utils.getUser();
-        passwordToken.setUser(user);
-        given(passwordResetService.sendResetPasswordRequest(any(), any())).willReturn(passwordToken);
+  @Test
+  void shouldSendResetRequest() throws Exception {
+    //given
+    val email = "email";
+    val passwordToken = Utils.getPasswordToken();
+    val user = Utils.getUser();
+    val lang = "pl";
+    passwordToken.setUser(user);
+    given(passwordResetService.sendResetPasswordRequest(any(), any())).willReturn(passwordToken);
 
-        //when
-        val resultActions = mockMvc.perform(get("/password/request")
-                .contentType(MediaType.APPLICATION_JSON)
-                .param("email", email));
+    //when
+    val resultActions = mockMvc.perform(get("/password/request")
+        .contentType(MediaType.APPLICATION_JSON)
+        .param("email", email)
+        .param("lang", lang));
 
-        //then
-        resultActions.andExpect(status().isOk());
-        String contentAsString = resultActions.andReturn().getResponse().getContentAsString();
-        val resultPasswordToken = Utils.jsonStringToObject(contentAsString, PasswordToken.class);
-        assertThat(resultPasswordToken).isEqualTo(passwordToken);
 
-    }
+    //then
+    resultActions.andExpect(status().isOk());
+    String contentAsString = resultActions.andReturn().getResponse().getContentAsString();
+    val resultPasswordToken = Utils.jsonStringToObject(contentAsString, PasswordToken.class);
+    assertThat(resultPasswordToken).isEqualTo(passwordToken);
 
-    @Test
-    void shouldNotSendResetRequest() throws Exception {
-        //given
-        val email = "email";
-        val lang = "en";
-        given(passwordResetService.sendResetPasswordRequest(email, lang)).willThrow(new MessagingException());
+  }
 
-        // when
-        val resultActions = mockMvc.perform(get("/password/request")
-                .param("email", email));
+  @Test
+  void shouldNotSendResetRequest() throws Exception {
+    //given
+    val email = "email";
+    val lang = "en";
+    given(passwordResetService.sendResetPasswordRequest(email, lang)).willThrow(
+        new MessagingException());
 
-        // then
-        resultActions.andExpect(status().isBadGateway());
-    }
+    // when
+    val resultActions = mockMvc.perform(get("/password/request")
+        .param("email", email));
 
-    @Test
-    void shouldNotFindUserAndNotSendPasswordRequest() throws Exception {
-        //given
-        val email = "email";
-        val lang = "en";
-        given(passwordResetService.sendResetPasswordRequest(email, lang)).willThrow(new EntityNotFoundException());
+    // then
+    resultActions.andExpect(status().isBadRequest());
+  }
 
-        // when
-        val resultActions = mockMvc.perform(get("/password/request")
-                .param("email", email));
+  @Test
+  void shouldNotFindUserAndNotSendPasswordRequest() throws Exception {
+    //given
+    val email = "email";
+    val lang = "en";
+    given(passwordResetService.sendResetPasswordRequest(email, lang)).willThrow(
+        new EntityNotFoundException());
 
-        // then
-        resultActions.andExpect(status().isNotFound());
-    }
+    // when
+    val resultActions = mockMvc.perform(get("/password/request")
+        .param("email", email)
+        .param("lang", lang));
 
-    @Test
-    void shouldResetPassword() throws Exception {
-        //given
-        val passwordResetRequest = Utils.getPasswordResetRequest();
-        doNothing().when(passwordResetService).resetPassword(passwordResetRequest);
+    // then
+    resultActions.andExpect(status().isNotFound());
+  }
 
-        //when
-        val resultActions = mockMvc.perform(post("/password/reset")
-                .content(Utils.objectToJsonString(passwordResetRequest))
-                .contentType(MediaType.APPLICATION_JSON));
+  @Test
+  void shouldResetPassword() throws Exception {
+    //given
+    val passwordResetRequest = Utils.getPasswordResetRequest();
+    doNothing().when(passwordResetService).resetPassword(passwordResetRequest);
 
-        //then
-        resultActions.andExpect(status().isOk());
-    }
+    //when
+    val resultActions = mockMvc.perform(post("/password/reset")
+        .content(Utils.objectToJsonString(passwordResetRequest))
+        .contentType(MediaType.APPLICATION_JSON));
+
+    //then
+    resultActions.andExpect(status().isOk());
+  }
 }
