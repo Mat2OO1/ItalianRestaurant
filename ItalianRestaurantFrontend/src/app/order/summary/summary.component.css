@@ -56,7 +56,7 @@ body {
   font-size: 1em;
   display: flex;
   flex-wrap: wrap;
-  row-gap: 10px;
+  row-gap: 5px;
   padding: 1rem 1.5rem;
   align-items: center;
   justify-content: space-between;
@@ -66,7 +66,7 @@ body {
 .plan-box-left {
   display: flex;
   flex-wrap: wrap;
-  flex: 50%;
+  flex: 60%;
   align-items: center;
   text-align: left;
 }
