@@ -47,7 +47,7 @@ public class PaymentService {
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.BLIK)
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.P24)
-                .addPaymentMethodType(SessionCreateParams.PaymentMethodType.PAYPAL)
+//                .addPaymentMethodType(SessionCreateParams.PaymentMethodType.PAYPAL)
                 .setMode(SessionCreateParams.Mode.PAYMENT).setSuccessUrl(frontUrl + "/confirmation/" + orderId)
                 .setCancelUrl(frontUrl + "/menu?payment=failed")
                 .addAllLineItem(
