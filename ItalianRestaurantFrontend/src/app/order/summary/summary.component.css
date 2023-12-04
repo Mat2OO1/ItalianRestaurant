@@ -210,3 +210,11 @@ cancel-btn {
   /*overflow: hidden; !* hide any overflow text *!*/
   text-align: center;
 }
+
+.table-info {
+  background-color: hsl(225, 100%, 98%);
+  border-radius: 12px;
+  font-size: 1em;
+  padding: 25px 10px;
+  margin: 20px;
+}
