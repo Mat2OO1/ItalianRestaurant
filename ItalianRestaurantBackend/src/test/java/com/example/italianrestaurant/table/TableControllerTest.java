@@ -61,6 +61,7 @@ public class TableControllerTest {
         val number = 1L;
         val table = Utils.getTable();
         table.setNumber(1);
+        table.setId(1L);
         given(tableService.getTableByNumber(1L)).willReturn(table);
 
         // when

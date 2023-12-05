@@ -100,12 +100,16 @@ export class AdminMenuComponent {
         this.dataStorageService.addMeal(result.mealDto, result.file!)
           .subscribe((meal) => {
             this.dataSources![category!.name].data.push(meal);
+            this.renderRows()
+            this.processing = false;
           }, error => {
             if (error.status === 400) {
               this.translate.get('meal_already_exists').subscribe((message: string) => {
                 this.snackBarService.openSnackbarError(message);
               })
             }
+            this.renderRows()
+            this.processing = false;
           });
       } else if (mode === DialogMode.EDIT && typeof result === 'object') {
         this.dataStorageService.editMeal(result.mealDto, result.id!, result.file!).subscribe((meal) => {
@@ -115,15 +119,17 @@ export class AdminMenuComponent {
             }
             return m;
           });
+          this.renderRows()
+          this.processing = false;
         });
       } else if (mode === DialogMode.DELETE && typeof result === 'number') {
         this.dataStorageService.deleteMeal(result).subscribe(() => {
           this.dataSources![category!.name].data = this.dataSources![category!.name].data.filter((m) => m.id !== result);
+          this.renderRows()
+          this.processing = false;
         });
       }
     }
-    this.renderRows()
-    this.processing = false;
   }
 
   private handleCategoryDialogResult(mode: DialogMode,
@@ -135,12 +141,16 @@ export class AdminMenuComponent {
           .subscribe((category) => {
             this.categories!.push(category);
             this.dataSources![category.name] = new MatTableDataSource();
+            this.renderRows()
+            this.processing = false;
           }, error => {
             if (error.status === 400) {
               this.translate.get('category_already_exists').subscribe((message: string) => {
                 this.snackBarService.openSnackbarError(message);
               })
             }
+            this.renderRows()
+            this.processing = false;
           });
       } else if (mode === DialogMode.EDIT && typeof result === 'object') {
         this.dataStorageService.editCategory(result.name, result.name_pl, result.id!).subscribe((category) => {
@@ -150,15 +160,17 @@ export class AdminMenuComponent {
             }
             return c;
           });
+          this.renderRows()
+          this.processing = false;
         });
       } else if (mode === DialogMode.DELETE && typeof result === 'number') {
         this.dataStorageService.deleteCategory(result).subscribe(() => {
           delete this.dataSources![this.categories!.find((c) => c.id === result)!.name];
           this.categories = this.categories!.filter((c) => c.id !== result);
+          this.renderRows()
+          this.processing = false;
         });
       }
-      this.renderRows()
-      this.processing = false;
     }
   }
 
