@@ -68,25 +68,25 @@
     </button>
   </mat-toolbar>
   <mat-sidenav-container class="mat-sidenav-container" id="sidenav-content" fxFlexFill>
-    <mat-sidenav #sidenav fxLayout="column" mode="over" opened="false" fxHide.gt-md="true">
+    <mat-sidenav #sidenav [autoFocus]="false" fxLayout="column" mode="over" opened="false" fxHide.gt-md="true">
       <mat-nav-list>
-        <a mat-list-item [routerLink]="['/menu']" (click)="sidenav.toggle()" aria-label="Menu">{{'menu' | translate}}</a>
+        <button mat-list-item [routerLink]="['/menu']" (click)="sidenav.toggle()" aria-label="Menu">{{'menu' | translate}}</button>
 
         <ng-container *ngIf="currentUser?.role === Role.USER">
-          <a routerLink="/reserve-table" (click)="sidenav.toggle()" mat-list-item aria-label="Reserve Table">{{'reserve_table' | translate}}</a>
-          <a routerLink="/order-history" (click)="sidenav.toggle()" mat-list-item aria-label="Order History">{{'orders' | translate}}</a>
+          <button routerLink="/reserve-table" (click)="sidenav.toggle()" mat-list-item aria-label="Reserve Table">{{'reserve_table' | translate}}</button>
+          <button routerLink="/order-history" (click)="sidenav.toggle()" mat-list-item aria-label="Order History">{{'orders' | translate}}</button>
         </ng-container>
 
         <ng-container *ngIf="currentUser?.role === Role.ADMIN">
-          <a routerLink="/admin-tables-panel" (click)="sidenav.toggle()" mat-list-item aria-label="Admin Tables Panel">{{'table' | translate}}</a>
-          <a routerLink="/admin-menu" (click)="sidenav.toggle()" mat-list-item aria-label="Admin Menu Editor">{{'menu_editor' | translate}}</a>
-          <a routerLink="/admin-panel" (click)="sidenav.toggle()" mat-list-item aria-label="Admin Panel">{{'orders' | translate}}</a>
-          <a routerLink="/admin-reservations" (click)="sidenav.toggle()" mat-list-item aria-label="Admin Reservations">{{'reservations' | translate}}</a>
+          <button routerLink="/admin-tables-panel" (click)="sidenav.toggle()" mat-list-item aria-label="Admin Tables Panel">{{'table' | translate}}</button>
+          <button routerLink="/admin-menu" (click)="sidenav.toggle()" mat-list-item aria-label="Admin Menu Editor">{{'menu_editor' | translate}}</button>
+          <button routerLink="/admin-panel" (click)="sidenav.toggle()" mat-list-item aria-label="Admin Panel">{{'orders' | translate}}</button>
+          <button routerLink="/admin-reservations" (click)="sidenav.toggle()" mat-list-item aria-label="Admin Reservations">{{'reservations' | translate}}</button>
         </ng-container>
 
         <ng-container *ngIf="currentUser === null">
-          <a routerLink="/register" (click)="sidenav.toggle()" mat-list-item aria-label="Register">{{'register' | translate}}</a>
-          <a routerLink="/login" (click)="sidenav.toggle()" mat-list-item aria-label="Login">{{'login' | translate}}</a>
+          <button routerLink="/register" (click)="sidenav.toggle()" mat-list-item aria-label="Register">{{'register' | translate}}</button>
+          <button routerLink="/login" (click)="sidenav.toggle()" mat-list-item aria-label="Login">{{'login' | translate}}</button>
         </ng-container>
 
         <button mat-list-item [matMenuTriggerFor]="menu" aria-label="Language Selector">
@@ -96,18 +96,18 @@
         </button>
 
         <mat-menu #menu="matMenu">
-          <a mat-menu-item (click)="changeLang('pl')"><span class="fi fi-pl"></span> Polski</a>
-          <a mat-menu-item (click)="changeLang('en')"><span class="fi fi-gb"></span> English</a>
+          <button mat-menu-item (click)="changeLang('pl')"><span class="fi fi-pl"></span> Polski</button>
+          <button mat-menu-item (click)="changeLang('en')"><span class="fi fi-gb"></span> English</button>
         </mat-menu>
 
-        <a *ngIf="currentUser?.role === Role.USER" (click)="sidenav.toggle()" routerLink="/summary" mat-list-item aria-label="Shopping Cart">
+        <button *ngIf="currentUser?.role === Role.USER" (click)="sidenav.toggle()" routerLink="/summary" mat-list-item aria-label="Shopping Cart">
           {{ 'cart' | translate }}
-        </a>
+        </button>
 
-        <a *ngIf="currentUser" (click)="sidenav.toggle()" routerLink="/account" mat-list-item aria-label="Profile">
+        <button *ngIf="currentUser" (click)="sidenav.toggle()" routerLink="/account" mat-list-item aria-label="Profile">
           {{ 'profile' | translate }}
-        </a>
-        <button *ngIf="currentUser?.role" (click)="onLogout(); sidenav.toggle()" mat-list-item aria-label="Logout">
+        </button>
+        <button class="sidenav-button" *ngIf="currentUser?.role" (click)="onLogout(); sidenav.toggle()" mat-list-item aria-label="Logout">
           {{ 'logout' | translate }}
         </button>
 
