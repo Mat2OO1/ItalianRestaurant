@@ -66,9 +66,13 @@ body {
 .plan-box-left {
   display: flex;
   flex-wrap: wrap;
-  flex: 60%;
+  flex: 50%;
   align-items: center;
   text-align: left;
+}
+
+.plan-box-left div {
+  flex: 20%;
 }
 
 @media only screen and (max-width: 600px) {
