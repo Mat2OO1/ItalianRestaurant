@@ -49,7 +49,7 @@ export class AdminMenuComponent {
       data: {mode: mode, category: category},
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.handleCategoryDialogResult(mode, result)
+      this.handleCategoryDialogResult(mode, result, category)
     });
   }
 
@@ -133,7 +133,8 @@ export class AdminMenuComponent {
   }
 
   private handleCategoryDialogResult(mode: DialogMode,
-                                     result: { name: string, name_pl: string, id: number | undefined } | number) {
+                                     result: { name: string, name_pl: string, id: number | undefined } | number,
+                                     oldCategory?: Category) {
     if (result) {
       this.processing = true;
       if (mode === DialogMode.ADD && typeof result === 'object') {
@@ -160,6 +161,14 @@ export class AdminMenuComponent {
             }
             return c;
           });
+
+          if (oldCategory) {
+            this.dataSources[category.name] = this.dataSources[oldCategory.name];
+            delete this.dataSources![oldCategory.name];
+          }
+
+
+
           this.renderRows()
           this.processing = false;
         });
