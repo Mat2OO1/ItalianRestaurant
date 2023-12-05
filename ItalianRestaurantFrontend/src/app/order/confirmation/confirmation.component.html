@@ -10,7 +10,7 @@
     <table class="table">
       <thead>
       <tr>
-<!--        <th scope="col">{{'meal'|translate}}</th>-->
+        <th scope="col">{{'meal'|translate}}</th>
         <th scope="col">{{'meal_name'|translate}}</th>
         <th scope="col">{{'quantity'|translate}}</th>
         <th scope="col">{{'price'|translate}}</th>
@@ -18,15 +18,15 @@
       </thead>
       <tbody>
       <tr *ngFor="let item of order">
-<!--        <th class="align-middle" scope="row">-->
-<!--          <img class="img-preview" src="{{item.meal.image}}">-->
-<!--        </th>-->
+        <th class="align-middle" scope="row">
+          <img class="img-preview" src="{{item.meal.image}}">
+        </th>
         <td class="align-middle">{{getMealName(item)}}</td>
         <td class="align-middle">{{item.quantity}}</td>
         <td class="align-middle" style="font-size: 12px">{{item.meal.price * item.quantity}}{{'currency'|translate}}</td>
       </tr>
       <tr>
-<!--        <th></th>-->
+        <th></th>
         <td></td>
         <td>{{'sum'|translate}}</td>
         <td style="font-size: 12px"><strong>{{calculateOrder()}}{{'currency'|translate}}</strong></td>
